@@ -1,6 +1,6 @@
-<h1 align="center">PojavLauncher</h1>
+<h1 align="center">Amethyst</h1>
 
-<img src="https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/assets/pojavlauncher.png" align="left" width="130" height="150" alt="PojavLauncher logo">
+<img src="https://github.com/Meayua/Amethyst-Android/blob/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="150" alt="Amethyst logo">
 
 [![Android CI](https://github.com/PojavLauncherTeam/PojavLauncher/workflows/Android%20CI/badge.svg)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/PojavLauncherTeam/PojavLauncher)](https://github.com/PojavLauncherTeam/PojavLauncher/actions)
@@ -10,14 +10,14 @@
 
 *From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes here comes PojavLauncher!*
 
-PojavLauncher is a launcher that allows you to play Minecraft: Java Edition on your Android and [iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS) devices.
+Amethyst is a launcher that allows you to play Minecraft: Java Edition on your Android and [iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS) devices.
 
 For more details, check out our [wiki](https://pojavlauncher.app/)!
 
 ## Important Notes
 
 * We do not have an official TikTok account. No one from the dev team makes TikTok videos.
-* The official Twitter for PojavLauncher is [@PLaunchTeam](https://twitter.com/PLaunchTeam). Any others (most notably @PojavLauncher) are fake.
+* The official Twitter for Amethyst is [@PLaunchTeam](https://twitter.com/PLaunchTeam). Any others (most notably @PojavLauncher) are fake.
 
 ## Table of Contents
 
@@ -37,24 +37,23 @@ For more details, check out our [wiki](https://pojavlauncher.app/)!
 
 ## Introduction
 
-* PojavLauncher is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk)
+* Amethyst is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk)
 * This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.21 snapshots (including Combat Test versions)
 * Modding via Forge and Fabric are also supported.
 * This repository contains source code for Android. For iOS/iPadOS, check out [PojavLauncher_iOS](https://github.com/PojavLauncherTeam/PojavLauncher_iOS).
 
-## Getting PojavLauncher
+## Getting Amethyst
 
-You can get PojavLauncher via three methods:
+Currently, you can get Amethyst via one method:
 
-1. **Releases:** Download the prebuilt app from our [stable releases](https://github.com/PojavLauncherTeam/PojavLauncher/releases) or [automatic builds](https://github.com/PojavLauncherTeam/PojavLauncher/actions).
-2. **Google Play:** Get it from Google Play by clicking on this badge: [![Google Play](https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png)](https://play.google.com/store/apps/details?id=net.kdt.pojavlaunch)
-3. **Build from Source:** Follow the [building instructions](#building) below.
+1. **Build from Source:** Follow the [building instructions](#building) below.
+*Prebuilt Files should be available soon.*
 
 ## Building
 
 ### Quick Build (Recommended)
 
-The easiest way to build PojavLauncher is to use the pre-built JREs provided by our CI.
+The easiest way to build Amethyst is to use the pre-built JREs provided by our CI.
 
 1. Clone the repository: `git clone https://github.com/PojavLauncherTeam/PojavLauncher.git`
 2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
@@ -117,11 +116,11 @@ Any code change should be submitted as a pull request. The description should ex
 
 ## Support
 
-For support, please join our [Discord server](https://discord.com/invite/aenk3EUvER).
+For support, please join our [Discord server](https://discord.gg/98pZ8YY3Cq).
 
 ## License
 
-PojavLauncher is licensed under [GNU LGPLv3](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE).
+Amethyst is licensed under [GNU LGPLv3](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE).
 
 ## Credits & Dependencies
 
