@@ -112,7 +112,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "net.kdt.pojavlaunch"
+        applicationId "org.angelauramc.amethyst"
         minSdkVersion 21
         targetSdkVersion 34
         versionCode getDateSeconds()
