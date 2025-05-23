@@ -27,7 +27,6 @@ import net.kdt.pojavlaunch.value.MinecraftLibraryArtifact;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -68,14 +67,8 @@ public class MinecraftDownloader {
 
         sExecutorService.execute(() -> {
             try {
-                if(isLocalProfile){
-                    throw new RuntimeException("Download failed. Please make sure you are logged in with a Microsoft Account.");
-                }
                 downloadGame(activity, version, realVersion);
                 listener.onDownloadDone();
-            }catch (UnknownHostException e){
-                Log.i("DownloadMirror", e.toString());
-                Tools.showErrorRemote("Can't download Minecraft, no internet connection found", e);
             }catch (Exception e) {
                 listener.onDownloadFailed(e);
             }

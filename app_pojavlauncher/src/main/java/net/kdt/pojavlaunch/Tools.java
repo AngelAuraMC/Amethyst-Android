@@ -509,7 +509,7 @@ public final class Tools {
         return JSONUtils.insertJSONValueList(
                  splitAndFilterEmpty(
                          versionInfo.minecraftArguments == null ?
-                                 fromStringArray(minscraftArgs.toArray(new String[0])):
+                                 fromStringArray(minecraftArgs.toArray(new String[0])):
                                  versionInfo.minecraftArguments
                  ), varArgMap
         );
