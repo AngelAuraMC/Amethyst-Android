@@ -197,7 +197,7 @@
     <string name="arc_capes_title">Cosmetica Capeky</string>
     <string name="arc_capes_desc">Aktivuje capeky (plášte) Cosmetica. Pre info navštívte https://cosmetica.cc. Pre ich funkčnosť je potrebný OptiFine.</string>
     <string name="notif_channel_name">Všeobecné nastavenia notifikácií</string>
-    <string name="lazy_service_default_title">Pojav Foreground Service</string>
+    <string name="lazy_service_default_title">Amethyst Foreground Service</string>
     <string name="use_global_default">(Použiť predvolené nastavenie)</string>
     <string name="default_control">Predvolené kontrolky</string>
     <string name="progresslayout_tasks_in_progress">Počet prebiehajúcich operácií: %d</string>

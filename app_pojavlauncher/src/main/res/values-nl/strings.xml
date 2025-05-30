@@ -195,7 +195,7 @@
     <string name="arc_capes_title">Cosmetica Capes</string>
     <string name="arc_capes_desc">Schakelt capes van Cosmetica in (voorheen Arc). Voor meer informatie ga naar https://cosmetica.cc. Vereist OptiFine.</string>
     <string name="notif_channel_name">Algemeen</string>
-    <string name="lazy_service_default_title">Pojav voorgrond Service</string>
+    <string name="lazy_service_default_title">Amethyst voorgrond Service</string>
     <string name="use_global_default">(Gebruik globale standaardwaarde)</string>
     <string name="default_control">Standaard controlmap</string>
     <string name="progresslayout_tasks_in_progress">%d taken in uitvoering</string>

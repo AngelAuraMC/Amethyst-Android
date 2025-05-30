@@ -204,7 +204,7 @@
     <string name="arc_capes_title">Peleryny Cosmetica</string>
     <string name="arc_capes_desc">Aktywuje peleryny z Cosmetica (wcześniej Arc). Aby dowiedzieć się więcej, odwiedź https://cosmetica.cc. Wymaga OptiFine.</string>
     <string name="notif_channel_name">Ogólne</string>
-    <string name="lazy_service_default_title">Usługa Pojav Foreground</string>
+    <string name="lazy_service_default_title">Usługa Amethyst Foreground</string>
     <string name="mcl_setting_veroption_installed">Zainstalowane</string>
     <string name="use_global_default">(Użyj ustawień domyślnych)</string>
     <string name="default_control">Domyślne sterowanie</string>

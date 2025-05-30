@@ -154,7 +154,7 @@
     <string name="arc_capes_title">Pelerine Cosmetica</string>
     <string name="arc_capes_desc">Activează pelerinele de la Cosmetica (anterior Arc). Pentru mai multe informații, vizitează https://cosmetica.cc. Necesită OptiFine.</string>
     <string name="notif_channel_name">General</string>
-    <string name="lazy_service_default_title">Serviciu Pojav prim-plan</string>
+    <string name="lazy_service_default_title">Serviciu Amethyst prim-plan</string>
     <string name="mcl_setting_veroption_installed">Instalat</string>
     <string name="use_global_default">(Utilizare implicită globală)</string>
     <string name="progresslayout_tasks_in_progress">%d sarcini în curs</string>

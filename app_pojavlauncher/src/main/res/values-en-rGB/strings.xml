@@ -197,7 +197,7 @@
     <string name="arc_capes_title">Cosmetica Capes</string>
     <string name="arc_capes_desc">Enables capes from Cosmetica (previously Arc). For more information please visit https://cosmetica.cc. Requires OptiFine.</string>
     <string name="notif_channel_name">General</string>
-    <string name="lazy_service_default_title">Pojav Foreground Service</string>
+    <string name="lazy_service_default_title">Amethyst Foreground Service</string>
     <string name="mcl_setting_veroption_installed">Installed</string>
     <string name="use_global_default">(Use global default)</string>
     <string name="default_control">Default controlmap</string>

@@ -204,7 +204,7 @@
     <string name="arc_capes_title">Capes Cosmetica</string>
     <string name="arc_capes_desc">Active les capes Cosmetica. Pour plus d\'informations visitez https://cosmetica.cc. Nécessite OptiFine.</string>
     <string name="notif_channel_name">Général</string>
-    <string name="lazy_service_default_title">Service de premier plan de Pojav</string>
+    <string name="lazy_service_default_title">Service de premier plan de Amethyst</string>
     <string name="mcl_setting_veroption_installed">Installés</string>
     <string name="use_global_default">(Utiliser la valeur globale par défaut)</string>
     <string name="default_control">Contrôles par défaut</string>

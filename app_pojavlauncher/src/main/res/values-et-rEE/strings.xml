@@ -121,7 +121,7 @@
     <string name="arc_capes_title">Cosmetica keebid</string>
     <string name="arc_capes_desc">Lubab Cosmetica (endine Arc) keebid. Rohkema teabe saamiseks külasta https://cosmetica.cc. Nõuab OptiFine\'i.</string>
     <string name="notif_channel_name">Üldine</string>
-    <string name="lazy_service_default_title">Pojav esiplaaniteenus</string>
+    <string name="lazy_service_default_title">Amethyst esiplaaniteenus</string>
     <string name="notification_terminate">Sundsulge</string>
     <string name="notification_game_runs">Mäng töötab!</string>
     <string name="folder_dialog_create">Loo</string>

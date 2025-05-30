@@ -200,7 +200,7 @@
     <string name="arc_capes_desc">Ενεργοποιεί κάπες από τη Cosmetica (προηγουμένως Arc). Για περισσότερες πληροφορίες, παρακαλώ επισκεφθείτε την ιστοσελίδα https://cosmetica.cc. Απαιτείται 
 το OptiFine.</string>
     <string name="notif_channel_name">Γενικά</string>
-    <string name="lazy_service_default_title">Υπηρεσία Προσκήνιου Pojav</string>
+    <string name="lazy_service_default_title">Υπηρεσία Προσκήνιου Amethyst</string>
     <string name="mcl_setting_veroption_installed">Εγκατεστημένο</string>
     <string name="use_global_default">(Χρήση της γενικής προεπιλογής)</string>
     <string name="default_control">Προεπιλεγμένος χάρτης ελέγχου</string>

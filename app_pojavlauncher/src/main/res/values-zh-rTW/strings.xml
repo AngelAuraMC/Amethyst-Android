@@ -204,7 +204,7 @@
     <string name="arc_capes_title">Cosmetica 披風</string>
     <string name="arc_capes_desc">透過 Cosmetica（前身為 Arc）啟用披風。需要 OptiFine。如需更多資訊請至 https://cosmetica.cc。</string>
     <string name="notif_channel_name">一般設定</string>
-    <string name="lazy_service_default_title">Pojav 背景服務</string>
+    <string name="lazy_service_default_title">Amethyst 背景服務</string>
     <string name="mcl_setting_veroption_installed">已安裝</string>
     <string name="use_global_default">（使用全域預設控制鍵）</string>
     <string name="default_control">預設控制鍵位</string>

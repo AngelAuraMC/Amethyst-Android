@@ -151,7 +151,7 @@
     <string name="arc_capes_title">Capes galing sa Cosmetica</string>
     <string name="arc_capes_desc">Pinapagana ang mga kapa mula sa Cosmetica (ang dating Arc). Para sa karagdagang impormasyon mangyaring bisitahin ang https://cosmetica.cc  Kinagangailangan ng OptiFine.</string>
     <string name="notif_channel_name">Pangkalahatan</string>
-    <string name="lazy_service_default_title">Serbisyong Harapan ng Pojav</string>
+    <string name="lazy_service_default_title">Serbisyong Harapan ng Amethyst</string>
     <string name="mcl_setting_veroption_installed">Naka-Install</string>
     <string name="of_dl_progress">Nagda-download %s</string>
     <string name="generic_debug">Debug</string>

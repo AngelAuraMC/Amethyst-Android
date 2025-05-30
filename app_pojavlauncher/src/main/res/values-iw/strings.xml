@@ -186,7 +186,7 @@
     <string name="arc_capes_title">שכמיות אסתטיות</string>
     <string name="arc_capes_desc">מאפשר שכמיות מאת Cosmetica (לשעבר Arc). לקבלת מידע נוסף, בקרו ב- https://cosmetica.cc. דורש OptiFine.</string>
     <string name="notif_channel_name">כללי</string>
-    <string name="lazy_service_default_title">שירות הרקע של Pojav</string>
+    <string name="lazy_service_default_title">שירות הרקע של Amethyst</string>
     <string name="use_global_default">(השתמש בהגדרות ברירת המחדל הגלובליות)</string>
     <string name="default_control">מפת בקר ברירת מחדל</string>
     <string name="progresslayout_tasks_in_progress">משימות בתהליך%d</string>

@@ -147,7 +147,7 @@
     <string name="arc_capes_title">Capes de Cosmetica</string>
     <string name="arc_capes_desc">Activa les capes de Cosmetica (anteriorment Arc). Per a més informació visiteu https://cosmetica.cc. Requereix l\'OptiFine.</string>
     <string name="notif_channel_name">General</string>
-    <string name="lazy_service_default_title">Servei de primer plà del Pojav</string>
+    <string name="lazy_service_default_title">Servei de primer plà del Amethyst</string>
     <string name="use_global_default">(Usa el valor global per defecte)</string>
     <string name="default_control">Mapa de control per defecte</string>
     <string name="progresslayout_tasks_in_progress">%d tasques en procés</string>

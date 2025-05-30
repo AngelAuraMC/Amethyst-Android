@@ -177,7 +177,7 @@
     <string name="arc_capes_title">\"Cosmetica\" apvalkalai</string>
     <string name="arc_capes_desc">Įjungia apvalkalus iš \"Cosmetica\" (anksčiau \"Arc\"). Daugiau informacijos rasite https://cosmetica.cc. Reikalingas OptiFine.</string>
     <string name="notif_channel_name">Pagrindinis</string>
-    <string name="lazy_service_default_title">Pojav foninis servisas</string>
+    <string name="lazy_service_default_title">Amethyst foninis servisas</string>
     <string name="mcl_setting_veroption_installed">Instaliuota</string>
     <string name="notification_terminate">Nutraukti</string>
     <string name="notification_game_runs">Žaidimas bėga!</string>

@@ -5,7 +5,7 @@
 [![Android CI](https://github.com/AngelAuraMC/Amethyst-Android/workflows/Android%20CI/badge.svg)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/AngelAuraMC/Amethyst-Android)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
 [![Crowdin](https://badges.crowdin.net/amethyst/localized.svg)](https://crowdin.com/project/amethyst)
-[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/98pZ8YY3Cq)
+[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/5ptqkyZxEy)
 
 *From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)'s ruined reputation, here comes Amethyst!*
 
@@ -47,7 +47,7 @@ You can get Amethyst via two methods:
 
 ### Quick Build (Recommended)
 
-The easiest way to build PojavLauncher is to use the pre-built JREs provided by our CI.
+The easiest way to build Amethyst is to use the pre-built JREs provided by our CI.
 
 1. Clone the repository: `git clone --recursive https://github.com/AngelAuraMC/Amethyst-Android.git`
 2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)

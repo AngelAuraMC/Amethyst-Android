@@ -30,6 +30,12 @@
             app2:selectable="false"/>
 
         <SwitchPreference
+            android:defaultValue="false"
+            android:key="disable_autojre_select"
+            android:title="Disable automatic JRE selection"
+            />
+
+        <SwitchPreference
             android:defaultValue="true"
             android:key="java_sandbox"
             android:summary="@string/mcl_setting_java_sandbox_subtitle"

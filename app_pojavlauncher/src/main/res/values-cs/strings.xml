@@ -204,7 +204,6 @@
     <string name="arc_capes_title">Kápě z Cosmeticy</string>
     <string name="arc_capes_desc">Zapne kápě z Cosmeticy (dříve Arc) Pro více informací navštivte https://cosmetica.cc. Vyžaduje OptiFine.</string>
     <string name="notif_channel_name">Všeobecné</string>
-    <string name="lazy_service_default_title">Služba Popředí Pojavu</string>
     <string name="mcl_setting_veroption_installed">Nainstalováno</string>
     <string name="use_global_default">(Užít globální výchozí nastavení)</string>
     <string name="default_control">Výchozí ovládání</string>

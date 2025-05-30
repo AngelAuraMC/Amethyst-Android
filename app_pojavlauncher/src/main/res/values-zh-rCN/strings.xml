@@ -47,9 +47,12 @@
     <string name="mcl_setting_subtitle_mousescale">修改虚拟鼠标的大小。</string>
     <string name="mcl_setting_title_javaargs">JVM 启动参数</string>
     <string name="mcl_setting_subtitle_javaargs">注意，如果你不清楚你在做什么请勿随意修改，否则可能会导致游戏崩溃！</string>
+    <string name="mcl_setting_title_renderer_settings">Extra Renderer Settings</string>
+    <string name="mcl_setting_title_renderer_subtitle">Renderer specific settings</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES -（全版本可用，速度较快）</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink（Vulkan）-（全版本可用，速度中等）</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (仅限 1.17+，速度较快)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 仅限 1.17+</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照版</string>
@@ -73,6 +76,7 @@
     <string name="global_select">选择</string>
     <string name="global_retry">请重试</string>
     <string name="global_default">默认</string>
+    <string name="global_off">禁用</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">应用程序/游戏以代码 %d退出，请查看 latestlog.txt 了解详情；如果你不知道发生了什么，请点击 “分享日志文件” 将日志文件发送给他人分析，而不是在此页面截屏。</string>
     <string name="mcn_signal_title">应用程序/游戏以致命信号 %d 中止，请查看 latestlog.txt 以了解更多详情。</string>
@@ -204,7 +208,7 @@
     <string name="arc_capes_title">Cosmetica 披风</string>
     <string name="arc_capes_desc">启用来自 Cosmetica（原 Arc）的披风，需要 OptiFine，欲知详情请访问 https://arcapes.com。</string>
     <string name="notif_channel_name">常规</string>
-    <string name="lazy_service_default_title">Pojav 前台服务</string>
+    <string name="lazy_service_default_title">Amethyst 前台服务</string>
     <string name="mcl_setting_veroption_installed">已安装</string>
     <string name="use_global_default">（使用全局默认设置）</string>
     <string name="default_control">默认控制键布局</string>
@@ -379,4 +383,20 @@
     <string name="local_login_bad_username_title">用户名不合适</string>
     <string name="local_login_bad_username_text">用户名长度必须在 3–16 个字符之间，并且只能包含拉丁字母、数字 0–9 和下划线。</string>
     <string name="quick_setting_title">快速设置</string>
+    <string name="create_bta_profile">创建 \"Better than Adventure!\" 配置</string>
+    <string name="select_bta_version">选择 \"Better than Adventure!\" 版本</string>
+    <string name="bta_installer_available_versions">支持的 BTA 版本</string>
+    <string name="bta_installer_untested_versions">未测试的 BTA 版本</string>
+    <string name="bta_installer_nightly_versions">每夜的 BTA 版本</string>
+    <string name="newdl_extracting_native_libraries">正在提取本地库 (%d/%d)</string>
+    <string name="toast_not_available_demo">演示模式下不可用</string>
+    <string name="preference_renderer_mobileglues_settings">MobileGlues 渲染器设置</string>
+    <string name="mg_renderer_glsl_cache">最大 GLSL 缓存大小</string>
+    <string name="mg_renderer_angle">使用 ANGLE 作为驱动</string>
+    <string name="mg_renderer_multidraw">MultiDraw 模拟方案</string>
+    <string name="mg_renderer_title_gl43exts">启用不完整的 OpenGL 4.3 扩展</string>
+    <string name="mg_renderer_summary_gl43exts">可能有助于解决模组导致的崩溃。非必要请禁用，可能会导致错误。</string>
+    <string name="mg_renderer_title_computeShaderext">启用实验性的 Compute Shader 扩展</string>
+    <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影渲染异常。非必要请禁用，可能会导致错误。</string>
+    <string name="mg_renderer_title_errorSetting">OpenGL 报错设置</string>
 </resources>

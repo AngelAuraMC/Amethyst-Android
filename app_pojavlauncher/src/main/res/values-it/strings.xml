@@ -204,7 +204,7 @@
     <string name="arc_capes_title">Mantelli Cosmetica</string>
     <string name="arc_capes_desc">Abilità i mantelli di Cosmetica (precedentemente Arc). Per ulteriori informazioni visita https://cosmetica.cc. Necessita OptiFine.</string>
     <string name="notif_channel_name">Generale</string>
-    <string name="lazy_service_default_title">Servizio di Foreground Pojav</string>
+    <string name="lazy_service_default_title">Servizio di Foreground Amethyst</string>
     <string name="mcl_setting_veroption_installed">Installato</string>
     <string name="use_global_default">(Utilizza il predefinito globale)</string>
     <string name="default_control">Controlli default</string>

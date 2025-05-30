@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch;
 
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.DEFAULT_PREF;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipboardManager;
@@ -242,8 +244,8 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
                 selectedMod = findModPath(argList);
             }
             Runtime selectedRuntime;
-            if(selectedMod == null) {
-                // We were unable to find out the path to the mod. In that case, use the default runtime.
+            if(selectedMod == null || DEFAULT_PREF.getBoolean("disable_autojre_select", false)) {
+                // If we are unable to find out the path to the mod or the user explicitly desires so, we use the default runtime
                 selectedRuntime = MultiRTUtils.forceReread(LauncherPreferences.PREF_DEFAULT_RUNTIME);
             }else {
                 // Autoselect it properly in the other case.

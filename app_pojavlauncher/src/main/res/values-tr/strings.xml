@@ -199,7 +199,7 @@
     <string name="arc_capes_title">Cosmetica Pelerinleri</string>
     <string name="arc_capes_desc">Cosmetica\'nın (eskiden Arc olarak biliniyordu) Pelerinlerini etkinleştirir. Daha fazla bilgi için lütfen https://cosmetica.cc\'u ziyaret edin. OptiFine gerektirir.</string>
     <string name="notif_channel_name">Genel</string>
-    <string name="lazy_service_default_title">Pojav Önplan Hizmeti</string>
+    <string name="lazy_service_default_title">Amethyst Önplan Hizmeti</string>
     <string name="mcl_setting_veroption_installed">Kuruldu</string>
     <string name="use_global_default">(Genel varsayılanı kullan)</string>
     <string name="default_control">Varsayılan kontroller</string>

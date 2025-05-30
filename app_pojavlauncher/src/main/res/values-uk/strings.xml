@@ -199,7 +199,7 @@
     <string name="arc_capes_title">Плащі Cosmetica</string>
     <string name="arc_capes_desc">Включає плащі від Cosmetica (раніше Arc). Для більш детальної інформації, будь ласка, відвідайте https://cosmetica.cc. Потребує OptiFine.</string>
     <string name="notif_channel_name">Загальне</string>
-    <string name="lazy_service_default_title">Служба Pojav</string>
+    <string name="lazy_service_default_title">Служба Amethyst</string>
     <string name="mcl_setting_veroption_installed">Встановлено</string>
     <string name="use_global_default">(Використовувати за стандартом)</string>
     <string name="default_control">Стандартне керування</string>

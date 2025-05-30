@@ -204,7 +204,6 @@
     <string name="arc_capes_title">Capas da Cosmetica</string>
     <string name="arc_capes_desc">Ativa capas da Cosmetica (anteriormente Arc). Para mais informações visite https://cosmetica.cc. Requer OptiFine.</string>
     <string name="notif_channel_name">Geral</string>
-    <string name="lazy_service_default_title">Serviço em primeiro plano</string>
     <string name="mcl_setting_veroption_installed">Instalado</string>
     <string name="use_global_default">(Usar padrão global)</string>
     <string name="default_control">Controle padrão</string>

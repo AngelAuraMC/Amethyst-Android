@@ -204,7 +204,7 @@
     <string name="arc_capes_title">Cosmetica-Umhänge</string>
     <string name="arc_capes_desc">Aktiviert Umhänge von Cosmetica (früher Arc). Für weitere Informationen, siehe https://cosmetica.cc. OptiFine wird benötigt.</string>
     <string name="notif_channel_name">Allgemein</string>
-    <string name="lazy_service_default_title">Pojav-Vordergrunddienst</string>
+    <string name="lazy_service_default_title">Amethyst-Vordergrunddienst</string>
     <string name="mcl_setting_veroption_installed">Installiert</string>
     <string name="use_global_default">(Standardvorgaben verwenden)</string>
     <string name="default_control">Standard-Steuerung</string>

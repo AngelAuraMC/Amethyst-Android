@@ -190,7 +190,7 @@
     <string name="arc_capes_title">شنل های Cosmetica</string>
     <string name="arc_capes_desc">شنل های Cosmetica (قبلاً Arc) را فعال می کند. برای اطلاعات بیشتر لطفاً به https://cosmetica.cc مراجعه کنید. به OptiFine نیاز دارد.</string>
     <string name="notif_channel_name">عمومی</string>
-    <string name="lazy_service_default_title">سرویس پیش‌زمینه Pojav</string>
+    <string name="lazy_service_default_title">سرویس پیش‌زمینه Amethyst</string>
     <string name="mcl_setting_veroption_installed">نصب شد</string>
     <string name="use_global_default">(از پیش‌فرض استفاده کنید)</string>
     <string name="progresslayout_tasks_in_progress">%d وظیفه در حال انجام</string>
