@@ -107,7 +107,7 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
      *                 when the cursor is not grabbed
      */
     public void start(boolean isAlreadyRunning, AbstractTouchpad touchpad){
-        if(Tools.isAndroid8OrHigher()) setUpPointerCapture(touchpad);
+//        if(Tools.isAndroid8OrHigher()) setUpPointerCapture(touchpad);
         mInGUIProcessor.setAbstractTouchpad(touchpad);
         if(LauncherPreferences.PREF_USE_ALTERNATE_SURFACE){
             SurfaceView surfaceView = new SurfaceView(getContext());
