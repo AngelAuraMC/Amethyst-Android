@@ -399,4 +399,7 @@
     <string name="mg_renderer_title_computeShaderext">启用实验性的 Compute Shader 扩展</string>
     <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影渲染异常。非必要请禁用，可能会导致错误。</string>
     <string name="mg_renderer_title_errorSetting">OpenGL 报错设置</string>
+    <string name="modloader_dl_install_neoforge">创建NeoForge配置</string>
+    <string name="neoforge_dl_select_version">选择NeoForge版本</string>
+    <string name="neoforge_dl_no_installer">很抱歉，该版本的NeoForge没有安装器，当前尚未支持这种版本的Neoforge的安装。</string>
 </resources>
