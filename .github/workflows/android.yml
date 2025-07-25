@@ -3,8 +3,8 @@ name: Android CI
 on:
   pull_request:
     branches-ignore:
-      - 'l10n_v3_openjdk' 
-    types: [ opened, reopened ]
+      - 'l10n_v3_openjdk'
+    types: [opened, reopened]
   push:
     branches-ignore:
       - 'l10n_v3_openjdk'
@@ -16,6 +16,14 @@ jobs:
     env:
       GPLAY_KEYSTORE_PASSWORD: ${{ secrets.GPLAY_KEYSTORE_PASSWORD }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+    outputs:
+      debug_apk_filename: ${{ steps.artifact-names.outputs.debug_apk_filename }}
+      debug_apk_url: ${{ steps.artifact-names.outputs.debug_apk_url }}
+      release_aab_filename: ${{ steps.artifact-names.outputs.release_aab_filename }}
+      release_aab_url: ${{ steps.artifact-names.outputs.release_aab_url }}
+      noruntime_apk_filename: ${{ steps.artifact-names.outputs.noruntime_apk_filename }}
+      noruntime_apk_url: ${{ steps.artifact-names.outputs.noruntime_apk_url }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -95,6 +103,7 @@ jobs:
           rm -r app_pojavlauncher/src/main/assets/components/jre-21
           gradle assembleDebug
           mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug-noruntime.apk
+
       - name: Gen md5sums
         run: |
           md5sum out/app-debug.apk > out/app-debug.md5
@@ -129,3 +138,58 @@ jobs:
           name: app-debug-noruntime
           path: out/app-debug-noruntime.*
 
+      - name: Export artifact names and URLs
+        id: artifact-names
+        run: |
+          echo "debug_apk_filename=app-debug.apk" >> $GITHUB_OUTPUT
+          echo "debug_apk_url=https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts/app-debug" >> $GITHUB_OUTPUT
+          
+          echo "noruntime_apk_filename=app-debug-noruntime.apk" >> $GITHUB_OUTPUT
+          echo "noruntime_apk_url=https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts/app-debug-noruntime" >> $GITHUB_OUTPUT
+          
+          echo "release_aab_filename=app-gplay.aab" >> $GITHUB_OUTPUT
+          echo "release_aab_url=https://github.com/${{ github.repository }}/suites/${{ github.run_id }}/artifacts/app-release-aab" >> $GITHUB_OUTPUT
+
+  comment-pr:
+    name: Comment on PR
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 1
+
+      - name: Delete existing comment
+        uses: izhangzhihao/delete-comment@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          delete_user_name: github-actions[bot]
+          issue_number: ${{ github.event.number }}
+
+      - name: Get build info
+        id: build-info
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          BUILD_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+          
+          echo "hash=$COMMIT_HASH" >> $GITHUB_OUTPUT
+          echo "time=$BUILD_TIME" >> $GITHUB_OUTPUT
+
+      - name: Comment on current PR
+        uses: thollander/actions-comment-pull-request@v3
+        with:
+          message: |
+            **Commit**: [#${{ steps.build-info.outputs.hash }}](https://github.com/${{ github.repository }}/commit/${{ github.event.pull_request.head.sha }})
+            **Build Time**: `${{ steps.build-info.outputs.time }}`
+
+            #### Artifacts:
+            - [**${{ needs.build.outputs.debug_apk_filename }}**](${{ needs.build.outputs.debug_apk_url }})
+            - [**${{ needs.build.outputs.noruntime_apk_filename }}**](${{ needs.build.outputs.noruntime_apk_url }})
+            - [**${{ needs.build.outputs.release_aab_filename }}**](${{ needs.build.outputs.release_aab_url }})
+
+            <sub>This comment was automatically generated. [View workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})</sub>
+          comment-tag: build-result
+          github-token: ${{ secrets.GITHUB_TOKEN }}
