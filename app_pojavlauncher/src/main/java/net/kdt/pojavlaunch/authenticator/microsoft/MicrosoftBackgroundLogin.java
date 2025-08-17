@@ -2,14 +2,18 @@ package net.kdt.pojavlaunch.authenticator.microsoft;
 
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 
+import android.content.Intent;
 import android.util.ArrayMap;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 
 import com.kdt.mcgui.ProgressLayout;
+import com.kdt.mcgui.mcAccountSpinner;
 
+import net.kdt.pojavlaunch.JavaGUILauncherActivity;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.authenticator.listener.DoneListener;
@@ -44,6 +48,7 @@ public class MicrosoftBackgroundLogin {
 
     private final boolean mIsRefresh;
     private final String mAuthCode;
+    private final LoginUiFeedback mListener;
     private static final Map<Long, Integer> XSTS_ERRORS;
     static {
         XSTS_ERRORS = new ArrayMap<>();
@@ -62,9 +67,10 @@ public class MicrosoftBackgroundLogin {
     public boolean doesOwnGame;
     public long expiresAt;
 
-    public MicrosoftBackgroundLogin(boolean isRefresh, String authCode){
+    public MicrosoftBackgroundLogin(boolean isRefresh, String authCode, LoginUiFeedback listener){
         mIsRefresh = isRefresh;
         mAuthCode = authCode;
+        mListener = listener;
     }
 
     /** Performs a full login, calling back listeners appropriately  */
@@ -293,7 +299,10 @@ public class MicrosoftBackgroundLogin {
             Log.i("MicrosoftLogin","Uuid Minecraft = " + uuidDashes);
             mcName=name;
             mcUuid=uuidDashes;
-        }else{
+        } else if (conn.getResponseCode() == 400) {
+            Log.i("MicrosoftLogin","It seems that this Microsoft Account did not setup a Java Profile.");
+            Tools.runOnUiThread(mListener::showNoJavaNameDialog);
+        } else{
             Log.i("MicrosoftLogin","It seems that this Microsoft Account does not own the game.");
             doesOwnGame = false;
             mcName = "Demo.Player";
@@ -301,6 +310,10 @@ public class MicrosoftBackgroundLogin {
             //throw new PresentedException(new RuntimeException(conn.getResponseMessage()), R.string.minecraft_not_owned);
             //throwResponseError(conn);
         }
+    }
+
+    public interface LoginUiFeedback {
+        void showNoJavaNameDialog();
     }
 
     /** Wrapper to ease notifying the listener */

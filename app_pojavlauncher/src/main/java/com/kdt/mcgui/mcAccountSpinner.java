@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -52,7 +53,7 @@ import java.util.Objects;
 
 import fr.spse.extended_view.ExtendedTextView;
 
-public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.OnItemSelectedListener {
+public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.OnItemSelectedListener, MicrosoftBackgroundLogin.LoginUiFeedback {
     public mcAccountSpinner(@NonNull Context context) {
         this(context, null);
     }
@@ -126,7 +127,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
     /* Triggered when we need to do microsoft login */
     private final ExtraListener<Uri> mMicrosoftLoginListener = (key, value) -> {
         mLoginBarPaint.setColor(getResources().getColor(R.color.minebutton_color));
-        new MicrosoftBackgroundLogin(false, value.getQueryParameter("code")).performLogin(
+        new MicrosoftBackgroundLogin(false, value.getQueryParameter("code"), this).performLogin(
                 mProgressListener, mDoneListener, mErrorListener);
         return false;
     };
@@ -288,7 +289,7 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         if(minecraftAccount.isMicrosoft){
             if(System.currentTimeMillis() > minecraftAccount.expiresAt){
                 // Perform login only if needed
-                new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken)
+                new MicrosoftBackgroundLogin(true, minecraftAccount.msaRefreshToken, this)
                         .performLogin(mProgressListener, mDoneListener, mErrorListener);
             }
             return;
@@ -419,7 +420,29 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
                     .show();
         }
     }
-
+    @Override
+    public void showNoJavaNameDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext())
+                .setTitle("No Java Profile found!")
+                .setMessage("Please set a Java username to be able to play online!")
+                .setNegativeButton(android.R.string.cancel, (di, i) -> {
+                    Toast.makeText(getContext(), "You will not be able to play online!", Toast.LENGTH_SHORT).show();
+                })
+                .setPositiveButton(android.R.string.ok, (di, i) -> {
+                    Toast.makeText(getContext(), "Unimplemented, set username box here", Toast.LENGTH_SHORT).show();
+                    final EditText editText = new EditText(getContext());
+                    editText.setHint("Steve, Alex, etc,.");
+                    AlertDialog.Builder builder2 = new AlertDialog.Builder(getContext())
+                            .setTitle("Set your Java Username")
+                            .setView(editText)
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .setPositiveButton(android.R.string.ok, (di2, i2) -> {
+                                Toast.makeText(getContext(), "Unimplemented, this doesn't do anything.", Toast.LENGTH_SHORT).show();
+                            });
+                    builder2.show();
+                });
+        builder.show();
+    }
 
 
 }
