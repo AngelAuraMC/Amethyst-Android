@@ -303,10 +303,11 @@ public class MicrosoftBackgroundLogin {
             Log.i("MicrosoftLogin","It seems that this Microsoft Account did not setup a Java Profile.");
             Tools.runOnUiThread(mListener::showNoJavaNameDialog);
         } else{
-            Log.i("MicrosoftLogin","It seems that this Microsoft Account does not own the game.");
-            doesOwnGame = false;
-            mcName = "Demo.Player";
-            mcUuid = "00000000-0000-0000-0000-000000000000";
+//            Log.i("MicrosoftLogin","It seems that this Microsoft Account does not own the game.");
+//            doesOwnGame = false;
+//            mcName = "Demo.Player";
+//            mcUuid = "00000000-0000-0000-0000-000000000000";
+            throw new RuntimeException("Failed to Login! HTTP Code: " +conn.getResponseCode());
             //throw new PresentedException(new RuntimeException(conn.getResponseMessage()), R.string.minecraft_not_owned);
             //throwResponseError(conn);
         }
