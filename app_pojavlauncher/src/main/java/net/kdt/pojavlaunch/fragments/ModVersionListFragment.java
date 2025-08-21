@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraCore;
-import net.kdt.pojavlaunch.mirrors.DownloadMirror;
 import net.kdt.pojavlaunch.modloaders.ModloaderDownloadListener;
 import net.kdt.pojavlaunch.modloaders.ModloaderListenerProxy;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
@@ -106,7 +105,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
         Object forgeVersion = expandableListView.getExpandableListAdapter().getChild(i, i1);
         ModloaderListenerProxy taskProxy = new ModloaderListenerProxy();
         Runnable downloadTask = createDownloadTask(forgeVersion, taskProxy);
-        setTaskProxy(taskProxy);
+        setTaskProxyValue(taskProxy);
         taskProxy.attachListener(this);
         mExpandableListView.setEnabled(false);
         new Thread(downloadTask).start();
@@ -118,7 +117,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
         Tools.runOnUiThread(()->{
             Context context = requireContext();
             getTaskProxy().detachListener();
-            setTaskProxy(null);
+            deleteTaskProxy();
             mExpandableListView.setEnabled(true);
             // Read the comment in FabricInstallFragment.onDownloadFinished() to see how this works
             getParentFragmentManager().popBackStackImmediate();
@@ -131,7 +130,7 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
         Tools.runOnUiThread(()->{
             Context context = requireContext();
             getTaskProxy().detachListener();
-            setTaskProxy(null);
+            deleteTaskProxy();
             mExpandableListView.setEnabled(true);
             Tools.dialog(context,
                     context.getString(R.string.global_error),
@@ -144,14 +143,17 @@ public abstract class ModVersionListFragment<T> extends Fragment implements Runn
         Tools.runOnUiThread(()->{
             Context context = requireContext();
             getTaskProxy().detachListener();
-            setTaskProxy(null);
+            deleteTaskProxy();
             mExpandableListView.setEnabled(true);
             Tools.showError(context, e);
         });
     }
 
-    private void setTaskProxy(ModloaderListenerProxy proxy) {
+    private void setTaskProxyValue(ModloaderListenerProxy proxy) {
         ExtraCore.setValue(mExtraTag, proxy);
+    }
+    private void deleteTaskProxy(){
+        ExtraCore.removeValue(mExtraTag);
     }
 
     private ModloaderListenerProxy getTaskProxy() {

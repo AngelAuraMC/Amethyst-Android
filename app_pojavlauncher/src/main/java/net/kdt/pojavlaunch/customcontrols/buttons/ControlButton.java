@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import net.kdt.pojavlaunch.EfficientAndroidLWJGLKeycode;
 import net.kdt.pojavlaunch.LwjglGlfwKeycode;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.R;
@@ -191,7 +192,7 @@ public class ControlButton extends TextView implements ControlInterface {
         setActivated(isDown);
         for(int keycode : mProperties.keycodes){
             if(keycode >= GLFW_KEY_UNKNOWN){
-                sendKeyPress(keycode, CallbackBridge.getCurrentMods(), isDown);
+                sendKeyPress(keycode, EfficientAndroidLWJGLKeycode.getLwjglChar(keycode), CallbackBridge.getCurrentMods(), isDown);
                 CallbackBridge.setModifiers(keycode, isDown);
             }else{
                 Log.i("punjabilauncher", "sendSpecialKey("+keycode+","+isDown+")");

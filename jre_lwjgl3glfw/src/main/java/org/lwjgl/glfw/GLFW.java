@@ -998,6 +998,32 @@ public class GLFW
         win.height = mGLFWWindowHeight;
         win.title = title;
 
+        // Set the Open GL version for context because Forge and derivatives ask for it
+        // If we give them 0.0, some mods don't like it, so we base our assumptions on a per renderer basis
+        int glMajor = 3;
+        int glMinor = 3;
+        // These values can be found at headings_array.xml
+        switch (System.getenv("POJAV_RENDERER")) {
+            case "vulkan_zink":
+                if (System.getenv("POJAV_LOAD_TURNIP").equals("1")) {
+                    System.out.println("GLFW: Turnip+Zink detected, setting GL context to 4.6");
+                    glMajor = 4;
+                    glMinor = 6;
+                }
+            case "opengles3_virgl":
+                System.out.println("GLFW: virglrenderer detected, setting GL context to 4.3");
+                glMajor = 4;
+                glMinor = 3;
+            case "opengles_mobileglues":
+                System.out.println("GLFW: MobileGlues detected, setting GL context to 4.0");
+                glMajor = 4;
+                glMinor = 0;
+                break;
+            default:
+                System.out.println("GLFW: "+ System.getenv("POJAV_RENDERER") + " detected, defaulting GL context to 3.3");
+        }
+        win.windowAttribs.put(GLFW_CONTEXT_VERSION_MAJOR, glMajor);
+        win.windowAttribs.put(GLFW_CONTEXT_VERSION_MINOR, glMinor);
         mGLFWWindowMap.put(ptr, win);
         mainContext = ptr;
 
@@ -1159,6 +1185,9 @@ public class GLFW
     }
 
     public static int glfwGetKey(@NativeType("GLFWwindow *") long window, int key) {
+        // This is jank, anything asking for int 348 results in an IndexOutOfBounds because idk.
+        // Probably an off-by-one error. This is the 'fix'
+        if (key == GLFW_KEY_LAST){return GLFW_KEY_LAST;}
         return keyDownBuffer.get(Math.max(0, key-31));
     }
 

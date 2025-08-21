@@ -8,6 +8,13 @@ import androidx.annotation.Nullable;
 
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 public class PojavProfile {
 	private static final String PROFILE_PREF = "pojav_profile";
 	private static final String PROFILE_PREF_FILE = "file";
@@ -29,6 +36,27 @@ public class PojavProfile {
         }
         return name;
     }
+
+	public static List<MinecraftAccount> getAllProfiles(){
+		List<MinecraftAccount> mcAccountList = new ArrayList<>();;
+		for (String accountName : getAllProfilesList()){
+			if (MinecraftAccount.load(accountName) != null) {
+				mcAccountList.add(MinecraftAccount.load(accountName));
+			}
+		}
+		return mcAccountList;
+	}
+
+	public static List<String> getAllProfilesList(){
+		List<String> accountList = new ArrayList<>();
+		File accountFolder = new File(Tools.DIR_ACCOUNT_NEW);
+		if(accountFolder.exists() && accountFolder.list() != null){
+			for (String fileName : Objects.requireNonNull(accountFolder.list())) {
+				accountList.add(fileName.substring(0, fileName.length() - 5));
+			}
+		}
+		return accountList;
+	}
 	
 	public static void setCurrentProfile(@NonNull Context ctx, @Nullable  Object obj) {
 		SharedPreferences.Editor pref = getPrefs(ctx).edit();

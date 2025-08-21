@@ -34,4 +34,6 @@
     <integer name="memory_seekbar_increment">8</integer>
     <integer name="memory_seekbar_min">256</integer>
 
+    <integer name="touchcontrller_vibrate_length_min">10</integer>
+    <integer name="touchcontrller_vibrate_length_max">1000</integer>
 </resources>

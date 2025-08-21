@@ -399,4 +399,10 @@
     <string name="mg_renderer_title_computeShaderext">启用实验性的 Compute Shader 扩展</string>
     <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影渲染异常。非必要请禁用，可能会导致错误。</string>
     <string name="mg_renderer_title_errorSetting">OpenGL 报错设置</string>
+
+    <string name="preference_category_touchcontroller_settings">TouchController 设置</string>
+    <string name="preference_force_enable_touchcontroller_title">强制启用 TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">启用 TouchController 集成，即使没有找到模组文件。</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController 震动长度</string>
+    <string name="preference_touchcontroller_vibrate_length_description">设置使用 TouchController 时的震动长度。</string>
 </resources>

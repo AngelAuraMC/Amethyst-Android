@@ -65,7 +65,7 @@
     <string name="mcl_setting_title_renderer_settings">Extra Renderer Settings</string>
     <string name="mcl_setting_title_renderer_subtitle">Renderer specific settings</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (all versions, fast)</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; only, fast)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (all versions, mid)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ only, fast)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ only</string>
@@ -171,6 +171,8 @@
     <string name="mcl_disable_swap_hand_subtitle">Disables double tapping on the hotbar item to swap it in the second hand.</string>
     <string name="mcl_setting_title_mousespeed">Mouse Speed</string>
     <string name="mcl_setting_subtitle_mousespeed">Changes the speed of the virtual mouse.</string>
+    <string name="mcl_setting_title_grab_mouse">Use virtual cursor</string>
+    <string name="mcl_setting_subtitle_grab_mouse">Ensures the cursor stays inside the game. Prevents mouse from clicking touch control layout.</string>
     <string name="customctrl_passthru">Mouse pass-thru</string>
     <string name="customctrl_swipeable">Swipeable</string>
     <string name="customctrl_forward_lock">Forward lock</string>
@@ -205,7 +207,6 @@
     <string name="preference_java_description">Java Runtimes, JVM Arguments, RAM amount and sandbox</string>
     <string name="preference_misc_title">Miscellaneous settings</string>
     <string name="preference_misc_description">Version list and libraries check</string>
-    <string name="preference_experimental_title">Experimental Stuff</string>
     <string name="preference_experimental_description">Use things there with consideration, no support</string>
     <string name="preference_sustained_performance_title">Enable sustained performance mode</string>
     <string name="preference_sustained_performance_description">Limit thermal throttling by limiting peak performance.</string>
@@ -439,10 +440,36 @@
     <string name="mg_renderer_glsl_cache">Max GLSL cache size</string>
     <string name="mg_renderer_angle">Use ANGLE as driver</string>
     <string name="mg_renderer_multidraw">Multidraw emulation mode</string>
+    <string name="mg_renderer_title_errorSetting">Error Filtering</string>
+    <string name="mg_renderer_title_timerQueryExt">Disable GPU Utilization in F3 menu</string>
+    <string name="mg_renderer_summary_timerQueryExt">Fixes random crashes when F3 is open on some Mali devices</string>
+    <string name="preference_ANGLE_only">ANGLE Only Options</string>
+    <string name="mg_renderer_title_angleDepthClearFixMode">Fix hand and held items from going through blocks</string>
+    <string name="mg_renderer_summary_angleDepthClearFixMode">Only affects ANGLE, can affect performance.</string>
+    <string name="preference_experimental_title">Experimental Stuff</string>
     <string name="mg_renderer_title_gl43exts">Advertise Experimental OpenGL 4.3 extensions</string>
     <string name="mg_renderer_summary_gl43exts">May help with mod crashes. Disable if not needed, can cause crashes.</string>
     <string name="mg_renderer_title_computeShaderext">Advertise Experimental Compute Shader extension</string>
     <string name="mg_renderer_summary_computeShaderext">May help with shaderpack glitches. Disable if not needed, can cause crashes.</string>
-    <string name="mg_renderer_title_errorSetting">Error Filtering</string>
+    <string name="mg_renderer_title_multidrawCompute">Use Compute Multidraw Emulation</string>
+    <string name="mg_renderer_summary_multidrawCompute">Uses compute shaders for multidraw emulation</string>
     <string name="app_short_name">Amethyst</string>
+    <string name="demo_versions_supported">Only Vanilla 1.3.1 and above are supported on demo accounts</string>
+    <string name="demo_unsupported">Demo Profile not supported</string>
+    <string name="change_account">Please change accounts to use this function</string>
+    <string name="no_minecraft_account_found">No Minecraft Account Found</string>
+    <string name="feature_requires_java_account">This feature requires a Microsoft account that owns Minecraft Java Edition.</string>
+    <string name="delete_account_and_login">Delete account and log in</string>
+    <string name="login_again">Please log in again</string>
+    <string name="account_corrupted">Selected account is corrupted</string>
+    <string name="modloader_dl_install_neoforge">Create Neoforge profile</string>
+    <string name="neoforge_dl_select_version">Select NeoForge version</string>
+    <string name="neoforge_dl_no_installer">Sorry, but this version of NeoForge does not have an installer, which is not yet supported.</string>
+
+    <string name="preference_category_touchcontroller_settings">TouchController Settings</string>
+    <string name="preference_force_enable_touchcontroller_title">Force enable TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">Force enable TouchController integration, even if mod file is not found.</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController vibrate length</string>
+    <string name="preference_touchcontroller_vibrate_length_description">Set the length of the vibration when using TouchController.</string>
+    <string name="error_vanilla_json_corrupt">Vanilla json seems to be corrupt. Please send a bug report on github or discord.</string>
 </resources>

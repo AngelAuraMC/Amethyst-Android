@@ -202,4 +202,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/editGestureDelay_textView" />
 
+    <Switch
+        android:id="@+id/always_grab_mouse_side_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:text="@string/mcl_setting_title_grab_mouse"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editGestureDelay_seekbar"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

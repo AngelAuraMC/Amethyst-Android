@@ -15,6 +15,7 @@ public class EfficientAndroidLWJGLKeycode {
     //The value its LWJGL equivalent.
     private static final int KEYCODE_COUNT = 106;
     private static final int[] sAndroidKeycodes = new int[KEYCODE_COUNT];
+    private static final int[] sLwjglKeycodesReversed = new int[LwjglGlfwKeycode.GLFW_KEY_LAST];
     private static final short[] sLwjglKeycodes = new short[KEYCODE_COUNT];
     private static String[] androidKeyNameArray; /* = new String[androidKeycodes.length]; */
     private static int mTmpCount = 0;
@@ -198,6 +199,28 @@ public class EfficientAndroidLWJGLKeycode {
         sendKeyPress(getValueByIndex(index));
     }
 
+    /**
+     * Takes a GLFW keycode and returns its char primitive. Works with Shift/Caps Lock.
+     * <p>
+     * Non-letter characters return U+0000.
+     *
+     * @param lwjglGlfwKeycode A GLFW key code macro (e.g., {@link LwjglGlfwKeycode#GLFW_KEY_W}).
+     */
+    public static char getLwjglChar(int lwjglGlfwKeycode){
+        int androidKeycode = sAndroidKeycodes[sLwjglKeycodesReversed[lwjglGlfwKeycode]];
+        KeyEvent key = new KeyEvent(KeyEvent.ACTION_UP, androidKeycode);
+        char charToSend;
+        charToSend = ((char) key.getUnicodeChar());
+        int currentMods = CallbackBridge.getCurrentMods();
+        if (Character.isLetter(charToSend) && (
+        ((currentMods & LwjglGlfwKeycode.GLFW_MOD_SHIFT) != 0) ^
+        ((currentMods & LwjglGlfwKeycode.GLFW_MOD_CAPS_LOCK) != 0))
+        ){
+            charToSend = Character.toUpperCase(charToSend);
+        }
+        return charToSend;
+    }
+
     public static short getValueByIndex(int index) {
         return sLwjglKeycodes[index];
     }
@@ -218,6 +241,7 @@ public class EfficientAndroidLWJGLKeycode {
     private static void add(int androidKeycode, short LWJGLKeycode){
         sAndroidKeycodes[mTmpCount] = androidKeycode;
         sLwjglKeycodes[mTmpCount] = LWJGLKeycode;
+        sLwjglKeycodesReversed[LWJGLKeycode] = mTmpCount;
         mTmpCount ++;
     }
 }

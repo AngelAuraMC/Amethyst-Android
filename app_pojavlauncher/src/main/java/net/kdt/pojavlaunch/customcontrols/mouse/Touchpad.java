@@ -132,7 +132,7 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
     public void enable(boolean supposed) {
         if(mDisplayState) return;
         mDisplayState = true;
-        if(supposed && CallbackBridge.isGrabbing()) return;
+        if(supposed && CallbackBridge.isGrabbing() && LauncherPreferences.PREF_MOUSE_GRAB_FORCE) return;
         _enable();
     }
 

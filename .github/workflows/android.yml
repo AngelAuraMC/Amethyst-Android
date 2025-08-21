@@ -3,11 +3,11 @@ name: Android CI
 on:
   pull_request:
     branches-ignore:
-      - 'l10n_v3_openjdk2' 
+      - 'l10n_v3_openjdk' 
     types: [ opened, reopened ]
   push:
     branches-ignore:
-      - 'l10n_v3_openjdk2'
+      - 'l10n_v3_openjdk'
   workflow_dispatch:
 
 jobs:
@@ -27,12 +27,6 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-
-      - name: Get LTW
-        run: |
-          apt update && apt install wget
-          cd app_pojavlauncher/libs
-          wget https://github.com/AngelAuraMC/LTW/releases/latest/download/ltw-release.aar
 
       - name: Get JRE 8
         uses: dawidd6/action-download-artifact@v9

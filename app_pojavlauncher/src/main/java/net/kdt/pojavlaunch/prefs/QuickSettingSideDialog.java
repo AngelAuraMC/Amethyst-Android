@@ -7,6 +7,7 @@ import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_GYRO_INVERT_Y;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_GYRO_SENSITIVITY;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_LONGPRESS_TRIGGER;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_MOUSESPEED;
+import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_MOUSE_GRAB_FORCE;
 import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_SCALE_FACTOR;
 
 import android.annotation.SuppressLint;
@@ -31,11 +32,11 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
 
     private SharedPreferences.Editor mEditor;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
-    private Switch mGyroSwitch, mGyroXSwitch, mGyroYSwitch, mGestureSwitch;
+    private Switch mGyroSwitch, mGyroXSwitch, mGyroYSwitch, mGestureSwitch, mMouseGrabSwitch;
     private CustomSeekbar mGyroSensitivityBar, mMouseSpeedBar, mGestureDelayBar, mResolutionBar;
     private TextView mGyroSensitivityText, mGyroSensitivityDisplayText, mMouseSpeedText, mGestureDelayText, mGestureDelayDisplayText, mResolutionText;
 
-    private boolean mOriginalGyroEnabled, mOriginalGyroXEnabled, mOriginalGyroYEnabled, mOriginalGestureDisabled;
+    private boolean mOriginalGyroEnabled, mOriginalGyroXEnabled, mOriginalGyroYEnabled, mOriginalGestureDisabled, mOriginalMouseGrab;
     private float mOriginalGyroSensitivity, mOriginalMouseSpeed, mOriginalResolution;
     private int mOriginalGestureDelay;
 
@@ -65,6 +66,7 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
         mGyroXSwitch = mDialogContent.findViewById(R.id.checkboxGyroX);
         mGyroYSwitch = mDialogContent.findViewById(R.id.checkboxGyroY);
         mGestureSwitch = mDialogContent.findViewById(R.id.checkboxGesture);
+        mMouseGrabSwitch = mDialogContent.findViewById(R.id.always_grab_mouse_side_dialog);
 
         mGyroSensitivityBar = mDialogContent.findViewById(R.id.editGyro_seekbar);
         mMouseSpeedBar = mDialogContent.findViewById(R.id.editMouseSpeed_seekbar);
@@ -86,6 +88,7 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
         mOriginalGyroXEnabled = PREF_GYRO_INVERT_X;
         mOriginalGyroYEnabled = PREF_GYRO_INVERT_Y;
         mOriginalGestureDisabled = PREF_DISABLE_GESTURES;
+        mOriginalMouseGrab = PREF_MOUSE_GRAB_FORCE;
 
         mOriginalGyroSensitivity = PREF_GYRO_SENSITIVITY;
         mOriginalMouseSpeed = PREF_MOUSESPEED;
@@ -96,6 +99,7 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
         mGyroXSwitch.setChecked(mOriginalGyroXEnabled);
         mGyroYSwitch.setChecked(mOriginalGyroYEnabled);
         mGestureSwitch.setChecked(mOriginalGestureDisabled);
+        mMouseGrabSwitch.setChecked(mOriginalMouseGrab);
 
         mGyroSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             PREF_ENABLE_GYRO = isChecked;
@@ -120,6 +124,11 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
             PREF_DISABLE_GESTURES = isChecked;
             updateGestureVisibility(isChecked);
             mEditor.putBoolean("disableGestures", isChecked);
+        });
+
+        mMouseGrabSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            PREF_MOUSE_GRAB_FORCE = isChecked;
+            mEditor.putBoolean("always_grab_mouse", isChecked);
         });
 
         mGyroSensitivityBar.setOnSeekBarChangeListener((SimpleSeekBarListener) (seekBar, progress, fromUser) -> {
@@ -156,6 +165,7 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
         setSeekTextPercent(mResolutionText, mResolutionBar.getProgress());
 
 
+        updateMouseGrabVisibility();
         updateGyroVisibility(mOriginalGyroEnabled);
         updateGestureVisibility(mOriginalGestureDisabled);
     }
@@ -170,6 +180,10 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
 
     private static void setSeekText(TextView target, int format, int value) {
         target.setText(target.getContext().getString(format, value));
+    }
+
+    private void updateMouseGrabVisibility(){
+        mMouseGrabSwitch.setVisibility(Tools.isPointerDeviceConnected()? View.VISIBLE : View.GONE);
     }
 
     private void updateGyroVisibility(boolean isEnabled) {
@@ -202,6 +216,7 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
         mGyroXSwitch.setOnCheckedChangeListener(null);
         mGyroYSwitch.setOnCheckedChangeListener(null);
         mGestureSwitch.setOnCheckedChangeListener(null);
+        mMouseGrabSwitch.setOnCheckedChangeListener(null);
 
         mGyroSensitivityBar.setOnSeekBarChangeListener(null);
         mMouseSpeedBar.setOnSeekBarChangeListener(null);
@@ -225,6 +240,7 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
             PREF_GYRO_INVERT_X = mOriginalGyroXEnabled;
             PREF_GYRO_INVERT_Y = mOriginalGyroYEnabled;
             PREF_DISABLE_GESTURES = mOriginalGestureDisabled;
+            PREF_MOUSE_GRAB_FORCE = mOriginalMouseGrab;
 
             PREF_GYRO_SENSITIVITY = mOriginalGyroSensitivity;
             PREF_MOUSESPEED = mOriginalMouseSpeed;

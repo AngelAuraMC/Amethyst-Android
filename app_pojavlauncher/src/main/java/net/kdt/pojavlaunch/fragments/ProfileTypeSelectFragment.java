@@ -1,5 +1,8 @@
 package net.kdt.pojavlaunch.fragments;
 
+import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
+import static net.kdt.pojavlaunch.Tools.hasOnlineProfile;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -33,6 +36,8 @@ public class ProfileTypeSelectFragment extends Fragment {
                 tryInstall(FabricInstallFragment.class, FabricInstallFragment.TAG));
         view.findViewById(R.id.modded_profile_forge).setOnClickListener((v)->
                 tryInstall(ForgeInstallFragment.class, ForgeInstallFragment.TAG));
+        view.findViewById(R.id.modded_profile_neoforge).setOnClickListener((v)->
+                tryInstall(NeoForgeInstallFragment.class, NeoForgeInstallFragment.TAG));
         view.findViewById(R.id.modded_profile_modpack).setOnClickListener((v)->
                 tryInstall(SearchModFragment.class, SearchModFragment.TAG));
         view.findViewById(R.id.modded_profile_quilt).setOnClickListener((v)->
@@ -42,8 +47,8 @@ public class ProfileTypeSelectFragment extends Fragment {
     }
 
     private void tryInstall(Class<? extends Fragment> fragmentClass, String tag){
-        if(Tools.isLocalProfile(requireContext()) || Tools.isDemoProfile(requireContext())){
-            Toast.makeText(requireContext(), R.string.toast_not_available_demo, Toast.LENGTH_LONG).show();
+        if(!hasOnlineProfile()){
+            hasNoOnlineProfileDialog(requireActivity());
         } else {
             Tools.swapFragment(requireActivity(), fragmentClass, tag, null);
         }

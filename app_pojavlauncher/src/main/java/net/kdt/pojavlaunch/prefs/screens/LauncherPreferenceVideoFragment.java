@@ -45,12 +45,6 @@ public class LauncherPreferenceVideoFragment extends LauncherPreferenceFragment 
         requirePreference("alternate_surface", SwitchPreferenceCompat.class).setChecked(LauncherPreferences.PREF_USE_ALTERNATE_SURFACE);
         requirePreference("force_vsync", SwitchPreferenceCompat.class).setChecked(LauncherPreferences.PREF_FORCE_VSYNC);
 
-        ListPreference rendererListPreference = requirePreference("renderer",
-                ListPreference.class);
-        Tools.RenderersList renderersList = Tools.getCompatibleRenderers(getContext());
-        rendererListPreference.setEntries(renderersList.rendererDisplayNames);
-        rendererListPreference.setEntryValues(renderersList.rendererIds.toArray(new String[0]));
-
         computeVisibility();
     }
 

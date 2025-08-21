@@ -13,6 +13,7 @@ import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 public class LauncherPreferenceControlFragment extends LauncherPreferenceFragment {
     private boolean mGyroAvailable = false;
+
     @Override
     public void onCreatePreferences(Bundle b, String str) {
         // Get values
@@ -20,6 +21,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         int prefButtonSize = (int) LauncherPreferences.PREF_BUTTONSIZE;
         int mouseScale = (int) (LauncherPreferences.PREF_MOUSESCALE * 100);
         int gyroSampleRate = LauncherPreferences.PREF_GYRO_SAMPLE_RATE;
+        int touchControllerVibrateLength = LauncherPreferences.PREF_TOUCHCONTROLLER_VIBRATE_LENGTH;
         float mouseSpeed = LauncherPreferences.PREF_MOUSESPEED;
         float gyroSpeed = LauncherPreferences.PREF_GYRO_SENSITIVITY;
         float joystickDeadzone = LauncherPreferences.PREF_DEADZONE_SCALE;
@@ -45,7 +47,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
 
         CustomSeekBarPreference seek6 = requirePreference("mousespeed",
                 CustomSeekBarPreference.class);
-        seek6.setValue((int)(mouseSpeed *100f));
+        seek6.setValue((int) (mouseSpeed * 100f));
         seek6.setSuffix(" %");
 
         CustomSeekBarPreference deadzoneSeek = requirePreference("gamepad_deadzone_scale",
@@ -55,22 +57,29 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
 
 
         Context context = getContext();
-        if(context != null) {
+        if (context != null) {
             mGyroAvailable = Tools.deviceSupportsGyro(context);
         }
-        PreferenceCategory gyroCategory =  requirePreference("gyroCategory",
+        PreferenceCategory gyroCategory = requirePreference("gyroCategory",
                 PreferenceCategory.class);
         gyroCategory.setVisible(mGyroAvailable);
 
         CustomSeekBarPreference gyroSensitivitySeek = requirePreference("gyroSensitivity",
                 CustomSeekBarPreference.class);
-        gyroSensitivitySeek.setValue((int) (gyroSpeed*100f));
+        gyroSensitivitySeek.setValue((int) (gyroSpeed * 100f));
         gyroSensitivitySeek.setSuffix(" %");
 
         CustomSeekBarPreference gyroSampleRateSeek = requirePreference("gyroSampleRate",
                 CustomSeekBarPreference.class);
         gyroSampleRateSeek.setValue(gyroSampleRate);
         gyroSampleRateSeek.setSuffix(" ms");
+
+        CustomSeekBarPreference touchControllerVibrateLengthSeek = requirePreference(
+                "touchControllerVibrateLength",
+                CustomSeekBarPreference.class);
+        touchControllerVibrateLengthSeek.setValue(touchControllerVibrateLength);
+        touchControllerVibrateLengthSeek.setSuffix(" ms");
+
         computeVisibility();
     }
 
@@ -80,7 +89,7 @@ public class LauncherPreferenceControlFragment extends LauncherPreferenceFragmen
         computeVisibility();
     }
 
-    private void computeVisibility(){
+    private void computeVisibility() {
         requirePreference("timeLongPressTrigger").setVisible(!LauncherPreferences.PREF_DISABLE_GESTURES);
         requirePreference("gyroSensitivity").setVisible(LauncherPreferences.PREF_ENABLE_GYRO);
         requirePreference("gyroSampleRate").setVisible(LauncherPreferences.PREF_ENABLE_GYRO);

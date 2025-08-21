@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.fragments;
 
+import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,6 @@ public class SelectAuthFragment extends Fragment {
         Button mLocalButton = view.findViewById(R.id.button_local_authentication);
 
         mMicrosoftButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), MicrosoftLoginFragment.class, MicrosoftLoginFragment.TAG, null));
-        mLocalButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), LocalLoginFragment.class, LocalLoginFragment.TAG, null));
+        mLocalButton.setOnClickListener(v -> hasNoOnlineProfileDialog(requireActivity(), () -> Tools.swapFragment(requireActivity(), LocalLoginFragment.class, LocalLoginFragment.TAG, null)));
     }
 }

@@ -97,6 +97,11 @@
             android:title="@string/preference_mouse_start_title"
             android:summary="@string/preference_mouse_start_description"
             />
+        <SwitchPreference
+            android:key="always_grab_mouse"
+            android:title="@string/mcl_setting_title_grab_mouse"
+            android:summary="@string/mcl_setting_subtitle_grab_mouse"
+            android:defaultValue="false"/>
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -164,7 +169,21 @@
 
     </PreferenceCategory>
 
-
+    <PreferenceCategory
+        android:title="@string/preference_category_touchcontroller_settings">
+        <SwitchPreference
+            android:key="forceEnableTouchController"
+            android:title="@string/preference_force_enable_touchcontroller_title"
+            android:summary="@string/preference_force_enable_touchcontroller_description"/>
+        <net.kdt.pojavlaunch.prefs.CustomSeekBarPreference
+            android:key="touchControllerVibrateLength"
+            android:title="@string/preference_touchcontroller_vibrate_length_title"
+            android:summary="@string/preference_touchcontroller_vibrate_length_description"
+            app2:selectable="false"
+            app2:min="@integer/touchcontrller_vibrate_length_min"
+            android:max="@integer/touchcontrller_vibrate_length_max"
+            app2:showSeekBarValue="true"/>
+    </PreferenceCategory>
 
 
 </PreferenceScreen>

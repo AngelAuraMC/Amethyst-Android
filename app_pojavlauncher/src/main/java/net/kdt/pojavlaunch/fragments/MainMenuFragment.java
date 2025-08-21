@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.fragments;
 
+import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
+import static net.kdt.pojavlaunch.Tools.hasOnlineProfile;
 import static net.kdt.pojavlaunch.Tools.openPath;
 import static net.kdt.pojavlaunch.Tools.shareLog;
 
@@ -53,11 +55,13 @@ public class MainMenuFragment extends Fragment {
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
         mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.discord_invite)));
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
-        mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
-        mInstallJarButton.setOnLongClickListener(v->{
-            runInstallerWithConfirmation(true);
-            return true;
-        });
+        if (hasOnlineProfile()) {
+            mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
+            mInstallJarButton.setOnLongClickListener(v -> {
+                runInstallerWithConfirmation(true);
+                return true;
+            });
+        } else mInstallJarButton.setOnClickListener(v -> hasNoOnlineProfileDialog(requireActivity()));
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
         mPlayButton.setOnClickListener(v -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true));
@@ -65,13 +69,12 @@ public class MainMenuFragment extends Fragment {
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
-            Tools.switchDemo(Tools.isDemoProfile(v.getContext())); // avoid switching accounts being able to access
-            if(Tools.isDemoProfile(v.getContext())){
-                Toast.makeText(v.getContext(), R.string.toast_not_available_demo, Toast.LENGTH_LONG).show();
-                return;
-            }
+            if (Tools.isDemoProfile(v.getContext())){ // Say a different message when on demo profile since they might see the hidden demo folder
+                hasNoOnlineProfileDialog(getActivity(), getString(R.string.demo_unsupported), getString(R.string.change_account));
+            } else if (!hasOnlineProfile()) { // Otherwise display the generic pop-up to log in
+                hasNoOnlineProfileDialog(requireActivity());
+            } else openPath(v.getContext(), getCurrentProfileDirectory(), false);
 
-            openPath(v.getContext(), getCurrentProfileDirectory(), false);
         });
 
 
@@ -97,12 +100,6 @@ public class MainMenuFragment extends Fragment {
     }
 
     private void runInstallerWithConfirmation(boolean isCustomArgs) {
-        // avoid using custom installers to install a version
-        if(Tools.isLocalProfile(requireContext()) || Tools.isDemoProfile(requireContext())){
-            Toast.makeText(requireContext(), R.string.toast_not_available_demo, Toast.LENGTH_LONG).show();
-            return;
-        }
-
         if (ProgressKeeper.getTaskCount() == 0)
             Tools.installMod(requireActivity(), isCustomArgs);
         else
