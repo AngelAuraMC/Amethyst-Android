@@ -380,7 +380,7 @@
     <string name="mcl_button_discord">Discord</string>
     <string name="ltw_render_distance_warning_msg">如果没有 Sodium 或其他类似模组，你的 GPU 将无法渲染 7 以上的渲染距离。点击“确定”后，渲染距离将自动缩短。</string>
     <string name="mcl_button_open_directory">打开游戏目录</string>
-    <string name="local_login_bad_username_title">用户名不合适</string>
+    <string name="local_login_bad_username_title">非法用户名</string>
     <string name="local_login_bad_username_text">用户名长度必须在 3–16 个字符之间，并且只能包含拉丁字母、数字 0–9 和下划线。</string>
     <string name="quick_setting_title">快速设置</string>
     <string name="create_bta_profile">创建 \"Better than Adventure!\" 配置</string>
@@ -394,9 +394,9 @@
     <string name="mg_renderer_glsl_cache">最大 GLSL 缓存大小</string>
     <string name="mg_renderer_angle">使用 ANGLE 作为驱动</string>
     <string name="mg_renderer_multidraw">MultiDraw 模拟方案</string>
-    <string name="mg_renderer_title_gl43exts">启用不完整的 OpenGL 4.3 扩展</string>
+    <string name="mg_renderer_title_gl43exts">启用实验性 OpenGL 4.3 扩展</string>
     <string name="mg_renderer_summary_gl43exts">可能有助于解决模组导致的崩溃。非必要请禁用，可能会导致错误。</string>
-    <string name="mg_renderer_title_computeShaderext">启用实验性的 Compute Shader 扩展</string>
+    <string name="mg_renderer_title_computeShaderext">启用实验性 Compute Shader 扩展</string>
     <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影渲染异常。非必要请禁用，可能会导致错误。</string>
     <string name="mg_renderer_title_errorSetting">OpenGL 报错设置</string>
 
