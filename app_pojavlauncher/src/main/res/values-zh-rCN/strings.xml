@@ -156,7 +156,7 @@
     <string name="multirt_runtime_corrupt">Java 运行环境损坏</string>
     <string name="multirt_runtime_incompatiblearch">不兼容的架构：%s</string>
     <string name="multirt_config_title">Java 运行环境</string>
-    <string name="multirt_config_add">导入</string>
+    <string name="multirt_config_add">添加</string>
     <string name="multirt_title">运行环境管理器</string>
     <string name="multirt_subtitle">管理已安装的 Java 运行环境。</string>
     <string name="multirt_progress_caching">缓存中……</string>
