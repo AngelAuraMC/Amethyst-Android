@@ -78,8 +78,8 @@
     <string name="global_default">默认</string>
     <string name="global_off">禁用</string>
     <!-- MainActivity: strings -->
-    <string name="mcn_exit_title">应用程序/游戏以代码 %d 退出，请查看 latestlog.txt 了解详情；如果你不知道发生了什么，请点击 “分享日志文件” 将日志文件发送给他人分析，而不是截屏此页面。</string>
-    <string name="mcn_signal_title">应用程序/游戏以致命信号 %d 中止，请查看 latestlog.txt 以了解更多详情。</string>
+    <string name="mcn_exit_title">应用程序/游戏以代码 %d 退出，请查看 latestlog.txt 以了解详情；如果你不知道发生了什么，请点击 “分享日志文件” 将日志文件发送给他人分析，而不是截屏此页面。</string>
+    <string name="mcn_signal_title">应用程序/游戏以致命信号 %d 中止，请查看 latestlog.txt 以了解详情。</string>
     <string name="mcn_exit_confirm">您确定要强制关闭？</string>
     <string name="mcn_check_fail_vulkan_support">此设备不支持 Zink（Vulkan）渲染器！</string>
     <!-- MainActivity: Control buttons -->
