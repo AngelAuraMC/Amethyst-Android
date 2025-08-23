@@ -47,8 +47,8 @@
     <string name="mcl_setting_subtitle_mousescale">修改虚拟鼠标的大小。</string>
     <string name="mcl_setting_title_javaargs">JVM 启动参数</string>
     <string name="mcl_setting_subtitle_javaargs">注意，如果你不清楚你在做什么请勿随意修改，否则可能会导致游戏崩溃！</string>
-    <string name="mcl_setting_title_renderer_settings">渲染器附加设置</string>
-    <string name="mcl_setting_title_renderer_subtitle">渲染器特殊设置</string>
+    <string name="mcl_setting_title_renderer_settings">扩展渲染器设置</string>
+    <string name="mcl_setting_title_renderer_subtitle">渲染器单独设置</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES -（全版本可用，速度快）</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink（Vulkan）-（全版本可用，速度中等）</string>
@@ -156,7 +156,7 @@
     <string name="multirt_runtime_corrupt">Java 运行环境损坏</string>
     <string name="multirt_runtime_incompatiblearch">不兼容的架构：%s</string>
     <string name="multirt_config_title">Java 运行环境</string>
-    <string name="multirt_config_add">新建</string>
+    <string name="multirt_config_add">导入</string>
     <string name="multirt_title">运行环境管理器</string>
     <string name="multirt_subtitle">管理已安装的 Java 运行环境。</string>
     <string name="multirt_progress_caching">缓存中……</string>
@@ -177,7 +177,7 @@
     <string name="preference_java_title">Java 调整</string>
     <string name="preference_java_description">Java 运行环境、JVM 参数、内存分配量与沙盒</string>
     <string name="preference_misc_title">其他设置</string>
-    <string name="preference_misc_description">版本列表和 libraries 检查</string>
+    <string name="preference_misc_description">版本列表和依赖库检查</string>
     <string name="preference_experimental_title">实验性补丁</string>
     <string name="preference_experimental_description">此处内容不受支持，请谨慎使用。</string>
     <string name="preference_sustained_performance_title">启用持续性能模式</string>
@@ -187,7 +187,7 @@
     <string name="preference_force_english_title">强制使用英文</string>
     <string name="preference_force_english_description">允许您按开发者的意愿看到原始字符串，此操作需要重启。</string>
     <string name="preference_edit_controls_title">编辑控制布局</string>
-    <string name="preference_edit_controls_summary">调整控制布局方案以适应您的需求。</string>
+    <string name="preference_edit_controls_summary">调整控制布局方案以满足您的需求。</string>
     <string name="preference_category_gyro_controls">陀螺仪控制</string>
     <string name="preference_category_virtual_mouse">虚拟鼠标</string>
     <string name="preference_gyro_invert_x_axis">反转 X 轴</string>
@@ -212,18 +212,18 @@
     <string name="mcl_setting_veroption_installed">已安装</string>
     <string name="use_global_default">（使用全局默认设置）</string>
     <string name="default_control">默认控制键布局</string>
-    <string name="progresslayout_tasks_in_progress">%d 项任务正在进行中</string>
+    <string name="progresslayout_tasks_in_progress">正在执行 %d 项任务</string>
     <string name="notification_terminate">终止</string>
     <string name="notification_game_runs">游戏运行中</string>
     <string name="folder_dialog_create">新建</string>
-    <string name="folder_dialog_insert_name">文件夹名称</string>
+    <string name="folder_dialog_insert_name">输入文件夹名称</string>
     <string name="folder_fragment_create">新建文件夹</string>
     <string name="folder_fragment_select">选择此文件夹</string>
     <string name="main_login_done">登录成功！</string>
     <string name="main_add_account">添加帐户</string>
     <string name="tasks_ongoing">执行任务中，请稍候…</string>
     <string name="no_saved_accounts">没有已保存的帐户</string>
-    <string name="mc_download_failed">下载 Minecraft 失败！这可能是由于网络连接不良、文件放置错误等造成的。</string>
+    <string name="mc_download_failed">下载 Minecraft 失败！这可能由网络连接不良、文件放置错误等导致。</string>
     <string name="xerr_unknown">未知的 Xbox Live API 错误 %d</string>
     <string name="xerr_no_account">您似乎没有 Xbox Live 帐户，请在 https://minecraft.net/ 上登录一次，然后重试。</string>
     <string name="xerr_adult_verification">需要成年人验证您的账户。</string>
@@ -231,12 +231,12 @@
     <string name="minecraft_not_owned">此帐户似乎没有 Minecraft 档案。如果您有 Xbox Game Pass，请登录 https://minecraft.net/ 并进行设置。</string>
     <string name="xerr_not_available">Xbox Live 在您所在的国家/地区不可用。</string>
     <string name="preference_enable_gyro_title">启用陀螺仪控制</string>
-    <string name="preference_enable_gyro_description">启用此功能将允许您通过转动手机来在游戏中转动视角。</string>
+    <string name="preference_enable_gyro_description">启用此功能将允许您通过转动手机以在游戏中转动视角。</string>
     <string name="preference_gyro_sensitivity_title">陀螺仪控制灵敏度</string>
     <string name="preference_gyro_sensitivity_description">调整陀螺仪控制的灵敏度。</string>
     <string name="toast_turn_on_gyro">需要先启用陀螺仪控制才能使用！</string>
     <string name="preference_gyro_sample_rate_title">陀螺仪采样率</string>
-    <string name="preference_gyro_sample_rate_description">若您在陀螺仪控制上遇到性能问题，请增加此值。</string>
+    <string name="preference_gyro_sample_rate_description">若您在陀螺仪控制上遇到性能问题，请调高此值。</string>
     <string name="microsoft_login_retry_later">您的请求过于频繁，请稍后重试。</string>
     <string name="storage_required">PojavLauncher 需要连接外部存储，请重新连接并重启应用。</string>
     <string name="mcl_setting_title_buttonallcaps">在标签按钮中仅使用大写字母</string>
@@ -289,7 +289,7 @@
     <string name="generic_apply">应用</string>
     <string name="generic_debug">调试</string>
     <string name="search_modpack_no_result">找不到整合包</string>
-    <string name="search_modpack_error">寻找整合包失败</string>
+    <string name="search_modpack_error">搜索整合包失败</string>
     <string name="search_modpack_download_error">整合包元数据下载失败</string>
     <string name="modpack_download_downloading_metadata">正在下载整合包元数据（%.2fMB / %.2fMB）</string>
     <string name="modpack_download_downloading_mods">正在下载模组（%.2fMB / %.2fMB）</string>
@@ -305,14 +305,14 @@
     <string name="notif_error_occured_desc">点击查看详请</string>
     <string name="fabric_dl_only_stable">仅显示稳定版本</string>
     <string name="dl_tampered_manifest_title">文件校验警告</string>
-    <string name="dl_tampered_manifest"><![CDATA[镜像下载源的游戏版本清单不符合 Mojang 的官方版本清单，这意味着它可能已经被篡改。<br/>
+    <string name="dl_tampered_manifest"><![CDATA[镜像源的游戏版本清单不符合 Mojang 的官方版本清单，这意味着它可能已经被篡改。<br/>
         <b>此行为并不安全。如果您继续，您的个人信息可能有风险。</b><br/>
-        如果您仍想使用镜像下载源，请点击 \"关闭版本清单检查\" 并重新开始下载。<br/>
-        如果您想要使用官方下载源。请点击 \"切换到官方下载源\" 并重新开始下载。<br/>]]></string>
+        如果您仍想使用镜像源，请点击 \"关闭版本清单检查\" 并重新开始下载。<br/>
+        如果您想要使用官方源。请点击 \"切换到官方源\" 并重新开始下载。<br/>]]></string>
     <string name="dl_turn_off_manifest_checks">关闭版本清单检查</string>
-    <string name="dl_switch_to_official_site">切换到官方下载源</string>
+    <string name="dl_switch_to_official_site">切换到官方源</string>
     <string name="preference_download_source_title">游戏下载源</string>
-    <string name="preference_download_source_description">选择一个镜像源代替官方下载源</string>
+    <string name="preference_download_source_description">选择一个镜像源代替官方源</string>
     <string name="preference_verify_manifest_title">验证游戏版本清单</string>
     <string name="preference_verify_manifest_description">启用后，启动器会把游戏版本清单连同依赖库一并检查。</string>
     <string name="notif_download_finished">游戏已就绪！</string>
@@ -325,17 +325,17 @@
     <string name="preference_category_miscellaneous">其他设置</string>
     <string name="preference_category_video">视频设置</string>
     <string name="notification_permission_dialog_title">权限请求</string>
-    <string name="notification_permission_dialog_text">PojavLauncher 需要获得通知权限，以防止在您离开应用时停止游戏或模组包的下载。没有这个权限，Android 可能会在您将 PojavLauncher 置于后台模式时关闭您的下载。</string>
-    <string name="notification_permission_toast">您可以随时进入设置来更改您的意愿</string>
+    <string name="notification_permission_dialog_text">PojavLauncher 需要获得通知权限，以防止在您离开应用时停止游戏或模组包的下载。没有这个权限，Android 可能会在您将 PojavLauncher 切换到后台时关闭您的下载。</string>
+    <string name="notification_permission_toast">您可以随时进入设置以更改您的主意</string>
     <string name="preference_ask_for_notification_title">允许通知</string>
     <string name="preference_ask_for_notification_description">请点击重新请求通知权限，以确保游戏或整合包的后台下载正常工作。</string>
     <string name="preference_vsync_in_zink_title">允许使用 Zink 时启用垂直同步</string>
-    <string name="preference_vsync_in_zink_description">允许启动器使用内部系统 API 为 Zink 启用垂直同步，如果系统更新后，您在使用 Zink 时崩溃，请关闭此项设置。</string>
-    <string name="exception_failed_to_unpack_jre17">JRE 17 安装失败！</string>
-    <string name="newdl_starting">正在读取游戏元数据…</string>
+    <string name="preference_vsync_in_zink_description">允许启动器使用内部系统 API 为 Zink 启用垂直同步，如果系统更新后，您在使用 Zink 时崩溃，请关闭此设置。</string>
+    <string name="exception_failed_to_unpack_jre17">安装 JRE 17 失败！</string>
+    <string name="newdl_starting">读取游戏元数据中…</string>
     <string name="newdl_downloading_metadata">正在下载游戏元数据（%s）</string>
-    <string name="newdl_downloading_game_files">正在下载游戏… (%d/%d, %.2f MB/秒)</string>
-    <string name="newdl_downloading_game_files_size">正在下载游戏… (%.2f/%.2f MB, %.2f MB/秒)</string>
+    <string name="newdl_downloading_game_files">下载游戏中… (%d/%d, %.2f MB/秒)</string>
+    <string name="newdl_downloading_game_files_size">下载游戏中… (%.2f/%.2f MB, %.2f MB/秒)</string>
     <string name="cropper_title">选择图像区域</string>
     <string name="cropper_lock_vertical">纵向锁定</string>
     <string name="cropper_lock_horizontal">横向锁定</string>
@@ -394,7 +394,7 @@
     <string name="mg_renderer_glsl_cache">最大 GLSL 缓存大小</string>
     <string name="mg_renderer_angle">使用 ANGLE 作为驱动</string>
     <string name="mg_renderer_multidraw">MultiDraw 模拟方案</string>
-    <string name="mg_renderer_title_gl43exts">启用实验性 OpenGL 4.3 扩展</string>
+    <string name="mg_renderer_title_gl43exts">启用不完整的 OpenGL 4.3 扩展</string>
     <string name="mg_renderer_summary_gl43exts">可能有助于解决模组导致的崩溃。非必要请禁用，可能会导致错误。</string>
     <string name="mg_renderer_title_computeShaderext">启用实验性 Compute Shader 扩展</string>
     <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影渲染异常。非必要请禁用，可能会导致错误。</string>
