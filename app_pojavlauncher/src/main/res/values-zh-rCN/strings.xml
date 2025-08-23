@@ -142,7 +142,7 @@
     <string name="mcl_disable_gestures">禁用手势</string>
     <string name="mcl_disable_gestures_subtitle">禁用手势，例如长按破坏方块和点击放置方块。</string>
     <string name="mcl_disable_swap_hand">禁用双击交换主副手物品</string>
-    <string name="mcl_disable_swap_hand_subtitle">禁用双击物品栏上的物品以交换副手的物品。</string>
+    <string name="mcl_disable_swap_hand_subtitle">禁用双击物品栏上的物品以与副手上的物品交换。</string>
     <string name="mcl_setting_title_mousespeed">鼠标移动速度</string>
     <string name="mcl_setting_subtitle_mousespeed">修改虚拟鼠标的移动速度。</string>
     <string name="customctrl_passthru">穿透点击</string>
