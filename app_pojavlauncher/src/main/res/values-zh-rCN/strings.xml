@@ -134,8 +134,8 @@
     <string name="main_install_jar_file">执行 Jar 文件</string>
     <string name="main_play">启动游戏</string>
     <string name="autoram_info_msg">已分配内存 %d MB</string>
-    <string name="mcl_setting_check_libraries">在下载完成后检查 libraries</string>
-    <string name="mcl_setting_check_libraries_subtitle">此选项强制启动器检查 libraries 文件的哈希值是否正常，防止下载损坏。</string>
+    <string name="mcl_setting_check_libraries">在下载完成后检查依赖库</string>
+    <string name="mcl_setting_check_libraries_subtitle">此选项强制启动器检查依赖库文件的哈希值，防止下载损坏。</string>
     <string name="dl_library_sha_fail">依赖 %s 已损坏，此依赖将被重新下载</string>
     <string name="dl_library_sha_unknown">无法检查运行库 %s ，它最好正常</string>
     <string name="dl_library_sha_pass">依赖库 %s 正常</string>
