@@ -1269,8 +1269,10 @@ public class GLFW
         }else return null;
     }
     public static boolean glfwJoystickIsGamepad(int jid) {
-        if(jid == GLFW_JOYSTICK_1) return true;
-        else return false;
+        if(jid == GLFW_JOYSTICK_1) {
+            CallbackBridge.enableGamepadDirectInput();
+            return true;
+        }else return false;
     }
     public static String glfwGetJoystickGUID(int jid) {
         // Return Xbox 360 controller GUID
