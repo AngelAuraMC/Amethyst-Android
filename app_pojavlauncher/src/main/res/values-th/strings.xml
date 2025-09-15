@@ -219,7 +219,7 @@
     <string name="xerr_adult_verification">ผู้ใหญ่ควรยืนยันบัญชีก่อน</string>
     <string name="xerr_child">บัญชีของคุณคือบัญชีเด็ก, เเล้วต้องเพื่มลงระบบครอบครัวเพื่อล็อกอิน</string>
     <string name="minecraft_not_owned">ดูเหมือนว่าบัญชีนี้จะไม่มีโปรไฟล์ Minecraft หากคุณมี Xbox Game Pass โปรดเข้าสู่ระบบที่ https://minecraft.net/ และตั้งค่า</string>
-    <string name="xerr_not_available">เอ็กบอดไลฟ์ ไม่มีที่อยู่ของคุณ</string>
+    <string name="xerr_not_available">เอ็กบอกไลฟ์ ไม่มีที่อยู่ของคุณ</string>
     <string name="preference_enable_gyro_title">เปิดใช้งานการควบคุมไจโรสโคป</string>
     <string name="preference_enable_gyro_description">การเปิดใช้งานนี้จะช่วยให้คุณสามารถเปิดเกมได้โดยการหมุนโทรศัพท์ของคุณ</string>
     <string name="preference_gyro_sensitivity_title">ความรวดเร็วในการควบคุมไจโร</string>
