@@ -171,7 +171,7 @@
     <string name="preference_misc_description">รายการเวอร์ชันและการตรวจสอบไลบรารี</string>
     <string name="preference_experimental_title">การตั้งค่าที่ทดสอบ</string>
     <string name="preference_experimental_description">ใช้ของตรงนั้นโดยคำนึงถึงไม่สนับสนุน</string>
-    <string name="preference_sustained_performance_title">เปิดตัวควบคุมความสามารถ</string>
+    <string name="preference_sustained_performance_title">เปิดการจำกัดประสิทธิภาพ</string>
     <string name="preference_sustained_performance_description">จำกัดการควบคุมปริมาณความร้อนโดยการจำกัดประสิทธิภาพสูงสุด</string>
     <string name="preference_force_vsync_title">บังคับให้เปิดใช้งาน VSync</string>
     <string name="preference_force_vsync_description">จำกัดการควบคุมปริมาณความร้อนโดยการจำกัดประสิทธิภาพสูงสุด</string>
