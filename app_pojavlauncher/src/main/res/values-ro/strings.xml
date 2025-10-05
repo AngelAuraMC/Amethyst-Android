@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
+    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
     <string name="login_online_login_label">Autentificare</string>
     <!-- Hint -->
+    <string name="hint_control_mapping">"Apasă pe angrenajul din partea superioară a mijlocului ecranului pentru a accesa meniul de context \nApasă un buton pentru a personaliza: edita, redimensiona sau modifica keybind-urile sale."</string>
     <!-- Warnings -->
     <string name="warning_remove_account">Acest cont va fi eliminat!</string>
     <!-- AlertDialog title -->
@@ -22,6 +24,7 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
+    <string name="mcl_tab_wiki">Wiki</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Se șterg fișierele cache</string>
@@ -31,17 +34,32 @@
     <string name="mcl_options">Opțiuni</string>
     <string name="mcl_option_customcontrol">Controale personalizate</string>
     <string name="mcl_setting_title_use_surface_view">Folosește randarea alternativă a suprafețelor</string>
+    <string name="mcl_setting_subtitle_use_surface_view">Poate ajuta în situațiile de suprasolicitare a cipului grafic. (GPU).</string>
     <string name="mcl_setting_title_ignore_notch">Ignoră notch-ul</string>
+    <string name="mcl_setting_subtitle_ignore_notch">Ignoră notch-ul și extinde afișarea după acesta. \nOferă o experiență de joc mai captivantă.</string>
     <string name="mcl_setting_title_resolution_scaler">Scaler de rezoluție</string>
+    <string name="mcl_setting_subtitle_resolution_scaler">Permite scăderea rezoluției jocului. Rezoluția completă este de 100%.</string>
+    <string name="mcl_setting_title_longpresstrigger">Întârzierea declanșatorului la o apăsare lungă</string>
+    <string name="mcl_setting_subtitle_longpresstrigger">Modifică întârzierea declanșatorului la o apăsare lungă pentru distrugerea cuburilor și aruncarea obiectelor.</string>
     <string name="mcl_setting_title_buttonscale">Redimensionare butoane de control</string>
+    <string name="mcl_setting_subtitle_buttonscale">Mărește-le dacă butoanele sunt prea mici.</string>
     <string name="mcl_setting_title_mousescale">Redimensionarea mouse-ului</string>
+    <string name="mcl_setting_subtitle_mousescale">Redimensionează cursorul virtual.</string>
     <string name="mcl_setting_title_javaargs">Argumente de lansare JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Ai grijă, acest lucru poate face ca jocul să se oprească dacă este modificat fără cunoștințe.</string>
+    <string name="mcl_setting_title_renderer_settings">Setări extra pentru programul de randare</string>
+    <string name="mcl_setting_title_renderer_subtitle">Setări specifice programului de randare</string>
     <string name="mcl_setting_category_renderer">Randator</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (doar: 1.21.4&lt; rapid)</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (toate versiunile, viteză medie)</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (doar vers. 1.17+, rapid)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - doar vers. 1.17+</string>
     <string name="mcl_setting_veroption_release">Lansat oficial</string>
     <string name="mcl_setting_veroption_snapshot">Lansat pentru testare</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha-vechi</string>
     <string name="mcl_setting_veroption_oldbeta">Beta-vechi</string>
+    <string name="mcl_setting_java_sandbox">Rulează executabilul .jar într-un mediu virtualizat (sandbox)</string>
+    <string name="mcl_setting_java_sandbox_subtitle">Controlează valabilitatea managerului dr securitate a mediului virtualizat (sandbox) la executarea unui fișier .jar.</string>
     <string name="mcl_version_clone">Clonă</string>
     <!-- Global strings -->
     <string name="global_edit">Editează</string>
@@ -56,13 +74,29 @@
     <string name="global_error_field_empty">Acest câmp nu poate fi gol</string>
     <string name="global_waiting">Așteptați</string>
     <string name="global_select">Selectați</string>
+    <string name="global_retry">Încearcă din nou</string>
     <string name="global_default">Prestabilit</string>
+    <string name="global_off">Oprit</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">Aplicația/Jocul a fost închis cu codul %d, vezi latestlog.txt pentru mai multe detalii.</string>
+    <string name="mcn_signal_title">Aplicația/Jocul a sistat în urma semnalului fatal %d, verifică cel mai recent fișier latestlog.txt pentru detalii adiționale.</string>
     <string name="mcn_exit_confirm">Ești sigur că vrei să oprești forțat?</string>
+    <string name="mcn_check_fail_vulkan_support">Programul de randare Zink (Vulkan) nu este valabil pe acest dispozitiv!</string>
     <!-- MainActivity: Control buttons -->
     <string name="control_chat">Mesaje</string>
     <string name="control_debug">Depanare</string>
+    <string name="control_primary">Pri</string>
+    <string name="control_secondary">Sec</string>
+    <string name="control_shift">◇</string>
+    <string name="control_inventory">Inv</string>
+    <string name="control_up">▲</string>
+    <string name="control_left">◀</string>
+    <string name="control_right">▶</string>
+    <string name="control_down">▼</string>
+    <string name="control_jump">⬛</string>
+    <string name="control_thirdperson">3-lea</string>
+    <string name="control_listplayers">Tab</string>
+    <string name="control_mouse">Mouse</string>
     <string name="control_mouseoff">Mouse: oprit</string>
     <string name="control_mouseon">Mouse: pornit </string>
     <!-- MainActivity: Menu advanced controls -->
@@ -93,13 +127,19 @@
     <string name="customctrl_addbutton">Adaugă buton</string>
     <string name="customctrl_addbutton_drawer">Adauga buton sertar</string>
     <string name="customctrl_addsubbutton">Adaugă sub-buton</string>
+    <string name="customctrl_selectdefault">Selectează setul de controale predefinit</string>
+    <string name="customctrl_export">Exportă setul de controale (controlmap)</string>
     <string name="main_share_logs">Distribuie fişierul jurnal</string>
+    <string name="main_install_jar_file">Execută un .jar</string>
     <string name="main_play">Joacă</string>
     <string name="autoram_info_msg">Memorie setată la %d MB</string>
     <string name="mcl_setting_check_libraries">Verifică bibliotecile după descărcare</string>
+    <string name="mcl_setting_check_libraries_subtitle">Această opțiune forțează lansatorul să verifice semnătura criptografică a librăriei de cod dacă este valabilă. Previne descărcările eronate.</string>
     <string name="dl_library_sha_fail">Biblioteca %s este deteriorată și va fi redescărcată</string>
     <string name="dl_library_sha_unknown">Biblioteca %s nu poate fi verificată, trebuie să presupunem că este bună</string>
     <string name="dl_library_sha_pass">Biblioteca %s este bună și utilizabilă</string>
+    <string name="mcl_gamepad_SDL">Activează backend-ul controllerului SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Activează backend-ul controlerului SDL. Are un suport tehnic mai bun pentru mod-uri. Se va folosi GLFW dacă nu este activat.</string>
     <string name="mcl_disable_gestures">Dezactivează gesturi</string>
     <string name="mcl_disable_gestures_subtitle">Dezactivează gesturile, cum ar fi tine apasat pentru a sparge blocul, și apasă pentru a pune un bloc.</string>
     <string name="mcl_disable_swap_hand">Dezactivați apăsarea dublă pentru a schimba mâinile</string>
@@ -170,4 +210,5 @@
     <string name="preference_category_miscellaneous">Setări diverse</string>
     <string name="controller_button_select">Selectați</string>
     <string name="preference_experimental_title">Lucruri experimentale</string>
+    <string name="app_short_name">Amethyst</string>
 </resources>
