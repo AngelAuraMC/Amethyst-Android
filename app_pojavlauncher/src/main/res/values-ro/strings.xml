@@ -5,6 +5,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
+    <string name="login_online_username_hint">Nume de utilizator</string>
     <string name="login_online_login_label">Autentificare</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"Apasă pe angrenajul din partea superioară a mijlocului ecranului pentru a accesa meniul de context \nApasă un buton pentru a personaliza: edita, redimensiona sau modifica keybind-urile sale."</string>
@@ -126,6 +127,7 @@
     <string name="customctrl_button_opacity">Opacitate Buton</string>
     <string name="customctrl_addbutton">Adaugă buton</string>
     <string name="customctrl_addbutton_drawer">Adauga buton sertar</string>
+    <string name="customctrl_addbutton_joystick">Adaugă manetă</string>
     <string name="customctrl_addsubbutton">Adaugă sub-buton</string>
     <string name="customctrl_selectdefault">Selectează setul de controale predefinit</string>
     <string name="customctrl_export">Exportă setul de controale (controlmap)</string>
@@ -151,6 +153,7 @@
 Previne cursorul din a apăsa pe layoutul de control touch.</string>
     <string name="customctrl_passthru">Conectarea directă a unui mouse extern (pass-through)</string>
     <string name="customctrl_swipeable">Glisabil</string>
+    <string name="customctrl_forward_lock">Blochează direcția înainte</string>
     <string name="customctrl_absolute_tracking">Urmărirea absolută a degetului (abs. fing. tracking)</string>
     <string name="memory_warning_msg">Cantitatea curentă de RAM liber (%d) este mai mică decât cantitatea alocată de RAM (%d), care ar putea duce la oprire. Schimbă cantitatea alocată dacă jocul se oprește.</string>
     <string name="address_memory_warning_msg">Memoria adresabilă liberă (%d) este mai puțină decât memoria alocată (%d), ceea ce va duce la oprirea abruptă a jocului (crash). Alocați mai puțină memorie dacă jocul se oprește brusc.</string>
@@ -251,6 +254,7 @@ Previne cursorul din a apăsa pe layoutul de control touch.</string>
     <string name="preference_category_java_tweaks">Ajustări Java</string>
     <string name="preference_category_miscellaneous">Setări diverse</string>
     <string name="controller_button_select">Selectați</string>
+    <string name="customctrl_visibility_title">Vizibilitate</string>
     <string name="preference_experimental_title">Lucruri experimentale</string>
     <string name="app_short_name">Amethyst</string>
 </resources>
