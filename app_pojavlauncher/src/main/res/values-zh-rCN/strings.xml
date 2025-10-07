@@ -438,5 +438,8 @@
     <string name="oldL4JFound">你正在使用的 Legacy4J 版本未包含 Android 修复！你需要在手柄设置中手动启用 SDL 才能获得最佳体验！</string>
     <string name="global_warning">警告！</string>
     <string name="controllableFound">Controllable 目前启动时有概率随机崩溃。你可以继续尝试并等待其成功启动，或者使用其他模组，例如 Controlify。</string>
+    <string name="mg_renderer_title_dsaExt">启用实验性 Direct State Access 扩展</string>
+    <string name="mg_renderer_summary_dsaExt">可能对 Iris 光影包有帮助，这是 AcceleratedRendering 模组所必需的</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 升级</string>
     <string name="autorendererselectfailed">自动渲染器选择失败，使用默认 HolyGL4ES</string>
 </resources>
