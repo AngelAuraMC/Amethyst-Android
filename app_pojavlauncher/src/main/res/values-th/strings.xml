@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
+    <string name="app_name">อเมทิสต์</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
     <string name="login_online_login_label">เข้าสู่ระบบ</string>
     <!-- Hint -->
+    <string name="hint_control_mapping">"แตะรูปฟันเฟื่องตรงมุมบนกลางเพื่อเปิดเมนู \n แตะที่ปุ่มเพื่อปรับแต่ง, แก้ไข, ปรับขนาด, ลบ, หริอเปลื่ยนการตั้งค่าปุ่ม"</string>
     <!-- Warnings -->
     <string name="warning_remove_account">บัญชีนี้จะถูกลบ!</string>
     <!-- AlertDialog title -->
@@ -44,8 +46,13 @@
     <string name="mcl_setting_title_mousescale">การปรับขนาดเมาส์</string>
     <string name="mcl_setting_subtitle_mousescale">เปลี่ยนขนาดของเมาส์เสมือน</string>
     <string name="mcl_setting_subtitle_javaargs">ระวัง อาจทำให้เกมพังได้หากแก้ไขโดยขาดความรู้</string>
+    <string name="mcl_setting_title_renderer_settings">การตั้งค่าการแสดงผลเพื่มเติม</string>
+    <string name="mcl_setting_title_renderer_subtitle">การตั้งค่าการแสดงผลเฉพาะ</string>
     <string name="mcl_setting_category_renderer">การแสดงผล</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; เท่านั้น, เร็ว)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (รองรับทุกเวอร์ชั่น, กลาง)</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ เท่านั้น, เร็ว)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ เท่านั้น</string>
     <string name="mcl_setting_veroption_release">ปล่อย</string>
     <string name="mcl_setting_veroption_snapshot">ภาพรวม</string>
     <string name="mcl_setting_veroption_oldbeta">เบตาเก่า</string>
@@ -67,8 +74,10 @@
     <string name="global_select">เลือก</string>
     <string name="global_retry">ลองอีกครั้ง</string>
     <string name="global_default">ค่าเรื่มต้น</string>
+    <string name="global_off">ปิด</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">ออกจากแอปพลิเคชัน/เกมเด้งด้วยรหัส %d โปรดตรวจสอบที่ latestlog.txt สำหรับรายละเอียดเพิ่มเติม</string>
+    <string name="mcn_signal_title">เกมถูกบังคับหยุดทำงานด้วยสัญญาณการปิดร้ายแรง %d, ตรวจสอบ latestlog.txt เพื่อข้อมูลเพื่มเติม</string>
     <string name="mcn_exit_confirm">คุณแน่ใจหรือไม่ว่าต้องการบังคับปิด?</string>
     <string name="mcn_check_fail_vulkan_support">อุปกรณ์นี้ไม่รองรับการแสดงผล Zink (Vulkan) </string>
     <!-- MainActivity: Control buttons -->
@@ -76,7 +85,13 @@
     <string name="control_debug">ดีบั๊ก</string>
     <string name="control_primary">หลัก</string>
     <string name="control_secondary">รอง</string>
+    <string name="control_shift">◇</string>
     <string name="control_inventory">กระเป๋า</string>
+    <string name="control_up">▲</string>
+    <string name="control_left">◀</string>
+    <string name="control_right">▶</string>
+    <string name="control_down">▼</string>
+    <string name="control_jump">⬛</string>
     <string name="control_thirdperson">มุมมอง</string>
     <string name="control_listplayers">แท็บ</string>
     <string name="control_mouse">เมาส์</string>
@@ -121,16 +136,21 @@
     <string name="dl_library_sha_fail">ไลบรารี %s ได้เสียหายเเละจะทำการดาวโหลดใหม่</string>
     <string name="dl_library_sha_unknown">ไลบรารี %s ไม่สามารถตรวจสอบได้ ขอให้ดีก็พอ</string>
     <string name="dl_library_sha_pass">ไลบรารี %s ดีเเละใช้การได้</string>
+    <string name="mcl_gamepad_SDL">เปิดใช้งานระบบจอยควบคุม SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">เปิดใช้งานระบบจอยควบคุม SDL, รองรับม็อดได้ดีกว่าเดิม และจะกลับไปใช้ GLFW หากไม่ได้เปิดใช้งาน</string>
     <string name="mcl_disable_gestures">ปิดท่าทางสัมผัส</string>
     <string name="mcl_disable_gestures_subtitle">ปิดท่าทางสัมผัส เช่นเเตะค้างเพื่อทำลายบล็อกเเละ เเตะเพื่อวางบล็อก</string>
     <string name="mcl_disable_swap_hand">ปิดกดสองครังเพื่อสลับของในมือ</string>
     <string name="mcl_disable_swap_hand_subtitle">ปิดใช้งานการแตะสองครั้งบนรายการแถบลัดเพื่อสลับรายการในเข็มวินาที</string>
     <string name="mcl_setting_title_mousespeed">ความเร็วเมาส์</string>
     <string name="mcl_setting_subtitle_mousespeed">เปลี่ยนความเร็วของเมาส์เสมือน</string>
+    <string name="mcl_setting_title_grab_mouse">ใช้เมาส์จำลอง</string>
+    <string name="mcl_setting_subtitle_grab_mouse">มั่นใจว่าตัวเคอเชอร์อยู่ในเกม, ป้องกันเมาส์จากการกดการควบคุมบนหน้าจอ</string>
     <string name="customctrl_passthru">เมาส์ผ่านได้</string>
     <string name="customctrl_swipeable">ลากได้</string>
     <string name="customctrl_absolute_tracking">การตรวจจับนั้วเเบบสมบูรณ์</string>
     <string name="memory_warning_msg">ขณะนี้เเรมที่เหลือในเครืองของคุณ (%d) น้อยกว่าเเรมที่ตั้งไว้ (%d) อาจะทำให้เด้งได้ ปรับค่าเเรมที่ต้องการเมื่อเกมเด้ง</string>
+    <string name="address_memory_warning_msg">แรมที่สามารถใช้ได้ (%d) น้อยกว่าแรมที่ได้ตั้งไว้ (%d) ชึ่งอาจะทำให้เกมเด้งออกได้, เปลี่ยนค่าแรมที่ตั้งไว้หากเกมเด้ง</string>
     <string name="mcl_memory_allocation">การจัดสรรหน่วยความจำ</string>
     <string name="mcl_memory_allocation_subtitle">ควบคุมจำนวนหน่วยความจำที่มอบให้กับ Minecraft</string>
     <string name="multirt_runtime_corrupt">ตัวรันไทม์จาวาเสียหาย</string>
@@ -143,6 +163,7 @@
     <string name="multirt_config_setdefault">ตั้งค่าเริ่มต้น</string>
     <string name="multirt_config_setdefault_already">ค่าเรื่มต้น</string>
     <string name="multirt_config_removeerror_last">คุณต้องติดตั้งรันไทม์ Java อย่างน้อยหนึ่งรายการ</string>
+    <string name="multirt_nocompatiblert">ไม่สามารถหาจาวารันไทม์ที่รองรับได้ เวอร์ชั่นนี้ต้องการจาวา %d หรือใหม่กว่า</string>
     <string name="multirt_nojava8rt">ไม่สามารถหาจาวา 8 ในการใช้ออฟชั่นนี้คุณต้องติดตั้งจาวา 8</string>
     <string name="multirt_delete_runtime">ลบรันไทม์</string>
     <string name="pvc_gameDirectory">ตำเเห่งโฟรเดอร์เกม</string>
@@ -218,6 +239,8 @@
     <string name="mcl_setting_subtitle_buttonallcaps">ปิดการใช้งานนี้หากคุณต้องการใช้อักษรตัวพิมพ์เล็กในการควบคุมของคุณ</string>
     <string name="preference_shader_dump_title">เปิดใช้งานบันทึกข้อมูลเชเดอร์</string>
     <string name="preference_shader_dump_description">บันทึกการแปลงเชเดอร์ลงในไฟล์บันทึก</string>
+    <string name="percent_format">%d%%</string>
+    <string name="millisecond_format">%d มิลลิวินาที</string>
     <string name="customctrl_editor_exit_title">ออก?</string>
     <string name="customctrl_editor_exit_msg">คุณแน่ใจหรือไม่ว่าต้องการออก</string>
     <string name="customctrl_editor_exit">ออกจากการแก้ไข</string>
@@ -306,6 +329,9 @@
     <string name="exception_failed_to_unpack_jre17">ไม่สามารถติดตั้ง JRE 17</string>
     <string name="newdl_starting">กำลังอ่านข้อมูลไฟล์เกม...</string>
     <string name="newdl_downloading_metadata">กำลังดาวโหลดข้อมูลไฟล์เกม (%s)</string>
+    <string name="newdl_downloading_game_files">กำลังดาวน์โหลดเกม… (%d/%d, %.2f เมกะไบต์/วินาที)</string>
+    <string name="newdl_downloading_game_files_size">กำลังดาวน์โหลดเกม… (%.2f/%.2f เมกะไบต์, %.2f เมกะไบต์/วินาที)</string>
     <string name="controller_button_select">เลือก</string>
     <string name="preference_experimental_title">การตั้งค่าที่ทดสอบ</string>
+    <string name="app_short_name">อเมทิสต์</string>
 </resources>
