@@ -173,6 +173,7 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = true
+            keepDebugSymbols += "**/libvulkan_freedreno.so"
         }
         pickFirst '**/libbytehook.so'
     }
