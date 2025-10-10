@@ -5,7 +5,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">Ім\'я користувача</string>
+    <string name="login_online_username_hint">Ім\'я гравця</string>
     <string name="login_online_login_label">Увійти</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"Торкніться верхньої центральної шестірні, щоб відкрити контекстне меню ⚙\nТоркніться кнопки, щоб налаштувати: редагувати, змінити розмір, видалити або змінити її сполучення клавіш."</string>
@@ -51,14 +51,14 @@
     <string name="mcl_setting_title_renderer_settings">Додаткові параметри промальовування</string>
     <string name="mcl_setting_title_renderer_subtitle">Спеціальні параметри промальовування.</string>
     <string name="mcl_setting_category_renderer">Промальовування</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES — лише 1.21.4&lt;, швидко</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES — лише 1.21.4&lt;, швидкий</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) — усі версії, посередній</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) — лише 1.17+, швидкий</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) — лише 1.17+</string>
     <string name="mcl_setting_veroption_release">Випуски</string>
     <string name="mcl_setting_veroption_snapshot">Знімки</string>
-    <string name="mcl_setting_veroption_oldalpha">Старі альфа</string>
-    <string name="mcl_setting_veroption_oldbeta">Старі бета</string>
+    <string name="mcl_setting_veroption_oldalpha">Історичні альфа</string>
+    <string name="mcl_setting_veroption_oldbeta">Історичні бета</string>
     <string name="mcl_setting_java_sandbox">Виконання файлу .jar пісочниці</string>
     <string name="mcl_setting_java_sandbox_subtitle">Керує доступністю менеджера безпеки пісочниці під час виконання файлу .jar.</string>
     <string name="mcl_version_clone">Клонувати</string>
@@ -66,7 +66,7 @@
     <string name="global_edit">Редагувати</string>
     <string name="global_error">Помилка</string>
     <string name="global_load">Завантаження</string>
-    <string name="global_name">Ім\'я</string>
+    <string name="global_name">Назва</string>
     <string name="global_remove">Вилучити</string>
     <string name="global_clone">Клонувати</string>
     <string name="global_restart">Перезавантаження</string>
@@ -204,7 +204,7 @@
     <string name="unnamed">Безіменний</string>
     <string name="profiles_latest_snapshot">Останній знімок</string>
     <string name="profiles_latest_release">Останній випуск</string>
-    <string name="profiles_profile_name">Ім\'я</string>
+    <string name="profiles_profile_name">Назва</string>
     <string name="profiles_profile_version">Версія</string>
     <string name="global_delete">Видалити</string>
     <string name="pedit_java_runtime">Середовище виконання Java</string>
@@ -269,7 +269,7 @@
     <string name="forge_dl_searching">Пошук номера версії Forge</string>
     <string name="modloader_dl_failed_to_load_list">Не вдалося завантажити список версій!</string>
     <string name="forge_dl_no_installer">Вибачте, але ця версія Forge не має встановлювача, який поки що не підтримується.</string>
-    <string name="forge_dl_select_version">Вибір версії Forge</string>
+    <string name="forge_dl_select_version">Виберіть версію Forge</string>
     <string name="fabric_dl_progress">Завантаження %s установника метаданих</string>
     <string name="fabric_dl_loader_version">Версія завантажувача %s</string>
     <string name="fabric_dl_game_version">Версія Minecraft</string>
@@ -281,8 +281,8 @@
     <string name="create_profile_vanilla">Створити усталений профіль</string>
     <string name="create_profile_vanilla_like_versions">Усталена версія</string>
     <string name="create_profile_modded_versions">Модифіковані версії</string>
-    <string name="fabric_dl_loader_title">Вибір версії</string>
-    <string name="of_dl_select_version">Вибір версії OptiFine</string>
+    <string name="fabric_dl_loader_title">Виберіть версію</string>
+    <string name="of_dl_select_version">Виберіть версію OptiFine</string>
     <string name="of_dl_failed_to_scrape">Не вдалося зібрати дані для встановлення OptiFine</string>
     <string name="of_dl_progress">Завантаження %s</string>
     <string name="create_profile_optifine">Створити профіль OptiFine</string>
