@@ -429,4 +429,8 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="oldL4JFound">Du verwendest eine Version von Legacy4J ohne die Android-Korrekturen! Du musst SDL manuell in den Controller-Einstellungen aktivieren, um das beste Spielerlebnis zu erhalten!</string>
     <string name="global_warning">Warnung!</string>
     <string name="controllableFound">Controllable hat derzeit eine zufällige Wahrscheinlichkeit, beim Start abzustürzen. Versuche es entweder erneut und hoffe, dass es startet, oder verwende einen anderen Mod wie Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Experimentelle Erweiterung für direkten Statuszugriff bewerben</string>
+    <string name="mg_renderer_summary_dsaExt">Kann bei Iris-Shaderpacks helfen, die für den AcceleratedRendering-Mod erforderlich sind</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 Hochskalierung</string>
+    <string name="autorendererselectfailed">Auswahl des Auto-Renderers fehlgeschlagen, Standard ist HolyGL4ES</string>
 </resources>
