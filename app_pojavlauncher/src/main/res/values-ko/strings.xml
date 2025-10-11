@@ -139,6 +139,8 @@
     <string name="dl_library_sha_fail">라이브러리 %s가 손상되었기 때문에 다시 다운로드합니다</string>
     <string name="dl_library_sha_unknown">%s 라이브러리를 확인할 수 없습니다.</string>
     <string name="dl_library_sha_pass">%s 라이브러리를 이용할 수 있습니다.</string>
+    <string name="mcl_gamepad_SDL">SDL 컨트롤러 백엔드 활성화</string>
+    <string name="mcl_gamepad_SDL_subtitle">모드 지원이 더욱 원활한 SDL 컨트롤러 백엔드를 활성화합니다. 사용되지 않을 경우 GLFW가 대신 사용됩니다.</string>
     <string name="mcl_disable_gestures">제스쳐 비활성화</string>
     <string name="mcl_disable_gestures_subtitle">탭하여 블록 설치, 길게 눌러 블록 파괴와 같은 제스쳐를 비활성화 합니다.</string>
     <string name="mcl_disable_swap_hand">두 번 탭하여 양손 들기 비활성화</string>
@@ -412,6 +414,10 @@
     <string name="modloader_dl_install_neoforge">Neoforge 프로필 생성</string>
     <string name="neoforge_dl_select_version">Neoforge 버전 선택</string>
     <string name="neoforge_dl_no_installer">죄송합니다. 이 버전의 NeoForge는 아직 지원되는 설치기를 가지고 있지 않습니다.</string>
-    <string name="preference_category_touchcontroller_settings">터치 컨트롤러 설정</string>
-    <string name="preference_force_enable_touchcontroller_title">터치 컨트롤러 강제 활성화</string>
+    <string name="preference_category_touchcontroller_settings">TouchController 설정</string>
+    <string name="preference_force_enable_touchcontroller_title">TouchController 강제 활성화</string>
+    <string name="preference_force_enable_touchcontroller_description">모드 파일이 존재하지 않는 경우에도 TouchController 통합을 강제로 활성화합니다.</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController 진동 길이</string>
+    <string name="preference_touchcontroller_vibrate_length_description">TouchController 사용 시의 진동 길이를 설정합니다.</string>
+    <string name="preference_ask_for_microphone_title">마이크 허용</string>
 </resources>
