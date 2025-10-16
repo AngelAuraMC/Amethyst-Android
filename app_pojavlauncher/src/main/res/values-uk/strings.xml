@@ -5,7 +5,7 @@
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
-    <string name="login_online_username_hint">Ім\'я користувача</string>
+    <string name="login_online_username_hint">Ім\'я гравця</string>
     <string name="login_online_login_label">Увійти</string>
     <!-- Hint -->
     <string name="hint_control_mapping">"Торкніться верхньої центральної шестірні, щоб відкрити контекстне меню ⚙\nТоркніться кнопки, щоб налаштувати: редагувати, змінити розмір, видалити або змінити її сполучення клавіш."</string>
@@ -41,32 +41,32 @@
     <string name="mcl_setting_title_resolution_scaler">Зменшити роздільну здатність</string>
     <string name="mcl_setting_subtitle_resolution_scaler">Дозволяє змінити масштаб роздільности гри. 100% — повна роздільність.</string>
     <string name="mcl_setting_title_longpresstrigger">Затримка тригера при тривалому натисканні</string>
-    <string name="mcl_setting_subtitle_longpresstrigger">Змінити затримку тривалого натискання для ламання блоків та викидання предметів.</string>
+    <string name="mcl_setting_subtitle_longpresstrigger">Змініть затримку тривалого натискання для ламання блоків та викидання предметів.</string>
     <string name="mcl_setting_title_buttonscale">Масштабування кнопок</string>
-    <string name="mcl_setting_subtitle_buttonscale">Збільште їх, якщо кнопки замалі.</string>
+    <string name="mcl_setting_subtitle_buttonscale">Збільште кнопки, якщо вони надто малі.</string>
     <string name="mcl_setting_title_mousescale">Масштабування курсору</string>
     <string name="mcl_setting_subtitle_mousescale">Змінити розмір віртуальної миші.</string>
     <string name="mcl_setting_title_javaargs">Аргументи запуску JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Будьте обережні, це може призвести до збоїв у грі, якщо це замінити без знань.</string>
     <string name="mcl_setting_title_renderer_settings">Додаткові параметри промальовування</string>
-    <string name="mcl_setting_title_renderer_subtitle">Спеціальні параметри промальовування</string>
+    <string name="mcl_setting_title_renderer_subtitle">Спеціальні параметри промальовування.</string>
     <string name="mcl_setting_category_renderer">Промальовування</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES — лише 1.21.4&lt;, швидко</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES — лише 1.21.4&lt;, швидкий</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) — усі версії, посередній</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) — лише 1.17+, швидкий</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) — лише 1.17+</string>
     <string name="mcl_setting_veroption_release">Випуски</string>
     <string name="mcl_setting_veroption_snapshot">Знімки</string>
-    <string name="mcl_setting_veroption_oldalpha">Старі альфа</string>
-    <string name="mcl_setting_veroption_oldbeta">Старі бета</string>
+    <string name="mcl_setting_veroption_oldalpha">Історичні альфа</string>
+    <string name="mcl_setting_veroption_oldbeta">Історичні бета</string>
     <string name="mcl_setting_java_sandbox">Виконання файлу .jar пісочниці</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Контролювати доступністю менеджера безпеки пісочниці під час виконання файлу .jar.</string>
+    <string name="mcl_setting_java_sandbox_subtitle">Керує доступністю менеджера безпеки пісочниці під час виконання файлу .jar.</string>
     <string name="mcl_version_clone">Клонувати</string>
     <!-- Global strings -->
     <string name="global_edit">Редагувати</string>
     <string name="global_error">Помилка</string>
     <string name="global_load">Завантаження</string>
-    <string name="global_name">Ім\'я</string>
+    <string name="global_name">Назва</string>
     <string name="global_remove">Вилучити</string>
     <string name="global_clone">Клонувати</string>
     <string name="global_restart">Перезавантаження</string>
@@ -143,7 +143,7 @@
     <string name="mcl_gamepad_SDL">Увімкнути SDL контролер</string>
     <string name="mcl_gamepad_SDL_subtitle">Увімкнути контролер SDL. Має кращу підтримку модів. Якщо не використовується, повертається до GLFW.</string>
     <string name="mcl_disable_gestures">Вимкнути жести</string>
-    <string name="mcl_disable_gestures_subtitle">Вимикає жести, наприклад утримувати, щоб розбити блок та торкнутися щоб поставити.</string>
+    <string name="mcl_disable_gestures_subtitle">Вимикає жести, наприклад ламання утриманням та розміщення натисканням блока.</string>
     <string name="mcl_disable_swap_hand">Вимкнути подвійний дотик для зміни рук</string>
     <string name="mcl_disable_swap_hand_subtitle">Вимикає подвійне натискання на предмет швидкої панелі для перемикання його у другій руці.</string>
     <string name="mcl_setting_title_mousespeed">Чутливість миші</string>
@@ -157,13 +157,13 @@
     <string name="memory_warning_msg">Поточна кількість вільної оперативної пам\'яті (%d) менша, ніж виділена оперативна пам\'ять (%d), що може призвести до збоїв. Змініть кількість вільної оперативної пам\'яті, якщо гра виходить з ладу.</string>
     <string name="address_memory_warning_msg">Поточний обсяг вільного адресного простору оперативної пам’яті (%d) менший за виділену оперативну пам’ять (%d), що призведе до збоїв. Змініть розподіл, якщо гра виходить з ладу.</string>
     <string name="mcl_memory_allocation">Виділення пам\'яті</string>
-    <string name="mcl_memory_allocation_subtitle">Контролює, скільки пам’яті надається Minecraft.</string>
+    <string name="mcl_memory_allocation_subtitle">Керує тим, скільки пам’яті надається Minecraft.</string>
     <string name="multirt_runtime_corrupt">Середовище виконання Java пошкоджено</string>
     <string name="multirt_runtime_incompatiblearch">Несумісна архітектура: %s</string>
     <string name="multirt_config_title">Середовища виконання Java</string>
     <string name="multirt_config_add">Додати нову</string>
     <string name="multirt_title">Керування середовищами виконання</string>
-    <string name="multirt_subtitle">Керування установленими середовищами виконання Java.</string>
+    <string name="multirt_subtitle">Керуйте встановленими середовищами виконання Java.</string>
     <string name="multirt_progress_caching">Кешування…</string>
     <string name="multirt_config_setdefault">Встановити усталено</string>
     <string name="multirt_config_setdefault_already">Усталено</string>
@@ -183,10 +183,10 @@
     <string name="preference_java_description">Середовища виконання Java, аргументи JVM, обсяг пам\'яті та пісочниця</string>
     <string name="preference_misc_title">Різні налаштування</string>
     <string name="preference_misc_description">Список версій та перевірка бібліотек</string>
-    <string name="preference_experimental_description">Використовуйте параметри там з обережністю, ніякої підтримки</string>
+    <string name="preference_experimental_description">Використовуйте ці параметри з обережністю, жодної підтримки</string>
     <string name="preference_sustained_performance_title">Увімкнути режим постійної продуктивности</string>
     <string name="preference_sustained_performance_description">Обмежити перегрів пристрою шляхом обмеження пікової продуктивности.</string>
-    <string name="preference_force_vsync_title">Увімкнути вертикальну синхронізацію</string>
+    <string name="preference_force_vsync_title">Увімкнути VSync</string>
     <string name="preference_force_vsync_description">Обмежити перегрів пристрою шляхом обмеження пікової продуктивности.</string>
     <string name="preference_force_english_title">Змінити мову на англійську</string>
     <string name="preference_force_english_description">Дозволяє побачити оригінальні рядки, як було задумано розробниками. Потребує перезапуску.</string>
@@ -204,7 +204,7 @@
     <string name="unnamed">Безіменний</string>
     <string name="profiles_latest_snapshot">Останній знімок</string>
     <string name="profiles_latest_release">Останній випуск</string>
-    <string name="profiles_profile_name">Ім\'я</string>
+    <string name="profiles_profile_name">Назва</string>
     <string name="profiles_profile_version">Версія</string>
     <string name="global_delete">Видалити</string>
     <string name="pedit_java_runtime">Середовище виконання Java</string>
@@ -269,7 +269,7 @@
     <string name="forge_dl_searching">Пошук номера версії Forge</string>
     <string name="modloader_dl_failed_to_load_list">Не вдалося завантажити список версій!</string>
     <string name="forge_dl_no_installer">Вибачте, але ця версія Forge не має встановлювача, який поки що не підтримується.</string>
-    <string name="forge_dl_select_version">Вибір версії Forge</string>
+    <string name="forge_dl_select_version">Виберіть версію Forge</string>
     <string name="fabric_dl_progress">Завантаження %s установника метаданих</string>
     <string name="fabric_dl_loader_version">Версія завантажувача %s</string>
     <string name="fabric_dl_game_version">Версія Minecraft</string>
@@ -281,8 +281,8 @@
     <string name="create_profile_vanilla">Створити усталений профіль</string>
     <string name="create_profile_vanilla_like_versions">Усталена версія</string>
     <string name="create_profile_modded_versions">Модифіковані версії</string>
-    <string name="fabric_dl_loader_title">Вибір версії</string>
-    <string name="of_dl_select_version">Вибір версії OptiFine</string>
+    <string name="fabric_dl_loader_title">Виберіть версію</string>
+    <string name="of_dl_select_version">Виберіть версію OptiFine</string>
     <string name="of_dl_failed_to_scrape">Не вдалося зібрати дані для встановлення OptiFine</string>
     <string name="of_dl_progress">Завантаження %s</string>
     <string name="create_profile_optifine">Створити профіль OptiFine</string>
@@ -318,7 +318,7 @@
     <string name="preference_download_source_title">Джерело завантаження гри</string>
     <string name="preference_download_source_description">Оберіть дзеркало завантаження замість офіційного сервера завантаження</string>
     <string name="preference_verify_manifest_title">Перевірити маніфест версії гри</string>
-    <string name="preference_verify_manifest_description">Коли увімкнено, запускач перевірятиме маніфест гри разом з бібліотеками.</string>
+    <string name="preference_verify_manifest_description">Якщо ввімкнено, запускач перевірятиме маніфест гри разом з бібліотеками.</string>
     <string name="notif_download_finished">Гра готова до запуску</string>
     <string name="notif_download_finished_desc">Натисніть, щоб розпочати!</string>
     <string name="preference_category_gestures">Жести</string>
@@ -333,9 +333,9 @@
     <string name="notification_permission_toast">Ви завжди можете змінити пізніше, перейшовши до налаштувань</string>
     <string name="preference_ask_for_notification_title">Дозволити сповіщення</string>
     <string name="preference_ask_for_notification_description">Натисніть, щоб повторно запитати дозвіл на сповіщення, необхідний для коректної роботи тлових завантажень гри/пакета модів.</string>
-    <string name="preference_vsync_in_zink_title">Вертикальна синхронізація із Zink</string>
+    <string name="preference_vsync_in_zink_title">Дозволити VSync із Zink</string>
     <string name="preference_vsync_in_zink_description">Дозволяє запускачу використовувати внутрішні системні API для увімкнення вертикальної синхронізації для Zink. Вимкніть, якщо після оновлення системи запускач вилітає разом із Zink.</string>
-    <string name="exception_failed_to_unpack_jre17">Не вдалося установити JRE 17</string>
+    <string name="exception_failed_to_unpack_jre17">Не вдалося встановити JRE 17</string>
     <string name="newdl_starting">Зчитування метаданих гри…</string>
     <string name="newdl_downloading_metadata">Завантаження метаданих гри (%s)</string>
     <string name="newdl_downloading_game_files">Завантаження гри… (%d/%d, %.2f МБ/с)</string>
@@ -395,12 +395,12 @@
     <string name="newdl_extracting_native_libraries">Екстракція нативних бібліотек (%d/%d)</string>
     <string name="toast_not_available_demo">Це недоступно в деморежимі</string>
     <string name="preference_renderer_mobileglues_settings">Налаштування промальовування MobileGlues </string>
-    <string name="mg_renderer_glsl_cache">Макс. розмір кешу GLSL</string>
+    <string name="mg_renderer_glsl_cache">Максимальний розмір кешу GLSL</string>
     <string name="mg_renderer_angle">Використовувати ANGLE як драйвер</string>
     <string name="mg_renderer_multidraw">Режим емуляції Multidraw</string>
     <string name="mg_renderer_title_errorSetting">Помилка фільтрації</string>
     <string name="mg_renderer_title_timerQueryExt">Вимкнути використання GPU в меню F3</string>
-    <string name="mg_renderer_summary_timerQueryExt">Виправляє випадкові збої, коли F3 відкрито на деяких пристроях Mali</string>
+    <string name="mg_renderer_summary_timerQueryExt">Виправляє випадкові збої, коли F3 відкрито на деяких пристроях Mali.</string>
     <string name="preference_ANGLE_only">Лише налаштування ANGLE</string>
     <string name="mg_renderer_title_angleDepthClearFixMode">Виправити проходження через блоки предмети</string>
     <string name="mg_renderer_summary_angleDepthClearFixMode">Упливає лише на ANGLE, може вплинути на продуктивність.</string>
@@ -408,9 +408,9 @@
     <string name="mg_renderer_title_gl43exts">Сповіщення експериментів розширення OpenGL 4.3</string>
     <string name="mg_renderer_summary_gl43exts">Може допомогти зі збоями мода. Вимкніть, якщо не потрібно, це може призвести до збоїв.</string>
     <string name="mg_renderer_title_computeShaderext">Сповіщення експериментів розширення обчислення шейдерів</string>
-    <string name="mg_renderer_summary_computeShaderext">Може допомогти у вирішенні збоїв у пакеті шейдерів. Вимкніть, якщо не потрібно, це може призвести до збоїв.</string>
+    <string name="mg_renderer_summary_computeShaderext">Може допомогти у вирішенні збоїв пакетів шейдерів. Вимкніть, якщо не потрібно, це може призвести до збоїв.</string>
     <string name="mg_renderer_title_multidrawCompute">Викор. емуляцію обчислення Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Використовує обчислювальні шейдери для емуляції Multidraw</string>
+    <string name="mg_renderer_summary_multidrawCompute">Використовує обчислювальні шейдери для емуляції Multidraw.</string>
     <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Лише усталена версія 1.3.1 і вище підтримуються демо обліковим записом</string>
     <string name="demo_unsupported">Демопрофіль не підтримується</string>
@@ -437,4 +437,8 @@
     <string name="oldL4JFound">Ви використовуєте версію Legacy4J без виправлень Android! Вам потрібно буде вручну ввімкнути SDL у налаштуваннях контролера, щоб отримати найкращий досвід!</string>
     <string name="global_warning">Попередження!</string>
     <string name="controllableFound">Наразі Controllable має випадкову ймовірність збою під час запуску. Або продовжуйте спроби та сподівайтеся, що він запуститься, або скористайтеся іншим модом, наприклад Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Рекламувати експериментальне розширення прямого доступу до стану</string>
+    <string name="mg_renderer_summary_dsaExt">Може допомогти з пакетами шейдерів Iris, необхідними для мода AcceleratedRendering.</string>
+    <string name="mg_renderer_title_fsr">Масштабування AMD FSR 1</string>
+    <string name="autorendererselectfailed">Помилка автовибору промальовування, скидання до HolyGL4ES</string>
 </resources>

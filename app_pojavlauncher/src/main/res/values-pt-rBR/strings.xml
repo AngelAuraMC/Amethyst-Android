@@ -110,6 +110,7 @@
     <string name="customctrl_button_opacity">Opacidade do botão</string>
     <string name="customctrl_addbutton">Adicionar botão</string>
     <string name="customctrl_addbutton_drawer">Adicionar botão gaveta</string>
+    <string name="customctrl_addbutton_joystick">Adicionar analógico</string>
     <string name="customctrl_addsubbutton">Adicionar sub-botão</string>
     <string name="customctrl_selectdefault">Selecionar controle padrão</string>
     <string name="customctrl_export">Exportar controles</string>

@@ -41,7 +41,7 @@
     <string name="mcl_setting_title_resolution_scaler">Tỷ lệ độ phân giải</string>
     <string name="mcl_setting_subtitle_resolution_scaler">Cho phép bạn giảm độ phân giải trò chơi. 100% nghĩa là sử dụng độ phân giải tối đa.</string>
     <string name="mcl_setting_title_longpresstrigger">Độ trễ nhấn giữ</string>
-    <string name="mcl_setting_subtitle_longpresstrigger">Thay đổi khoảng thời gian nhấn giữ để phá khối và thả vật phẩm.</string>
+    <string name="mcl_setting_subtitle_longpresstrigger">Thay đổi thời lượng nhấn giữ để phá khối và thả vật phẩm.</string>
     <string name="mcl_setting_title_buttonscale">Quy mô nút điều khiển</string>
     <string name="mcl_setting_subtitle_buttonscale">Tăng giá trị nếu các nút quá nhỏ.</string>
     <string name="mcl_setting_title_mousescale">Kích cỡ chuột</string>
@@ -140,6 +140,8 @@
     <string name="dl_library_sha_fail">Thư viện %s đã bị hỏng và sẽ được tải lại</string>
     <string name="dl_library_sha_unknown">Không thể kiểm tra thư viện %s, tệp vẫn sẽ được sử dụng</string>
     <string name="dl_library_sha_pass">Thư viện %s không có vấn đề</string>
+    <string name="mcl_gamepad_SDL">Bật hậu phần tay cầm SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Sử dụng hậu phần tay cầm SDL để cải thiện tương thích với các bản mod. Tự động chuyển về GLFW nếu không sử dụng.</string>
     <string name="mcl_disable_gestures">Tắt cử chỉ</string>
     <string name="mcl_disable_gestures_subtitle">Tắt các cử chỉ thông dụng, chẳng hạn như giữ để phá khối, chạm để đặt khối.</string>
     <string name="mcl_disable_swap_hand">Tắt nhấn hai lần để đổi tay</string>
@@ -427,4 +429,16 @@
     <string name="preference_touchcontroller_vibrate_length_title">Thời lượng rung TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Định thời lượng rung khi sử dụng TouchController.</string>
     <string name="error_vanilla_json_corrupt">Tệp json gốc có vẻ đã bị hỏng. Vui lòng báo lỗi qua GitHub hoặc Discord.</string>
+    <string name="preference_ask_for_microphone_title">Cho phép sử dụng micrô</string>
+    <string name="preference_ask_for_microphone_description">Nhấn để gửi lại yêu cầu cấp quyền thông báo, bắt buộc khi sử dụng một số bản mod, ví dụ: Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Có thể cho phép các phiên bản Legacy4J cũ sử dụng hậu phần SDL</string>
+    <string name="mcl_gamepad_forcedSDL">Buộc khởi động xử lý tay cầm SDL</string>
+    <string name="preference_category_SDL_settings">Cài đặt SDL</string>
+    <string name="oldL4JFound">Bạn hiện đang sử dụng bản Legacy4J cũ mà không dùng sửa lỗi cho Android! Bạn sẽ cần phải bật SDL thủ công trong phần cài đặt tay cầm để có trải nghiệm chơi tốt nhất!</string>
+    <string name="global_warning">Cảnh báo!</string>
+    <string name="controllableFound">Controllable hiện gặp vấn đề thi thoảng bị thoát đột ngột. Bạn có thể tiếp tục thử khởi động lại xem có chạy được hay không hoặc dùng một bản mod khác như Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Truyền phần mở rộng Direct State Access thử nghiệm</string>
+    <string name="mg_renderer_summary_dsaExt">Có thể giúp cải thiện một số shader Iris, bắt buộc sử dụng đối với mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Tăng phân giải AMD FSR 1</string>
+    <string name="autorendererselectfailed">Không thể tự động chọn trình kết xuất, đang chuyển về mặc định HolyGL4ES</string>
 </resources>

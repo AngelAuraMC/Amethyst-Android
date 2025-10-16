@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
+    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
+    <string name="login_online_username_hint">Nume de utilizator</string>
     <string name="login_online_login_label">Autentificare</string>
     <!-- Hint -->
+    <string name="hint_control_mapping">"Apasă pe angrenajul din partea superioară a mijlocului ecranului pentru a accesa meniul de context \nApasă un buton pentru a personaliza: edita, redimensiona sau modifica keybind-urile sale."</string>
     <!-- Warnings -->
     <string name="warning_remove_account">Acest cont va fi eliminat!</string>
     <!-- AlertDialog title -->
@@ -22,6 +25,7 @@
     <string name="toast_3">Exit</string>
     -->
     <!-- MCLauncherActivity: Tabs -->
+    <string name="mcl_tab_wiki">Wiki</string>
     <!-- MCLauncherActivity: Account status -->
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Se șterg fișierele cache</string>
@@ -31,17 +35,32 @@
     <string name="mcl_options">Opțiuni</string>
     <string name="mcl_option_customcontrol">Controale personalizate</string>
     <string name="mcl_setting_title_use_surface_view">Folosește randarea alternativă a suprafețelor</string>
+    <string name="mcl_setting_subtitle_use_surface_view">Poate ajuta în situațiile de suprasolicitare a cipului grafic. (GPU).</string>
     <string name="mcl_setting_title_ignore_notch">Ignoră notch-ul</string>
+    <string name="mcl_setting_subtitle_ignore_notch">Ignoră notch-ul și extinde afișarea după acesta. \nOferă o experiență de joc mai captivantă.</string>
     <string name="mcl_setting_title_resolution_scaler">Scaler de rezoluție</string>
+    <string name="mcl_setting_subtitle_resolution_scaler">Permite scăderea rezoluției jocului. Rezoluția completă este de 100%.</string>
+    <string name="mcl_setting_title_longpresstrigger">Întârzierea declanșatorului la o apăsare lungă</string>
+    <string name="mcl_setting_subtitle_longpresstrigger">Modifică întârzierea declanșatorului la o apăsare lungă pentru distrugerea cuburilor și aruncarea obiectelor.</string>
     <string name="mcl_setting_title_buttonscale">Redimensionare butoane de control</string>
+    <string name="mcl_setting_subtitle_buttonscale">Mărește-le dacă butoanele sunt prea mici.</string>
     <string name="mcl_setting_title_mousescale">Redimensionarea mouse-ului</string>
+    <string name="mcl_setting_subtitle_mousescale">Redimensionează cursorul virtual.</string>
     <string name="mcl_setting_title_javaargs">Argumente de lansare JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Ai grijă, acest lucru poate face ca jocul să se oprească dacă este modificat fără cunoștințe.</string>
+    <string name="mcl_setting_title_renderer_settings">Setări extra pentru programul de randare</string>
+    <string name="mcl_setting_title_renderer_subtitle">Setări specifice programului de randare</string>
     <string name="mcl_setting_category_renderer">Randator</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (doar: 1.21.4&lt; rapid)</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (toate versiunile, viteză medie)</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (doar vers. 1.17+, rapid)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - doar vers. 1.17+</string>
     <string name="mcl_setting_veroption_release">Lansat oficial</string>
     <string name="mcl_setting_veroption_snapshot">Lansat pentru testare</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha-vechi</string>
     <string name="mcl_setting_veroption_oldbeta">Beta-vechi</string>
+    <string name="mcl_setting_java_sandbox">Rulează executabilul .jar într-un mediu virtualizat (sandbox)</string>
+    <string name="mcl_setting_java_sandbox_subtitle">Controlează valabilitatea managerului dr securitate a mediului virtualizat (sandbox) la executarea unui fișier .jar.</string>
     <string name="mcl_version_clone">Clonă</string>
     <!-- Global strings -->
     <string name="global_edit">Editează</string>
@@ -56,13 +75,29 @@
     <string name="global_error_field_empty">Acest câmp nu poate fi gol</string>
     <string name="global_waiting">Așteptați</string>
     <string name="global_select">Selectați</string>
+    <string name="global_retry">Încearcă din nou</string>
     <string name="global_default">Prestabilit</string>
+    <string name="global_off">Oprit</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">Aplicația/Jocul a fost închis cu codul %d, vezi latestlog.txt pentru mai multe detalii.</string>
+    <string name="mcn_signal_title">Aplicația/Jocul a sistat în urma semnalului fatal %d, verifică cel mai recent fișier latestlog.txt pentru detalii adiționale.</string>
     <string name="mcn_exit_confirm">Ești sigur că vrei să oprești forțat?</string>
+    <string name="mcn_check_fail_vulkan_support">Programul de randare Zink (Vulkan) nu este valabil pe acest dispozitiv!</string>
     <!-- MainActivity: Control buttons -->
     <string name="control_chat">Mesaje</string>
     <string name="control_debug">Depanare</string>
+    <string name="control_primary">Pri</string>
+    <string name="control_secondary">Sec</string>
+    <string name="control_shift">◇</string>
+    <string name="control_inventory">Inv</string>
+    <string name="control_up">▲</string>
+    <string name="control_left">◀</string>
+    <string name="control_right">▶</string>
+    <string name="control_down">▼</string>
+    <string name="control_jump">⬛</string>
+    <string name="control_thirdperson">3-lea</string>
+    <string name="control_listplayers">Tab</string>
+    <string name="control_mouse">Mouse</string>
     <string name="control_mouseoff">Mouse: oprit</string>
     <string name="control_mouseon">Mouse: pornit </string>
     <!-- MainActivity: Menu advanced controls -->
@@ -92,56 +127,101 @@
     <string name="customctrl_button_opacity">Opacitate Buton</string>
     <string name="customctrl_addbutton">Adaugă buton</string>
     <string name="customctrl_addbutton_drawer">Adauga buton sertar</string>
+    <string name="customctrl_addbutton_joystick">Adaugă manetă</string>
     <string name="customctrl_addsubbutton">Adaugă sub-buton</string>
+    <string name="customctrl_selectdefault">Selectează setul de controale predefinit</string>
+    <string name="customctrl_export">Exportă setul de controale (controlmap)</string>
     <string name="main_share_logs">Distribuie fişierul jurnal</string>
+    <string name="main_install_jar_file">Execută un .jar</string>
     <string name="main_play">Joacă</string>
     <string name="autoram_info_msg">Memorie setată la %d MB</string>
     <string name="mcl_setting_check_libraries">Verifică bibliotecile după descărcare</string>
+    <string name="mcl_setting_check_libraries_subtitle">Această opțiune forțează lansatorul să verifice semnătura criptografică a librăriei de cod dacă este valabilă. Previne descărcările eronate.</string>
     <string name="dl_library_sha_fail">Biblioteca %s este deteriorată și va fi redescărcată</string>
     <string name="dl_library_sha_unknown">Biblioteca %s nu poate fi verificată, trebuie să presupunem că este bună</string>
     <string name="dl_library_sha_pass">Biblioteca %s este bună și utilizabilă</string>
+    <string name="mcl_gamepad_SDL">Activează backend-ul controllerului SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Activează backend-ul controlerului SDL. Are un suport tehnic mai bun pentru mod-uri. Se va folosi GLFW dacă nu este activat.</string>
     <string name="mcl_disable_gestures">Dezactivează gesturi</string>
     <string name="mcl_disable_gestures_subtitle">Dezactivează gesturile, cum ar fi tine apasat pentru a sparge blocul, și apasă pentru a pune un bloc.</string>
     <string name="mcl_disable_swap_hand">Dezactivați apăsarea dublă pentru a schimba mâinile</string>
+    <string name="mcl_disable_swap_hand_subtitle">Dezactivează dubla apăsare pe un item din hotbar pentru a-l muta în mâna opusă.</string>
     <string name="mcl_setting_title_mousespeed">Viteza mouse-ului</string>
+    <string name="mcl_setting_subtitle_mousespeed">Modifică viteza cursorului virtual.</string>
+    <string name="mcl_setting_title_grab_mouse">Folosește cursorul virtual</string>
+    <string name="mcl_setting_subtitle_grab_mouse">Asigură păstrarea cursorului în fereastra jocului. 
+Previne cursorul din a apăsa pe layoutul de control touch.</string>
+    <string name="customctrl_passthru">Conectarea directă a unui mouse extern (pass-through)</string>
     <string name="customctrl_swipeable">Glisabil</string>
+    <string name="customctrl_forward_lock">Blochează direcția înainte</string>
+    <string name="customctrl_absolute_tracking">Urmărirea absolută a degetului (abs. fing. tracking)</string>
     <string name="memory_warning_msg">Cantitatea curentă de RAM liber (%d) este mai mică decât cantitatea alocată de RAM (%d), care ar putea duce la oprire. Schimbă cantitatea alocată dacă jocul se oprește.</string>
+    <string name="address_memory_warning_msg">Memoria adresabilă liberă (%d) este mai puțină decât memoria alocată (%d), ceea ce va duce la oprirea abruptă a jocului (crash). Alocați mai puțină memorie dacă jocul se oprește brusc.</string>
     <string name="mcl_memory_allocation">Memorie alocată</string>
+    <string name="mcl_memory_allocation_subtitle">Controlează cantitatea de RAM alocat către Minecraft.</string>
     <string name="multirt_runtime_corrupt">Java Runtime Corupt</string>
     <string name="multirt_runtime_incompatiblearch">Arhitectură incompatibilă: %s</string>
+    <string name="multirt_config_title">Java Runtimes</string>
     <string name="multirt_config_add">Adăugare nouă</string>
     <string name="multirt_title">Manager Runtime</string>
+    <string name="multirt_subtitle">Modifică instalările Java Runtimes.</string>
+    <string name="multirt_progress_caching">Se scrie cache-ul...</string>
     <string name="multirt_config_setdefault">Setaţi ca prestabilit</string>
     <string name="multirt_config_setdefault_already">Prestabilit</string>
+    <string name="multirt_config_removeerror_last">Trebuie să ai instalat cel puțin un Java Runtime.</string>
+    <string name="multirt_nocompatiblert">Nu s-au găsit Java Runtimes compatibile. Această versiune necesită Java %d sau mai nou.</string>
     <string name="multirt_nojava8rt">Nu s-a putut găsi Java 8. Pentru a folosi această opțiune, trebuie să instalezi Java 8.</string>
+    <string name="multirt_delete_runtime">Șterge runtime-ul</string>
     <string name="pvc_gameDirectory">Dosarul jocului</string>
     <string name="pvc_jvmArgs">Argumente JVM</string>
     <string name="preference_mouse_start_title">Începe cu mouse-ul virtual activat</string>
+    <string name="preference_mouse_start_description">Cursorul virtual apare la pornirea jocului când această opțiune este activată.</string>
     <string name="preference_video_title">Video și randare</string>
+    <string name="preference_video_description">Rezoluție, program de randare și performanță</string>
     <string name="preference_control_title">Personalizarea controalelor</string>
+    <string name="preference_control_description">Gesturi, butoane și redimensionare</string>
     <string name="preference_java_title">Ajustări Java</string>
+    <string name="preference_java_description">Java Runtimes, argumente JVM, cantitate RAM și sandbox</string>
     <string name="preference_misc_title">Setări diverse</string>
+    <string name="preference_misc_description">Verifică lista de versiuni și biblioteciile de cod</string>
+    <string name="preference_experimental_description">Folosiți aceste opțiuni cu grijă, nu oferim suport tehnic</string>
     <string name="preference_sustained_performance_title">Activează modul de performanță susținută</string>
+    <string name="preference_sustained_performance_description">Limitează throttling-ul termic prin limitarea performanței maxime.</string>
+    <string name="preference_force_vsync_title">Activează forțat VSync</string>
+    <string name="preference_force_vsync_description">Limitează throttling-ul termic prin limitarea performanței maxime.</string>
+    <string name="preference_force_english_title">Forțează limba Engleză</string>
+    <string name="preference_force_english_description">Vă permite vizualizarea string-urilor originale, așa cum au intenționat dezvoltatorii. Necesită repornirea programului.</string>
     <string name="preference_edit_controls_title">Editare controale personalizate</string>
+    <string name="preference_edit_controls_summary">Modifică schema de control după bunul plac.</string>
+    <string name="preference_category_gyro_controls">Controale giroscopice</string>
     <string name="preference_gyro_invert_x_axis">Inversează axa X</string>
     <string name="preference_gyro_invert_y_axis">Inversează axa Y</string>
+    <string name="preference_gyro_invert_x_axis_description">Inversează axa orizontală.</string>
+    <string name="preference_gyro_invert_y_axis_description">Inversează axa verticală.</string>
+    <string name="preference_gyro_smoothing_title">Activează stabilizarea giroscopului</string>
+    <string name="preference_gyro_smoothing_description">Redu jitterul în defavoarea latenței.</string>
     <string name="preference_back_title">Înapoi la ultimul ecran</string>
     <string name="unnamed">Fără nume</string>
     <string name="profiles_latest_snapshot">Ultimul snapshot</string>
     <string name="profiles_latest_release">Ultima versiune stabilă</string>
     <string name="profiles_profile_name">Nume</string>
     <string name="global_delete">Șterge</string>
+    <string name="pedit_java_runtime">Java Runtime</string>
     <string name="pedit_renderer">Randator</string>
     <string name="arc_capes_title">Pelerine Cosmetica</string>
     <string name="arc_capes_desc">Activează pelerinele de la Cosmetica (anterior Arc). Pentru mai multe informații, vizitează https://cosmetica.cc. Necesită OptiFine.</string>
+    <string name="notif_channel_name">General</string>
     <string name="lazy_service_default_title">Serviciu Amethyst prim-plan</string>
     <string name="mcl_setting_veroption_installed">Instalat</string>
     <string name="use_global_default">(Utilizare implicită globală)</string>
+    <string name="default_control">Controlmap prestabilit</string>
     <string name="progresslayout_tasks_in_progress">%d sarcini în curs</string>
     <string name="notification_terminate">Termină</string>
     <string name="notification_game_runs">Jocul rulează!</string>
     <string name="folder_dialog_create">Creează</string>
     <string name="folder_dialog_insert_name">Introduceți numele dosarului</string>
+    <string name="folder_fragment_create">Creează dosar</string>
+    <string name="folder_fragment_select">Selectează dosar</string>
     <string name="main_login_done">Autentificare finalizată</string>
     <string name="main_add_account">Adăugați un cont</string>
     <string name="tasks_ongoing">Sarcinile sunt în desfășurare, vă rugăm așteptați</string>
@@ -154,9 +234,14 @@
     <string name="minecraft_not_owned">Se pare că acest cont nu are un profil de Minecraft. Dacă aveți Xbox Game Pass, vă rugăm să vă autentificați pe https://minecraft.net/ și să-l configurați.</string>
     <string name="xerr_not_available">Xbox Live nu este disponibil în ţara dumneavoastră</string>
     <string name="preference_enable_gyro_title">Permite controalele gyroscopului</string>
+    <string name="preference_enable_gyro_description">Activând această opțiune te vei putea întoarce în joc rotindu-ți telefonul.</string>
     <string name="preference_gyro_sensitivity_title">Controalele tiroscopului controlează sensibilitatea</string>
+    <string name="preference_gyro_sensitivity_description">Ajustează sensibilitatea controlului giroscopic.</string>
+    <string name="toast_turn_on_gyro">Activează controlul giroscopic pentru a folosi asta!</string>
     <string name="preference_gyro_sample_rate_title">Rata de eşantionare giroscopică</string>
+    <string name="preference_gyro_sample_rate_description">Dacă aveți probleme de performanță cu controlul giroscopic, creșteți valoarea aceasta.</string>
     <string name="microsoft_login_retry_later">Prea multe solicitări, vă rugăm să încercaţi din nou mai târziu.</string>
+    <string name="storage_required">Amethyst necesită conectarea unui mediu de stocare externă. Reconectează-l și restartează aplicația.</string>
     <string name="preference_shader_dump_title">Activează dumping pentru shader</string>
     <string name="customctrl_editor_exit_title">Părăsiți?</string>
     <string name="customctrl_editor_exit_msg">Sunteți sigur că doriți să ieșiți?</string>
@@ -169,5 +254,7 @@
     <string name="preference_category_java_tweaks">Ajustări Java</string>
     <string name="preference_category_miscellaneous">Setări diverse</string>
     <string name="controller_button_select">Selectați</string>
+    <string name="customctrl_visibility_title">Vizibilitate</string>
     <string name="preference_experimental_title">Lucruri experimentale</string>
+    <string name="app_short_name">Amethyst</string>
 </resources>

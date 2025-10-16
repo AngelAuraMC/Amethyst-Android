@@ -405,11 +405,25 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="mg_renderer_title_computeShaderext">Kísérleti Compute Shader bővítmény reklámozása</string>
     <string name="mg_renderer_summary_computeShaderext">Ez segíthet a shaderpackok összeomlásain ellen. Kikapcsolható, ha nem szükséges.</string>
     <string name="app_short_name">Ametiszt</string>
+    <string name="demo_versions_supported">Csakis Vanilla 1.3.1 vagy újabb verziók támogatják a demó fiókokat</string>
+    <string name="demo_unsupported">Demó Profil nem támogatott</string>
+    <string name="change_account">Válts egy másik fiókot a funkió használatához</string>
     <string name="no_minecraft_account_found">Egy Minecraft fiók sem található</string>
+    <string name="feature_requires_java_account">Ehhez a funkcióhoz egy olyan Microsoft fiókot igényel, ami a Minecraft Java Edition licenszet tartalmazza.</string>
+    <string name="delete_account_and_login">Fiók törlése, majd bejelentkezés</string>
     <string name="login_again">Kérlek, jelentkezz be újra</string>
+    <string name="account_corrupted">A kiválasztott fiók sérült</string>
     <string name="modloader_dl_install_neoforge">Neoforge profil létrehozása</string>
     <string name="neoforge_dl_select_version">Neoforge verzió kiválasztása</string>
     <string name="neoforge_dl_no_installer">Sajnáljuk, de ez a NeoForge verziónak nincsen beépített telepítője, ami még nem támogatott.</string>
     <string name="preference_category_touchcontroller_settings">TouchController beállítások</string>
+    <string name="preference_force_enable_touchcontroller_title">TouchController engedélyezésének kényszerítése</string>
     <string name="preference_touchcontroller_vibrate_length_title">TouchController rezgésének hossza</string>
+    <string name="preference_ask_for_microphone_title">Mikrofon engedélyezése</string>
+    <string name="preference_ask_for_microphone_description">Kattints ide az értesítési engedély újbóli kéréséhez, ami a Voice Chat modokhoz, például a \"Simple Voice Chat\" modhoz szükséges.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Engedélyezheti a Legacy4J régebbi verzióit az SDL backend használatához</string>
+    <string name="mcl_gamepad_forcedSDL">Kényszerítve elindítja az SDL kontroller-kezelést</string>
+    <string name="preference_category_SDL_settings">SDL Beállítások</string>
+    <string name="oldL4JFound">Egy Legacy4J verziót használsz, ami nem tartalmazza az Android-javításokat! Engedélyezned kell az SDL-t manuálisan a kontroller beállításaiban a legjobb élményért!</string>
+    <string name="global_warning">Figyelem!</string>
 </resources>
