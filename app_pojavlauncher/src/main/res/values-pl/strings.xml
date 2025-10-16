@@ -405,9 +405,9 @@
     <string name="mg_renderer_title_angleDepthClearFixMode">Napraw przechodzenie przez bloki przedmiotów trzymanych w ręku</string>
     <string name="mg_renderer_summary_angleDepthClearFixMode">Dotyczy tylko ANGLE, może wpływać na wydajność.</string>
     <string name="preference_experimental_title">Rzeczy eksperymentalne</string>
-    <string name="mg_renderer_title_gl43exts">Udawaj eksperymentalne rozszerzenia OpenGL 4.3</string>
+    <string name="mg_renderer_title_gl43exts">Zgłaszaj eksperymentalne rozszerzenia OpenGL 4.3</string>
     <string name="mg_renderer_summary_gl43exts">Może pomóc w przypadku awarii modyfikacji. Jeśli nie jest potrzebne, wyłącz go, ponieważ może powodować awarie.</string>
-    <string name="mg_renderer_title_computeShaderext">Udawaj eksperymentalne rozszerzenia Compute Shaderów</string>
+    <string name="mg_renderer_title_computeShaderext">Zgłaszaj eksperymentalne rozszerzenie shaderów obliczeniowych</string>
     <string name="mg_renderer_summary_computeShaderext">Może pomóc w przypadku problemów z shaderpackami. Jeśli nie jest potrzebne, wyłącz je, ponieważ może powodować awarie.</string>
     <string name="mg_renderer_title_multidrawCompute">Użyj emulacji obliczeniowej Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Wykorzystuje shadery obliczeniowe do emulacji Multidraw</string>
@@ -437,5 +437,8 @@
     <string name="oldL4JFound">Korzystasz z wersji Legacy4J bez poprawek dla systemu Android! Aby zapewnić sobie najlepsze wrażenia, należy ręcznie włączyć SDL w ustawieniach kontrolera!</string>
     <string name="global_warning">Uwaga!</string>
     <string name="controllableFound">Obecnie modyfikacja Controllable ma losową szansę na awarię podczas uruchamiania. Możesz próbować ponownie i liczyć na to, że gra się uruchomi, lub użyć innej modyfikacji, takiej jak Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Zgłaszaj eksperymentalne rozszerzenie bezpośredniego dostępu do stanu (DSA)</string>
+    <string name="mg_renderer_summary_dsaExt">Może pomóc w przypadku shaderpacków Iris, wymaganych dla modyfikacji AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">Skalowanie AMD FSR 1</string>
+    <string name="autorendererselectfailed">Nie udało się wybrać automatycznego silnika renderującego; ustawiono domyślnie HolyGL4ES</string>
 </resources>
