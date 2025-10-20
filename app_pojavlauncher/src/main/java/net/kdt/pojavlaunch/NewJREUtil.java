@@ -141,7 +141,7 @@ public class NewJREUtil {
                 activity.getString(R.string.multirt_nocompatiblert, verInfo.javaVersion.majorVersion));
     }
 
-    private enum InternalRuntime {
+    public enum InternalRuntime {
         JRE_17(17, "Internal-17", "components/jre-new"),
         JRE_21(21, "Internal-21", "components/jre-21");
         public final int majorVersion;
