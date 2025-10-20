@@ -91,13 +91,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: app.apk
-          path: out/app.apk
-
-      - name: Upload APK hash
-        uses: actions/upload-artifact@v4
-        with:
-          name: app.apk.sha256
-          path: out/app.apk.sha256
+          path: out/app.apk*
 
       - name: Upload AAB
         uses: actions/upload-artifact@v4
