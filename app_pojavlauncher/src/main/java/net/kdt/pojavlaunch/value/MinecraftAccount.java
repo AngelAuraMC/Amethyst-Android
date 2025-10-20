@@ -46,10 +46,18 @@ public class MinecraftAccount {
     }
 
     public boolean isLocal(){
+        return false;
+    }
+    
+    public boolean isLocalReal(){
         return accessToken.equals("0") && !username.startsWith("Demo.");
     }
 
     public boolean isDemo(){
+        return false;
+    }
+    
+    public boolean isDemoReal(){
         return username.startsWith("Demo.");
     }
     
