@@ -248,7 +248,6 @@
     <string name="create_profile">Створити новий профіль</string>
     <string name="preference_shader_dump_title">Увімкнути вивантажування шейдерів</string>
     <string name="preference_shader_dump_description">Записувати дані про перетворені шейдери у файл журналу.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d мс</string>
     <string name="customctrl_editor_exit_title">Вийти?</string>
     <string name="customctrl_editor_exit_msg">Ви дійсно бажаєте вийти?</string>

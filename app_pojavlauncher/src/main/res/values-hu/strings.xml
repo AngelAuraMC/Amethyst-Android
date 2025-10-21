@@ -248,7 +248,6 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="create_profile">Új profil létrehozása</string>
     <string name="preference_shader_dump_title">Shader dumping engedélyezése</string>
     <string name="preference_shader_dump_description">A naplókat átkonvertálta a shadereket a naplófájlba.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Biztosan kilépsz?</string>
     <string name="customctrl_editor_exit_msg">Biztosan ki akarsz lépni?</string>

@@ -234,7 +234,6 @@
     <string name="mcl_setting_subtitle_buttonallcaps">השבת אפשרות זו אם ברצונך להשתמש באותיות קטנות בבקרים שלך.</string>
     <string name="preference_shader_dump_title">אפשר השלכת הצללה</string>
     <string name="preference_shader_dump_description">רישום הצללות שהומרו לקובץ ה log.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d מ\"ש</string>
     <string name="customctrl_editor_exit_title">עזיבה?</string>
     <string name="customctrl_editor_exit_msg">האם אתה בטוח שברצונך לצאת?</string>

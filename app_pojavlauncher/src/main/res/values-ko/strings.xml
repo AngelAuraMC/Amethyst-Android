@@ -243,7 +243,6 @@
     <string name="mcl_setting_subtitle_buttonallcaps">컨트롤 버튼 문자에 소문자를 사용하려면 이것을 비활성화하세요.</string>
     <string name="preference_shader_dump_title">쉐이더 덤핑 활성화</string>
     <string name="preference_shader_dump_description">쉐이더 변환 결과를 로그 파일로 저장.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">나가시겠습니까?</string>
     <string name="customctrl_editor_exit_msg">정말로 나가시겠습니까?</string>

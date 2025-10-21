@@ -246,7 +246,6 @@
     <string name="create_profile">Cipta profail baharu</string>
     <string name="preference_shader_dump_title">Dayakan pelonggokkan pembayang</string>
     <string name="preference_shader_dump_description">Log pembayang yang ditukar ke dalam fail log.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Ingin keluar?</string>
     <string name="customctrl_editor_exit_msg">Adakah anda pasti anda mahu keluar?</string>

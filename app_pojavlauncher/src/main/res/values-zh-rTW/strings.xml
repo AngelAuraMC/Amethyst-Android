@@ -247,7 +247,6 @@
     <string name="create_profile">創建新的檔案</string>
     <string name="preference_shader_dump_title">啟用著色器輸出</string>
     <string name="preference_shader_dump_description">記錄切換的著色器到記錄檔中。</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d 毫秒</string>
     <string name="customctrl_editor_exit_title">離開？</string>
     <string name="customctrl_editor_exit_msg">您確定要退出？</string>

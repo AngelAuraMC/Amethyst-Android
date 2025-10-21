@@ -246,7 +246,6 @@
     <string name="create_profile">Tạo hồ sơ mới</string>
     <string name="preference_shader_dump_title">Bật tính năng xuất shader</string>
     <string name="preference_shader_dump_description">Ghi các shader đã chuyển đổi vào tệp nhật ký.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Thoát?</string>
     <string name="customctrl_editor_exit_msg">Bạn có chắc chắn muốn thoát không?</string>

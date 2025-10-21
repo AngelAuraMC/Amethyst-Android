@@ -279,7 +279,7 @@
     <string name="create_profile">Create new profile</string>
     <string name="preference_shader_dump_title">Enable shader dumping</string>
     <string name="preference_shader_dump_description">Log converted shaders into the log file.</string>
-    <string name="percent_format">%d%%</string>
+    <string name="percent_format" translatable="false">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Leaving?</string>
     <string name="customctrl_editor_exit_msg">Are you sure you want to exit?</string>

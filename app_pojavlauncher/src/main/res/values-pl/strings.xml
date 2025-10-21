@@ -248,7 +248,6 @@
     <string name="create_profile">Utwórz nowy profil</string>
     <string name="preference_shader_dump_title">Włącz dumping shaderów</string>
     <string name="preference_shader_dump_description">Zapisuje przekonwertowane shadery w pliku dziennika.</string>
-    <string name="percent_format">%d%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Wychodzisz?</string>
     <string name="customctrl_editor_exit_msg">Czy na pewno chcesz wyjść?</string>

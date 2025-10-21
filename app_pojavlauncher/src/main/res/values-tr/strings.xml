@@ -246,7 +246,6 @@
     <string name="create_profile">Yeni profil oluştur</string>
     <string name="preference_shader_dump_title">Gölgelendirici bilgi göstergesini etkinleştir</string>
     <string name="preference_shader_dump_description">Dönüştürülen shader\'ları günlük dosyasına (log\'a) kaydedin.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Çıkılsın mı?</string>
     <string name="customctrl_editor_exit_msg">Çıkmak istediğinizden emin misiniz?</string>

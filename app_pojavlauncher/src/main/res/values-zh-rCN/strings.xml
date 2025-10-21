@@ -250,7 +250,6 @@
     <string name="create_profile">创建新的配置</string>
     <string name="preference_shader_dump_title">启用着色器输出</string>
     <string name="preference_shader_dump_description">记录切换的着色器到日志文件中。</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d 毫秒</string>
     <string name="customctrl_editor_exit_title">离开？</string>
     <string name="customctrl_editor_exit_msg">您确定要退出？</string>

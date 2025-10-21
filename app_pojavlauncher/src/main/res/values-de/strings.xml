@@ -245,7 +245,6 @@
     <string name="mcl_setting_subtitle_buttonallcaps">Deaktivieren, um Kleinbuchstaben für die Steuerung zu verwenden.</string>
     <string name="preference_shader_dump_title">Shader-Dumping aktivieren</string>
     <string name="preference_shader_dump_description">Konvertierte Shader mit in die Protokolldatei schreiben.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Gehst Du?</string>
     <string name="customctrl_editor_exit_msg">Wollen Sie das Spiel wirklich beenden?</string>
