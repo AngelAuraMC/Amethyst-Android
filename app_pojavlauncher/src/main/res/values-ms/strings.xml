@@ -140,6 +140,8 @@
     <string name="dl_library_sha_fail">Pustaka %s ini rosak dan akan dimuat turun semula</string>
     <string name="dl_library_sha_unknown">Pustaka %s tidak boleh diperiksa, harus menganggap bahawa ianya baik</string>
     <string name="dl_library_sha_pass">Pustaka %s adalah baik dan boleh digunakan</string>
+    <string name="mcl_gamepad_SDL">Dayakan bahagian belakang pengawal SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Mendayakan bahagian belakang pengawal SDL. Mempunyai sokongan mod yang lebih baik. Akan kembali menggunakan GLFW jika SDL tidak digunakan.</string>
     <string name="mcl_disable_gestures">Nyahdayakan gerak isyarat</string>
     <string name="mcl_disable_gestures_subtitle">Menyahdayakan gerak isyarat, seperti menahan untuk menhancurkan blok, dan tekan untuk meletakkan blok.</string>
     <string name="mcl_disable_swap_hand">Naydaya ketik dua kali untuk bertukar tangan</string>
@@ -246,7 +248,6 @@
     <string name="create_profile">Cipta profail baharu</string>
     <string name="preference_shader_dump_title">Dayakan pelonggokkan pembayang</string>
     <string name="preference_shader_dump_description">Log pembayang yang ditukar ke dalam fail log.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Ingin keluar?</string>
     <string name="customctrl_editor_exit_msg">Adakah anda pasti anda mahu keluar?</string>
@@ -427,4 +428,16 @@
     <string name="preference_touchcontroller_vibrate_length_title">Panjang getaran TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Menetapkan panjang getaran apabila menggunakan TouchController.</string>
     <string name="error_vanilla_json_corrupt">Json vanila nampaknya rosak. Sila hantar laporan pepijat pada github atau discord.</string>
+    <string name="preference_ask_for_microphone_title">Benarkan mikrofon</string>
+    <string name="preference_ask_for_microphone_description">Klik untuk meminta semula kebenaran pemberitahuan, diperlukan untuk mod perbualan suara seperti Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Boleh membenarkan versi lama Legacy4J menggunakan bahagian belakang SDL</string>
+    <string name="mcl_gamepad_forcedSDL">Mulakan pengendalian pengawal SDL secara paksa</string>
+    <string name="preference_category_SDL_settings">Tetapan SDL</string>
+    <string name="oldL4JFound">Anda sedang menggunakan versi Legacy4J tanpa pembaikan untuk android! Anda perlu mendayakan SDL secara manual dalam tetapan pengawal untuk mendapatkan pengalaman terbaik!</string>
+    <string name="global_warning">Amaran!</string>
+    <string name="controllableFound">Controllable pada masa ini mempunyai peluang rawak untuk ranap semasa pelancaran. Sama ada terus mencuba lagi dan berharap ia dilancarkan atau gunakan mod lain seperti Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Gunakan sambungan Direct State Access Uji Kaji</string>
+    <string name="mg_renderer_summary_dsaExt">Boleh membantu dengan pek pembayang Iris, diperlukan untuk mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 Upscaling</string>
+    <string name="autorendererselectfailed">Pilihan pemapar automatik gagal, akan lalai kepada HolyGL4ES</string>
 </resources>
