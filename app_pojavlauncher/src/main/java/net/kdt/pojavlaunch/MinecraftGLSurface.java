@@ -14,6 +14,7 @@ import android.graphics.SurfaceTexture;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -413,6 +414,14 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         // Initial size set. Request immedate refresh, otherwise the initial width and height for the game
         // may be broken/unknown.
         refreshSize(true);
+        // Ensures we run at correct refresh rate (should also NOT change the resolution being used)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            float maxHz = 120f; // Set to 120 by default just to be safe
+            for (float altHz : getDisplay().getMode().getAlternativeRefreshRates()) {
+                maxHz = Math.max(maxHz, altHz);
+            }
+            surface.setFrameRate(maxHz, Surface.FRAME_RATE_COMPATIBILITY_DEFAULT, Surface.CHANGE_FRAME_RATE_ONLY_IF_SEAMLESS);
+        }
 
         //Load Minecraft options:
         MCOptionUtils.set("fullscreen", "off");

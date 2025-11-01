@@ -1019,6 +1019,12 @@ public final class Tools {
         for (DependentLibrary libItem: info.libraries) {
             if(!checkRules(libItem.rules)) continue;
             libDir.add(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(libItem));
+            // Mitigation: Babric doesn't use asm-all for some reason so it does a classpath conflict
+            if (libItem.name.startsWith("org.ow2.asm:asm") && !libItem.name.startsWith("org.ow2.asm:asm-all:")){
+                libDir.remove(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(new DependentLibrary(){{
+                    name = "org.ow2.asm:asm-all:5.0.4";
+                }} ));
+            }
         }
         return libDir.toArray(new String[0]);
     }
