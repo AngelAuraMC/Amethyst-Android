@@ -248,7 +248,6 @@
     <string name="create_profile">Створити новий профіль</string>
     <string name="preference_shader_dump_title">Увімкнути вивантажування шейдерів</string>
     <string name="preference_shader_dump_description">Записувати дані про перетворені шейдери у файл журналу.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d мс</string>
     <string name="customctrl_editor_exit_title">Вийти?</string>
     <string name="customctrl_editor_exit_msg">Ви дійсно бажаєте вийти?</string>
@@ -288,7 +287,7 @@
     <string name="create_profile_optifine">Створити профіль OptiFine</string>
     <string name="hint_search_modpack">Пошук пакетів модів</string>
     <string name="preference_vulkan_driver_system_title">Використовувати систему драйверів Vulkan</string>
-    <string name="preference_vulkan_driver_system_description">Примусово запускати драйвер Vulkan замість Turnip на ГП Adreno. Упливає лише на Zink і моди, які використовують Vulkan.</string>
+    <string name="preference_vulkan_driver_system_description">Примусово запускати драйвер Vulkan замість Turnip на ГП Adreno. Впливає лише на Zink і моди, які використовують Vulkan.</string>
     <string name="generic_install">Установити</string>
     <string name="generic_apply">Застосувати</string>
     <string name="generic_debug">Налагодження</string>
@@ -403,7 +402,7 @@
     <string name="mg_renderer_summary_timerQueryExt">Виправляє випадкові збої, коли F3 відкрито на деяких пристроях Mali.</string>
     <string name="preference_ANGLE_only">Лише налаштування ANGLE</string>
     <string name="mg_renderer_title_angleDepthClearFixMode">Виправити проходження через блоки предмети</string>
-    <string name="mg_renderer_summary_angleDepthClearFixMode">Упливає лише на ANGLE, може вплинути на продуктивність.</string>
+    <string name="mg_renderer_summary_angleDepthClearFixMode">Впливає лише на ANGLE, може вплинути на продуктивність.</string>
     <string name="preference_experimental_title">Експериментальні штуки</string>
     <string name="mg_renderer_title_gl43exts">Сповіщення експериментів розширення OpenGL 4.3</string>
     <string name="mg_renderer_summary_gl43exts">Може допомогти зі збоями мода. Вимкніть, якщо не потрібно, це може призвести до збоїв.</string>
