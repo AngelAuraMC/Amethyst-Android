@@ -246,7 +246,6 @@
     <string name="create_profile">Buat profil baru</string>
     <string name="preference_shader_dump_title">Aktifkan shader dumping</string>
     <string name="preference_shader_dump_description">Simpan catatan shader ke sebuah berkas.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Meninggalkan?</string>
     <string name="customctrl_editor_exit_msg">Anda yakin ingin keluar?</string>
