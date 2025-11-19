@@ -125,10 +125,10 @@
     <string name="customctrl_stroke_width">描邊寬度</string>
     <string name="customctrl_stroke_color">描邊顏色</string>
     <string name="customctrl_button_opacity">按鈕不透明度</string>
-    <string name="customctrl_addbutton">添加按鈕</string>
+    <string name="customctrl_addbutton">新增按鈕</string>
     <string name="customctrl_addbutton_drawer">添加組合按鈕</string>
-    <string name="customctrl_addbutton_joystick">添加搖桿</string>
-    <string name="customctrl_addsubbutton">添加子按鈕</string>
+    <string name="customctrl_addbutton_joystick">新增搖桿</string>
+    <string name="customctrl_addsubbutton">新增子按鈕</string>
     <string name="customctrl_selectdefault">選擇預設控制鍵位</string>
     <string name="customctrl_export">匯出控制鍵位</string>
     <string name="main_share_logs">分享記錄檔</string>
@@ -222,7 +222,7 @@
     <string name="folder_fragment_create">建立資料夾</string>
     <string name="folder_fragment_select">選擇此資料夾</string>
     <string name="main_login_done">登入成功</string>
-    <string name="main_add_account">新增帳戶</string>
+    <string name="main_add_account">新增帳號</string>
     <string name="tasks_ongoing">任務進行中，請稍候</string>
     <string name="no_saved_accounts">沒有已保存的帳號</string>
     <string name="mc_download_failed">Minecraft 下載失敗！
@@ -247,7 +247,6 @@
     <string name="create_profile">創建新的檔案</string>
     <string name="preference_shader_dump_title">啟用著色器輸出</string>
     <string name="preference_shader_dump_description">記錄切換的著色器到記錄檔中。</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d 毫秒</string>
     <string name="customctrl_editor_exit_title">離開？</string>
     <string name="customctrl_editor_exit_msg">您確定要退出？</string>
