@@ -239,7 +239,6 @@
     <string name="mcl_setting_subtitle_buttonallcaps">Désactivez cette option si vous souhaitez utiliser des lettres minuscules dans vos contrôles.</string>
     <string name="preference_shader_dump_title">Activer le dumping du shader</string>
     <string name="preference_shader_dump_description">Enregistre les shaders convertis dans le fichier journal.</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d%%</string>
     <string name="customctrl_editor_exit_title">Partir?</string>
     <string name="customctrl_editor_exit_msg">Êtes-vous sûr·e de vouloir quitter?</string>
