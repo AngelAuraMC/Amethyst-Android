@@ -440,4 +440,5 @@
     <string name="mg_renderer_summary_dsaExt">Може допомогти з пакетами шейдерів Iris, необхідними для мода AcceleratedRendering.</string>
     <string name="mg_renderer_title_fsr">Масштабування AMD FSR 1</string>
     <string name="autorendererselectfailed">Помилка автовибору промальовування, скидання до HolyGL4ES</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) — усі версії, посередній</string>
 </resources>
