@@ -239,7 +239,6 @@
     <string name="mcl_setting_subtitle_buttonallcaps">ปิดการใช้งานนี้หากคุณต้องการใช้อักษรตัวพิมพ์เล็กในการควบคุมของคุณ</string>
     <string name="preference_shader_dump_title">เปิดใช้งานบันทึกข้อมูลเชเดอร์</string>
     <string name="preference_shader_dump_description">บันทึกการแปลงเชเดอร์ลงในไฟล์บันทึก</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d มิลลิวินาที</string>
     <string name="customctrl_editor_exit_title">ออก?</string>
     <string name="customctrl_editor_exit_msg">คุณแน่ใจหรือไม่ว่าต้องการออก</string>
