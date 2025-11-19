@@ -243,7 +243,6 @@
     <string name="create_profile">Создать новый профиль</string>
     <string name="preference_shader_dump_title">Сохранять дамп шейдеров</string>
     <string name="preference_shader_dump_description">Записывать в файл журнала данные о конвертации шейдеров.</string>
-    <string name="percent_format">%d %%</string>
     <string name="millisecond_format">%d мс</string>
     <string name="customctrl_editor_exit_title">Выйти?</string>
     <string name="customctrl_editor_exit_msg">Вы действительно хотите выйти?</string>
