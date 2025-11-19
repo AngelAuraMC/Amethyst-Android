@@ -215,7 +215,6 @@
     <string name="storage_required">PojavLauncherを使用するには外部ストレージが必要です。外部ストレージを接続してアプリを起動しなおしてください。</string>
     <string name="preference_shader_dump_title">シェーダーダンプをオンにする</string>
     <string name="preference_shader_dump_description">変換されたシェーダーをログファイルに記録します。</string>
-    <string name="percent_format">%d%%</string>
     <string name="customctrl_editor_exit_title">終了しますか？</string>
     <string name="customctrl_editor_exit_msg">本当に終了しますか？</string>
     <string name="customctrl_editor_exit">編集を中止する</string>
