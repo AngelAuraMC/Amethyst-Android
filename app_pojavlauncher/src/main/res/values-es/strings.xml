@@ -232,7 +232,6 @@
     <string name="create_profile">Crear un nuevo perfil</string>
     <string name="preference_shader_dump_title">Activar dumpeo de shaders</string>
     <string name="preference_shader_dump_description">Registra shaders compilados (sic).</string>
-    <string name="percent_format">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">¿Vas a salir?</string>
     <string name="customctrl_editor_exit_msg">¿Estás seguro de que quieres salir?</string>
