@@ -432,4 +432,5 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="mg_renderer_summary_dsaExt">Kann bei Iris-Shaderpacks helfen, die für den AcceleratedRendering-Mod erforderlich sind</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 Hochskalierung</string>
     <string name="autorendererselectfailed">Auswahl des Auto-Renderers fehlgeschlagen, Standard ist HolyGL4ES</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (alle Versionen, Mitte)</string>
 </resources>
