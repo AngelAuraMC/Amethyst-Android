@@ -3,6 +3,11 @@
     "(Default)": {
       "name": "(Default)",
       "lastVersionId": "1.7.10"
+    },
+    "GitHubCopilot": {
+      "name": "GitHubCopilot",
+      "uuid": "123e4567-e89b-12d3-a456-426614174000",
+      "lastVersionId": "1.7.10"
     }
   },
   "selectedProfile": "(Default)"
