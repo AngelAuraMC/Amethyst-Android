@@ -208,6 +208,9 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             if(minecraftProfile.pojavRendererName != null) {
                 Log.i("RdrDebug","__P_renderer="+minecraftProfile.pojavRendererName);
                 Tools.LOCAL_RENDERER = minecraftProfile.pojavRendererName;
+                // TODO: Remove this jank when it's not relevant anymore
+                // Shitty hack to make OSMZink smoothly transition into kopper
+                if (minecraftProfile.pojavRendererName.equals("vulkan_zink")) Tools.LOCAL_RENDERER = "opengles3_desktopgl_zink_kopper";
             }
 
             setTitle("Minecraft " + minecraftProfile.lastVersionId);

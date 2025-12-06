@@ -174,6 +174,9 @@ android {
         jniLibs {
             useLegacyPackaging = true
         }
+        doNotStrip += [
+                "**/libcutils.so"
+        ]
         pickFirst '**/libbytehook.so'
     }
 
@@ -187,7 +190,7 @@ android {
 
 afterEvaluate {
     // Explicit dependencies for which the apk relies on
-    tasks.mergeDebugAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":jre_lwjgl3glfw:jar")
+    tasks.mergeDebugAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":lwjgl2_methods_injector:jar", ":jre_lwjgl3glfw:jar")
 }
 
 dependencies {

@@ -42,6 +42,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
     public static final String TAG = "ProfileEditorFragment";
@@ -164,6 +165,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mTempProfile == null){
             mTempProfile = getProfile(profile);
         }
+        // TODO: Remove this jank when it's not relevant anymore
+        // Shitty hack to make OSMZink smoothly transition into kopper
+        if ("vulkan_zink".equals(mTempProfile.pojavRendererName)) mTempProfile.pojavRendererName = "opengles3_desktopgl_zink_kopper";
         mProfileIcon.setImageDrawable(
                 ProfileIconCache.fetchIcon(getResources(), mProfileKey, mTempProfile.icon)
         );

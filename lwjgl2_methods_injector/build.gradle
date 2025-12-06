@@ -1,0 +1,27 @@
+plugins {
+    id 'java-library'
+    id("com.gradleup.shadow") version "9.2.2"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jar {
+    archiveBaseName.set("lwjgl2_methods_injector")
+    manifest {
+        attributes("Manifest-Version": "1.0",
+                "PreMain-Class": "org.angelauramc.lwjgl2_methods_injector.startInjectors",
+                "Can-Redefine-Classes": "true")
+    }
+    if (gitUsed()){
+      File versionFile = file("../app_pojavlauncher/src/main/assets/components/lwjgl2_methods_injector/version")
+      versionFile.write(getGitHash(project.projectDir))
+    }
+    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl2_methods_injector/"))
+}
+
+dependencies {
+    compileOnly 'org.ow2.asm:asm:9.9'
+}
