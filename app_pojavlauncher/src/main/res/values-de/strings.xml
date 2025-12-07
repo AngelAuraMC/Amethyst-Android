@@ -348,6 +348,7 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="log_view_label_log_output">Protokoll-Ausgabe:</string>
     <string name="execute_jar_failed_to_read_file">Fehler beim Lesen der .jar-Datei</string>
     <string name="execute_jar_incompatible_runtime">Die Ausführung der .jar-Funktion ist nicht kompatibel mit Java %d</string>
+    <string name="controller_button_start">Start</string>
     <string name="controller_button_select">Auswählen</string>
     <string name="controller_button_trigger_left">Linker Trigger</string>
     <string name="controller_button_trigger_right">Rechter Trigger</string>
