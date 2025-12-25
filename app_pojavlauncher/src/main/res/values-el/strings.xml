@@ -298,4 +298,5 @@
     <string name="newdl_starting">Ανάγνωση μεταδεδομένων παιχνιδιού…</string>
     <string name="newdl_downloading_metadata">Λήψη μεταδεδομένων παιχνιδιού (%s)</string>
     <string name="preference_experimental_title">Πειραματικές αντικείμενα</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
