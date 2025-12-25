@@ -441,4 +441,5 @@
     <string name="mg_renderer_title_fsr">Масштабування AMD FSR 1</string>
     <string name="autorendererselectfailed">Помилка автовибору промальовування, скидання до HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) — усі версії, посередній</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
