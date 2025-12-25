@@ -423,11 +423,11 @@
     <string name="modloader_dl_install_neoforge">创建 NeoForge 配置</string>
     <string name="neoforge_dl_select_version">选择 NeoForge 版本</string>
     <string name="neoforge_dl_no_installer">抱歉，此版本的 NeoForge 没有安装程序，尚不支持。</string>
-    <string name="preference_category_touchcontroller_settings">触屏控制器设置</string>
-    <string name="preference_force_enable_touchcontroller_title">强制启用触屏控制器</string>
-    <string name="preference_force_enable_touchcontroller_description">即使未找到模组文件，也强制启用触屏控制器集成。</string>
-    <string name="preference_touchcontroller_vibrate_length_title">触屏控制器振动时长</string>
-    <string name="preference_touchcontroller_vibrate_length_description">设置使用触屏控制器时的振动时长。</string>
+    <string name="preference_category_touchcontroller_settings">TouchController 模组设置</string>
+    <string name="preference_force_enable_touchcontroller_title">强制启用 TouchController 模组</string>
+    <string name="preference_force_enable_touchcontroller_description">即使未找到模组文件，也强制启用 TouchController 集成。</string>
+    <string name="preference_touchcontroller_vibrate_length_title">TouchController 振动时长</string>
+    <string name="preference_touchcontroller_vibrate_length_description">设置使用 TouchController 时的振动时长。</string>
     <string name="error_vanilla_json_corrupt">原版 JSON 似乎已损坏。请在 GitHub 或 Discord 上提交错误报告。</string>
     <string name="preference_ask_for_microphone_title">允许麦克风</string>
     <string name="preference_ask_for_microphone_description">点击以重新请求通知权限，Simple Voice Chat 等语音聊天模组需要此权限。</string>
@@ -443,5 +443,10 @@
     <string name="autorendererselectfailed">自动渲染器选择失败，使用默认 HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink（Vulkan）—（可用于所有版本，速度中等）</string>
     <string name="sodium_warning_title">检测到 Sodium 模组！</string>
+    <string name="sodium_warning_message">你似乎正在使用 Sodium 模组，这是不受支持的，而且可能会导致图形问题或游戏崩溃。请移除 Sodium 及其所有依赖模组。</string>
+    <string name="delete_sodium">删除 Sodium 并启动</string>
+    <string name="sodium_override_title">强行运行 Sodium</string>
+    <string name="sodium_override_summaryOff">使用 Sodium 可能会导致视觉漏洞和游戏崩溃。特此警告。</string>
+    <string name="sodium_override_summaryOn">Sodium 模组不受支持。若你遇到任何问题，我们将不会提供任何帮助。</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
