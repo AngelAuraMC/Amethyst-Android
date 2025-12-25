@@ -441,5 +441,11 @@
     <string name="mg_renderer_title_fsr">Skalowanie AMD FSR 1</string>
     <string name="autorendererselectfailed">Nie udało się wybrać automatycznego silnika renderującego; ustawiono domyślnie HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (wszystkie wersje, średni)</string>
+    <string name="sodium_warning_title">Wykryto Sodium!</string>
+    <string name="sodium_warning_message">Wygląda na to, że używasz modyfikacji Sodium, która nie jest obsługiwana i może powodować problemy graficzne lub awarie gry. Usuń ją wraz ze wszystkimi powiązanymi modyfikacjami.</string>
+    <string name="delete_sodium">Usuń Sodium i uruchom grę</string>
+    <string name="sodium_override_title">Uruchom mimo wszystko z Sodium</string>
+    <string name="sodium_override_summaryOff">Używanie Sodium może powodować błędy wizualne i awarie gry. Uruchamiasz na własne ryzyko.</string>
+    <string name="sodium_override_summaryOn">Modyfikacja Sodium nie jest obsługiwana. W razie jakichkolwiek problemów nie udzielimy żadnej pomocy.</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
