@@ -231,4 +231,5 @@ if yu wanna use teh offishul download source, press "switch to offishul site" n 
     <string name="notification_permission_dialog_text">Punjabi launcher requirez a permisshun to post notifishunz to prevent game/modpack downloadz frum stoppin wen yu leev teh app. wifout dis permisshun, android may shut down ur downloadz wen yu put launcher in background mode stay open.</string>
     <string name="preference_ask_for_notification_description">click to re-request teh notifishun permisshun, required for game/modpack background downloadz to werk properly.</string>
     <string name="preference_vsync_in_zink_description">lowz teh launchur to use internal system apis to enable v-sync for zink.turn dis off if ur launchur suddnly crashz wif zink afta a system update</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
