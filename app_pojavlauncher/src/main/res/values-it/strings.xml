@@ -418,4 +418,5 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="preference_touchcontroller_vibrate_length_title">Durata vibrazione TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Impostare la lunghezza della vibrazione quando si utilizza TouchController.</string>
     <string name="error_vanilla_json_corrupt">Il Vanilla json sembra essere corrotto. Per favore invia una segnalazione bug su github o discord.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
