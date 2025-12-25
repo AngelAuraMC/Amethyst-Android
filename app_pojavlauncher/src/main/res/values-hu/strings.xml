@@ -425,4 +425,5 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="preference_category_SDL_settings">SDL Beállítások</string>
     <string name="oldL4JFound">Egy Legacy4J verziót használsz, ami nem tartalmazza az Android-javításokat! Engedélyezned kell az SDL-t manuálisan a kontroller beállításaiban a legjobb élményért!</string>
     <string name="global_warning">Figyelem!</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
