@@ -442,4 +442,5 @@
     <string name="mg_renderer_title_fsr">AMD FSR 1 升级</string>
     <string name="autorendererselectfailed">自动渲染器选择失败，使用默认 HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink（Vulkan）—（可用于所有版本，速度中等）</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
