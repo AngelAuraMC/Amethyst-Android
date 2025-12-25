@@ -394,4 +394,5 @@
     <string name="modloader_dl_install_neoforge">צור פרופיל Neoforge</string>
     <string name="neoforge_dl_select_version">בחר גרסת NeoForge</string>
     <string name="neoforge_dl_no_installer">מצטערים, לגרסה הזו של NeoForge אין מתקין, ולכן היא עדיין אינה נתמכת.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
