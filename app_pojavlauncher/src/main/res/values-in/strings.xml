@@ -426,4 +426,5 @@
     <string name="preference_touchcontroller_vibrate_length_title">Durasi getaran kontrol sentuh</string>
     <string name="preference_touchcontroller_vibrate_length_description">Atur durasi getaran saat menggunakan kontrol sentuh.</string>
     <string name="error_vanilla_json_corrupt">File JSON bawaan tampaknya rusak. Silakan kirim laporan bug di GitHub atau Discord.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
