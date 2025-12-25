@@ -347,4 +347,5 @@
     <string name="local_login_bad_username_text">O nome de usuário deve ter entre 3 a 16 caracteres, deve conter somente letras latinas, número de 0 a 9 e sublinhados.</string>
     <string name="quick_setting_title">Configurações rápidas</string>
     <string name="preference_experimental_title">Opções experimentais</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
