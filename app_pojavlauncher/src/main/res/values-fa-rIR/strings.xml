@@ -248,4 +248,5 @@
     <string name="preference_category_miscellaneous">تنظیمات متفرقه</string>
     <string name="controller_button_select">انتخاب</string>
     <string name="preference_experimental_title">چیز های تستی</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
