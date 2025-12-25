@@ -428,4 +428,5 @@
     <string name="error_vanilla_json_corrupt">Vanilla json se zdá být poškozen. Pošlete prosím zprávu o chybě na github nebo discord.</string>
     <string name="preference_ask_for_microphone_title">Povolit mikrofon</string>
     <string name="preference_ask_for_microphone_description">Kliknutím znovu požádáte o dotaz na oprávnění, které je vyžadováno pro módy s hlasovým vstupem jako je Simple Voice Chat.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
