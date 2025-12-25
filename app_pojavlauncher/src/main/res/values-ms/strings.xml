@@ -440,4 +440,5 @@
     <string name="mg_renderer_summary_dsaExt">Boleh membantu dengan pek pembayang Iris, diperlukan untuk mod AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 Upscaling</string>
     <string name="autorendererselectfailed">Pilihan pemapar automatik gagal, akan lalai kepada HolyGL4ES</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
