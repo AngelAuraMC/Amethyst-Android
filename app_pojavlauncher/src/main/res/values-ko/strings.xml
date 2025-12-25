@@ -10,16 +10,16 @@
     <!-- Hint -->
     <string name="hint_control_mapping">"상단 중앙 톱니바퀴 아이콘을 탭하여 상황에 맞는 메뉴를 엽니다. ⚙\n버튼을 탭하여 키바인드를 편집, 크기 조정, 삭제, 사용자 지정합니다"</string>
     <!-- Warnings -->
-    <string name="warning_remove_account">이 계정이 제거될 거예요!</string>
+    <string name="warning_remove_account">이 계정이 제거됩니다!</string>
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">모드 설치기를 선택하세요</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst에 예기치 못한 충돌이 발생했어요</string>
+    <string name="error_fatal">Amethyst에 예기치 못한 충돌이 발생했습니다</string>
     <string name="error_no_version">버전이 없습니다!</string>
     <string name="error_show_more">더 보기</string>
     <string name="error_show_less">간략히 보기</string>
     <!-- Toast messages -->
-    <string name="toast_permission_denied">저장소에 대한 읽고 쓰기 권한이 필요합니다!</string>
+    <string name="toast_permission_denied">저장소 읽기/쓰기 권한이 필요합니다!</string>
     <string name="toast_optifine_success">설치 완료</string>
     <!--
     <string name="toast_3">Exit</string>
@@ -35,7 +35,7 @@
     <string name="mcl_options">설정</string>
     <string name="mcl_option_customcontrol">사용자 지정 조작</string>
     <string name="mcl_setting_title_use_surface_view">대체 표면 렌더링 사용</string>
-    <string name="mcl_setting_subtitle_use_surface_view">GPU 바운드 상황에서 성능에 도움이 될 수 있습니다.</string>
+    <string name="mcl_setting_subtitle_use_surface_view">GPU 과부하 상황에서 성능에 도움이 될 수 있습니다.</string>
     <string name="mcl_setting_title_ignore_notch">노치 무시하기</string>
     <string name="mcl_setting_subtitle_ignore_notch">디스플레이 노치를 무시하여 더 넓은 화면으로 플레이할 수 있습니다.\n더 몰입감 있는 경험을 제공합니다.</string>
     <string name="mcl_setting_title_resolution_scaler">해상도 비율</string>
@@ -56,7 +56,7 @@
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17 이상 전용, 빠름)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17 이상 전용</string>
     <string name="mcl_setting_veroption_release">릴리즈</string>
-    <string name="mcl_setting_veroption_snapshot">스냅숏</string>
+    <string name="mcl_setting_veroption_snapshot">스냅샷</string>
     <string name="mcl_setting_veroption_oldalpha">구 알파</string>
     <string name="mcl_setting_veroption_oldbeta">구 베타</string>
     <string name="mcl_setting_java_sandbox">외부 .jar 실행</string>
@@ -349,6 +349,10 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="log_view_label_log_output">로그 출력:</string>
     <string name="execute_jar_failed_to_read_file">.jar 파일을 읽지 못했습니다</string>
     <string name="execute_jar_incompatible_runtime">Java %d는 .jar 실행 기능과 호환되지 않습니다</string>
+    <string name="controller_button_a">A</string>
+    <string name="controller_button_b">B</string>
+    <string name="controller_button_x">X</string>
+    <string name="controller_button_y">Y</string>
     <string name="controller_button_select">선택</string>
     <string name="controller_button_trigger_left">좌측 트리거</string>
     <string name="controller_button_trigger_right">우측 트리거</string>
@@ -425,9 +429,12 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="mcl_gamepad_forcedSDL_subtitle">이전 버전의 Legacy4J가 SDL 백엔드를 사용하도록 할 수 있습니다.</string>
     <string name="mcl_gamepad_forcedSDL">SDL 컨트롤러 핸들링 강제 시작</string>
     <string name="preference_category_SDL_settings">SDL 설정</string>
+    <string name="oldL4JFound">Android용 패치가 적용되지 않은 Legacy4J 버전을 사용 중입니다! 최적의 플레이 경험을 위해 컨트롤러 설정에서 SDL을 활성화해주세요.</string>
     <string name="global_warning">경고!</string>
+    <string name="controllableFound">현재 Controllable 사용 시 게임을 시작할 때 무작위로 충돌이 발생합니다. 정상적으로 시작될 때까지 재시도하거나 Controlify와 같은 대체 모드를 사용해 주시기 바랍니다.</string>
     <string name="mg_renderer_title_dsaExt">실험적인 Direct State Access 확장 사용</string>
     <string name="mg_renderer_summary_dsaExt">Iris 쉐이더팩 사용에 도움이 될 수 있습니다. AcceleratedRendering 모드 사용 시 필요합니다.</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 업스케일링</string>
     <string name="autorendererselectfailed">렌더러 자동 선택에 실패하여 HolyGL4ES가 대신 선택됩니다</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (모든 버전 호환, 중간)</string>
 </resources>
