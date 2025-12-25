@@ -349,4 +349,5 @@
     <string name="local_login_bad_username_text">يجب أن يكون اسم المستخدم بين 3–16 حرفاً، ويجب أن يحتوي فقط على أحرف لاتينية وأرقام 0-9 وتسطيرات سفلية.</string>
     <string name="quick_setting_title">قائمة الإعدادات السريعة</string>
     <string name="preference_experimental_title">أشياء تجريبية</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
