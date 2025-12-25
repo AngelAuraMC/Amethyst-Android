@@ -422,4 +422,5 @@
     <string name="preference_force_enable_touchcontroller_description">Принудительно включает интеграцию сенсорного контроллера, даже если файл мода не найден.</string>
     <string name="preference_touchcontroller_vibrate_length_title">Длина вибрации сенсорного контроллера</string>
     <string name="preference_touchcontroller_vibrate_length_description">Установите продолжительность вибрации при использовании сенсорного контроллера.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
