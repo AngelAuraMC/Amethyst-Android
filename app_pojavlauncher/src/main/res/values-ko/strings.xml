@@ -127,6 +127,7 @@
     <string name="customctrl_button_opacity">버튼 불투명도</string>
     <string name="customctrl_addbutton">버튼 추가</string>
     <string name="customctrl_addbutton_drawer">버튼 드로어 추가</string>
+    <string name="customctrl_addbutton_joystick">조이스틱 추가</string>
     <string name="customctrl_addsubbutton">부속 버튼 추가</string>
     <string name="customctrl_selectdefault">기본 조작맵 선택</string>
     <string name="customctrl_export">컨트롤맵 불러오기</string>
