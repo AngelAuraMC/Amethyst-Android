@@ -228,4 +228,5 @@
     <string name="newdl_starting">Metadata van het spel lezen…</string>
     <string name="newdl_downloading_metadata">Spelmetagegevens downloaden (%s)</string>
     <string name="preference_experimental_title">Experimentele dingen</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
