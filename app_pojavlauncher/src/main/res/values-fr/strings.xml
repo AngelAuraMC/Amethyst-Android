@@ -413,4 +413,5 @@
     <string name="preference_touchcontroller_vibrate_length_title">Longueur de la vibration TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Définissez la longueur des vibrations lors de l\'utilisation de TouchController.</string>
     <string name="error_vanilla_json_corrupt">Le json Vanilla semble être corrompu. Veuillez envoyer un rapport de bug sur github ou discord.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
