@@ -434,5 +434,11 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="mg_renderer_title_fsr">AMD FSR 1 Hochskalierung</string>
     <string name="autorendererselectfailed">Auswahl des Auto-Renderers fehlgeschlagen, Standard ist HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (alle Versionen, Mitte)</string>
+    <string name="sodium_warning_title">Sodium erkannt!</string>
+    <string name="sodium_warning_message">Es scheint, dass du Sodium verwendest. Dieses wird nicht unterstützt und kann zu Grafikfehlern oder Abstürzen führen. Bitte entferne es und alle davon abhängigen Mods.</string>
+    <string name="delete_sodium">Sodium löschen und starten</string>
+    <string name="sodium_override_title">Sodium zwangsweise starten</string>
+    <string name="sodium_override_summaryOff">Die Verwendung von Sodium verursacht möglicherweise visuelle Bugs und Abstürze. Du wurdest gewarnt.</string>
+    <string name="sodium_override_summaryOn">Sodium wird nicht unterstützt. Bei etwaigen Problemen wird keine Hilfe geleistet.</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
