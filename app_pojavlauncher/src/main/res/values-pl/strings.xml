@@ -441,4 +441,5 @@
     <string name="mg_renderer_title_fsr">Skalowanie AMD FSR 1</string>
     <string name="autorendererselectfailed">Nie udało się wybrać automatycznego silnika renderującego; ustawiono domyślnie HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (wszystkie wersje, średni)</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
