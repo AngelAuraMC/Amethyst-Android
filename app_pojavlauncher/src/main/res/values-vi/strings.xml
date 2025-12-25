@@ -441,4 +441,5 @@
     <string name="mg_renderer_title_fsr">Tăng phân giải AMD FSR 1</string>
     <string name="autorendererselectfailed">Không thể tự động chọn trình kết xuất, đang chuyển về mặc định HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
