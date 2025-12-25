@@ -293,4 +293,5 @@
     <string name="newdl_starting">Čítanie metadát hry…</string>
     <string name="newdl_downloading_metadata">Sťahovanie metadát hry (%s)</string>
     <string name="preference_experimental_title">Experimentálne nastavenia</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
