@@ -441,5 +441,11 @@
     <string name="mg_renderer_title_fsr">Масштабування AMD FSR 1</string>
     <string name="autorendererselectfailed">Помилка автовибору промальовування, скидання до HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) — усі версії, посередній</string>
+    <string name="sodium_warning_title">Виявлено Sodium!</string>
+    <string name="sodium_warning_message">Схоже, ви використовуєте Sodium, це не підтримується та може призвести до графічних проблем або збоїв. Будь ласка, видаліть його та всі залежні моди.</string>
+    <string name="delete_sodium">Видалити Sodium та запустити</string>
+    <string name="sodium_override_title">Настійно запустити Sodium</string>
+    <string name="sodium_override_summaryOff">Використання Sodium може викликати візуальні помилки й аварійні збої. Вас попередили.</string>
+    <string name="sodium_override_summaryOn">Sodium не підтримується. Допомога не надасться, якщо ви зіткнетеся з жодною проблемою.</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
