@@ -442,5 +442,10 @@
     <string name="autorendererselectfailed">Otomatik grafik işleyici seçilemedi; varsayılan olarak HolyGL4ES kullanılacak</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Bakır Zink (Vulkan) — (Tüm Versiyonlar, Orta)</string>
     <string name="sodium_warning_title">Sodium tespit edildi!</string>
+    <string name="sodium_warning_message">Sodium kullanıyor gibi görünüyorsunuz, bu desteklenmemektedir ve grafik sorunlarına veya çökmelere neden olabilir. Lütfen bunu ve tüm bağımlı modları kaldırın.</string>
+    <string name="delete_sodium">Sodium\'u kaldır ve Başlat</string>
+    <string name="sodium_override_title">Sodium\'u zorla çalıştır</string>
+    <string name="sodium_override_summaryOff">Sodium kullanmak görsel hatalara ve çökmelere sebebiyet verebilir. Uyarıldınız.</string>
+    <string name="sodium_override_summaryOn">Sodium desteklenmemektedir. Herhangi bir sorunla karşılaşırsanız yardım sağlanmayacaktır.</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
