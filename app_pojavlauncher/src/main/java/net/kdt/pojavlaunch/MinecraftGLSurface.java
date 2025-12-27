@@ -182,7 +182,9 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
                 }
 
                 @Override
-                public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {}
+                public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {
+                    // TODO: Triggers on eglSwapBuffers. Add a loading message and make it end here
+                }
             });
 
             ((ViewGroup)getParent()).addView(textureView);
