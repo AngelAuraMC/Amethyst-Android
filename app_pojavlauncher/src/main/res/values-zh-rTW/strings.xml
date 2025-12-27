@@ -57,8 +57,8 @@
     <string name="mcl_setting_renderer_ltw">LTW（OpenGL ES 3）—僅 1.17+</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照版</string>
-    <string name="mcl_setting_veroption_oldalpha">遠古 alpha 版</string>
-    <string name="mcl_setting_veroption_oldbeta">遠古 beta 版</string>
+    <string name="mcl_setting_veroption_oldalpha">遠古 Alpha 版</string>
+    <string name="mcl_setting_veroption_oldbeta">遠古 Beta 版</string>
     <string name="mcl_setting_java_sandbox">沙盒內執行 .jar 檔案</string>
     <string name="mcl_setting_java_sandbox_subtitle">在執行 .jar 檔案時，控制沙盒安全管理器是否可用。</string>
     <string name="mcl_version_clone">複製</string>
@@ -373,7 +373,7 @@
     <string name="controller_remapper_exit_part1">按住</string>
     <string name="controller_remapper_exit_part2">以退出</string>
     <string name="controller_remapper_operating_mode">當前模式</string>
-    <string name="customctrl_visibility_title">可見性</string>
+    <string name="customctrl_visibility_title">可見度</string>
     <string name="customctrl_visibility_ingame">遊戲內</string>
     <string name="customctrl_visibility_in_menus">選單內</string>
     <string name="controller_remapper_expand_entry">展開以更改鍵碼</string>
@@ -430,5 +430,11 @@
     <string name="preference_ask_for_microphone_title">允許麥克風</string>
     <string name="preference_ask_for_microphone_description">點擊以重新請求通知權限，Simple Voice Chat 等語音聊天模組需要此權限。</string>
     <string name="autorendererselectfailed">自動渲染器選擇失敗，預設改用 HolyGL4ES</string>
+    <string name="sodium_warning_title">偵測到 Sodium！</string>
+    <string name="sodium_warning_message">看來你正在使用 Sodium，這是不被支援的，可能會導致畫面顯示問題或遊戲崩潰。請移除 Sodium 以及所有它的前置模組。</string>
+    <string name="delete_sodium">刪除 Sodium 並啟動</string>
+    <string name="sodium_override_title">強制執行 Sodium</string>
+    <string name="sodium_override_summaryOff">使用 Sodium 可能會導致視覺錯誤和崩潰。你已經收到警告了。</string>
+    <string name="sodium_override_summaryOn">官方不支援 Sodium。如果你遇到任何問題，將不會獲得任何協助。</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
