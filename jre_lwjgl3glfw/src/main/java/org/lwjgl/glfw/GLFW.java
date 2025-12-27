@@ -1057,6 +1057,10 @@ public class GLFW
             glMajor = 4;
             glMinor = 0;
         }
+
+        // This somehow fixes a bunch of issues like glGetString sigsegv'ing on krypton wrapper.
+        glfwMakeContextCurrent(ptr);
+
         // Get the real values properly
         FunctionProvider functionProvider = org.lwjgl.opengl.GL.getFunctionProvider();
         if (functionProvider != null) {

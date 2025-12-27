@@ -483,22 +483,22 @@ public class JREUtils {
             case "opengles2":
             case "opengles2_5":
             case "opengles3":
-                renderLibrary = "libgl4es_115.so"; break;
+                renderLibrary = "libng_gl4es.so"; break;
             case "vulkan_zink": renderLibrary = "libOSMesa.so"; break;
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
-                renderLibrary = "libgl4es_115.so";
+                renderLibrary = "libng_gl4es.so";
                 break;
         }
 
         if (!dlopen(renderLibrary) && !dlopen(findInLdLibPath(renderLibrary))) {
-            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to GL4ES 1.1.4");
+            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to Krypton Wrapper");
             LOCAL_RENDERER = "opengles2";
-            renderLibrary = "libgl4es_115.so";
-            dlopen(NATIVE_LIB_DIR + "/libgl4es_115.so");
+            renderLibrary = "libng_gl4es.so";
+            dlopen(NATIVE_LIB_DIR + "/libng_gl4es.so");
         }
         return renderLibrary;
     }

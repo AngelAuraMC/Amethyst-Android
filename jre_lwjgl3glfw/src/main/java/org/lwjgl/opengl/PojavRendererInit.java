@@ -26,7 +26,7 @@ public class PojavRendererInit {
                                 "Renderer-specific initialization may not work properly");
         }
         // NOTE: hardcoded gl4es libname
-        if(rendererName.endsWith("libgl4es_115.so")) {
+        if(rendererName.endsWith("libng_gl4es.so")) {
             nativeInitGl4esInternals(functionProvider);
         }
     }
