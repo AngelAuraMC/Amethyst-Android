@@ -441,5 +441,6 @@
     <string name="mg_renderer_title_fsr">AMD FSR 1 Video ölçekleme</string>
     <string name="autorendererselectfailed">Otomatik grafik işleyici seçilemedi; varsayılan olarak HolyGL4ES kullanılacak</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Bakır Zink (Vulkan) — (Tüm Versiyonlar, Orta)</string>
+    <string name="sodium_warning_title">Sodium tespit edildi!</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
