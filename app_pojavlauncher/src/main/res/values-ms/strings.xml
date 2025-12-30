@@ -443,7 +443,11 @@
     <string name="autorendererselectfailed">Pilihan pemapar automatik gagal, akan lalai kepada HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (semua versi, sederhana)</string>
     <string name="sodium_warning_title">Sodium dikesan!</string>
+    <string name="sodium_warning_message">Amaran ini muncul apabila anda menggunakan Sodium, ini tidak disokong dan mungkin menyebabkan masalah grafik ataupun ranap. Sila alih keluar mod tersebut beserta semua mod yang bergantung padanya.</string>
+    <string name="delete_sodium">Hapus Sodium dan Lancarkan</string>
     <string name="sodium_override_title">Jalankan Sodium secara paksa</string>
+    <string name="sodium_override_summaryOff">Menggunakan Sodium mungkin menyebabkan pepijat visual dan ranap permainan. Anda telah diberi amaran.</string>
+    <string name="sodium_override_summaryOn">Sodium tidak disokong. Tiada bantuan akan diberikan jika anda menghadapi sebarang masalah.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">Bukan fail pek mod!</string>
 </resources>
