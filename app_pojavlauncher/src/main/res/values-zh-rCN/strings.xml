@@ -267,6 +267,7 @@
     <string name="version_select_hint">选择版本</string>
     <string name="forge_dl_progress">正在下载 %s 的安装程序</string>
     <string name="forge_dl_searching">正在搜索 Forge 版本号</string>
+    <string name="neoforge_dl_searching">正在搜索 NeoForge 版本号</string>
     <string name="modloader_dl_failed_to_load_list">版本列表加载失败！</string>
     <string name="forge_dl_no_installer">抱歉，此版本的 Forge 没有安装程序，尚不支持。</string>
     <string name="forge_dl_select_version">选择 Forge 版本</string>
@@ -449,4 +450,5 @@
     <string name="sodium_override_summaryOff">使用 Sodium 可能会导致视觉漏洞和游戏崩溃。特此警告。</string>
     <string name="sodium_override_summaryOn">Sodium 模组不受支持。若你遇到任何问题，我们将不会提供任何帮助。</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">这不是整合包文件！</string>
 </resources>
