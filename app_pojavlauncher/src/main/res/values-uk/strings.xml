@@ -38,7 +38,7 @@
     <string name="mcl_setting_subtitle_use_surface_view">Може підвищити продуктивність у сценаріях, пов’язаних з ГП.</string>
     <string name="mcl_setting_title_ignore_notch">Ігнорувати виріз під фронтальну камеру</string>
     <string name="mcl_setting_subtitle_ignore_notch">Ігнорує виріз і розширює екран під ним.\nДає вам більше можливостей для занурення у грі.</string>
-    <string name="mcl_setting_title_resolution_scaler">Зменшити роздільну здатність</string>
+    <string name="mcl_setting_title_resolution_scaler">Зменшити роздільність</string>
     <string name="mcl_setting_subtitle_resolution_scaler">Дозволяє змінити масштаб роздільности гри. 100% — повна роздільність.</string>
     <string name="mcl_setting_title_longpresstrigger">Затримка тригера при тривалому натисканні</string>
     <string name="mcl_setting_subtitle_longpresstrigger">Змініть затримку тривалого натискання для ламання блоків та викидання предметів.</string>
@@ -266,6 +266,7 @@
     <string name="version_select_hint">Оберіть версію</string>
     <string name="forge_dl_progress">Завантаження встановлювача для %s</string>
     <string name="forge_dl_searching">Пошук номера версії Forge</string>
+    <string name="neoforge_dl_searching">Пошук номера версії NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Не вдалося завантажити список версій!</string>
     <string name="forge_dl_no_installer">Вибачте, але ця версія Forge не має встановлювача, який поки що не підтримується.</string>
     <string name="forge_dl_select_version">Виберіть версію Forge</string>
@@ -448,4 +449,5 @@
     <string name="sodium_override_summaryOff">Використання Sodium може викликати візуальні помилки й аварійні збої. Вас попередили.</string>
     <string name="sodium_override_summaryOn">Sodium не підтримується. Допомога не надасться, якщо ви зіткнетеся з жодною проблемою.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Не є файлом пакета модів!</string>
 </resources>
