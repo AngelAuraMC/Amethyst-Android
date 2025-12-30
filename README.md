@@ -100,11 +100,11 @@ See our [issue tracker](https://github.com/AngelAuraMC/Amethyst-Android/issues) 
 
 ## FAQ
 
-See our [wiki](https://angelauramc.dev/wiki) for more information.
+See our [wiki](https://wiki.angelauramc.dev/) for more information.
 
 ## Contributing
 
-Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the [wiki](https://AngelAuraMC.github.io/), contribute to the [translations](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
+Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the [wiki](https://wiki.angelauramc.dev/), contribute to the [translations](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
 
 Any code change should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
 
