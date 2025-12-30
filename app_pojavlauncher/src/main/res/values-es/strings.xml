@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
+    <string name="app_name">Amatista</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
     <string name="login_online_username_hint">Nombre de usuario</string>
     <string name="login_online_login_label">Iniciar sesión</string>
     <!-- Hint -->
+    <string name="hint_control_mapping">"Toque la rueda dentada central superior para abrir el menú de la puerta ⚙\nToque un botón para personalizarlo: editarlo, cambiar su tamaño, eliminarlo o cambiar sus combinaciones de teclas."</string>
     <!-- Warnings -->
     <string name="warning_remove_account">¡Esta cuenta será borrada!</string>
     <!-- AlertDialog title -->
@@ -46,8 +48,12 @@
     <string name="mcl_setting_subtitle_mousescale">Cambia el tamaño del ratón virtual.</string>
     <string name="mcl_setting_title_javaargs">JRE Argumentos de lanzamiento</string>
     <string name="mcl_setting_subtitle_javaargs">Ten cuidado, esto puede hacer que el juego se cierre si es modificado sin ningún conocimiento previo.</string>
+    <string name="mcl_setting_title_renderer_settings">Configuración adicional del renderizado</string>
+    <string name="mcl_setting_title_renderer_subtitle">Configuración específica del renderizado</string>
     <string name="mcl_setting_category_renderer">Renderizador</string>
+    <string name="mcl_setting_renderer_gles2_4">Santo GL4ES - (solo 1.21.4&lt;, rápido)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas las versiones, medio)</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (solo 1.17+, rápido)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - solo 1.17+</string>
     <string name="mcl_setting_veroption_release">Lanzamientos</string>
     <string name="mcl_setting_veroption_snapshot">Snapshots</string>
@@ -71,6 +77,7 @@
     <string name="global_select">Seleccionar</string>
     <string name="global_retry">Reintentar</string>
     <string name="global_default">Predeterminado</string>
+    <string name="global_off">Apagado</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">La aplicación/juego ha finalizado con el código %d, mira el archivo latestlog.txt para más detalles.</string>
     <string name="mcn_signal_title">La aplicación/juego ha finalizado con código %d, revise latestlog.txt para más detalles.</string>
@@ -353,6 +360,7 @@
     <string name="local_login_bad_username_text">El nombre de usuario debe de ser entre 3 a 16 caracteres, y solo contener letras latinas, números de 0 a 9 y guiones bajos.</string>
     <string name="quick_setting_title">Configuraciones rápidas</string>
     <string name="preference_experimental_title">Cosas Experimentales</string>
+    <string name="app_short_name">Amatista</string>
     <string name="modloader_dl_install_neoforge">Crear perfil de Neoforge</string>
     <string name="neoforge_dl_select_version">Seleccionar versión de NeoForge</string>
     <string name="neoforge_dl_no_installer">Lo sentimos, pero esta versión de NeoForge no tiene un instalador, lo cual aún no está soportado.</string>
