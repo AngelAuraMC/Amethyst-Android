@@ -266,6 +266,7 @@
     <string name="version_select_hint">Pilih versi</string>
     <string name="forge_dl_progress">Memuat turun pemasang untuk %s</string>
     <string name="forge_dl_searching">Mencari nombor versi Forge</string>
+    <string name="neoforge_dl_searching">Mencari nombor versi NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Gagal memuat senarai versi!</string>
     <string name="forge_dl_no_installer">Maaf, tetapi versi Forge ini tidak mempunyai pemasang, yang masih belum disokong.</string>
     <string name="forge_dl_select_version">Pilih versi Forge</string>
@@ -440,5 +441,9 @@
     <string name="mg_renderer_summary_dsaExt">Boleh membantu dengan pek pembayang Iris, diperlukan untuk mod AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 Upscaling</string>
     <string name="autorendererselectfailed">Pilihan pemapar automatik gagal, akan lalai kepada HolyGL4ES</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (semua versi, sederhana)</string>
+    <string name="sodium_warning_title">Sodium dikesan!</string>
+    <string name="sodium_override_title">Jalankan Sodium secara paksa</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Bukan fail pek mod!</string>
 </resources>
