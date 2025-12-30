@@ -266,6 +266,7 @@
     <string name="version_select_hint">Wybierz wersję</string>
     <string name="forge_dl_progress">Pobieranie instalatora dla %s</string>
     <string name="forge_dl_searching">Wyszukiwanie numeru wersji Forge</string>
+    <string name="neoforge_dl_searching">Wyszukiwanie numeru wersji NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Nie udało się załadować listy wersji!</string>
     <string name="forge_dl_no_installer">Przepraszamy, ale ta wersja Forge nie posiada instalatora, który nie jest jeszcze obsługiwany.</string>
     <string name="forge_dl_select_version">Wybierz wersję Forge</string>
@@ -448,4 +449,5 @@
     <string name="sodium_override_summaryOff">Używanie Sodium może powodować błędy wizualne i awarie gry. Uruchamiasz na własne ryzyko.</string>
     <string name="sodium_override_summaryOn">Modyfikacja Sodium nie jest obsługiwana. W razie jakichkolwiek problemów nie udzielimy żadnej pomocy.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">To nie jest plik paczki modów!</string>
 </resources>
