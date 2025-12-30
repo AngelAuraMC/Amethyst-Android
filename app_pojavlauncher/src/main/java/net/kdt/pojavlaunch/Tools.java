@@ -35,7 +35,6 @@ import android.provider.OpenableColumns;
 import android.util.ArrayMap;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.InputDevice;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -62,7 +61,6 @@ import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
-import net.kdt.pojavlaunch.tasks.AsyncAssetManager;
 import net.kdt.pojavlaunch.utils.DateUtils;
 import net.kdt.pojavlaunch.utils.DownloadUtils;
 import net.kdt.pojavlaunch.utils.FileUtils;
@@ -79,7 +77,6 @@ import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.IOUtils;
-import org.libsdl.app.SDLControllerManager;
 import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.BufferedInputStream;
@@ -93,7 +90,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
@@ -213,83 +209,20 @@ public final class Tools {
     }
 
     /**
-     * @return The selected "Custom path" of the current profile
-     */
-    @NonNull
-    private static File getGameDir() {
-        return getGameDirPath(LauncherProfiles.getCurrentProfile());
-    }
-
-    /**
-     * Searches for mod in mods directory of current selected profile
-     * @param filenames Filename(s) of the .jar mod(s)
-     * @return Whether or not the .jar is found
-     */
-    public static boolean hasMods(String... filenames) {
-        File gameDir = getGameDir();
-        File modsDir = new File(gameDir, "mods");
-        File[] modFiles = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if (modFiles == null) return false;
-        for (File file : modFiles) {
-            for (String filename : filenames)
-                if (file.getName().contains(filename)) return true;
-        }
-        return false;
-    }
-
-    /**
-     * Tries to delete any sodium related mods of the currently selected profile via string matching
-     * the files in the mods folder.
-     */
-    public static void deleteSodiumMods() {
-        File modsDir = new File(getGameDir(), "mods");
-        File[] mods = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if(mods == null) ;
-        for(File file : mods) {
-            String name = file.getName().toLowerCase();
-            if(name.contains("sodium") ||
-                    name.contains("beddium")    || // Also covers embeddium
-                    name.contains("rubidium")   ||
-                    name.contains("xenon")      || // Name conflicts with another mod
-                    name.contains("celeritas")  ||
-                    name.contains("relictium")  ||
-                    name.contains("vintagium")  ||
-                    name.contains("podium")     ||
-                    name.contains("indium")     ||
-                    name.contains("lazurite")   ||
-                    name.contains("iris")       ||
-                    name.contains("monocle")    ||
-                    name.contains("voxy")       ||
-                    name.contains("nvidium")    ||
-                    name.contains("chloride")   ||
-                    name.contains("bedrodium")  ||
-                    name.contains("substrate")  || // Name conflicts with another mod
-                    name.contains("blendium")   ||
-                    name.contains("ryoamium")
-                // The name conflicts are for pretty dead mods so we ignore them.
-                // I doubt they're using some mod with less than 5k downloads with sodium.
-            ) if(!file.delete())
-                throw new RuntimeException("Failed to delete Sodium and related mods!");
-        }
-    }
-
-    /**
-     * Search for TouchController mod to automatically enable TouchController mod support.
-     *
+     * Optimization mods based on Sodium can mitigate the render distance issue. Check if Sodium
+     * or its derivative is currently installed to skip the render distance check.
      * @param gameDir current game directory
-     * @return whether TouchController is found
+     * @return whether sodium or a sodium-based mod is installed
      */
-    public static boolean hasTouchController(File gameDir) {
+    private static boolean hasSodium(File gameDir) {
         File modsDir = new File(gameDir, "mods");
         File[] mods = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if (mods == null) {
-            return false;
-        }
-        for (File file : mods) {
-            String name = file.getName().toLowerCase(Locale.ROOT);
-            if (name.contains("touchcontroller")) {
-                return true;
-            }
+        if(mods == null) return false;
+        for(File file : mods) {
+            String name = file.getName();
+            if(name.contains("sodium") ||
+                    name.contains("embeddium") ||
+                    name.contains("rubidium")) return true;
         }
         return false;
     }
@@ -310,10 +243,10 @@ public final class Tools {
         return info.isAdreno() && info.glesMajorVersion >= 3;
     }
 
-    private static boolean affectedByLTWRenderDistanceIssue() {
+    private static boolean checkRenderDistance(File gamedir) {
         if(!"opengles3_ltw".equals(Tools.LOCAL_RENDERER)) return false;
         if(!affectedByRenderDistanceIssue()) return false;
-        if(hasMods("sodium", "embeddium", "rubidium")) return false;
+        if(hasSodium(gamedir)) return false;
 
         int renderDistance;
         try {
@@ -356,9 +289,7 @@ public final class Tools {
         }
         LauncherProfiles.load();
         File gamedir = Tools.getGameDirPath(minecraftProfile);
-        startControllableMitigation(activity, gamedir);
-        startOldLegacy4JMitigation(activity, gamedir);
-        if(affectedByLTWRenderDistanceIssue()) {
+        if(checkRenderDistance(gamedir)) {
             LifecycleAwareAlertDialog.DialogCreator dialogCreator = ((alertDialog, dialogBuilder) ->
                     dialogBuilder.setMessage(activity.getString(R.string.ltw_render_distance_warning_msg))
                             .setPositiveButton(android.R.string.ok, (d, w)->{}));
@@ -391,7 +322,7 @@ public final class Tools {
 
         List<String> javaArgList = new ArrayList<>();
 
-        getCacioJavaArgs(javaArgList, runtime.javaVersion == 8, activity);
+        getCacioJavaArgs(javaArgList, runtime.javaVersion == 8);
 
         if (versionInfo.logging != null) {
             String configFile = Tools.DIR_DATA + "/security/" + versionInfo.logging.client.file.id.replace("client", "log4j-rce-patch");
@@ -410,17 +341,7 @@ public final class Tools {
 
         javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionId, gamedir)));
         javaArgList.add("-cp");
-        if (launchClassPath.contains("bta-client-")){ // BTADownloadTask.BASE_JSON sets this. Jank.
-            // BTA for some reason needs this to be last or else it uses the wrong lwjgl
-            javaArgList.add(launchClassPath + ":" + getLWJGL3ClassPath());
-        // Legacy Fabric needs this to be first or else it uses the wrong lwjgl
-        } else javaArgList.add(getLWJGL3ClassPath() + ":" + launchClassPath);
-
-        // Forge 1.6.4 crash mitigation
-        // https://github.com/MinecraftForge/FML/blob/f1b3381e61fac1a0ae90f521223c6bc613eb4888/common/cpw/mods/fml/common/asm/FMLSanityChecker.java#L192-L208
-        // It for some reason fails certification and crashes because it thinks Minecraft is corrupted.
-        // This also has no loading screen as a result.
-        javaArgList.add("-Dfml.ignoreInvalidMinecraftCertificates=true");
+        javaArgList.add(launchClassPath + ":" + getLWJGL3ClassPath());
 
         javaArgList.add(versionInfo.mainClass);
         javaArgList.addAll(Arrays.asList(launchArgs));
@@ -431,109 +352,6 @@ public final class Tools {
         JREUtils.launchJavaVM(activity, runtime, gamedir, javaArgList, args);
         // If we returned, this means that the JVM exit dialog has been shown and we don't need to be active anymore.
         // We never return otherwise. The process will be killed anyway, and thus we will become inactive
-    }
-    private static Logger.eventLogListener controllableMitigationLogListener;
-    /*
-     * This is does not work when debugging. This is not reliable.
-     * This is a monstrosity that races the mod, trying to ensure that when the folder is checked
-     * after extraction but before dlopen, it is empty, so it loads the bundled SDL2 we have instead
-     */
-    private static void startControllableMitigation(Activity activity ,File gamedir) {
-        String TAG = "ControllableMitigation";
-        File deleted = new File(gamedir + "/controllable_natives/SDL");
-        boolean hasControllable = false;
-        File modsDir = new File(gamedir, "mods");
-        File[] mods = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if (mods != null) {
-            for (File file : mods) {
-                String name = file.getName();
-                if (name.contains("controllable")) {
-                    hasControllable = true;
-                    break;
-                }
-            }
-        }
-        if (hasControllable) {
-            Tools.runOnUiThread(() -> {
-                Tools.dialog(activity, activity.getString(R.string.global_warning), activity.getString(R.string.controllableFound));
-            });
-            Thread mitigationThread = new Thread(() -> {
-                // This is total garbage but it seems to be the best jank for the job
-                Log.i(TAG, "Controllable detected! Starting mitigation thread");
-                try {org.apache.commons.io.FileUtils.deleteDirectory(deleted);} catch (IOException ignored) {}
-                while (!Thread.currentThread().isInterrupted()) {
-                    // Looks for controllable_natives/SDL/<sdl_version_number>/libSDL2.so and
-                    // deletes it. We can assume array index 0 because this dir gets fully deleted
-                    // before the loop is started.
-                    if (deleted.isDirectory()) {
-                        if (deleted.listFiles().length > 0) {
-                            if (deleted.listFiles()[0].listFiles().length > 0) {
-                                if (deleted.listFiles()[0].listFiles()[0].exists()) {
-                                    deleted.listFiles()[0].listFiles()[0].delete();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-                // We can end here because SdlNativeLibraryLoader only extracts libSDL2.so once
-                // If NativeLibrary can't find it in the folder to load() it uses java.library.path
-                Log.i(TAG, "Success! Ending Controllable crash mitigation..");
-            });
-            mitigationThread.start();
-            controllableMitigationLogListener = loggedLine -> {
-                // Hard off switch if it somehow didn't delete anything, just in case.
-                if (loggedLine.contains("Sound engine started") && mitigationThread.isAlive()) {
-                    Log.i(TAG, "Nothing happened. Ending Controllable crash mitigation..");
-                    Logger.removeLogListener(controllableMitigationLogListener);
-                    mitigationThread.interrupt();
-                }
-            };
-            Logger.addLogListener(controllableMitigationLogListener);
-        }
-    }
-
-    private static Logger.eventLogListener oldL4JMitigationLogListener;
-    /// TODO: Remove when the time is right
-    /**
-     * Legacy4J for a long time had broken SDL detection for android, we need to check and
-     * accommodate this for now. At least until the broken logic are on versions considered
-     * obsolete.
-     * <p>
-     * This is of course, very jank, it does not work for anything below 1.7.5 but why is anyone
-     * on that version anyway? Legacy4J has LTS for like all the versions.
-     */
-    private static void startOldLegacy4JMitigation(Activity activity, File gamedir) {
-        boolean hasLegacy4J = false;
-        File modsDir = new File(gamedir, "mods");
-        File[] mods = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if(mods != null) {
-            for (File file : mods) {
-                String name = file.getName();
-                if (name.contains("Legacy4J")) {
-                    hasLegacy4J = true;
-                    break;
-                }
-            }
-        }
-        if (hasLegacy4J) {
-            String TAG = "OldLegacy4JMitigation";
-            Log.i(TAG, "Legacy4J detected!");
-            oldL4JMitigationLogListener = loggedLine -> {
-                if (LauncherPreferences.PREF_GAMEPAD_SDL_PASSTHRU && loggedLine.contains("literal{SDL3 (isXander's libsdl4j)} isn't supported in this system. GLFW will be used instead.")) {
-                    Log.i(TAG, "Old version of Legacy4J detected! Force enabling SDL");
-                    Tools.SDL.initializeControllerSubsystems();
-                    Tools.runOnUiThread(() -> {
-                        Tools.dialog(activity, activity.getString(R.string.global_warning), activity.getString(R.string.oldL4JFound));
-                    });
-                    Logger.removeLogListener(oldL4JMitigationLogListener);
-                } else if (LauncherPreferences.PREF_GAMEPAD_SDL_PASSTHRU && loggedLine.contains("Added SDL Controller Mappings")) {
-                    Log.i(TAG, "Fixed version of Legacy4J detected! Have fun!");
-                    Logger.removeLogListener(oldL4JMitigationLogListener);
-                }
-            };
-            Logger.addLogListener(oldL4JMitigationLogListener);
-        }
     }
 
     public static File getGameDirPath(@NonNull MinecraftProfile minecraftProfile){
@@ -575,7 +393,7 @@ public final class Tools {
         }
     }
 
-    public static void getCacioJavaArgs(List<String> javaArgList, boolean isJava8, Activity activity) {
+    public static void getCacioJavaArgs(List<String> javaArgList, boolean isJava8) {
         // Caciocavallo config AWT-enabled version
         javaArgList.add("-Djava.awt.headless=false");
         javaArgList.add("-Dcacio.managed.screensize=" + AWTCanvasView.AWT_CANVAS_WIDTH + "x" + AWTCanvasView.AWT_CANVAS_HEIGHT);
@@ -586,20 +404,10 @@ public final class Tools {
             javaArgList.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
             javaArgList.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
         } else {
-            File caciocavavallo17Dir = new File(Tools.DIR_GAME_HOME, "caciocavallo17");
-            File[] caciocavallo17Jars = caciocavavallo17Dir.listFiles((f, s) ->s.contains("cacio-tta"));
-            if(caciocavallo17Jars == null || caciocavallo17Jars.length < 1) {
-            // We wanna avoid the launch being interrupted so we extract again if it isn't found
-                AsyncAssetManager.unpackComponents(activity);
-                caciocavallo17Jars = caciocavavallo17Dir.listFiles((f, s) ->s.contains("cacio-tta"));
-                if(caciocavallo17Jars == null || caciocavallo17Jars.length < 1)
-                    throw new RuntimeException("Failed to extract required assets!");
-            }
-            javaArgList.add("-javaagent:"+caciocavallo17Jars[0].getAbsolutePath());
             javaArgList.add("-Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit");
             javaArgList.add("-Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment");
-            // This approach breaks kilt so we use an agent instead
-//          javaArgList.add("-Djava.system.class.loader=com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
+            javaArgList.add("-Djava.system.class.loader=com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
+
             javaArgList.add("--add-exports=java.desktop/java.awt=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/java.awt.peer=ALL-UNNAMED");
             javaArgList.add("--add-exports=java.desktop/sun.awt.image=ALL-UNNAMED");
@@ -993,9 +801,6 @@ public final class Tools {
     public static void dialogOnUiThread(final Activity activity, final CharSequence title, final CharSequence message) {
         activity.runOnUiThread(()->dialog(activity, title, message));
     }
-    public static void dialogOnUiThread(final Activity activity, final int title, final int message) {
-        dialogOnUiThread(activity, activity.getString(title), activity.getString(message));
-    }
 
     public static void dialog(final Context context, final CharSequence title, final CharSequence message) {
         new AlertDialog.Builder(context)
@@ -1071,12 +876,6 @@ public final class Tools {
         for (DependentLibrary libItem: info.libraries) {
             if(!checkRules(libItem.rules)) continue;
             libDir.add(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(libItem));
-            // Mitigation: Babric doesn't use asm-all for some reason so it does a classpath conflict
-            if (libItem.name.startsWith("org.ow2.asm:asm") && !libItem.name.startsWith("org.ow2.asm:asm-all:")){
-                libDir.remove(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(new DependentLibrary(){{
-                    name = "org.ow2.asm:asm-all:5.0.4";
-                }} ));
-            }
         }
         return libDir.toArray(new String[0]);
     }
@@ -1103,7 +902,7 @@ public final class Tools {
                 insertSafety(inheritsVer, customVer,
                         "assetIndex", "assets", "id",
                         "mainClass", "minecraftArguments",
-                        "releaseTime", "time", "type", "inheritsFrom"
+                        "releaseTime", "time", "type"
                 );
 
                 // Go through the libraries, remove the ones overridden by the custom version
@@ -1571,8 +1370,8 @@ public final class Tools {
         String[] defaultRenderers = resources.getStringArray(R.array.renderer_values);
         String[] defaultRendererNames = resources.getStringArray(R.array.renderer);
         boolean deviceHasVulkan = checkVulkanSupport(context.getPackageManager());
-        // Zink is now also optional because it sucks
-        boolean deviceHasOSMesaZinkBinary = new File(Tools.NATIVE_LIB_DIR, "libOSMesa.so").exists();
+        // Currently, only 32-bit x86 does not have the Zink binary
+        boolean deviceHasZinkBinary = !(Architecture.is32BitsDevice() && Architecture.isx86Device());
         boolean deviceHasOpenGLES3 = JREUtils.getDetectedVersion() >= 3;
         // LTW is an optional proprietary dependency
         boolean appHasLtw = new File(Tools.NATIVE_LIB_DIR, "libltw.so").exists();
@@ -1581,7 +1380,7 @@ public final class Tools {
         for(int i = 0; i < defaultRenderers.length; i++) {
             String rendererId = defaultRenderers[i];
             if(rendererId.contains("vulkan") && !deviceHasVulkan) continue;
-            if(rendererId.contains("vulkan_zink") && !deviceHasOSMesaZinkBinary) continue;
+            if(rendererId.contains("zink") && !deviceHasZinkBinary) continue;
             if(rendererId.contains("ltw") && (!deviceHasOpenGLES3 || !appHasLtw)) continue;
             rendererIds.add(rendererId);
             rendererNames.add(defaultRendererNames[i]);
@@ -1655,12 +1454,7 @@ public final class Tools {
         return currentProfile == null || currentProfile.isLocal();
     }
     public static boolean hasOnlineProfile(){
-        for (MinecraftAccount accountToCheck : getAllProfiles()) {
-            if (!accountToCheck.isLocal() && !accountToCheck.isDemo()) {
-                return true;
-            }
-        }
-        return false;
+        return true;
     }
 
     public static void hasNoOnlineProfileDialog(Activity activity, @Nullable Runnable run, @Nullable String customTitle, @Nullable String customMessage){
@@ -1686,85 +1480,5 @@ public final class Tools {
         hasNoOnlineProfileDialog(activity, null, customTitle, customMessage);
     }
 
-    public static String getSelectedVanillaMcVer(){
-        String selectedProfile = LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "");
-        MinecraftProfile selected = LauncherProfiles.mainProfileJson.profiles.get(selectedProfile);
-        if (selected == null) { // This should NEVER happen.
-            throw new RuntimeException("No profile selected, how did you reach this? Go ask in the discord or github");
-        }
-        String currentMCVersion = selected.lastVersionId;
-        String vanillaVersion = currentMCVersion;
-        File providedJsonFile = new File(Tools.DIR_HOME_VERSION + "/" + currentMCVersion + "/" + currentMCVersion + ".json");
-        JMinecraftVersionList.Version providedJsonVersion = null;
-        try {
-            providedJsonVersion = Tools.GLOBAL_GSON.fromJson(Tools.read(providedJsonFile.getAbsolutePath()), JMinecraftVersionList.Version.class);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            vanillaVersion = providedJsonVersion.inheritsFrom != null ? providedJsonVersion.inheritsFrom : vanillaVersion;
-        } catch (NullPointerException e) {
-            throw new RuntimeException(e);
-        }
-        return vanillaVersion;
-    }
 
-    public static Integer mcVersiontoInt(String mcVersion){
-        String[] sVersionArray = mcVersion.split("\\.");
-        String[] iVersionArray = new String[3];
-        // Make sure this is actually a version string
-        for (int i = 0; i < iVersionArray.length; i++) {
-            try {
-                // Ensure there's padding
-                sVersionArray[i] =  String.format("%3s", sVersionArray[i]).replace(' ', '0');
-                // Grab only the last 3, MCJE 999.999.999 isnt coming soon anyway
-                sVersionArray[i] = sVersionArray[i].substring(sVersionArray[i].length() - 3);
-            } catch (ArrayIndexOutOfBoundsException ignored){
-                // If we don't get 3 a third array, pad with 0s because it's probably 1.21 or something
-                iVersionArray[i] = "000";
-                continue;
-            }
-            try {
-                // Verify its a real deal, legit number
-                Integer.parseInt(sVersionArray[i]);
-                iVersionArray[i] = sVersionArray[i];
-            } catch (NumberFormatException e) {
-                throw new RuntimeException("Tools(mcVersiontoInt): Invalid version string");
-            }
-        }
-        return Integer.parseInt(iVersionArray[0] + iVersionArray[1] + iVersionArray[2]);
     }
-
-    public static boolean isPointerDeviceConnected() {
-        int[] deviceIds = InputDevice.getDeviceIds();
-        for (int id : deviceIds) {
-            InputDevice device = InputDevice.getDevice(id);
-            if (device == null) continue;
-            int sources = device.getSources();
-            if ((sources & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE
-                    || (sources & InputDevice.SOURCE_TOUCHPAD) == InputDevice.SOURCE_TOUCHPAD
-                    || (sources & InputDevice.SOURCE_TRACKBALL) == InputDevice.SOURCE_TRACKBALL) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static Object runMethodbyReflection(String className, String methodName) throws ReflectiveOperationException{
-        Class<?> clazz = Class.forName(className);
-        Method method = clazz.getDeclaredMethod(methodName);
-        method.setAccessible(true);
-        Object motionListener = method.invoke(null);
-        assert motionListener != null;
-        return motionListener;
-    }
-
-    static class SDL {
-        /**
-         * Initializes gamepad, joystick, and event subsystems.
-         * This triggers {@link SDLControllerManager#pollInputDevices()} and subsequently disables
-         * the emulated gamepad implementation.
-         */
-        public static native void initializeControllerSubsystems();
-    }
-}
