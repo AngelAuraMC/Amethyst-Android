@@ -263,6 +263,7 @@
     <string name="version_select_hint">Wähle eine Version</string>
     <string name="forge_dl_progress">Installer für %s wird heruntergeladen</string>
     <string name="forge_dl_searching">Suche nach Forge-Versionsnummer</string>
+    <string name="neoforge_dl_searching">Suche nach der NeoForge-Versionsnummer</string>
     <string name="modloader_dl_failed_to_load_list">Fehler beim Laden der Versionsliste!</string>
     <string name="forge_dl_no_installer">Entschuldigung, aber diese Version von Forge hat keinen Installer, der noch nicht unterstützt wird.</string>
     <string name="forge_dl_select_version">Forge-Version auswählen</string>
@@ -441,4 +442,5 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="sodium_override_summaryOff">Die Verwendung von Sodium verursacht möglicherweise visuelle Bugs und Abstürze. Du wurdest gewarnt.</string>
     <string name="sodium_override_summaryOn">Sodium wird nicht unterstützt. Bei etwaigen Problemen wird keine Hilfe geleistet.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Keine Modpack Datei!</string>
 </resources>
