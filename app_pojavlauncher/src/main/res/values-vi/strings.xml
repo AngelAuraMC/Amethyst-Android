@@ -266,6 +266,7 @@
     <string name="version_select_hint">Chọn phiên bản</string>
     <string name="forge_dl_progress">Đang tải trình cài đặt cho %s</string>
     <string name="forge_dl_searching">Đang tìm số phiên bản Forge</string>
+    <string name="neoforge_dl_searching">Đang tìm kiếm số phiên bản NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Không thể tải danh sách phiên bản!</string>
     <string name="forge_dl_no_installer">Xin lỗi, phiên bản Forge này không có trình cài đặt, vì vậy không được hỗ trợ.</string>
     <string name="forge_dl_select_version">Chọn phiên bản Forge</string>
@@ -441,5 +442,12 @@
     <string name="mg_renderer_title_fsr">Tăng phân giải AMD FSR 1</string>
     <string name="autorendererselectfailed">Không thể tự động chọn trình kết xuất, đang chuyển về mặc định HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
+    <string name="sodium_warning_title">Đã phát hiện Sodium!</string>
+    <string name="sodium_warning_message">Có vẻ bạn đang sử dụng Sodium, mod này không được hỗ trợ và có thể gây ra vấn đề đồ họa hoặc thoát đột ngột. Vui lòng loại bỏ mod này cùng các mod phụ thuộc khác.</string>
+    <string name="delete_sodium">Xóa Sodium và khởi chạy</string>
+    <string name="sodium_override_title">Vẫn chạy Sodium</string>
+    <string name="sodium_override_summaryOff">Sử dụng Sodium có thể gây ra sai lệnh hiển thị hoặc thoát đột ngột. Vui lòng lưu ý điều này.</string>
+    <string name="sodium_override_summaryOn">Sodium không được hỗ trợ. Bạn sẽ không được nhận hỗ trợ cho các vấn đề gặp phải.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Không phải tệp modpack!</string>
 </resources>
