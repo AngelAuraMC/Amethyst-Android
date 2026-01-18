@@ -426,5 +426,20 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="mcl_gamepad_forcedSDL_subtitle">Permetti alle vecchie versioni di Legacy4J di utilizzare il backend SDL</string>
     <string name="mcl_gamepad_forcedSDL">Avvia forzatamente la gestione del controller SDL</string>
     <string name="preference_category_SDL_settings">Impostazioni SDL</string>
+    <string name="oldL4JFound">Stai usando una versione di Legacy4J senza le fix di Android! È necessario abilitare manualmente SDL nelle impostazioni del controller per ottenere la migliore esperienza!</string>
+    <string name="global_warning">Avviso!</string>
+    <string name="controllableFound">Controllable attualmente ha una possibilità casuale di crash al lancio. Puoi provare di nuovo nella speranza che parta o utilizzare un\'altra mod come Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Annuncia estensione Experimental Direct State Access</string>
+    <string name="mg_renderer_summary_dsaExt">Può aiutare con i shaderpack Iris, richiesto per la mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Upscaling AMD FSR 1</string>
+    <string name="autorendererselectfailed">Selezione automatica del renderer non riuscita, utilizzo di HolyGL4ES come predefinito</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tutte le versioni, prestazioni medie)</string>
+    <string name="sodium_warning_title">Rilevato Sodium!</string>
+    <string name="sodium_warning_message">Sembra che tu stia usando Sodium, questa mod non è supportata e potrebbe causare problemi grafici o crash. Si prega di rimuoverla insieme a tutte le mod che ne dipendono.</string>
+    <string name="delete_sodium">Elimina Sodium e rilancia</string>
+    <string name="sodium_override_title">Esegui Sodium forzatamente</string>
+    <string name="sodium_override_summaryOff">L\'uso di Sodium potrebbe causare dei bug e crash. Sei stato avvisato.</string>
+    <string name="sodium_override_summaryOn">Sodium non è supportato. Nessun aiuto sarà fornito se si verificano problemi.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Non è un file modpack!</string>
 </resources>
