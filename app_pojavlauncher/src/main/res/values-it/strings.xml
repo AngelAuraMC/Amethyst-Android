@@ -139,6 +139,8 @@
     <string name="dl_library_sha_fail">La libreria %s è danneggiata e sarà scaricata nuovamente</string>
     <string name="dl_library_sha_unknown">La libreria %s non può essere controllata, sarà ignorata e applicata comunque</string>
     <string name="dl_library_sha_pass">La libreria %s va bene ed è usabile</string>
+    <string name="mcl_gamepad_SDL">Abilita il backend del controller SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Abilita il backend del controller SDL. Ha un miglior supporto per le mod. Torna a GLFW se non utilizzato.</string>
     <string name="mcl_disable_gestures">Disattiva gestures</string>
     <string name="mcl_disable_gestures_subtitle">Disattiva gestures, ad esempio premere per rompere un blocco, e cliccare per piazzarlo.</string>
     <string name="mcl_disable_swap_hand">Disabilita il doppio tocco per cambiare mano</string>
@@ -261,6 +263,7 @@ Accedi almeno una volta su https://minecraft.net/ e riprova.</string>
     <string name="version_select_hint">Seleziona versione</string>
     <string name="forge_dl_progress">Download installer %s</string>
     <string name="forge_dl_searching">Ricerca del numero della versione di Forge</string>
+    <string name="neoforge_dl_searching">Ricerca del numero della versione di NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Impossibile caricare la lista delle versioni!</string>
     <string name="forge_dl_no_installer">Ci scusiamo per il disagio, ma questa versione di Forge non ha un installer, non è ancora supportato.</string>
     <string name="forge_dl_select_version">Seleziona versione Forge</string>
@@ -418,5 +421,10 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="preference_touchcontroller_vibrate_length_title">Durata vibrazione TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Impostare la lunghezza della vibrazione quando si utilizza TouchController.</string>
     <string name="error_vanilla_json_corrupt">Il Vanilla json sembra essere corrotto. Per favore invia una segnalazione bug su github o discord.</string>
+    <string name="preference_ask_for_microphone_title">Consenti accesso al microfono</string>
+    <string name="preference_ask_for_microphone_description">Clicca per richiedere nuovamente la notifica di autorizzazione, richiesto per le mod di chat vocale come Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Permetti alle vecchie versioni di Legacy4J di utilizzare il backend SDL</string>
+    <string name="mcl_gamepad_forcedSDL">Avvia forzatamente la gestione del controller SDL</string>
+    <string name="preference_category_SDL_settings">Impostazioni SDL</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
