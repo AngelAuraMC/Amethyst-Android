@@ -152,6 +152,7 @@
     <string name="mcl_setting_subtitle_grab_mouse">Stellt sicher, dass der Cursor innerhalb des Spiels bleibt. Verhindert, dass die Maus auf das Touch-Steuerungslayout klickt.</string>
     <string name="customctrl_passthru">Maus ignoriert Schaltflächen</string>
     <string name="customctrl_swipeable">Wischbar</string>
+    <string name="customctrl_forward_lock">Vorwärts-Sperre</string>
     <string name="customctrl_absolute_tracking">Absolutes Finger-Tracking</string>
     <string name="memory_warning_msg">Die aktuelle Menge an freiem RAM (%d) ist niedriger als zugewiesener RAM (%d), was zu Abstürzen führen kann. Ändere die Zuordnung, wenn das Spiel abstürzt.</string>
     <string name="address_memory_warning_msg">Der aktuelle freie adressierbare RAM-Speicherplatz (%d) ist niedriger als der zugewiesene RAM (%d), was zu Abstürzen führen wird. Sollte das Spiel abstürzen, ändere die Zuweisung.</string>
