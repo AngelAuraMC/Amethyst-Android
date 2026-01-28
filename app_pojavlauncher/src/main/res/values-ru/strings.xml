@@ -55,7 +55,7 @@
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (только 1.17+, быстро)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3; 1.17 и выше)</string>
     <string name="mcl_setting_veroption_release">Релизы</string>
-    <string name="mcl_setting_veroption_snapshot">Снапшоты</string>
+    <string name="mcl_setting_veroption_snapshot">Снапшот</string>
     <string name="mcl_setting_veroption_oldalpha">Старые альфа</string>
     <string name="mcl_setting_veroption_oldbeta">Старые бета</string>
     <string name="mcl_setting_java_sandbox">Безопасное выполнение .jar</string>
@@ -145,6 +145,7 @@
     <string name="mcl_disable_swap_hand_subtitle">Отключает перемещение предмета во вторую руку при двойном касании по нему в панели инструментов.</string>
     <string name="mcl_setting_title_mousespeed">Скорость указателя</string>
     <string name="mcl_setting_subtitle_mousespeed">Изменить скорость указателя виртуальный мыши.</string>
+    <string name="mcl_setting_title_grab_mouse">Использовать виртуальный курсор</string>
     <string name="customctrl_passthru">Пропускать касание в игру</string>
     <string name="customctrl_swipeable">Пролистываемый</string>
     <string name="customctrl_forward_lock">Блокировка движения вперёд</string>
@@ -422,5 +423,8 @@
     <string name="preference_force_enable_touchcontroller_description">Принудительно включает интеграцию сенсорного контроллера, даже если файл мода не найден.</string>
     <string name="preference_touchcontroller_vibrate_length_title">Длина вибрации сенсорного контроллера</string>
     <string name="preference_touchcontroller_vibrate_length_description">Установите продолжительность вибрации при использовании сенсорного контроллера.</string>
+    <string name="error_vanilla_json_corrupt">Ванильный json возможно поврежден. Пожалуйста, отправьте сообщение об ошибке на github или discord.</string>
+    <string name="global_warning">Предупреждение!</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Не является файлом сборки!</string>
 </resources>
