@@ -308,7 +308,7 @@
     <string name="newdl_downloading_game_files">جاري تحميل اللعبة… (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">جاري تحميل اللعبة… (%.2f/%.2f MB، %.2f MB/s)</string>
     <string name="cropper_title">اختيار منطقة الصورة</string>
-    <string name="cropper_lock_vertical">تأمين المحور العمودي</string>
+    <string name="cropper_lock_vertical">T</string>
     <string name="cropper_lock_horizontal">تأمين المحور الأفقي</string>
     <string name="cropper_reset">إعادة الضبط</string>
     <string name="cropper_select_cancelled">تم إلغاء الاختيار</string>
