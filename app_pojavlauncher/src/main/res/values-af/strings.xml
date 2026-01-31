@@ -63,6 +63,7 @@
     <string name="preference_sustained_performance_description">จำกัดการควบคุมปริมาณความร้อนโดยการจำกัดประสิทธิภาพ</string>
     <string name="preference_force_vsync_description">จำกัดการควบคุมปริมาณความร้อนโดยการจำกัดประสิทธิภาพ</string>
     <string name="of_dl_progress">Lade %s herunter</string>
+    <string name="log_view_button_output_off">T</string>
     <string name="mg_renderer_title_errorSetting">Error Filtering</string>
     <string name="mg_renderer_title_computeShaderext">Advertise Experimental Compute Shader extensionhh</string>
     <!--  Make sure the people turning this on can read English.  -->
