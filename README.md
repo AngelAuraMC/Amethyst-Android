@@ -137,6 +137,7 @@ Amethyst is licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-
   * [pfffft](https://bitbucket.org/jpommier/pffft/src/master/): [ARR](app_pojavlauncher/src/main/assets/licenses/PFFFT_LICENSE)
 * [SDL3](https://github.com/libsdl-org/SDL): [zlib License](https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt)
 * [sdl2-compat](https://github.com/libsdl-org/sdl2-compat): [zlib License](https://github.com/libsdl-org/sdl2-compat/blob/main/LICENSE.txt)
+* [imgui-java](https://github.com/SpaiR/imgui-java): [MIT License](https://github.com/SpaiR/imgui-java/blob/main/LICENSE)
 * Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
 
 ## Roadmap
