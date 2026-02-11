@@ -266,6 +266,7 @@
     <string name="version_select_hint">Bir Sürüm Seçin</string>
     <string name="forge_dl_progress">%s için yükleyici indiriliyor</string>
     <string name="forge_dl_searching">Forge sürüm numarası aranıyor</string>
+    <string name="neoforge_dl_searching">NeoForge sürüm numarası aranıyor</string>
     <string name="modloader_dl_failed_to_load_list">Sürüm listesi yüklenemedi!</string>
     <string name="forge_dl_no_installer">Üzgünüz, bu Forge sürümünün yükleyicisinin kurulum dosyası bulunmuyor, bu nedenle şuanlık desteklenmemektedir.</string>
     <string name="forge_dl_select_version">Forge sürümünü seç</string>
@@ -448,4 +449,5 @@
     <string name="sodium_override_summaryOff">Sodium kullanmak görsel hatalara ve çökmelere sebebiyet verebilir. Uyarıldınız.</string>
     <string name="sodium_override_summaryOn">Sodium desteklenmemektedir. Herhangi bir sorunla karşılaşırsanız yardım sağlanmayacaktır.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Modpack dosyası değil!</string>
 </resources>
