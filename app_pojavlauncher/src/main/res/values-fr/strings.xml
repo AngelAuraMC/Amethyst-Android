@@ -203,6 +203,7 @@
     <string name="profiles_latest_snapshot">Dernière snapshot</string>
     <string name="profiles_latest_release">Dernière version</string>
     <string name="profiles_profile_name">Nom</string>
+    <string name="profiles_profile_version">Version</string>
     <string name="global_delete">Supprimer</string>
     <string name="pedit_java_runtime">Exécutable Java</string>
     <string name="pedit_renderer">Moteur de rendu</string>
@@ -242,6 +243,7 @@
     <string name="storage_required">PojavLauncher nécessite que le stockage externe soit connecté. Veuillez le reconnecter et redémarrer l\'application.</string>
     <string name="mcl_setting_title_buttonallcaps">N\'utilisez que des lettres majuscules dans les libellés des boutons</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Désactivez cette option si vous souhaitez utiliser des lettres minuscules dans vos contrôles.</string>
+    <string name="create_profile">Créer un nouveau profil</string>
     <string name="preference_shader_dump_title">Activer le dumping du shader</string>
     <string name="preference_shader_dump_description">Enregistre les shaders convertis dans le fichier journal.</string>
     <string name="millisecond_format">%d%%</string>
