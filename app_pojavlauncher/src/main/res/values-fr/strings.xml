@@ -56,6 +56,7 @@
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ seulement, rapide)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ uniquement</string>
     <string name="mcl_setting_veroption_release">Version officielle</string>
+    <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Bêta</string>
     <string name="mcl_setting_java_sandbox">Exécution de Sandbox .jar</string>
@@ -117,6 +118,8 @@
 -->
     <string name="customctrl_toggle">Basculable</string>
     <string name="customctrl_size">Taille</string>
+    <string name="customctrl_mapping">Mappage</string>
+    <string name="customctrl_orientation">Orientation</string>
     <string name="customctrl_background_color">Couleur d\'arrière-plan</string>
     <string name="customctrl_corner_radius">Rayon des coins</string>
     <string name="customctrl_stroke_width">Épaisseur du contour</string>
@@ -124,6 +127,7 @@
     <string name="customctrl_button_opacity">Opacité du bouton</string>
     <string name="customctrl_addbutton">Ajouter un bouton</string>
     <string name="customctrl_addbutton_drawer">Ajouter un tiroir à boutons</string>
+    <string name="customctrl_addbutton_joystick">Ajouter un joystick</string>
     <string name="customctrl_addsubbutton">Ajouter un sous-bouton</string>
     <string name="customctrl_selectdefault">Sélectionner la controlmap par défaut</string>
     <string name="customctrl_export">Exporter la controlmap</string>
@@ -146,6 +150,7 @@
     <string name="mcl_setting_subtitle_grab_mouse">Assure que le curseur reste dans le jeu. Empêche la souris de cliquer sur la disposition du contrôle.</string>
     <string name="customctrl_passthru">Souris pass-thru</string>
     <string name="customctrl_swipeable">Balayable</string>
+    <string name="customctrl_forward_lock">Transfert verrouillé</string>
     <string name="customctrl_absolute_tracking">Suivi absolu du doigt</string>
     <string name="memory_warning_msg">La quantité actuelle de RAM libre (%d) est inférieure à la RAM allouée (%d), ce qui peut entraîner des plantages. Changez l\'allocation si le jeu plante.</string>
     <string name="address_memory_warning_msg">La quantité actuelle d\'espace RAM allouable libre (%d) est inférieure à la RAM allouée (%d), ce qui entraînera des crashs. Modifiez l\'allocation de la RAM si le jeu crash.</string>
@@ -360,6 +365,7 @@
     <string name="controller_remapper_exit_part1">Maintenir</string>
     <string name="controller_remapper_exit_part2">pour quitter</string>
     <string name="controller_remapper_operating_mode">Mode actuel</string>
+    <string name="customctrl_visibility_title">Visibilité</string>
     <string name="customctrl_visibility_ingame">En jeu</string>
     <string name="customctrl_visibility_in_menus">Dans les menus</string>
     <string name="controller_remapper_expand_entry">Développer pour changer les codes de touches</string>
