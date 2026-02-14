@@ -20,11 +20,9 @@ Boolean gitUsed() {
         case 127:
           println("git not found");
           return false;
-          break;
         case 128:
           println("not inside a git repository");
           return false;
-          break;
         case 0:
           return true;
         default:
