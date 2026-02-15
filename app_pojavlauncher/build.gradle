@@ -126,9 +126,9 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue 'string', 'application_package', 'org.angelauramc.amethyst.debug'
-            resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'org.angelauramc.amethyst.scoped.controlfolder.debug'
+            resValue 'string', 'application_package', 'com.maxjubayeryt.copper.debug'
+            resValue 'string', 'storageProviderAuthorities', 'com.maxjubayeryt.copper.scoped.gamefolder.debug'
+            resValue 'string', 'shareProviderAuthority', 'com.maxjubayeryt.copper.scoped.controlfolder.debug'
         }
         proguard {
             initWith debug
@@ -147,8 +147,8 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder'
-            resValue 'string', 'application_package', 'org.angelauramc.amethyst'
+            resValue 'string', 'storageProviderAuthorities', 'com.maxjubayeryt.copper.scoped.gamefolder'
+            resValue 'string', 'application_package', 'com.maxjubayeryt.copper'
         }
         gplay {
             initWith release
