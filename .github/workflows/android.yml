@@ -27,6 +27,13 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+          
+      - name: Get LTW
+        run: |
+          sudo apt update && sudo apt install -y wget
+          mkdir -p app_pojavlauncher/libs
+          cd app_pojavlauncher/libs
+          wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
 
 	  - name: Get LTW
         run: |
