@@ -1,6 +1,6 @@
 <h1 align="center">Copper launcher</h1>
 
-<img src="https://github.com/user-attachments/assets/f2eb7a03-d154-48b5-aea8-0487758c1be6" align="left" width="130" height="130" alt="Copper logo">
+<img src="https://github.com/user-attachments/assets/d72c99fd-bb67-4ea3-9cc4-62595748b4c3" align="left" width="130" height="130" alt="Copper logo">
 
 [![Android CI](https://github.com/AngelAuraMC/Amethyst-Android/workflows/Android%20CI/badge.svg)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/AngelAuraMC/Amethyst-Android)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
