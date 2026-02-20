@@ -1,4 +1,4 @@
-<h1 align="center">Copper launcher</h1>
+<h1 align="center">Copper</h1>
 
 <img src="https://github.com/user-attachments/assets/c19dc4e7-6d8a-4e30-b36c-6e8f2c860d24" align="left" width="130" height="130" alt="Copper logo">
 
