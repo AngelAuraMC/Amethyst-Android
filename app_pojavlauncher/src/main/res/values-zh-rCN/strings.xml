@@ -51,10 +51,10 @@
     <string name="mcl_setting_title_renderer_settings">附加渲染器设置</string>
     <string name="mcl_setting_title_renderer_subtitle">渲染器特定设置</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES—（仅 &lt;1.21.4，速度较快）</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES—（仅支持 1.21.4 以下版本，速度较快）</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink（Vulkan）—（可用于所有版本，速度中等）</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues（OpenGL ES）—（仅 1.17+，速度快）</string>
-    <string name="mcl_setting_renderer_ltw">LTW（OpenGL ES 3）—仅 1.17+</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues（OpenGL ES）—（仅支持 1.17 以上版本，速度快）</string>
+    <string name="mcl_setting_renderer_ltw">LTW（OpenGL ES 3）—仅支持 1.17 以上版本</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照</string>
     <string name="mcl_setting_veroption_oldalpha">远古 alpha 版</string>
@@ -409,7 +409,7 @@
     <string name="mg_renderer_title_gl43exts">启用实验性 OpenGL 4.3 扩展</string>
     <string name="mg_renderer_summary_gl43exts">可能有助于解决模组导致的崩溃。不需要时请禁用，否则可能会导致崩溃。</string>
     <string name="mg_renderer_title_computeShaderext">启用实验性的 Compute Shader 扩展</string>
-    <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影渲染问题。不需要时请禁用，否则可能会导致崩溃。</string>
+    <string name="mg_renderer_summary_computeShaderext">可能有助于解决光影包渲染问题。不需要时请禁用，否则可能会导致崩溃。</string>
     <string name="mg_renderer_title_multidrawCompute">使用计算多重绘制模拟</string>
     <string name="mg_renderer_summary_multidrawCompute">使用计算着色器进行多重绘制模拟</string>
     <string name="app_short_name">Amethyst</string>
@@ -440,7 +440,7 @@
     <string name="controllableFound">Controllable 目前启动时有概率随机崩溃。你可以继续尝试并等待其成功启动，或者使用其他模组，例如 Controlify。</string>
     <string name="mg_renderer_title_dsaExt">启用实验性 Direct State Access 扩展</string>
     <string name="mg_renderer_summary_dsaExt">可能对 Iris 光影包有帮助，这是 AcceleratedRendering 模组所必需的</string>
-    <string name="mg_renderer_title_fsr">AMD FSR 1 升级</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 超分辨率</string>
     <string name="autorendererselectfailed">自动渲染器选择失败，使用默认 HolyGL4ES</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink（Vulkan）—（可用于所有版本，速度中等）</string>
     <string name="sodium_warning_title">检测到 Sodium 模组！</string>
