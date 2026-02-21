@@ -51,10 +51,10 @@
     <string name="mcl_setting_title_renderer_settings">附加渲染器設定</string>
     <string name="mcl_setting_title_renderer_subtitle">渲染器特定設定</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES—（僅 &lt;1.21.4，速度較快）</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES—（僅支援 1.21.4 以下版本，速度較快）</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink（Vulkan）—（可用於所有版本，速度中等）</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues（OpenGL ES）—（僅 1.17+，速度快）</string>
-    <string name="mcl_setting_renderer_ltw">LTW（OpenGL ES 3）—僅 1.17+</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues（OpenGL ES）—（僅支援 1.17 以上版本，速度快）</string>
+    <string name="mcl_setting_renderer_ltw">LTW（OpenGL ES 3）—僅支援 1.17 以上版本</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照版</string>
     <string name="mcl_setting_veroption_oldalpha">遠古 Alpha 版</string>
@@ -82,7 +82,7 @@
     <string name="mcn_exit_title">應用/遊戲以代碼 %d 退出，請查看記錄檔 lastestlog.txt 以瞭解詳情。</string>
     <string name="mcn_signal_title">應用/遊戲以致命信息 %d 中止，請查看記錄檔 latestlog.txt 以瞭解詳情。</string>
     <string name="mcn_exit_confirm">您確定要強制關閉？</string>
-    <string name="mcn_check_fail_vulkan_support">此裝置不支援 ZInk（Vulkan）渲染器！</string>
+    <string name="mcn_check_fail_vulkan_support">此裝置不支援 Zink（Vulkan）渲染器！</string>
     <!-- MainActivity: Control buttons -->
     <string name="control_chat">聊天</string>
     <string name="control_debug">除錯</string>
@@ -409,7 +409,7 @@
     <string name="mg_renderer_title_gl43exts">啟用實驗性 OpenGL 4.3 擴展</string>
     <string name="mg_renderer_summary_gl43exts">可能有助於解決模組導致的崩潰。不需要時請禁用，否則可能會導致崩潰。</string>
     <string name="mg_renderer_title_computeShaderext">啟用實驗性的 Compute Shader 擴展</string>
-    <string name="mg_renderer_summary_computeShaderext">可能有助於解決光影渲染問題。不需要時請禁用，否則可能會導致崩潰。</string>
+    <string name="mg_renderer_summary_computeShaderext">可能有助於解決光影包渲染問題。不需要時請禁用，否則可能會導致崩潰。</string>
     <string name="mg_renderer_title_multidrawCompute">使用計算多重繪制模擬</string>
     <string name="mg_renderer_summary_multidrawCompute">使用計算著色器進行多重繪制模擬</string>
     <string name="app_short_name">Amethyst</string>
@@ -439,7 +439,10 @@
     <string name="global_warning">警告！</string>
     <string name="controllableFound">Controllable 目前啟動時有概率隨機崩潰。你可以繼續嘗試並等待其成功啟動，或者使用其他模組，例如 Controlify。</string>
     <string name="mg_renderer_title_dsaExt">啟用實驗性 Direct State Access 擴展</string>
+    <string name="mg_renderer_summary_dsaExt">可能對 Iris 光影包有幫助，這是 AcceleratedRendering 模組所必需的</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 升頻</string>
     <string name="autorendererselectfailed">自動渲染器選擇失敗，預設改用 HolyGL4ES</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink（Vulkan）—（可用于所有版本，速度中等）</string>
     <string name="sodium_warning_title">偵測到 Sodium！</string>
     <string name="sodium_warning_message">看來你正在使用 Sodium，這是不被支援的，可能會導致畫面顯示問題或遊戲崩潰。請移除 Sodium 以及所有它的前置模組。</string>
     <string name="delete_sodium">刪除 Sodium 並啟動</string>
