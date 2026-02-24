@@ -5,6 +5,7 @@
         <item name="2">@string/mcl_setting_renderer_vulkan_zink</item>
         <item name="3">@string/mcl_setting_renderer_mobileglues</item>
         <item name="4">@string/mcl_setting_renderer_ltw</item>
+        <item name="8">@string/mcl_setting_renderer_nggl4es</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
