@@ -65,6 +65,16 @@ jobs:
           branch: buildjre17-21
           name: jre21-pojav
 
+      - name: Get JRE25
+        uses: dawidd6/action-download-artifact@v9
+        with:
+          workflow: build.yml
+          path: app_pojavlauncher/src/main/assets/components/jre-25
+          workflow_conclusion: completed
+          repo: FCL-Team/Android-OpenJDK-Build
+          branch: Build_JRE_25
+          name: jre25-multiarch
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           validate-wrappers: false
