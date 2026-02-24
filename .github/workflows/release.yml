@@ -3,7 +3,7 @@ name: Android Release CI
 on:
   push:
     tags:
-    - 'v*'
+      - 'v*'
   workflow_dispatch:
 
 jobs:
@@ -11,10 +11,18 @@ jobs:
     runs-on: ubuntu-22.04
     permissions:
       contents: write
+
     env:
       GPLAY_KEYSTORE_PASSWORD: ${{ secrets.GPLAY_KEYSTORE_PASSWORD }}
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
       - name: Get the version
         id: tagger
         uses: jimschubert/query-tag-action@v2
@@ -22,33 +30,36 @@ jobs:
           skip-unshallow: 'true'
           abbrev: false
           commit-ish: HEAD
+
       - name: Decode Keystore
         env:
           ENCODED_KEYSTORE: ${{ secrets.SIGN_BASE64_KEY }}
         run: |
-          TMP_KEYSTORE_DIR_PATH="${RUNNER_TEMP}"/keystore
+          TMP_KEYSTORE_DIR_PATH="${RUNNER_TEMP}/keystore"
           mkdir -p "${TMP_KEYSTORE_DIR_PATH}"
-          TMP_KEYSTORE_FILE_PATH="${TMP_KEYSTORE_DIR_PATH}"/keystore.ks
-          echo $ENCODED_KEYSTORE | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"
-          echo "STORE_PATH=$(echo $TMP_KEYSTORE_FILE_PATH)" >> $GITHUB_ENV
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          submodules: "recursive"
-          fetch-depth: 0
+          TMP_KEYSTORE_FILE_PATH="${TMP_KEYSTORE_DIR_PATH}/keystore.ks"
+          echo "$ENCODED_KEYSTORE" | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"
+          echo "STORE_PATH=${TMP_KEYSTORE_FILE_PATH}" >> $GITHUB_ENV
 
       - name: Set up JDK 21
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '21'
+          distribution: temurin
+          java-version: 21
+
+      - name: Get LTW
+        run: |
+          sudo apt update && sudo apt install -y wget
+          mkdir -p app_pojavlauncher/libs
+          cd app_pojavlauncher/libs
+          wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
 
       - name: Get JRE 8
         uses: dawidd6/action-download-artifact@v9
         with:
           workflow: build.yml
           path: app_pojavlauncher/src/main/assets/components/jre
-          workflow_conclusion: success
+          workflow_conclusion: completed
           repo: AngelAuraMC/angelauramc-openjdk-build
           branch: buildjre8
           name: jre8-pojav
@@ -58,7 +69,7 @@ jobs:
         with:
           workflow: build.yml
           path: app_pojavlauncher/src/main/assets/components/jre-new
-          workflow_conclusion: success
+          workflow_conclusion: completed
           repo: AngelAuraMC/angelauramc-openjdk-build
           branch: buildjre17-21
           name: jre17-pojav
@@ -68,10 +79,20 @@ jobs:
         with:
           workflow: build.yml
           path: app_pojavlauncher/src/main/assets/components/jre-21
-          workflow_conclusion: success
+          workflow_conclusion: completed
           repo: AngelAuraMC/angelauramc-openjdk-build
           branch: buildjre17-21
           name: jre21-pojav
+
+	    - name: Get JRE25
+        uses: dawidd6/action-download-artifact@v9
+        with:
+          workflow: build.yml
+          path: app_pojavlauncher/src/main/assets/components/jre-25
+          workflow_conclusion: completed
+          repo: FCL-Team/Android-OpenJDK-Build
+          branch: Build_JRE_25
+          name: jre25-multiarch
 
       - uses: gradle/actions/setup-gradle@v4
         with:
@@ -81,57 +102,37 @@ jobs:
       - name: Build JRE JAR files
         run: |
           ./scripts/languagelist_updater.sh
-
           mkdir out
-          # Build JRE JAR files (security manager, etc...)
-          gradle :jre_lwjgl3glfw:build --no-daemon
+          ./gradlew :jre_lwjgl3glfw:build --no-daemon
 
-      - name: Build Google Play .aab
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
-        run: |
-          gradle :app_pojavlauncher:bundleGplay
-          mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
-
-      - name: Build Release .apk
+      - name: Build Release APK
         env:
-          STORE_PASSWORD: ${{secrets.STORE_PASS}}
-          SINGER_PASS: ${{secrets.SINGER_PASS}}
+          STORE_PASSWORD: ${{ secrets.STORE_PASS }}
+          SINGER_PASS: ${{ secrets.SINGER_PASS }}
         run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleRelease
+          ./gradlew :app_pojavlauncher:assembleRelease
           mv app_pojavlauncher/build/outputs/apk/release/*.apk out/app-release.apk
 
-      - name: Build APK without runtime
+      - name: Build Release APK (No Runtime)
         env:
-          STORE_PASSWORD: ${{secrets.STORE_PASS}}
-          SINGER_PASS: ${{secrets.SINGER_PASS}}
+          STORE_PASSWORD: ${{ secrets.STORE_PASS }}
+          SINGER_PASS: ${{ secrets.SINGER_PASS }}
         run: |
-          rm -r app_pojavlauncher/src/main/assets/components/jre
-          rm -r app_pojavlauncher/src/main/assets/components/jre-new
-          rm -r app_pojavlauncher/src/main/assets/components/jre-21
-          gradle assembleRelease
+          rm -rf app_pojavlauncher/src/main/assets/components/jre
+          rm -rf app_pojavlauncher/src/main/assets/components/jre-new
+          rm -rf app_pojavlauncher/src/main/assets/components/jre-21
+          ./gradlew :app_pojavlauncher:assembleRelease
           mv app_pojavlauncher/build/outputs/apk/release/*.apk out/app-release-noruntime.apk
-          
-      - name: Gen md5sums
+
+      - name: Generate MD5
         run: |
           md5sum out/app-release.apk > out/app-release.md5
           md5sum out/app-release-noruntime.apk > out/app-release-noruntime.md5
-      - name: Upload onto the Google Play testing track
-        continue-on-error: true
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
-        uses: r0adkll/upload-google-play@v1.1.2
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GPLAY_SERVICE_JSON }}
-          packageName: net.kdt.pojavlaunch
-          releaseFiles: out/app-gplay.aab
-          track: internal
-          inAppUpdatePriority: 5
 
-      - name: Create release
+      - name: Create GitHub Release
         if: "!contains(steps.tagger.outputs.tag, '-beta')"
-        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda #v2.2.1
+        uses: softprops/action-gh-release@v2
         with:
-          prerelease: false
           tag_name: ${{ steps.tagger.outputs.tag }}
           name: ${{ steps.tagger.outputs.tag }}
           generate_release_notes: true
