@@ -41,6 +41,8 @@
         <item>opengles3_desktopgl_zink</item>
         <item>opengles_mobileglues</item>
         <item>opengles3_ltw</item>
+        <item>opengles3_KW</item>
+        
     </string-array>
     <string-array name="download_source_names">
         <item>@string/global_default</item>
