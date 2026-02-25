@@ -1,4 +1,4 @@
-<h1 align="center">Copper Rewrite</h1>
+<h1 align="center">Copper Launcher</h1>
 
 <img src="https://raw.githubusercontent.com/Mahdin4sure/Copper/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
 
@@ -39,7 +39,7 @@ Copper is a launcher that allows you to play Minecraft: Java Edition on your And
 You can get Copper via three methods:
 
 1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/Copper-launcher/Copper-Android/workflows/android/v3_openjdk/app-debug.zip)
-2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/Mahdin4sure/Copper/releases/)
+2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/Copper-launcher/Copper-Android/releases/)
 3. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
@@ -48,7 +48,7 @@ You can get Copper via three methods:
 
 The easiest way to build Copper is to use the pre-built JREs provided by our CI.
 
-1. Clone the repository: `git clone --recursive https://github.com/Mahdin4sure/Copper.git`
+1. Clone the repository: `git clone --recursive https://github.com/Copper-launcher/Copper-Android.git`
 2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
 
 The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
@@ -91,11 +91,16 @@ If you need more control over the build process, follow these steps:
 * [x] Game surface zooming
 * [x] New input pipe rewritten to native code
 * [x] Rewritten entire controls system
-* [ ] More to come!
+* [x] Added piracy support.
+* [x] Added Sodium support.
+* [x] Added new theme.
+* [x] Added Krypton Wrapper.
+* [x] Readded LTW.
+      
 
 ## Known Issues
 
-See Copper's [issue tracker](https://github.com/Mahdin4sure/Copper/issues) for a list of known issues and their current status.
+See Copper's [issue tracker](https://github.com/Copper-launcher/Copper-Android/issues) for a list of known issues and their current status.
 
 ## Support
 
@@ -139,4 +144,4 @@ Future plans include:
 * Improving stability and performance.
 * Enhancing the mod installation experience.
 
-We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/Mahdin4sure/Copper/issues).
+We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/Copper-launcher/Copper-Android/issues).
