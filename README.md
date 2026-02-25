@@ -36,10 +36,11 @@ Copper is a launcher that allows you to play Minecraft: Java Edition on your And
 
 ## Getting Copper
 
-You can get Copper via two methods:
+You can get Copper via three methods:
 
-1. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/Mahdin4sure/Copper/releases/)
-2. **Build from Source:** Follow the [building instructions](#building) below.
+1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/Copper-launcher/Copper-Android/workflows/android/v3_openjdk/app-debug.zip)
+2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/Mahdin4sure/Copper/releases/)
+3. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
 
