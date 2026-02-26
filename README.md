@@ -1,9 +1,9 @@
 <h1 align="center">Copper Launcher</h1>
 
-<img src="https://raw.githubusercontent.com/Mahdin4sure/Copper/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
+<img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
 
-[![Android CI](https://github.com/Mahdin4sure/Copper/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Madhin4sure/Copper)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
+[![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher)](https://github.com/CopperLauncher/CopperLauncher/actions)
 [![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
 [![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://dsc.gg/Copper-launcher)
 
