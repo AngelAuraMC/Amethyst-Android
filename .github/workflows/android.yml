@@ -102,6 +102,15 @@ jobs:
           md5sum out/app-debug.apk > out/app-debug.md5
           md5sum out/app-debug-noruntime.apk > out/app-debug-noruntime.md5
 
+      - name: Build Release .apk
+        env:
+          STORE_PASSWORD: ${{secrets.STORE_PASS}}
+          SINGER_PASS: ${{secrets.SINGER_PASS}}
+        run: |
+          # Build the launcher
+          gradle :app_pojavlauncher:assembleRelease
+          mv app_pojavlauncher/build/outputs/apk/release/*.apk out/app-release.apk
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
@@ -130,3 +139,15 @@ jobs:
         with:
           name: app-debug-noruntime
           path: out/app-debug-noruntime.*
+
+      - name: Create release
+        if: "!contains(steps.tagger.outputs.tag, '-beta')"
+        uses: softprops/action-gh-release@c95fe1489396fe8a9eb87c0abf8aa5b2ef267fda #v2.2.1
+        with:
+          prerelease: false
+          tag_name: ${{ steps.tagger.outputs.tag }}
+          name: ${{ steps.tagger.outputs.tag }}
+          generate_release_notes: true
+          files: out/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
