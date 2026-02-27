@@ -5,7 +5,7 @@
 [![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher)](https://github.com/CopperLauncher/CopperLauncher/actions)
 [![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://dsc.gg/Copper-launcher)
+[![Discord](https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat)](https://discord.com/invite/r8wUtzMzUe)
 
 *From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)'s ruined reputation, here comes Copper!*
 
