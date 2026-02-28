@@ -470,6 +470,10 @@ public final class Tools {
         // This also has no loading screen as a result.
         javaArgList.add("-Dfml.ignoreInvalidMinecraftCertificates=true");
 
+        // imgui-java set library name to use. This because Axiom uses a fork with different library naming
+        // logic that doesn't seem to appear in the main repository. I'm not gonna work with that.
+        javaArgList.add("-Dimgui.library.name=imgui-java");
+
         javaArgList.add(versionInfo.mainClass);
         javaArgList.addAll(Arrays.asList(launchArgs));
         // ctx.appendlnToLog("full args: "+javaArgList.toString());
