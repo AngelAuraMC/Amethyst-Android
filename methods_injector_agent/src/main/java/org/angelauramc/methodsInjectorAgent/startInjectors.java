@@ -1,4 +1,7 @@
-package org.angelauramc.lwjgl2_methods_injector;
+package org.angelauramc.methodsInjectorAgent;
+
+import org.angelauramc.methodsInjectorAgent.lwjgl2_methods_injector.ALC10Injector;
+import org.angelauramc.methodsInjectorAgent.lwjgl2_methods_injector.ASM5OverrideInjector;
 
 import java.lang.instrument.Instrumentation;
 

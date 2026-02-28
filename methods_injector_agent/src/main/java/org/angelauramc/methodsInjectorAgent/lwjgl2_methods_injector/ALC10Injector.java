@@ -1,4 +1,4 @@
-package org.angelauramc.lwjgl2_methods_injector;
+package org.angelauramc.methodsInjectorAgent.lwjgl2_methods_injector;
 
 import static org.objectweb.asm.Opcodes.*;
 

@@ -9,17 +9,17 @@ java {
 }
 
 jar {
-    archiveBaseName.set("lwjgl2_methods_injector")
+    archiveBaseName.set("methods_injector_agent")
     manifest {
         attributes("Manifest-Version": "1.0",
-                "PreMain-Class": "org.angelauramc.lwjgl2_methods_injector.startInjectors",
+                "PreMain-Class": "org.angelauramc.methodsInjectorAgent.startInjectors",
                 "Can-Redefine-Classes": "true")
     }
     if (gitUsed()){
-      File versionFile = file("../app_pojavlauncher/src/main/assets/components/lwjgl2_methods_injector/version")
+      File versionFile = file("../app_pojavlauncher/src/main/assets/components/methods_injector_agent/version")
       versionFile.write(getGitHash(project.projectDir))
     }
-    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl2_methods_injector/"))
+    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/methods_injector_agent/"))
 }
 
 dependencies {
