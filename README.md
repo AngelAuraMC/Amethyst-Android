@@ -6,6 +6,9 @@
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher)](https://github.com/CopperLauncher/CopperLauncher/actions)
 [![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
 [![Discord](https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat)](https://discord.com/invite/r8wUtzMzUe)
+[![CurseForge](https://img.shields.io/badge/curseforge-maxjubayeryt-orange?logo=curseforge)](https://www.curseforge.com/members/maxjubayeryt/projects)
+[![Modrinth](https://img.shields.io/badge/modrinth-maxjubayeryt-green?logo=modrinth)](https://modrinth.com/user/maxjubayeryt)
+[![Modrinth](https://img.shields.io/badge/modrinth-CopperLauncher-green?logo=modrinth)](https://modrinth.com/organization/copperlauncher)
 
 Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) that allows you to play Minecraft: Java Edition on your Android devices.
 
