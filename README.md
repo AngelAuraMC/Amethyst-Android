@@ -39,8 +39,8 @@ Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) 
 
 You can get Copper via three methods:
 
-1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/Copper-launcher/Copper-Android/workflows/android/v3_openjdk/app-debug.zip)
-2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/Copper-launcher/Copper-Android/releases/)
+1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug.zip)
+2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/CopperLauncher/CopperLauncher/releases/)
 3. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
@@ -49,7 +49,7 @@ You can get Copper via three methods:
 
 The easiest way to build Copper is to use the pre-built JREs provided by our CI.
 
-1. Clone the repository: `git clone --recursive https://github.com/Copper-launcher/Copper-Android.git`
+1. Clone the repository: `git clone --recursive https://github.com/CopperLauncher/CopperLauncher.git`
 2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
 
 The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
@@ -101,7 +101,7 @@ If you need more control over the build process, follow these steps:
 
 ## Known Issues
 
-See Copper's [issue tracker](https://github.com/Copper-launcher/Copper-Android/issues) for a list of known issues and their current status.
+See Copper's [issue tracker](https://github.com/CopperLauncher/CopperLauncher/issues) for a list of known issues and their current status.
 
 ## Support
 
