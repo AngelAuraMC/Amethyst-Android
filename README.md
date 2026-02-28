@@ -2,7 +2,7 @@
 
 <img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
 
-[![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
+[![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/CopperLauncher/CopperLauncher/actions)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher)](https://github.com/CopperLauncher/CopperLauncher/actions)
 [![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
 [![Discord](https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat)](https://discord.com/invite/r8wUtzMzUe)
@@ -109,7 +109,7 @@ For support, please join our [Discord server](https://dsc.gg/Copper-launcher)
 
 ## License
 
-Copper is licensed under [GNU LGPLv3](https://github.com/Copper-launcher/Copper-Android/blob/v3_openjdk/LICENSE).
+Copper is licensed under [GNU LGPLv3](https://github.com/CopperLauncher/CopperLauncher/blob/v3_openjdk/LICENSE).
 
 ## Credits & Dependencies
 
@@ -145,4 +145,4 @@ Future plans include:
 * Improving stability and performance.
 * Enhancing the mod installation experience.
 
-We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/Copper-launcher/Copper-Android/issues).
+We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/CopperLauncher/CopperLauncher/issues).
