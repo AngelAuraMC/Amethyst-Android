@@ -241,5 +241,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     implementation "net.java.dev.jna:jna:5.13.0@aar"
+    implementation 'com.github.luben:zstd-jni:1.5.7-6' // Keep this in sync with the injector
 
 }
