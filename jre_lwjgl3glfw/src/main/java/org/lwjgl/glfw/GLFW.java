@@ -1423,6 +1423,13 @@ public class GLFW
     }
 
     /** Array version of: {@link #glfwGetWindowContentScale GetWindowContentScale} */
+    public static void glfwGetWindowContentScale(@NativeType("GLFWwindow *") long window, @Nullable @NativeType("float *") float[] xscale, @Nullable @NativeType("float *") float[] yscale) {
+        float scale = CallbackBridge.nativeGetAndroidDPI(); // This is overkill but hey, its the proper implementation!
+        System.out.println("glfwGetWindowContentScale: "+scale);
+        // Assume uniform scaling because we are in the modern era
+        if (xscale != null) Arrays.fill(xscale, scale);
+        if (yscale != null) Arrays.fill(yscale, scale);
+    }
 /*
     public static void glfwGetWindowContentScale(@NativeType("GLFWwindow *") long window, @Nullable @NativeType("float *") float[] xscale, @Nullable @NativeType("float *") float[] yscale) {
         long __functionAddress = Functions.GetWindowContentScale;

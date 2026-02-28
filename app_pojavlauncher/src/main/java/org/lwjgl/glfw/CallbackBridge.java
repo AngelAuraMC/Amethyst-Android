@@ -4,6 +4,7 @@ import net.kdt.pojavlaunch.*;
 import net.kdt.pojavlaunch.customcontrols.gamepad.direct.DirectGamepadEnableHandler;
 
 import android.content.*;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
 
@@ -245,6 +246,12 @@ public class CallbackBridge {
 
     public static void setDirectGamepadEnableHandler(DirectGamepadEnableHandler h) {
         sDirectGamepadEnableHandler = new WeakReference<>(h);
+    }
+    @Keep // Used to implement glfwGetWindowContentScale for imgui-java
+    private static float getAndroidDPI(){
+        DisplayMetrics metrics = new DisplayMetrics();
+        metrics.setToDefaults();
+        return metrics.density;
     }
 
     @Keep @CriticalNative public static native void nativeSetUseInputStackQueue(boolean useInputStackQueue);

@@ -51,6 +51,7 @@ struct pojav_environ_s {
     jmethodID method_glftSetWindowAttrib;
     jmethodID method_internalWindowSizeChanged;
     jmethodID method_internalChangeMonitorSize;
+    jmethodID method_getAndroidDPI;
     jclass bridgeClazz;
     jclass vmGlfwClass;
     jboolean isGrabbing;

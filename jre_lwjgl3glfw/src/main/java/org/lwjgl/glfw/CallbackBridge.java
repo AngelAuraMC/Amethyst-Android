@@ -1,6 +1,5 @@
 package org.lwjgl.glfw;
 import java.nio.ByteBuffer;
-import java.util.*;
 
 public class CallbackBridge {
     public static final int CLIPBOARD_COPY = 2000;
@@ -58,5 +57,6 @@ public class CallbackBridge {
     public static native ByteBuffer nativeCreateGamepadButtonBuffer();
     public static native ByteBuffer nativeCreateGamepadAxisBuffer();
     private static native boolean nativeEnableGamepadDirectInput();
+    public static native float nativeGetAndroidDPI();
 }
 
