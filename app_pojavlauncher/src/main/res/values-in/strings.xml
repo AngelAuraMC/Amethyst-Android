@@ -140,6 +140,7 @@
     <string name="dl_library_sha_fail">Library %s rusak dan akan di-unduh ulang</string>
     <string name="dl_library_sha_unknown">Library %s tidak dapat diperiksa, harus dianggap bagus</string>
     <string name="dl_library_sha_pass">Library %s baik-baik saja dan dapat digunakan</string>
+    <string name="mcl_gamepad_SDL">Aktifkan backend pengontrol SDL</string>
     <string name="mcl_disable_gestures">Matikan gestures</string>
     <string name="mcl_disable_gestures_subtitle">Mematikan gestures, seperti tahan lama untuk menghancurkan block, dan pencet untuk menempatkan block.</string>
     <string name="mcl_disable_swap_hand">Nonaktifkan ketuk dua kali untuk bertukar tangan</string>
