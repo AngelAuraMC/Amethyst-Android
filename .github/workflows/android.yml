@@ -34,47 +34,7 @@ jobs:
           mkdir -p app_pojavlauncher/libs
           cd app_pojavlauncher/libs
           wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
-
-      - name: Get JRE 8
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre
-          workflow_conclusion: completed
-          repo: AngelAuraMC/angelauramc-openjdk-build
-          branch: buildjre8
-          name: jre8-pojav
-
-      - name: Get JRE17
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-new
-          workflow_conclusion: completed
-          repo: AngelAuraMC/angelauramc-openjdk-build
-          branch: buildjre17-21
-          name: jre17-pojav
-
-      - name: Get JRE21
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-21
-          workflow_conclusion: completed
-          repo: AngelAuraMC/angelauramc-openjdk-build
-          branch: buildjre17-21
-          name: jre21-pojav
-
-      - name: Get JRE25
-        uses: dawidd6/action-download-artifact@v9
-        with:
-          workflow: build.yml
-          path: app_pojavlauncher/src/main/assets/components/jre-25
-          workflow_conclusion: completed
-          repo: FCL-Team/Android-OpenJDK-Build
-          branch: Build_JRE_25
-          name: jre25-multiarch
-
+          
       - uses: gradle/actions/setup-gradle@v4
         with:
           validate-wrappers: false
@@ -98,14 +58,6 @@ jobs:
           # Build the launcher
           ./gradlew :app_pojavlauncher:assembleDebug
           mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug.apk
-
-      - name: Build APK without runtime
-        run: |
-          rm -rf app_pojavlauncher/src/main/assets/components/jre
-          rm -rf app_pojavlauncher/src/main/assets/components/jre-new
-          rm -rf app_pojavlauncher/src/main/assets/components/jre-21
-          ./gradlew assembleDebug
-          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug-noruntime.apk
 
       - name: Gen md5sums
         run: |
@@ -134,9 +86,3 @@ jobs:
           releaseFiles: out/app-gplay.aab
           track: internal
           inAppUpdatePriority: 5
-
-      - name: Upload APK (without runtime)
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-debug-noruntime
-          path: out/app-debug-noruntime.*
