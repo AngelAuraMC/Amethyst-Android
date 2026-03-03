@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name='Amethyst'
+rootProject.name='Copper'
 include ':jre_lwjgl3glfw'
 include ':app_pojavlauncher'
 
