@@ -55,6 +55,15 @@ jobs:
           gradle :app_pojavlauncher:bundleGplay
           mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
 
+      - name: Build Release .apk
+        env:
+          STORE_PASSWORD: ${{secrets.STORE_PASS}}
+          SINGER_PASS: ${{secrets.SINGER_PASS}}
+        run: |
+          # Build the launcher
+          gradle :app_pojavlauncher:assembleRelease
+          mv app_pojavlauncher/build/outputs/apk/release/*.apk out/app-release.apk
+      
       - name: Build Debug .apk
         run: |
           # Build the launcher
@@ -65,25 +74,14 @@ jobs:
         run: |
           md5sum out/app-debug.apk > out/app-debug.md5
 
-      - name: Upload APK
+      - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
+          name: app-debug (recommended)
           path: out/app-debug.*
 
-      - name: Upload AAB
+      - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-release-aab
-          path: out/app-gplay.aab
-
-      - name: Upload onto the Google Play testing track
-        continue-on-error: true
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
-        uses: r0adkll/upload-google-play@v1.1.2
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GPLAY_SERVICE_JSON }}
-          packageName: net.kdt.pojavlaunch
-          releaseFiles: out/app-gplay.aab
-          track: internal
-          inAppUpdatePriority: 5
+          name: app-release
+          path: out/app-release.*
