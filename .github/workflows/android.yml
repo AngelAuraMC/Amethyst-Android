@@ -56,9 +56,6 @@ jobs:
           mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
 
       - name: Build Release .apk
-        env:
-          STORE_PASSWORD: ${{secrets.STORE_PASS}}
-          SINGER_PASS: ${{secrets.SINGER_PASS}}
         run: |
           # Build the launcher
           gradle :app_pojavlauncher:assembleRelease
