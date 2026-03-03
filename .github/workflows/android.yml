@@ -35,25 +35,25 @@ jobs:
           cd app_pojavlauncher/libs
           wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
 
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           validate-wrappers: false
           gradle-version: "8.11"
 
-      - name: Run scripts
+      - name: Build JRE JAR files
         run: |
           ./scripts/languagelist_updater.sh
+
           mkdir out
+          # Build JRE JAR files (security manager, etc...)
+          gradle :jre_lwjgl3glfw:build --no-daemon
 
-      - name: Build Release .apk
+      - name: Build Google Play .aab
+        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
         run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleRelease
-          mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk out/app-release.apk
-
-      - name: Gen md5sums
-        run: |
-          md5sum out/app-release.apk > out/app-release.md5
+          gradle :app_pojavlauncher:bundleGplay
+          mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
 
       - name: Build Debug .apk
         run: |
@@ -65,14 +65,25 @@ jobs:
         run: |
           md5sum out/app-debug.apk > out/app-debug.md5
 
-      - name: Upload debug APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug (recommended)
+          name: app-debug
           path: out/app-debug.*
 
-      - name: Upload release APK
+      - name: Upload AAB
         uses: actions/upload-artifact@v4
         with:
-          name: app-release
-          path: out/app-release.*
+          name: app-release-aab
+          path: out/app-gplay.aab
+
+      - name: Upload onto the Google Play testing track
+        continue-on-error: true
+        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
+        uses: r0adkll/upload-google-play@v1.1.2
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GPLAY_SERVICE_JSON }}
+          packageName: net.kdt.pojavlaunch
+          releaseFiles: out/app-gplay.aab
+          track: internal
+          inAppUpdatePriority: 5
