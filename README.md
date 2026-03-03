@@ -1,15 +1,18 @@
-<h1 align="center">Copper</h1>
+<h1 align="center">Copper Launcher</h1>
 
-<img src="https://raw.githubusercontent.com/Mahdin4sure/Copper/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
+<img width="1500" height="500" alt="New Project (1)" src="https://github.com/user-attachments/assets/cabc612a-87e5-487e-b8f4-09e5c20062e6" />
 
-[![Android CI](https://github.com/Mahdin4sure/Copper/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Madhin4sure/Copper)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
+<img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
+
+[![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher)](https://github.com/CopperLauncher/CopperLauncher/actions)
 [![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://dsc.gg/Copper-launcher)
+[![Discord](https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat)](https://discord.com/invite/r8wUtzMzUe)
+[![CurseForge](https://img.shields.io/badge/curseforge-maxjubayeryt-orange?logo=curseforge)](https://www.curseforge.com/members/maxjubayeryt/projects)
+[![Modrinth](https://img.shields.io/badge/modrinth-maxjubayeryt-green?logo=modrinth)](https://modrinth.com/user/maxjubayeryt)
+[![Modrinth](https://img.shields.io/badge/modrinth-CopperLauncher-green?logo=modrinth)](https://modrinth.com/organization/copperlauncher)
 
-*From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)'s ruined reputation, here comes Copper!*
-
-Copper is a launcher that allows you to play Minecraft: Java Edition on your Android devices.
+Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) that allows you to play Minecraft: Java Edition on your Android devices.
 
 ## Table of Contents
 
@@ -36,10 +39,11 @@ Copper is a launcher that allows you to play Minecraft: Java Edition on your And
 
 ## Getting Copper
 
-You can get Copper via two methods:
+You can get Copper via three methods:
 
-1. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/Mahdin4sure/Copper/releases/)
-2. **Build from Source:** Follow the [building instructions](#building) below.
+1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug.zip)
+2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/CopperLauncher/CopperLauncher/releases/)
+3. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
 
@@ -47,7 +51,7 @@ You can get Copper via two methods:
 
 The easiest way to build Copper is to use the pre-built JREs provided by our CI.
 
-1. Clone the repository: `git clone --recursive https://github.com/Mahdin4sure/Copper.git`
+1. Clone the repository: `git clone --recursive https://github.com/CopperLauncher/CopperLauncher.git`
 2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
 
 The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
@@ -90,11 +94,16 @@ If you need more control over the build process, follow these steps:
 * [x] Game surface zooming
 * [x] New input pipe rewritten to native code
 * [x] Rewritten entire controls system
-* [ ] More to come!
+* [x] Added piracy support.
+* [x] Added Sodium support.
+* [x] Added new theme.
+* [x] Added Krypton Wrapper.
+* [x] Readded LTW.
+      
 
 ## Known Issues
 
-See Copper's [issue tracker](https://github.com/Mahdin4sure/Copper/issues) for a list of known issues and their current status.
+See Copper's [issue tracker](https://github.com/CopperLauncher/CopperLauncher/issues) for a list of known issues and their current status.
 
 ## Support
 
@@ -138,4 +147,4 @@ Future plans include:
 * Improving stability and performance.
 * Enhancing the mod installation experience.
 
-We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/Mahdin4sure/Copper/issues).
+We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/Copper-launcher/Copper-Android/issues).
