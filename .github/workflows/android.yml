@@ -72,11 +72,6 @@ jobs:
         run: |
           gradle :app_pojavlauncher:bundleGplay
           mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
-      - name: Build Release .apk
-        run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleRelease
-          mv app_pojavlauncher/build/outputs/apk/release/*.apk out/app-release.apk
       - name: Build Debug .apk
         run: |
           # Build the launcher
@@ -97,11 +92,6 @@ jobs:
         with:
           name: app-debug (recommended)
           path: out/app-debug.*
-      - name: Upload release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: out/app-release.*
       - name: Upload APK (without runtime)
         uses: actions/upload-artifact@v4
         with:
