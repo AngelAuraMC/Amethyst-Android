@@ -39,7 +39,7 @@ Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) 
 
 You can get Copper via three methods:
 
-1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-release.zip)
+1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug%20(recommended).zip)
 2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/CopperLauncher/CopperLauncher/releases/)
 3. **Build from Source:** Follow the [building instructions](#building) below.
 
