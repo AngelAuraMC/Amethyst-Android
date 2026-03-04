@@ -1,7 +1,5 @@
 <h1 align="center">Copper Launcher</h1>
 
-<img width="1500" height="500" alt="New Project (1)" src="https://github.com/user-attachments/assets/cabc612a-87e5-487e-b8f4-09e5c20062e6" />
-
 <img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
 
 [![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
@@ -41,7 +39,7 @@ Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) 
 
 You can get Copper via three methods:
 
-1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug.zip)
+1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-release.zip)
 2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/CopperLauncher/CopperLauncher/releases/)
 3. **Build from Source:** Follow the [building instructions](#building) below.
 
