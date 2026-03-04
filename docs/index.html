@@ -1,1 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Copper Launcher</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --copper: #b87333;
+      --copper-light: #d4955a;
+      --copper-bright: #f0a96b;
+      --copper-dark: #7a4b1e;
+      --bg-dark: #0d0a08;
+      --bg-card: #141009;
+      --bg-card2: #1c1510;
+      --text: #e8ddd5;
+      --text-muted: #9a8880;
+      --border: #2e1f14;
+      --green: #4caf78;
+      --glow: rgba(184,115,51,0.18);
+    }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* NOISE TEXTURE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999; opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,10,8,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--text);
+    }
+
+    .nav-logo img {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      filter: drop-shadow(0 0 6px var(--copper));
+    }
+
+    .nav-logo span {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--copper-bright);
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--copper-bright); }
+
+    .nav-cta {
+      display: flex; gap: 0.75rem; align-items: center;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--copper), var(--copper-dark));
+      color: #fff;
+      text-decoration: none;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      letter-spacing: 0.03em;
+      border: none; cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 2px 12px rgba(184,115,51,0.35);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, var(--copper-light), var(--copper));
+      box-shadow: 0 4px 20px rgba(184,115,51,0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.5rem 1.1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.88rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-ghost:hover {
+      border-color: var(--copper);
+      color: var(--copper-bright);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(184,115,51,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(120,60,20,0.08) 0%, transparent 60%),
+        linear-gradient(180deg, var(--bg-dark) 0%, #100c08 100%);
+    }
+
+    /* Animated grid lines */
+    .hero-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(184,115,51,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(184,115,51,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, black 0%, transparent 80%);
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 820px; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(184,115,51,0.1);
+      border: 1px solid rgba(184,115,51,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      color: var(--copper-bright);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    h1 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.01em;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #fff 0%, var(--copper-bright) 40%, var(--copper) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn-primary-lg {
+      background: linear-gradient(135deg, var(--copper-light), var(--copper-dark));
+      color: #fff;
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      border: none; cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 24px rgba(184,115,51,0.4);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .btn-primary-lg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(184,115,51,0.55);
+    }
+
+    .btn-secondary-lg {
+      background: var(--bg-card2);
+      color: var(--text);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .btn-secondary-lg:hover {
+      border-color: var(--copper);
+      color: var(--copper-bright);
+      transform: translateY(-2px);
+    }
+
+    /* SCREENSHOT SHOWCASE */
+    .screenshot-frame {
+      position: relative;
+      max-width: 820px;
+      margin: 0 auto;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(184,115,51,0.25);
+      box-shadow:
+        0 0 0 1px rgba(184,115,51,0.1),
+        0 20px 80px rgba(0,0,0,0.7),
+        0 0 60px rgba(184,115,51,0.08);
+    }
+
+    .screenshot-frame img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .screenshot-frame::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 60%, var(--bg-dark) 100%);
+      pointer-events: none;
+    }
+
+    /* PLATFORM BADGES */
+    .platform-section {
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+
+    .platform-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .platforms {
+      display: flex; justify-content: center; align-items: center; gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .platform-badge {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--bg-card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.5rem 1.25rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .platform-badge:hover {
+      border-color: var(--copper);
+      color: var(--copper-bright);
+    }
+
+    /* DIVIDER */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+      margin: 0 2rem;
+    }
+
+    /* FEATURES */
+    .features {
+      padding: 6rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--copper);
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--copper), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feature-card:hover {
+      border-color: rgba(184,115,51,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 20px var(--glow);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      background: rgba(184,115,51,0.1);
+      border: 1px solid rgba(184,115,51,0.2);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .feature-card p {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    /* FEATURE SHOWCASE (alternating) */
+    .showcase {
+      padding: 2rem 2rem 6rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .showcase-item {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      margin-bottom: 6rem;
+    }
+
+    .showcase-item.reverse { direction: rtl; }
+    .showcase-item.reverse > * { direction: ltr; }
+
+    .showcase-text h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.75rem;
+    }
+
+    .showcase-text p {
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .showcase-img {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 12px 60px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    .showcase-img img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .tag-list {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+    }
+
+    .tag {
+      background: rgba(184,115,51,0.1);
+      border: 1px solid rgba(184,115,51,0.2);
+      color: var(--copper-bright);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.04em;
+    }
+
+    /* VERSIONS TABLE */
+    .status-section {
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, transparent, rgba(184,115,51,0.03) 50%, transparent);
+    }
+
+    .status-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 0.75rem;
+      margin-top: 2.5rem;
+    }
+
+    .status-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.88rem;
+    }
+
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .status-dot.green { background: var(--green); box-shadow: 0 0 6px var(--green); }
+    .status-dot.yellow { background: #f0c040; box-shadow: 0 0 6px #f0c040; }
+
+    /* DOWNLOAD */
+    .download-section {
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .download-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 3rem;
+    }
+
+    .download-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .download-card:hover {
+      border-color: var(--copper);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 24px var(--glow);
+    }
+
+    .download-card .dl-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .download-card h4 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+
+    .download-card p {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    /* COMMUNITY */
+    .community-section {
+      padding: 6rem 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .community-links {
+      display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .community-link {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1.5rem;
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+    .community-link:hover {
+      border-color: var(--copper);
+      color: var(--copper-bright);
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    footer a { color: var(--copper); text-decoration: none; }
+    footer a:hover { color: var(--copper-bright); }
+
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-bottom: 1rem;
+    }
+
+    .footer-logo img {
+      width: 28px; height: 28px;
+      border-radius: 6px;
+      filter: drop-shadow(0 0 4px var(--copper));
+    }
+
+    .footer-logo span {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--copper-bright);
+    }
+
+    .footer-links {
+      display: flex; justify-content: center; gap: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .showcase-item { grid-template-columns: 1fr; gap: 2rem; }
+      .showcase-item.reverse { direction: ltr; }
+      h1 { font-size: 2.8rem; }
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-badge { animation-delay: 0.1s; }
+    h1 { animation-delay: 0.2s; }
+    .hero-sub { animation-delay: 0.3s; }
+    .hero-actions { animation-delay: 0.4s; }
+    .screenshot-frame { animation-delay: 0.5s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" alt="Copper Launcher Logo" onerror="this.style.display='none'"/>
+    <span>Copper Launcher</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#status">Status</a></li>
+    <li><a href="#download">Download</a></li>
+    <li><a href="#community">Community</a></li>
+    <li><a href="https://github.com/CopperLauncher/CopperLauncher">GitHub</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a class="btn-ghost" href="https://github.com/CopperLauncher/CopperLauncher">GitHub</a>
+    <a class="btn-primary" href="#download">Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Now Available · v1.0.1</div>
+    <h1>Copper Launcher</h1>
+    <p class="hero-sub">
+      A powerful Minecraft: Java Edition launcher for Android, built on Amethyst.
+      Play every version, mod freely, and carry your world in your pocket.
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary-lg" href="https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug.zip">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"/></svg>
+        Download APK
+      </a>
+      <a class="btn-secondary-lg" href="https://github.com/CopperLauncher/CopperLauncher">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        View on GitHub
+      </a>
+    </div>
+
+    <!-- Screenshot -->
+    <div class="screenshot-frame">
+      <img
+        src="https://private-user-images.githubusercontent.com/192858647/556352791-cabc612a-87e5-487e-b8f4-09e5c20062e6.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzIyODIyNjUsIm5iZiI6MTc3MjI4MTk2NSwicGF0aCI6Ii8xOTI4NTg2NDcvNTU2MzUyNzkxLWNhYmM2MTJhLTg3ZTUtNDg3ZS1iOGY0LTA5ZTVjMjAwNjJlNi5wbmciLCJleHAiOjE3NzIyODIyNjV9.xxx"
+        alt="Copper Launcher screenshot"
+        onerror="this.src='https://raw.githubusercontent.com/AngelAuraMC/Amethyst-Android/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png'; this.style.minHeight='280px'; this.style.objectFit='contain'; this.style.background='#1c1510'; this.style.padding='2rem';"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM BADGES -->
+<section class="platform-section">
+  <p class="platform-label">Available on</p>
+  <div class="platforms">
+    <div class="platform-badge">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.44c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.53-1.32 3.01-2.53 3.95zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+      iOS (coming soon)
+    </div>
+    <div class="platform-badge">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.523 15.341l-1.98-1.062A5.012 5.012 0 0017 12a5.012 5.012 0 00-1.457-2.279l1.98-1.062.017-.01c1.358-.728 1.875-2.418 1.147-3.776C17.96 3.515 16.27 2.998 14.912 3.726L12.93 4.788A4.97 4.97 0 0012 4.75a4.97 4.97 0 00-.93.038L9.088 3.726C7.73 2.998 6.04 3.515 5.313 4.873c-.728 1.358-.21 3.048 1.147 3.776l.017.01 1.98 1.062A5.012 5.012 0 007 12a5.012 5.012 0 001.457 2.279l-1.98 1.062-.017.01C5.102 16.079 4.585 17.769 5.313 19.127 6.04 20.485 7.73 21.002 9.088 20.274l1.982-1.062c.293.025.592.038.93.038.338 0 .637-.013.93-.038l1.982 1.062c1.358.728 3.048.21 3.776-1.147.728-1.358.21-3.048-1.165-3.786z"/></svg>
+      Android
+    </div>
+    <div class="platform-badge">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.95 7.93l-1.41 1.41c-.39.39-.39 1.02 0 1.41l1.41 1.41c.39.39.39 1.02 0 1.41l-1.41 1.41c-.39.39-1.02.39-1.41 0L12.66 15.6c-.39-.39-1.02-.39-1.41 0l-1.41 1.41c-.39.39-1.02.39-1.41 0l-1.41-1.41c-.39-.39-.39-1.02 0-1.41L8.43 12.66c.39-.39.39-1.02 0-1.41L7.02 9.84c-.39-.39-.39-1.02 0-1.41L8.43 7.02c.39-.39 1.02-.39 1.41 0l1.41 1.41c.39.39 1.02.39 1.41 0l1.41-1.41c.39-.39 1.02-.39 1.41 0l1.41 1.41c.39.39.39 1.02 0 1.41z"/></svg>
+      Open Source (LGPL-3.0)
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- FEATURES GRID -->
+<section class="features" id="features">
+  <div class="section-header">
+    <p class="section-eyebrow">Why Copper</p>
+    <h2>Everything you need to play</h2>
+    <p class="section-desc">Built on the shoulders of giants — Amethyst and PojavLauncher — with extra polish and features.</p>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚙️</div>
+      <h3>Full Java Edition</h3>
+      <p>Play Minecraft: Java Edition from rd-132211 all the way up to the latest 1.21 snapshots and Combat Test versions.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔧</div>
+      <h3>Mod Support</h3>
+      <p>Forge and Fabric supported out of the box. Install mods directly or via a headless installer for full modded gameplay.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h3>Custom Themes</h3>
+      <p>Copper ships with a fresh new theme and supports customization to make the launcher truly your own.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h3>Performance Mods</h3>
+      <p>Sodium and Krypton Wrapper are baked in for dramatically improved rendering performance on mobile hardware.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🖥️</div>
+      <h3>Modern OpenJDK</h3>
+      <p>Ships with OpenJDK 8, 17, and 21 — multi-architecture support for ARM32, ARM64, x86, and x86_64 devices.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Translated</h3>
+      <p>Community-powered localization via Crowdin means Copper speaks your language, wherever you are.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎮</div>
+      <h3>Rewritten Controls</h3>
+      <p>The entire controls system has been rebuilt from the ground up with native code, providing a responsive and natural feel.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔊</div>
+      <h3>OpenAL Audio</h3>
+      <p>Full OpenAL audio support works on most Android devices, keeping your Minecraft experience immersive.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔓</div>
+      <h3>Free & Open Source</h3>
+      <p>Licensed under GNU LGPLv3. Inspect, fork, and contribute — the code is yours to explore on GitHub.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE SECTIONS -->
+<section class="showcase">
+  <div class="showcase-item">
+    <div class="showcase-text">
+      <p class="section-eyebrow">Mod Management</p>
+      <h3>Forge & Fabric, natively</h3>
+      <p>Installing mods on mobile used to be painful. Copper integrates a full mod installer — both with and without GUI — so you can load up your favourite modpacks and get playing in minutes.</p>
+      <div class="tag-list">
+        <span class="tag">Forge</span>
+        <span class="tag">Fabric</span>
+        <span class="tag">Headless Installer</span>
+        <span class="tag">Modrinth</span>
+        <span class="tag">CurseForge</span>
+      </div>
+    </div>
+    <div class="showcase-img">
+      <img
+        src="https://raw.githubusercontent.com/AngelAuraMC/Amethyst-Android/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png"
+        alt="Mod management"
+        style="min-height:220px; object-fit:contain; background:#1c1510; padding:2rem;"
+      />
+    </div>
+  </div>
+
+  <div class="showcase-item reverse">
+    <div class="showcase-text">
+      <p class="section-eyebrow">Performance</p>
+      <h3>Play smooth on any device</h3>
+      <p>Copper integrates Sodium, Krypton Wrapper, and MobileGlues rendering to squeeze every frame out of your Android hardware. Even older devices can experience buttery-smooth gameplay.</p>
+      <div class="tag-list">
+        <span class="tag">Sodium</span>
+        <span class="tag">Krypton Wrapper</span>
+        <span class="tag">GL4ES</span>
+        <span class="tag">MobileGlues</span>
+        <span class="tag">VirGL</span>
+      </div>
+    </div>
+    <div class="showcase-img">
+      <img
+        src="https://i.imgur.com/placeholder.png"
+        alt="Minecraft gameplay on Android"
+        style="min-height:220px; object-fit:contain; background: linear-gradient(135deg, #1c1510, #2a1a0e); padding:2rem; display:flex; align-items:center; justify-content:center;"
+        onerror="this.style.minHeight='220px'; this.style.background='linear-gradient(135deg,#1c1510,#2a1a0e)'; this.alt='Performance screenshot';"
+      />
+    </div>
+  </div>
+
+  <div class="showcase-item">
+    <div class="showcase-text">
+      <p class="section-eyebrow">Version Support</p>
+      <h3>Every version, ever made</h3>
+      <p>From the very first Minecraft test builds to the latest snapshots and experimental Combat Tests — if Mojang shipped it, Copper can run it. All major Java Edition milestones are supported.</p>
+      <div class="tag-list">
+        <span class="tag">1.7 – 1.21</span>
+        <span class="tag">Snapshots</span>
+        <span class="tag">Combat Tests</span>
+        <span class="tag">Legacy Versions</span>
+      </div>
+    </div>
+    <div class="showcase-img" style="background: var(--bg-card); border: 1px solid var(--border); border-radius:14px; padding:2rem; min-height:220px; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 60px rgba(0,0,0,0.6);">
+      <div style="text-align:center;">
+        <div style="font-family:'Rajdhani',sans-serif; font-size:3rem; font-weight:700; color:var(--copper-bright); line-height:1;">rd-132211</div>
+        <div style="color:var(--text-muted); font-size:0.85rem; margin-top:0.5rem;">all the way to</div>
+        <div style="font-family:'Rajdhani',sans-serif; font-size:3rem; font-weight:700; color:var(--copper-bright); line-height:1;">1.21+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- STATUS TABLE -->
+<section class="status-section" id="status">
+  <div class="status-inner">
+    <div class="section-header">
+      <p class="section-eyebrow">Compatibility</p>
+      <h2>Current Status</h2>
+      <p class="section-desc">Copper supports a wide range of architectures and feature sets. Here's what's working today.</p>
+    </div>
+
+    <div class="status-grid">
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 8 · ARM32</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 8 · ARM64</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 8 · x86</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 8 · x86_64</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 17 · ARM32</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 17 · ARM64</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 17 · x86</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 17 · x86_64</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 21 · ARM64</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenJDK 21 · x86_64</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Minecraft 1.12.2 and below</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Minecraft 1.13+</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Minecraft 1.17 / 22w13a+</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenAL Audio</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>OpenGL (via GL4ES)</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Game Surface Zooming</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Forge Installer</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Fabric Installer</span></div>
+      <div class="status-item"><div class="status-dot green"></div><span>Sodium Support</span></div>
+      <div class="status-item"><div class="status-dot yellow"></div><span>iOS (in progress)</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- DOWNLOAD -->
+<section class="download-section" id="download">
+  <div class="section-header">
+    <p class="section-eyebrow">Get Started</p>
+    <h2>Download Copper</h2>
+    <p class="section-desc">Choose your preferred method to get Copper on your Android device.</p>
+  </div>
+
+  <div class="download-cards">
+    <a class="download-card" href="https://github.com/CopperLauncher/CopperLauncher/releases/latest">
+      <div class="dl-icon">📦</div>
+      <h4>Stable Release</h4>
+      <p>Latest tested build from GitHub Releases</p>
+      <span class="btn-primary" style="display:inline-block;">Download v1.0.1</span>
+    </a>
+    <a class="download-card" href="https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug.zip">
+      <div class="dl-icon">🌙</div>
+      <h4>Nightly Build</h4>
+      <p>Latest automated build via Nightly.link</p>
+      <span class="btn-primary" style="display:inline-block;">Download Nightly</span>
+    </a>
+    <a class="download-card" href="https://github.com/CopperLauncher/CopperLauncher#building">
+      <div class="dl-icon">🔨</div>
+      <h4>Build from Source</h4>
+      <p>Compile it yourself using Gradle</p>
+      <span class="btn-ghost" style="display:inline-block;">View Instructions</span>
+    </a>
+  </div>
+
+  <p style="margin-top:2rem; font-size:0.83rem; color:var(--text-muted);">
+    Not affiliated with Mojang or Microsoft. You must own a valid Minecraft: Java Edition account to use Copper Launcher.
+  </p>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- COMMUNITY -->
+<section class="community-section" id="community">
+  <div class="section-header">
+    <p class="section-eyebrow">Community</p>
+    <h2>Get Involved</h2>
+    <p class="section-desc">Copper is open source and community-driven. Join us, report bugs, translate, or contribute code.</p>
+  </div>
+
+  <div class="community-links">
+    <a class="community-link" href="https://discord.com/invite/r8wUtzMzUe">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#5865F2"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+      Discord Server
+    </a>
+    <a class="community-link" href="https://github.com/CopperLauncher/CopperLauncher">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+      Source Code
+    </a>
+    <a class="community-link" href="https://github.com/CopperLauncher/CopperLauncher/issues">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+      Issue Tracker
+    </a>
+    <a class="community-link" href="https://crowdin.com/project/pojavlauncher">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/></svg>
+      Help Translate
+    </a>
+    <a class="community-link" href="https://modrinth.com/organization/copperlauncher">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="#1bd96a"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+      Modrinth
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" alt="Logo" onerror="this.style.display='none'"/>
+    <span>Copper Launcher</span>
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/CopperLauncher/CopperLauncher">GitHub</a>
+    <a href="https://github.com/CopperLauncher/CopperLauncher/blob/v3_openjdk/LICENSE">License (LGPL-3.0)</a>
+    <a href="https://github.com/CopperLauncher/CopperLauncher/blob/v3_openjdk/GPLAY_PRIVACY_POLICY">Privacy Policy</a>
+    <a href="https://github.com/CopperLauncher/CopperLauncher/issues">Bug Reports</a>
+    <a href="https://discord.com/invite/r8wUtzMzUe">Discord</a>
+  </div>
+  <p>Not affiliated with Mojang or Microsoft · Copper Launcher is open-source, licensed under <a href="https://github.com/CopperLauncher/CopperLauncher/blob/v3_openjdk/LICENSE">GNU LGPLv3</a></p>
+  <p style="margin-top:0.5rem; font-size:0.78rem; opacity:0.6;">© 2024–2026 Copper Launcher Contributors · Forked from <a href="https://github.com/AngelAuraMC/Amethyst-Android">Amethyst</a></p>
+</footer>
+
+</body>
+</html>
