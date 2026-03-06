@@ -1,4 +1,5 @@
 name: Android CI
+
 on:
   pull_request:
     branches-ignore:
@@ -8,6 +9,7 @@ on:
     branches-ignore:
       - 'l10n_v3_openjdk'
   workflow_dispatch:
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -19,21 +21,22 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: "recursive"
+
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '21'
+
       - name: Get LTW
-        run: |
-          sudo apt update && sudo apt install -y wget
-          mkdir -p app_pojavlauncher/libs
-          cd app_pojavlauncher/libs
-          wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
-      - uses: gradle/actions/setup-gradle@v4
+        uses: dawidd6/action-download-artifact@v6
+        continue-on-error: true
         with:
-          validate-wrappers: false
-          gradle-version: "8.11"
+          repo: MojoLauncher/LTW
+          run_id: 20699056437
+          name: output-aar
+          path: app_pojavlauncher/libs
+      
       - name: Get JRE8
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -43,6 +46,7 @@ jobs:
           repo: AngelAuraMC/angelauramc-openjdk-build
           branch: buildjre8
           name: jre8-pojav
+      
       - name: Get JRE17
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -52,6 +56,7 @@ jobs:
           repo: AngelAuraMC/angelauramc-openjdk-build
           branch: buildjre17-21
           name: jre17-pojav
+      
       - name: Get JRE21
         uses: dawidd6/action-download-artifact@v6
         with:
@@ -61,22 +66,33 @@ jobs:
           repo: AngelAuraMC/angelauramc-openjdk-build
           branch: buildjre17-21
           name: jre21-pojav
-      - name: Build JRE JAR files
+
+      - name: Get JRE25
+        uses: dawidd6/action-download-artifact@v9
+        with:
+          workflow: build.yml
+          path: app_pojavlauncher/src/main/assets/components/jre-25
+          workflow_conclusion: completed
+          repo: FCL-Team/Android-OpenJDK-Build
+          branch: Build_JRE_25
+          name: jre25-multiarch
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          validate-wrappers: false
+          gradle-version: "8.11"
+
+      - name: Run scripts
         run: |
           ./scripts/languagelist_updater.sh
           mkdir out
-          # Build JRE JAR files (security manager, etc...)
-          gradle :jre_lwjgl3glfw:build --no-daemon
-      - name: Build Google Play .aab
-        if: github.repository_owner == 'PojavLauncherTeam' && github.ref_name == 'v3_openjdk'
-        run: |
-          gradle :app_pojavlauncher:bundleGplay
-          mv app_pojavlauncher/build/outputs/bundle/gplay/app_pojavlauncher-gplay.aab out/app-gplay.aab
+
       - name: Build Debug .apk
         run: |
           # Build the launcher
           gradle :app_pojavlauncher:assembleDebug
           mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug.apk
+
       - name: Build APK without runtime
         run: |
           rm -rf app_pojavlauncher/src/main/assets/components/jre
@@ -84,16 +100,19 @@ jobs:
           rm -rf app_pojavlauncher/src/main/assets/components/jre-21
           ./gradlew assembleDebug
           mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug-noruntime.apk
+      
       - name: Gen md5sums
         run: |
           md5sum out/app-debug.apk > out/app-debug.md5
+
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
         with:
           name: app-debug (recommended)
           path: out/app-debug.*
+
       - name: Upload APK (without runtime)
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-noruntime (lightweight)
+          name: app-debug-noruntime
           path: out/app-debug-noruntime.*
