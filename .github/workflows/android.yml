@@ -29,13 +29,11 @@ jobs:
           java-version: '21'
 
       - name: Get LTW
-        uses: dawidd6/action-download-artifact@v6
-        continue-on-error: true
-        with:
-          repo: MojoLauncher/LTW
-          run_id: 20699056437
-          name: output-aar
-          path: app_pojavlauncher/libs
+        run: |
+          sudo apt update && sudo apt install -y wget
+          mkdir -p app_pojavlauncher/libs
+          cd app_pojavlauncher/libs
+          wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
       
       - name: Get JRE8
         uses: dawidd6/action-download-artifact@v6
