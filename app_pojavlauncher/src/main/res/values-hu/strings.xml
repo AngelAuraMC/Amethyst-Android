@@ -247,7 +247,7 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Tiltsd ezt le, hogyha nem akarsz kisbetűket használni a kezelőszerveidben.</string>
     <string name="create_profile">Új profil létrehozása</string>
     <string name="preference_shader_dump_title">Shader dumping engedélyezése</string>
-    <string name="preference_shader_dump_description">A naplókat átkonvertálta a shadereket a naplófájlba.</string>
+    <string name="preference_shader_dump_description">A naplókat átkonvertálja a shadereket a naplófájlba.</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Biztosan kilépsz?</string>
     <string name="customctrl_editor_exit_msg">Biztosan ki akarsz lépni?</string>
