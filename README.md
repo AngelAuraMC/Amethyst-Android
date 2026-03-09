@@ -2,13 +2,17 @@
 
 <img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
 
-[![Android CI](https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg)](https://github.com/Mahdin4sure/Copper/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher)](https://github.com/CopperLauncher/CopperLauncher/actions)
-[![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat)](https://discord.com/invite/r8wUtzMzUe)
-[![CurseForge](https://img.shields.io/badge/curseforge-maxjubayeryt-orange?logo=curseforge)](https://www.curseforge.com/members/maxjubayeryt/projects)
-[![Modrinth](https://img.shields.io/badge/modrinth-maxjubayeryt-green?logo=modrinth)](https://modrinth.com/user/maxjubayeryt)
-[![Modrinth](https://img.shields.io/badge/modrinth-CopperLauncher-green?logo=modrinth)](https://modrinth.com/organization/copperlauncher)
+<p align="center">
+  <img src="https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher" alt="GitHub commit activity"/>
+  <img src="https://img.shields.io/badge/platform-Android-green" alt="Platform"/>
+  <img src="https://img.shields.io/badge/minSdk-26-blue" alt="Min SDK"/>
+  <img src="https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg" alt="Android CI"/>
+  <img src="https://badges.crowdin.net/pojavlauncher/localized.svg" alt="Crowdin"/>
+  <img src="https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat" alt="Discord"/>
+  <img src="https://img.shields.io/badge/curseforge-maxjubayeryt-orange?logo=curseforge" alt="CurseForge"/>
+  <img src="https://img.shields.io/badge/modrinth-maxjubayeryt-green?logo=modrinth" alt="Modrinth"/>
+  <img src="https://img.shields.io/badge/modrinth-CopperLauncher-green?logo=modrinth" alt="Modrinth"/>
+</p>
 
 Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) that allows you to play Minecraft: Java Edition on your Android devices.
 
