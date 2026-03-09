@@ -88,6 +88,7 @@
     <string name="control_debug">Depuración</string>
     <string name="control_primary">Pri</string>
     <string name="control_secondary">Seg</string>
+    <string name="control_shift">◇</string>
     <string name="control_inventory">Inv</string>
     <string name="control_up">▲</string>
     <string name="control_left">◀</string>
@@ -354,6 +355,7 @@
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
     <string name="controller_button_y">Y</string>
+    <string name="controller_button_start">Start</string>
     <string name="controller_button_select">Seleccionar</string>
     <string name="controller_button_trigger_left">Activador izquierdo</string>
     <string name="controller_button_trigger_right">Activador derecho</string>
@@ -435,5 +437,16 @@
     <string name="global_warning">¡Advertencia!</string>
     <string name="controllableFound">\"Controllable\" actualmente tiene una probabilidad aleatoria de fallar al iniciarse. Sigue intentándolo hasta que inicie o usa otro mod como \"Controlify\".</string>
     <string name="mg_renderer_title_dsaExt">Publicitar la extensión experimental de Direct State Access</string>
+    <string name="mg_renderer_summary_dsaExt">Puede ayudar con los shaderpacks Iris, necesario para el mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Re-escalado AMD FSR 1</string>
+    <string name="autorendererselectfailed">Falló la selección automática del renderizador. Se usará HolyGL4ES por defecto</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (todas las versiones, media)</string>
+    <string name="sodium_warning_title">¡Sodium detectado!</string>
+    <string name="sodium_warning_message">Parece que está usando Sodium, lo cual no está soportado y puede causar problemas gráficos o bloqueos. Por favor, elimínelo junto con todos los mods que dependan de él.</string>
+    <string name="delete_sodium">Eliminar Sodium e iniciar juego</string>
+    <string name="sodium_override_title">Ejecutar Sodium a fuerza</string>
+    <string name="sodium_override_summaryOff">El uso de Sodium puede causar errores visuales y fallos. Se le ha advertido.</string>
+    <string name="sodium_override_summaryOn">Sodium no está soportado. No se ofrecerá ayuda si encuentra algún problema.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">¡No es un archivo modpack!</string>
 </resources>
