@@ -8,7 +8,7 @@
     <string name="login_online_username_hint">Ім\'я гравця</string>
     <string name="login_online_login_label">Увійти</string>
     <!-- Hint -->
-    <string name="hint_control_mapping">"Торкніться верхньої центральної шестірні, щоб відкрити контекстне меню ⚙\nТоркніться кнопки, щоб налаштувати: редагувати, змінити розмір, видалити або змінити її сполучення клавіш."</string>
+    <string name="hint_control_mapping">"Торкніться верхньої центральної шестірні, щоби відкрити контекстне меню ⚙\nТоркніться кнопки, щоби налаштувати: редагувати, змінити розмір, видалити або змінити її сполучення клавіш."</string>
     <!-- Warnings -->
     <string name="warning_remove_account">Цей обліковий запис буде видалено!</string>
     <!-- AlertDialog title -->
@@ -102,7 +102,7 @@
     <string name="control_mouseon">Миша: УВІМК. </string>
     <!-- MainActivity: Menu advanced controls -->
     <string name="control_forceclose">Примусове закриття</string>
-    <string name="control_viewout">Журнал</string>
+    <string name="control_viewout">Вивід журналу</string>
     <string name="control_adebug">Налагодження введення</string>
     <string name="control_customkey">Надіслати користувацьку розкладку</string>
     <!-- ImportControlActivity Strings -->
@@ -169,7 +169,7 @@
     <string name="multirt_config_setdefault_already">Усталено</string>
     <string name="multirt_config_removeerror_last">У вас має бути встановлене принаймні одне середоввище виконання Java.</string>
     <string name="multirt_nocompatiblert">Не вдається знайти сумісне середовище виконання Java. Для цієї версії потрібна Java %d або новіша.</string>
-    <string name="multirt_nojava8rt">Не вдалося знайти Java 8. Для того, щоб скористатися цією опцією, вам потрібно встановити Java 8.</string>
+    <string name="multirt_nojava8rt">Не вдалося знайти Java 8. Для того, щоби скористатися цією опцією, вам потрібно встановити Java 8.</string>
     <string name="multirt_delete_runtime">Видалити середов. викон.</string>
     <string name="pvc_gameDirectory">Тека гри</string>
     <string name="pvc_jvmArgs">Аргументи JVM</string>
@@ -179,7 +179,7 @@
     <string name="preference_video_description">Роздільність, промальовування і продуктивність</string>
     <string name="preference_control_title">Налаштування керування</string>
     <string name="preference_control_description">Жести, кнопки та масштабування</string>
-    <string name="preference_java_title">Оптимізація Java</string>
+    <string name="preference_java_title">Налаштування Java</string>
     <string name="preference_java_description">Середовища виконання Java, аргументи JVM, обсяг пам\'яті та пісочниця</string>
     <string name="preference_misc_title">Різні налаштування</string>
     <string name="preference_misc_description">Список версій та перевірка бібліотек</string>
@@ -238,7 +238,7 @@
     <string name="preference_enable_gyro_description">Увімкнувши цю функцію, ви зможете повертатися в грі, просто повернувши телефон.</string>
     <string name="preference_gyro_sensitivity_title">Налаштування чутливости гіроскопа</string>
     <string name="preference_gyro_sensitivity_description">Відрегулювати чутливість керування гіроскопом.</string>
-    <string name="toast_turn_on_gyro">Спочатку увімкніть керування гіроскопом, щоб скористатися цією функцією!</string>
+    <string name="toast_turn_on_gyro">Спочатку ввімкніть керування гіроскопом, щоби скористатися цією функцією!</string>
     <string name="preference_gyro_sample_rate_title">Частота дискретизації гіроскопа</string>
     <string name="preference_gyro_sample_rate_description">Якщо у вас виникають проблеми з керуванням гіроскопом, збільште цей параметр.</string>
     <string name="microsoft_login_retry_later">Занадто багато запитів, спробуйте пізніше.</string>
@@ -300,13 +300,13 @@
     <string name="modpack_download_downloading_mods_fc">Завантаження модів (Файл %d з %d)</string>
     <string name="modpack_download_applying_overrides">Застосування перевизначень (%d/%d)</string>
     <string name="modpack_install_notification_title">Установлювач пакета модів Pojav</string>
-    <string name="modpack_install_notification_success">Натисніть тут, щоб завершити встановлення пакета модів</string>
+    <string name="modpack_install_notification_success">Натисніть тут, щоби завершити встановлення пакета модів</string>
     <string name="modpack_install_notification_data_not_available">Не вдалося завантажити інформацію про завантажувач модів</string>
     <string name="modpack_install_modloader_download_failed">Не вдалося завантажити файли завантажувача мода</string>
     <string name="modpack_install_download_failed">Не вдалося завантажити файли пакета модів</string>
     <string name="modpack_install_button">Створити профіль пакета модів</string>
     <string name="notif_error_occured">Сталася помилка</string>
-    <string name="notif_error_occured_desc">Натисніть, щоб побачити подробиці</string>
+    <string name="notif_error_occured_desc">Натисніть, щоби побачити подробиці</string>
     <string name="fabric_dl_only_stable">Показувати лише стабільні версії</string>
     <string name="dl_tampered_manifest_title">Попередження щодо перевірки файлу</string>
     <string name="dl_tampered_manifest"><![CDATA[Версія маніфесту гри у дзеркалі не збігається з офіціальною версією від Mojang, можливо, воно підроблене.<br/>
@@ -320,19 +320,19 @@
     <string name="preference_verify_manifest_title">Перевірити маніфест версії гри</string>
     <string name="preference_verify_manifest_description">Якщо ввімкнено, запускач перевірятиме маніфест гри разом з бібліотеками.</string>
     <string name="notif_download_finished">Гра готова до запуску</string>
-    <string name="notif_download_finished_desc">Натисніть, щоб розпочати!</string>
+    <string name="notif_download_finished_desc">Натисніть, щоби розпочати!</string>
     <string name="preference_category_gestures">Жести</string>
     <string name="preference_category_buttons">Кнопки</string>
     <string name="preference_category_experimental_settings">Експериментальні налаштування</string>
-    <string name="preference_category_java_tweaks">Оптимізація Java</string>
+    <string name="preference_category_java_tweaks">Налаштування Java</string>
     <string name="preference_category_main_categories">Категорії</string>
     <string name="preference_category_miscellaneous">Різні налаштування</string>
     <string name="preference_category_video">Налаштування відео</string>
     <string name="notification_permission_dialog_title">Запит на дозвіл</string>
-    <string name="notification_permission_dialog_text">PojavLauncher потребує дозволу на надсилання сповіщень, щоб запобігти припиненню завантаження гри/пакета модів, коли ви виходите з додатка. Без цього дозволу Android може припинити завантаження, коли ви переведете PojavLauncher у тловий режим.</string>
+    <string name="notification_permission_dialog_text">PojavLauncher потребує дозволу на надсилання сповіщень, щоби запобігти припиненню завантаження гри/пакета модів, коли ви виходите з додатка. Без цього дозволу Android може припинити завантаження, коли ви переведете PojavLauncher у режимі тла.</string>
     <string name="notification_permission_toast">Ви завжди можете змінити пізніше, перейшовши до налаштувань</string>
     <string name="preference_ask_for_notification_title">Дозволити сповіщення</string>
-    <string name="preference_ask_for_notification_description">Натисніть, щоб повторно запитати дозвіл на сповіщення, необхідний для коректної роботи тлових завантажень гри/пакета модів.</string>
+    <string name="preference_ask_for_notification_description">Натисніть, щоби повторно запитати дозвіл на сповіщення, необхідний для коректної роботи тлових завантажень гри/пакета модів.</string>
     <string name="preference_vsync_in_zink_title">Дозволити VSync із Zink</string>
     <string name="preference_vsync_in_zink_description">Дозволяє запускачу використовувати внутрішні системні API для увімкнення вертикальної синхронізації для Zink. Вимкніть, якщо після оновлення системи запускач вилітає разом із Zink.</string>
     <string name="exception_failed_to_unpack_jre17">Не вдалося встановити JRE 17</string>
@@ -373,12 +373,12 @@
     <string name="controller_dpad_left">D-Pad вліво</string>
     <string name="controller_dpad_right">D-Pad вправо</string>
     <string name="controller_remapper_exit_part1">Утримуйте</string>
-    <string name="controller_remapper_exit_part2">, щоб вийти</string>
+    <string name="controller_remapper_exit_part2">, щоби вийти</string>
     <string name="controller_remapper_operating_mode">Поточний режим</string>
     <string name="customctrl_visibility_title">Видимість</string>
     <string name="customctrl_visibility_ingame">У грі</string>
     <string name="customctrl_visibility_in_menus">У меню</string>
-    <string name="controller_remapper_expand_entry">Розгорніть, щоб змінити коди клавіш</string>
+    <string name="controller_remapper_expand_entry">Розгорніть, щоби змінити коди клавіш</string>
     <string name="preference_remap_controller_title">Змінити прив’язки клавіш контролера</string>
     <string name="preference_remap_controller_description">Дозволяє змінювати клавіші клавіатури, пов’язані з кожною кнопкою контролера</string>
     <string name="mcl_button_discord">Discord</string>
@@ -430,7 +430,7 @@
     <string name="preference_touchcontroller_vibrate_length_description">Установлює тривалість вібрації під час використання TouchController.</string>
     <string name="error_vanilla_json_corrupt">Усталений json, здається, пошкоджено. Будь ласка, надішліть звіт про помилку на github або discord.</string>
     <string name="preference_ask_for_microphone_title">Дозволити мікрофон</string>
-    <string name="preference_ask_for_microphone_description">Натисніть, щоб повторно надіслати запит дозволу на повідомлення для голосових чатів, наприклад Simple Voice Chat.</string>
+    <string name="preference_ask_for_microphone_description">Натисніть, щоби повторно надіслати запит дозволу на повідомлення для голосових чатів, наприклад Simple Voice Chat.</string>
     <string name="mcl_gamepad_forcedSDL_subtitle">Можна дозволити старим версіям Legacy4J використовувати серверну частину SDL</string>
     <string name="mcl_gamepad_forcedSDL">Примусово запустити обробку контролера SDL</string>
     <string name="preference_category_SDL_settings">Налаштування SDL</string>
