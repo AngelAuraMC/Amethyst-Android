@@ -403,9 +403,37 @@
     <string name="mg_renderer_summary_angleDepthClearFixMode">Solo afecta el ANGLE, puede afectar el rendimiento.</string>
     <string name="preference_experimental_title">Cosas Experimentales</string>
     <string name="mg_renderer_title_gl43exts">Publicitar extensiones experimentales de OpenGL 4.3</string>
+    <string name="mg_renderer_summary_gl43exts">Puede ayudar evitar fallos causados por mods. Desactívalo si no se necesita, puede causar fallos.</string>
+    <string name="mg_renderer_title_computeShaderext">Publicitar extensión experimental del Compute Shader</string>
+    <string name="mg_renderer_summary_computeShaderext">Puede ayudar con los problemas en los shaderpacks. Desactívalo si no se necesita, puede causar fallos.</string>
+    <string name="mg_renderer_title_multidrawCompute">Usar emulación Compute Multidraw</string>
+    <string name="mg_renderer_summary_multidrawCompute">Usa Compute Shaders para la emulación de multidraw</string>
     <string name="app_short_name">Amatista</string>
+    <string name="demo_versions_supported">Solo las versiones Vanilla 1.3.1 y superior son compatibles con cuentas demo</string>
+    <string name="demo_unsupported">Perfil Demo no compatible</string>
+    <string name="change_account">Por favor cambie de cuentas para usar esta función</string>
+    <string name="no_minecraft_account_found">Ninguna cuenta de Minecraft encontrada</string>
+    <string name="feature_requires_java_account">Esta función requiere una cuenta de Microsoft que posee Minecraft Java Edition.</string>
+    <string name="delete_account_and_login">Borrar cuenta e iniciar sesión</string>
+    <string name="login_again">Por favor inicie la sesión de nuevo</string>
+    <string name="account_corrupted">La cuenta seleccionada está corrupta</string>
     <string name="modloader_dl_install_neoforge">Crear perfil de Neoforge</string>
     <string name="neoforge_dl_select_version">Seleccionar versión de NeoForge</string>
     <string name="neoforge_dl_no_installer">Lo sentimos, pero esta versión de NeoForge no tiene un instalador, lo cual aún no está soportado.</string>
+    <string name="preference_category_touchcontroller_settings">Ajustes del TouchController</string>
+    <string name="preference_force_enable_touchcontroller_title">Forzar activación del TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">Forzar la activación del TouchController, incluso si el archivo del mod no se encuentra.</string>
+    <string name="preference_touchcontroller_vibrate_length_title">Longitud de vibración del TouchController</string>
+    <string name="preference_touchcontroller_vibrate_length_description">Establece la longitud de la vibración al usar TouchController.</string>
+    <string name="error_vanilla_json_corrupt">El JSON de Vanilla parece estar corrupto. Por favor, envíe un informe de error en GitHub o Discord.</string>
+    <string name="preference_ask_for_microphone_title">Permitir micrófono</string>
+    <string name="preference_ask_for_microphone_description">Haga clic para volver a solicitar el permiso de notificaciones, necesario para mods de chat de voz como Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Puede permitir que versiones viejas de Legacy4J usen el backend SDL</string>
+    <string name="mcl_gamepad_forcedSDL">Forzar inicio de manejo de controlador SDL</string>
+    <string name="preference_category_SDL_settings">Ajustes SDL</string>
+    <string name="oldL4JFound">¡Estás usando una versión de Legacy4J sin los arreglos de Android! ¡Necesitarás activar manualmente el SDL en los ajustes del control para obtener la mejor experiencia!</string>
+    <string name="global_warning">¡Advertencia!</string>
+    <string name="controllableFound">\"Controllable\" actualmente tiene una probabilidad aleatoria de fallar al iniciarse. Sigue intentándolo hasta que inicie o usa otro mod como \"Controlify\".</string>
+    <string name="mg_renderer_title_dsaExt">Publicitar la extensión experimental de Direct State Access</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
