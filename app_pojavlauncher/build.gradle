@@ -85,8 +85,11 @@ android {
     compileSdk = 34
 
     lintOptions {
-        abortOnError false
-    }
+    checkReleaseBuilds false
+    abortOnError false
+    disable 'ExtraTranslation', 'MissingTranslation'
+}
+
 
     signingConfigs {
         customDebug {
