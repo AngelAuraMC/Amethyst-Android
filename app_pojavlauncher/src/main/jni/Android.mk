@@ -34,7 +34,8 @@ LOCAL_SRC_FILES := \
     jre_launcher.c \
     utils.c \
     stdio_is.c \
-    driver_helper/nsbypass.c
+    driver_helper/nsbypass.c \
+    glfw_vulkan_bridge.c
 
 ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 LOCAL_CFLAGS += -DADRENO_POSSIBLE
