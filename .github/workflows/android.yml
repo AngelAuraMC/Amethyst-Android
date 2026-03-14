@@ -84,8 +84,6 @@ jobs:
         run: |
           ./scripts/languagelist_updater.sh
           mkdir out
-<<<<<<< HEAD
-=======
 
       - name: Build Release .apk
         run: |
@@ -96,7 +94,6 @@ jobs:
       - name: Gen md5sums
         run: |
           md5sum out/app-release.apk > out/app-release.md5
->>>>>>> upstream/v3_openjdk
 
       - name: Build Debug .apk
         run: |
@@ -122,16 +119,13 @@ jobs:
           name: app-debug (recommended)
           path: out/app-debug.*
 
-<<<<<<< HEAD
       - name: Upload APK (without runtime)
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-noruntime
           path: out/app-debug-noruntime.*
-=======
       - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release
           path: out/app-release.*
->>>>>>> upstream/v3_openjdk
