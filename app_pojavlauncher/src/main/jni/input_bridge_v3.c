@@ -54,6 +54,7 @@ jint JNI_OnLoad(JavaVM* vm, __attribute__((unused)) void* reserved) {
         pojav_environ->method_accessAndroidClipboard = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "accessAndroidClipboard", "(ILjava/lang/String;)Ljava/lang/String;");
         pojav_environ->method_onGrabStateChanged = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "onGrabStateChanged", "(Z)V");
         pojav_environ->method_onDirectInputEnable = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "onDirectInputEnable", "()V");
+        pojav_environ->method_getAndroidDPI = (*dvEnv)->GetStaticMethodID(dvEnv, pojav_environ->bridgeClazz, "getAndroidDPI", "()F");
         pojav_environ->isUseStackQueueCall = JNI_FALSE;
     } else if (pojav_environ->dalvikJavaVMPtr != vm) {
         LOGI("Saving JVM environ...");
@@ -136,6 +137,9 @@ void pojavPumpEvents(void* window) {
                 break;
             case EVENT_TYPE_MOUSE_BUTTON:
                 if(pojav_environ->GLFW_invoke_MouseButton) pojav_environ->GLFW_invoke_MouseButton(window, event.i1, event.i2, event.i3);
+                break;
+            case EVENT_TYPE_CURSOR_ENTER:
+                if(pojav_environ->GLFW_invoke_CursorEnter) pojav_environ->GLFW_invoke_CursorEnter(window, event.i1);
                 break;
             case EVENT_TYPE_SCROLL:
                 if(pojav_environ->GLFW_invoke_Scroll) pojav_environ->GLFW_invoke_Scroll(window, event.i1, event.i2);
@@ -305,6 +309,13 @@ Java_org_lwjgl_glfw_CallbackBridge_nativeEnableGamepadDirectInput(__attribute__(
     return JNI_TRUE;
 }
 
+JNIEXPORT jfloat JNICALL Java_org_lwjgl_glfw_CallbackBridge_nativeGetAndroidDPI(JNIEnv* env, __attribute__((unused)) jclass clazz) {
+    TRY_ATTACH_ENV(dvm_env, pojav_environ->dalvikJavaVMPtr, "getAndroidDPI failed!\n",);
+    jfloat result = (*dvm_env)->CallStaticFloatMethod(dvm_env, pojav_environ->bridgeClazz,
+                                                      pojav_environ->method_getAndroidDPI);
+    return result;
+}
+
 jboolean critical_send_char(jchar codepoint) {
     if (pojav_environ->GLFW_invoke_Char && pojav_environ->isInputReady) {
         if (pojav_environ->isUseStackQueueCall) {
@@ -360,10 +371,6 @@ void critical_send_cursor_pos(jfloat x, jfloat y) {
                 } else {
                     pojav_environ->GLFW_invoke_CursorEnter((void*) pojav_environ->showingWindow, 1);
                 }
-            } else if (pojav_environ->isGrabbing) {
-                // Some Minecraft versions does not use GLFWCursorEnterCallback
-                // This is a smart check, as Minecraft will not in grab mode if already not.
-                pojav_environ->isCursorEntered = true;
             }
         }
 
@@ -557,9 +564,14 @@ Java_org_lwjgl_glfw_CallbackBridge_nativeCreateGamepadAxisBuffer(JNIEnv *env, jc
 
 // HACK: Legacy4J has faulty detection that hardwires us to GLFW unless we init SDL ourselves.
 // This is a horribly made function that should really have more checks around it but meh.
-#include <SDL3/SDL.h>
+#define SDL_INIT_JOYSTICK   0x00000200u
+#define SDL_INIT_GAMEPAD    0x00002000u
+#define SDL_INIT_EVENTS     0x00004000u
 
 static inline void initSubsystem(void) {
+    typedef int (*SDL_Init_Func)(uint32_t flags);
+    void* handle = dlopen("libSDL3.so", RTLD_NOW);
+    SDL_Init_Func SDL_Init = (SDL_Init_Func)dlsym(handle, "SDL_Init");
     SDL_Init(SDL_INIT_GAMEPAD | SDL_INIT_JOYSTICK | SDL_INIT_EVENTS);
 }
 JNIEXPORT void JNICALL

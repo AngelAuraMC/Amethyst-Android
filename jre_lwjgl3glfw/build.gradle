@@ -1,3 +1,5 @@
+import java.security.MessageDigest
+
 plugins {
     id 'java'
 }
@@ -8,25 +10,31 @@ configurations.default.setCanBeResolved(true)
 
 jar {
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveBaseName = "lwjgl-glfw-classes"
+    archiveBaseName.set("lwjgl-glfw-classes")
     destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl3/"))
-    if (gitUsed()){
-      File versionFile = file("../app_pojavlauncher/src/main/assets/components/lwjgl3/version")
-      versionFile.write(getGitHash(project.projectDir))
-    }
     from {
         configurations.default.collect {
             println(it.getName())
             it.isDirectory() ? it : zipTree(it)
         }
     }
+    // Makes the jar reproducible so the version file actually is a version file
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    // Write version file
+    def versionFile  = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/lwjgl3/version")
+    def jarFile = archiveFile.get().asFile
+    doLast {
+        writeVersionFile(jarFile, versionFile)
+    }
+    outputs.file(versionFile) // Adds the versionFile to outputs
+
     exclude 'net/java/openjdk/cacio/ctc/**'
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
-    }
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 dependencies {

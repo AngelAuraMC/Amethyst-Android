@@ -12,16 +12,22 @@ dependencies {
 }
 
 jar {
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    if (gitUsed()){
-      File versionFile = file("../app_pojavlauncher/src/main/assets/components/forge_installer/version")
-      versionFile.write(getGitHash(project.projectDir))
-    }
+    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/forge_installer/"))
     manifest {
         attributes("Manifest-Version": "1.0",
                 "PreMain-Class": "git.artdeell.installer_agent.Agent")
     }
-    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/forge_installer/"))
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    // Makes the jar reproducible so the version file actually is a version file
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    // Write version file
+    def versionFile  = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/forge_installer/version")
+    def jarFile = archiveFile.get().asFile
+    doLast {
+        writeVersionFile(jarFile, versionFile)
+    }
+    outputs.file(versionFile) // Adds the versionFile to outputs
 }
