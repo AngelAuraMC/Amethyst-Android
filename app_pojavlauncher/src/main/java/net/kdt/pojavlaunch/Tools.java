@@ -86,6 +86,7 @@ import org.lwjgl.glfw.CallbackBridge;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -809,11 +810,23 @@ public final class Tools {
     }
     public static String generateLaunchClasspath(JMinecraftVersionList.Version info, String actualname) {
         StringBuilder launchClasspath = new StringBuilder(); //versnDir + "/" + version + "/" + version + ".jar:";
-        String lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3").getAbsolutePath();
-        String lwjgl3File = lwjgl3Folder + "/lwjgl-glfw-classes.jar";
-        String lwjglxFile = lwjgl3Folder + "/lwjglx-classes.jar";
+        File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3");
+        String lwjgl3Merged = lwjgl3Folder.getAbsolutePath() + "/lwjgl-glfw-classes.jar";
+        String lwjglxFile = lwjgl3Folder + "/lwjgl-lwjglx.jar";
 
-        launchClasspath.append(lwjgl3File).append(":");
+        launchClasspath.append(lwjgl3Merged).append(":");
+
+        File[] lwjglModules = lwjgl3Folder.listFiles(pathname ->
+                pathname.getName().endsWith(".jar") &&
+            // Exclude our two special jars which goes first and last
+                !pathname.getName().endsWith("glfw-classes.jar") &&
+                !pathname.getName().endsWith("lwjglx.jar"));
+
+        if (lwjglModules != null) {
+            for (File lwjglModule : lwjglModules)
+                launchClasspath.append(lwjglModule.getAbsolutePath()).append(":");
+        } else Log.e("generateLaunchClasspath", "lwjgl modules are missing from components!");
+
         launchClasspath.append(getLibClasspath(info)).append(":");
         launchClasspath.append(getClientClasspath(actualname));
         if (!isLwjgl3) launchClasspath.append(":").append(lwjglxFile);
