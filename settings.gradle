@@ -19,6 +19,5 @@ include ':jre_lwjgl3glfw'
 include ':app_pojavlauncher'
 
 include ':arc_dns_injector'
-include ':lwjgl2_methods_injector'
+include ':methods_injector_agent'
 include ':forge_installer'
-include ':MobileGlues'

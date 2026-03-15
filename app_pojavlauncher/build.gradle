@@ -95,6 +95,12 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+        customRelease {
+            storeFile file("aamc_upload.jks")
+            storePassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
+            keyAlias "android_github_release"
+            keyPassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
+        }
         googlePlayBuild {
             storeFile file("upload.jks")
             storePassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
@@ -144,6 +150,7 @@ android {
             // Don't set to true or java.awt will be a.a or something similar.
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.customRelease
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
@@ -157,7 +164,7 @@ android {
         }
     }
 
-    ndkVersion = "25.2.9519653"
+    ndkVersion = "27.3.13750724"
 
     externalNativeBuild {
         ndkBuild {
@@ -196,7 +203,8 @@ android {
 
 afterEvaluate {
     // Explicit dependencies for which the apk relies on
-    tasks.mergeDebugAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":lwjgl2_methods_injector:jar", ":jre_lwjgl3glfw:jar")
+    tasks.mergeDebugAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":methods_injector_agent:jar", ":jre_lwjgl3glfw:jar")
+    tasks.mergeReleaseAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":methods_injector_agent:jar", ":jre_lwjgl3glfw:jar")
 }
 
 dependencies {
@@ -233,5 +241,6 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    implementation project(":MobileGlues")
+    implementation "net.java.dev.jna:jna:5.13.0@aar"
+
 }
