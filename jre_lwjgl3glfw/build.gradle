@@ -9,11 +9,25 @@ group = 'org.lwjgl.glfw'
 configurations.default.setCanBeResolved(true)
 
 jar {
+    String lwjglxJarName = "lwjgl-lwjglx.jar" // Name of the jar with LWJGLX (LWJGL2 Compatibility) Classes
+    String lwjglxFinalJarName = "lwjglx-classes.jar" // What lwjglxJarName is renamed to
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     archiveBaseName.set("lwjgl-glfw-classes")
     destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl3/"))
+
+    // Mark as using multiple Java versions.
+    manifest {
+        attributes "Multi-Release": "true"
+    }
+
     from {
-        configurations.default.collect {
+        // Ensure that the core lwjgl jar is processed first so duplicates in META-INF from other classes
+        // are ignored. This avoids InvalidModuleDescriptorException due to say, using the module-info.class
+        // from lwjgl-jemalloc.
+        def files = configurations.default.findAll { it.name != lwjglxJarName }
+        def coreJar = files.find { it.name == "lwjgl.jar" }
+        def others = files - coreJar
+        ([coreJar] + others).collect {
             println(it.getName())
             it.isDirectory() ? it : zipTree(it)
         }
@@ -23,11 +37,20 @@ jar {
     reproducibleFileOrder = true
     // Write version file
     def versionFile  = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/lwjgl3/version")
+    def lwjglxFinalFile = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/lwjgl3/" + lwjglxFinalJarName)
     def jarFile = archiveFile.get().asFile
     doLast {
-        writeVersionFile(jarFile, versionFile)
+        copy {
+            // Copy lwjglx to the lwjgl classes dir
+            from configurations.default.find { it.name == lwjglxJarName }
+            into archiveFile.get().asFile.parentFile
+            rename lwjglxJarName, lwjglxFinalJarName
+        }
+        writeVersionFile([jarFile, lwjglxFinalFile] as File[], versionFile)
     }
-    outputs.file(versionFile) // Adds the versionFile to outputs
+    // Adds the jank to outputs
+    outputs.file(versionFile)
+    outputs.file(lwjglxFinalFile)
 
     exclude 'net/java/openjdk/cacio/ctc/**'
 }

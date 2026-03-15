@@ -144,6 +144,7 @@ public final class Tools {
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
     private static RenderersList sCompatibleRenderers;
+    private static boolean isLwjgl3 = true;
 
 
     private static File getPojavStorageRoot(Context ctx) {
@@ -396,7 +397,7 @@ public final class Tools {
         OldVersionsUtils.selectOpenGlVersion(versionInfo);
 
 
-        String launchClassPath = generateLaunchClassPath(versionInfo, versionId);
+        String launchClasspath = generateLaunchClasspath(versionInfo, versionId);
 
         List<String> javaArgList = new ArrayList<>();
 
@@ -418,12 +419,7 @@ public final class Tools {
         }
 
         javaArgList.addAll(Arrays.asList(getMinecraftJVMArgs(versionId, gamedir)));
-        javaArgList.add("-cp");
-        if (launchClassPath.contains("bta-client-")){ // BTADownloadTask.BASE_JSON sets this. Jank.
-            // BTA for some reason needs this to be last or else it uses the wrong lwjgl
-            javaArgList.add(launchClassPath + ":" + getLWJGL3ClassPath());
-        // Legacy Fabric needs this to be first or else it uses the wrong lwjgl
-        } else javaArgList.add(getLWJGL3ClassPath() + ":" + launchClassPath);
+        javaArgList.add("-cp"); javaArgList.add(launchClasspath);
 
         // Forge 1.6.4 crash mitigation
         // https://github.com/MinecraftForge/FML/blob/f1b3381e61fac1a0ae90f521223c6bc613eb4888/common/cpw/mods/fml/common/asm/FMLSanityChecker.java#L192-L208
@@ -758,47 +754,31 @@ public final class Tools {
         return libInfos[0].replaceAll("\\.", "/") + "/" + libInfos[1] + "/" + libInfos[2] + "/" + libInfos[1] + "-" + libInfos[2] + ".jar";
     }
 
+    private static String getLibClasspath(JMinecraftVersionList.Version info){
+        StringBuilder libClasspath = new StringBuilder();
+        String[] classpath = generateLibClasspath(info);
+        for (String jarFile : classpath) {
+            libClasspath.append(jarFile).append(":");
+        }
+        // Remove the ':' at the end
+        libClasspath.setLength(libClasspath.length() - 1);
+        return libClasspath.toString();
+    }
+
     public static String getClientClasspath(String version) {
         return DIR_HOME_VERSION + "/" + version + "/" + version + ".jar";
     }
+    public static String generateLaunchClasspath(JMinecraftVersionList.Version info, String actualname) {
+        StringBuilder launchClasspath = new StringBuilder(); //versnDir + "/" + version + "/" + version + ".jar:";
+        String lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3").getAbsolutePath();
+        String lwjgl3File = lwjgl3Folder + "/lwjgl-glfw-classes.jar";
+        String lwjglxFile = lwjgl3Folder + "/lwjglx-classes.jar";
 
-    private static String getLWJGL3ClassPath() {
-        StringBuilder libStr = new StringBuilder();
-        File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3");
-        File[] lwjgl3Files = lwjgl3Folder.listFiles();
-        if (lwjgl3Files != null) {
-            for (File file: lwjgl3Files) {
-                if (file.getName().endsWith(".jar")) {
-                    libStr.append(file.getAbsolutePath()).append(":");
-                }
-            }
-        }
-        // Remove the ':' at the end
-        libStr.setLength(libStr.length() - 1);
-        return libStr.toString();
-    }
-
-    private final static boolean isClientFirst = false;
-    public static String generateLaunchClassPath(JMinecraftVersionList.Version info, String actualname) {
-        StringBuilder finalClasspath = new StringBuilder(); //versnDir + "/" + version + "/" + version + ".jar:";
-
-        String[] classpath = generateLibClasspath(info);
-
-        if (isClientFirst) {
-            finalClasspath.append(getClientClasspath(actualname));
-        }
-        for (String jarFile : classpath) {
-            if (!FileUtils.exists(jarFile)) {
-                Log.d(APP_NAME, "Ignored non-exists file: " + jarFile);
-                continue;
-            }
-            finalClasspath.append((isClientFirst ? ":" : "")).append(jarFile).append(!isClientFirst ? ":" : "");
-        }
-        if (!isClientFirst) {
-            finalClasspath.append(getClientClasspath(actualname));
-        }
-
-        return finalClasspath.toString();
+        launchClasspath.append(lwjgl3File).append(":");
+        launchClasspath.append(getLibClasspath(info)).append(":");
+        launchClasspath.append(getClientClasspath(actualname));
+        if (!isLwjgl3) launchClasspath.append(":").append(lwjglxFile);
+        return launchClasspath.toString();
     }
 
 
@@ -1084,8 +1064,14 @@ public final class Tools {
     public static String[] generateLibClasspath(JMinecraftVersionList.Version info) {
         List<String> libDir = new ArrayList<>();
         for (DependentLibrary libItem: info.libraries) {
+            if(libItem.name.startsWith("org.lwjgl.lwjgl:lwjgl:2.")) isLwjgl3 = false;
+            String libPath = Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(libItem);
+            if (!FileUtils.exists(libPath)) {
+                Log.d(APP_NAME, "Ignored non-exists file: " + libPath);
+                continue;
+            }
             if(!checkRules(libItem.rules)) continue;
-            libDir.add(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(libItem));
+            libDir.add(libPath);
             // Mitigation: Babric doesn't use asm-all for some reason so it does a classpath conflict
             if (libItem.name.startsWith("org.ow2.asm:asm") && !libItem.name.startsWith("org.ow2.asm:asm-all:")){
                 libDir.remove(Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(new DependentLibrary(){{

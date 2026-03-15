@@ -5,15 +5,26 @@ plugins{
     id 'com.android.library' version '8.7.2' apply false
 }
 
-static void writeVersionFile(File jarFile, File versionFile){
-    def sha256 = MessageDigest.getInstance("SHA-1")
-    jarFile.withInputStream { is ->
+static void hashFileWithDigest(File fileToHash, MessageDigest digest){
+    fileToHash.withInputStream { is ->
         byte[] buffer = new byte[8192]
         int read
         while ((read = is.read(buffer)) != -1) {
-            sha256.update(buffer, 0, read)
+            digest.update(buffer, 0, read)
         }
     }
-    def hash = sha256.digest().collect { String.format("%02x", it) }.join()
-    versionFile.write(hash)
+}
+
+static void writeVersionFile(File jarFile, File versionFile){
+    def sha1 = MessageDigest.getInstance("SHA-1")
+    hashFileWithDigest(jarFile, sha1)
+    versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
+}
+
+static void writeVersionFile(File[] jarFileArray, File versionFile){
+    def sha1 = MessageDigest.getInstance("SHA-1")
+    jarFileArray.each {jarFile ->
+        hashFileWithDigest(jarFile, sha1)
+    }
+    versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
 }
