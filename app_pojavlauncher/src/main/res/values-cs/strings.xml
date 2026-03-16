@@ -264,6 +264,7 @@
     <string name="version_select_hint">Vyberte verzi</string>
     <string name="forge_dl_progress">Stahování instalátoru pro %s</string>
     <string name="forge_dl_searching">Hledání čísla verze Forge</string>
+    <string name="neoforge_dl_searching">Hledání čísla verze NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Nepodařilo se načísti seznam verzí!</string>
     <string name="forge_dl_no_installer">Omlouváme se, ale tato verze Forge nemá instalátor, což zatím není podporováno.</string>
     <string name="forge_dl_select_version">Vyberte verzi Forge</string>
@@ -428,5 +429,12 @@
     <string name="error_vanilla_json_corrupt">Vanilla json se zdá být poškozen. Pošlete prosím zprávu o chybě na github nebo discord.</string>
     <string name="preference_ask_for_microphone_title">Povolit mikrofon</string>
     <string name="preference_ask_for_microphone_description">Kliknutím znovu požádáte o dotaz na oprávnění, které je vyžadováno pro módy s hlasovým vstupem jako je Simple Voice Chat.</string>
+    <string name="global_warning">Varování!</string>
+    <string name="sodium_warning_title">Sodium detekováno!</string>
+    <string name="delete_sodium">Smažte Sodium a spusťte</string>
+    <string name="sodium_override_title">Vynutit spuštění Sodium</string>
+    <string name="sodium_override_summaryOff">Sodium může způsobit vizuální chyby a pády. Byli jste varováni.</string>
+    <string name="sodium_override_summaryOn">Sodium není podporováno. Pokud narazíte na nějaké problémy, nebude vám poskytnuta žádná pomoc.</string>
     <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Není modpack soubor!</string>
 </resources>
