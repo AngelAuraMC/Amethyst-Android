@@ -429,7 +429,23 @@
     <string name="preference_touchcontroller_vibrate_length_title">Длина вибрации сенсорного контроллера</string>
     <string name="preference_touchcontroller_vibrate_length_description">Установите продолжительность вибрации при использовании сенсорного контроллера.</string>
     <string name="error_vanilla_json_corrupt">Ванильный json возможно поврежден. Пожалуйста, отправьте сообщение об ошибке на github или discord.</string>
+    <string name="preference_ask_for_microphone_title">Разрешить Микрофон</string>
+    <string name="preference_ask_for_microphone_description">Нажмите, чтобы запросить разрешие для микрофона, нужно для модов как Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Могут ли старые версии Legacy4J использовать SDL бэк-энд</string>
+    <string name="mcl_gamepad_forcedSDL">Принудительно запустить обработку SDL</string>
+    <string name="preference_category_SDL_settings">Настройки SDL</string>
+    <string name="oldL4JFound">Вы используете версию Legacy4J без исправлений для Android! Для получения наилучших результатов вам потребуется вручную включить SDL в настройках контроллера!</string>
     <string name="global_warning">Предупреждение!</string>
+    <string name="controllableFound">Controllable сейчас имеет случайный шанс крашнуть игру на запуске. Либо продолжайте пробовать или используйте другой мод как Controlify.</string>
+    <string name="mg_renderer_summary_dsaExt">Может помочь с шейдер-паками для Iris, обязателен для AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Апскейлинг AMD FSR 1</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (все версии, среднее)</string>
+    <string name="sodium_warning_title">Обнаружен Sodium!</string>
+    <string name="sodium_warning_message">Похоже, вы используете Sodium, он не поддерживается и может привести к графическим проблемам или крашам, Пожалуйста удалите его.</string>
+    <string name="delete_sodium">Удалить Sodium и запустить</string>
+    <string name="sodium_override_title">Продолжить все равно</string>
+    <string name="sodium_override_summaryOff">Sodium может создавать визуальные баги и краши. Вы были предупреждены.</string>
+    <string name="sodium_override_summaryOn">Sodium не поддерживается.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">Не является файлом сборки!</string>
 </resources>
