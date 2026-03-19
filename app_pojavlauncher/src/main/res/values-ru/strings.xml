@@ -51,6 +51,7 @@
     <string name="mcl_setting_title_renderer_settings">Дополнительные настройки визуализации</string>
     <string name="mcl_setting_title_renderer_subtitle">Особые настройки визуализации</string>
     <string name="mcl_setting_category_renderer">Визуализатор</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; только, быстрый)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan; все версии, средний)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (только 1.17+, быстро)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3; 1.17 и выше)</string>
@@ -139,6 +140,8 @@
     <string name="dl_library_sha_fail">Библиотека %s повреждена и будет загружена повторно</string>
     <string name="dl_library_sha_unknown">Библиотеку %s не удалось проверить; допустим, она в порядке</string>
     <string name="dl_library_sha_pass">Библиотека %s проверена и готова к использованию</string>
+    <string name="mcl_gamepad_SDL">Включить SDL бэк-энд для контроллера</string>
+    <string name="mcl_gamepad_SDL_subtitle">Включает SDL бэк-энд. Имеет улучшенную поддержку модов. Использует на GLFW не включено.</string>
     <string name="mcl_disable_gestures">Отключить жесты</string>
     <string name="mcl_disable_gestures_subtitle">Переключение жестов размещения/разрушения блока при касании/удерживании экрана.</string>
     <string name="mcl_disable_swap_hand">Отключить смену руки по двойному касанию</string>
@@ -146,6 +149,7 @@
     <string name="mcl_setting_title_mousespeed">Скорость указателя</string>
     <string name="mcl_setting_subtitle_mousespeed">Изменить скорость указателя виртуальный мыши.</string>
     <string name="mcl_setting_title_grab_mouse">Использовать виртуальный курсор</string>
+    <string name="mcl_setting_subtitle_grab_mouse">Не дает курсору выйти за пределы игры. Предотвращает нажатие кнопок мыши на сенсорном экране.</string>
     <string name="customctrl_passthru">Пропускать касание в игру</string>
     <string name="customctrl_swipeable">Пролистываемый</string>
     <string name="customctrl_forward_lock">Блокировка движения вперёд</string>
@@ -262,6 +266,7 @@
     <string name="version_select_hint">Выберите версию</string>
     <string name="forge_dl_progress">Загрузка установщика %s</string>
     <string name="forge_dl_searching">Поиск номера версии Forge</string>
+    <string name="neoforge_dl_searching">Поиск NeoForge для номера версии</string>
     <string name="modloader_dl_failed_to_load_list">Не удалось загрузить список версий.</string>
     <string name="forge_dl_no_installer">К сожалению, у этой версии Forge отсутствует поддерживаемый установщик.</string>
     <string name="forge_dl_select_version">Выбор версии Forge</string>
