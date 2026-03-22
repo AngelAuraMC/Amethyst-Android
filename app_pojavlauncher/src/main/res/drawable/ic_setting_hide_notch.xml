@@ -3,18 +3,9 @@
     android:height="50dp"
     android:viewportWidth="70"
     android:viewportHeight="50">
-  <path
-      android:pathData="M63.5,13.955c0,-4.991 -3,-8.318 -6,-8.318L12.5,5.637c-3,0 -6,3.327 -6,8.318l0,99.822c0,4.991 3,8.318 6,8.318l45,0c3,0 6,-3.327 6,-8.318L63.5,13.955Z"
-      android:strokeLineJoin="round"
-      android:strokeWidth="3.016"
-      android:fillColor="#597da6"
-      android:strokeColor="#fff"
-      android:fillType="evenOdd"
-      android:strokeLineCap="round"/>
-  <path
-      android:pathData="M50,7c-10,0 -5,10 -15,10S30,7 20,7h30Z"
-      android:strokeLineJoin="round"
-      android:fillColor="#fff"
-      android:fillType="evenOdd"
-      android:strokeLineCap="round"/>
+  <group android:scaleX="2.91667" android:scaleY="2.08333">
+    <path
+        android:fillColor="#FFCC80"
+        android:pathData="M7 23Q6.175 23 5.5875 22.4125Q5 21.825 5 21V3Q5 2.175 5.5875 1.5875Q6.175 1 7 1H17Q17.825 1 18.4125 1.5875Q19 2.175 19 3V6.1Q19.45 6.275 19.725 6.65Q20 7.025 20 7.5V9.5Q20 9.975 19.725 10.35Q19.45 10.725 19 10.9V21Q19 21.825 18.4125 22.4125Q17.825 23 17 23ZM7 21H17Q17 21 17 21Q17 21 17 21V3Q17 3 17 3Q17 3 17 3H7Q7 3 7 3Q7 3 7 3V21Q7 21 7 21Q7 21 7 21ZM7 21Q7 21 7 21Q7 21 7 21V3Q7 3 7 3Q7 3 7 3Q7 3 7 3Q7 3 7 3V21Q7 21 7 21Q7 21 7 21ZM12 20Q12.425 20 12.7125 19.7125Q13 19.425 13 19Q13 18.575 12.7125 18.2875Q12.425 18 12 18Q11.575 18 11.2875 18.2875Q11 18.575 11 19Q11 19.425 11.2875 19.7125Q11.575 20 12 20Z"/>
+  </group>
 </vector>
