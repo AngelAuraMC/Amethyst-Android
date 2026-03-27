@@ -92,10 +92,6 @@
     <string name="global_waiting">Wait</string>
     <string name="global_select">Select</string>
     <string name="global_retry">Retry</string>
-    <string name="global_back">Back</string>
-    <string name="global_add">Add</string>
-    <string name="manage_mods_empty">No mods installed for this profile.</string>
-    <string name="manage_mods_delete_confirm">Delete %s?</string>
     <string name="global_default">Default</string>
     <string name="global_off">Off</string>
 
@@ -430,13 +426,6 @@
     <string name="preference_remap_controller_title">Change controller key bindings</string>
     <string name="preference_remap_controller_description">Allows you to modify the keyboard keys bound to each controller button</string>
     <string name="mcl_button_discord">Discord</string>
-    <string name="mcl_section_quick_actions">Quick Actions</string>
-    <string name="mcl_section_instance_tools">Instance Tools</string>
-    <string name="mcl_button_mod_store">Mod Store</string>
-    <string name="mcl_button_settings">Settings</string>
-    <string name="mcl_button_manage_mods">Manage Mods &amp; Tools</string>
-    <string name="mcl_button_install_modpack">Install Modpack (.mrpack/zip)</string>
-    <string name="delete">Delete</string>
     <string name="ltw_render_distance_warning_msg">Your GPU is not capable of rendering above 7 render distance without Sodium or other similar mods. The render distance will be automatically reduced when you click "OK".</string>
     <string name="mcl_button_open_directory">Open game directory</string>
     <string name="discord_invite" translatable="false">https://discord.gg/8WzF2RVAq4</string>
