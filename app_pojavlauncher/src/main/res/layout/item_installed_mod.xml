@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_card"
+    android:layout_marginVertical="@dimen/padding_medium"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:minHeight="@dimen/_70sdp">
+
+    <!-- Mod icon -->
+    <ImageView
+        android:id="@+id/installed_mod_icon"
+        android:layout_width="@dimen/_52sdp"
+        android:layout_height="@dimen/_52sdp"
+        android:layout_margin="@dimen/padding_moderate"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@mipmap/ic_launcher_foreground" />
+
+    <!-- Mod name -->
+    <TextView
+        android:id="@+id/installed_mod_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_moderate"
+        android:layout_marginTop="@dimen/padding_moderate"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"
+        android:textSize="@dimen/_13ssp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/installed_mod_icon"
+        app:layout_constraintEnd_toStartOf="@+id/installed_mod_toggle"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="EntityCulling" />
+
+    <!-- Mod version -->
+    <TextView
+        android:id="@+id/installed_mod_version"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_moderate"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_11ssp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/installed_mod_icon"
+        app:layout_constraintEnd_toStartOf="@+id/installed_mod_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/installed_mod_name"
+        tools:text="Version 1.8.0" />
+
+    <!-- Mod description -->
+    <TextView
+        android:id="@+id/installed_mod_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_moderate"
+        android:layout_marginBottom="@dimen/padding_moderate"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/_11ssp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@+id/installed_mod_icon"
+        app:layout_constraintEnd_toStartOf="@+id/installed_mod_toggle"
+        app:layout_constraintTop_toBottomOf="@+id/installed_mod_version"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="This mod uses async path-tracing to hide Tiles/Entities that are not vi…" />
+
+    <!-- Enable/disable toggle -->
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/installed_mod_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_moderate"
+        android:checked="true"
+        
+        
+        app:layout_constraintEnd_toStartOf="@+id/installed_mod_delete"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Delete button -->
+    <ImageButton
+        android:id="@+id/installed_mod_delete"
+        android:layout_width="@dimen/_38sdp"
+        android:layout_height="@dimen/_38sdp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_menu_delete_forever"
+        android:padding="@dimen/padding_moderate"
+        android:contentDescription="@string/delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
