@@ -23,9 +23,6 @@ import androidx.fragment.app.Fragment;
 import com.kdt.mcgui.mcVersionSpinner;
 
 import net.kdt.pojavlaunch.CustomControlsActivity;
-import net.kdt.pojavlaunch.fragments.ManageModsFragment;
-import net.kdt.pojavlaunch.fragments.SearchModFragment;
-import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
@@ -54,8 +51,6 @@ public class MainMenuFragment extends Fragment {
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
         Button mOpenDirectoryButton = view.findViewById(R.id.open_files_button);
-        Button mModStoreButton = view.findViewById(R.id.mod_store_button);
-        Button mSettingsMenuButton = view.findViewById(R.id.settings_menu_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -64,16 +59,6 @@ public class MainMenuFragment extends Fragment {
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
         mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.discord_invite)));
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
-
-        // Mod Store → open mod search fragment
-        if (mModStoreButton != null)
-            mModStoreButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(),
-                    SearchModFragment.class, SearchModFragment.TAG, null));
-
-        // Settings → open settings fragment
-        if (mSettingsMenuButton != null)
-            mSettingsMenuButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(),
-                    LauncherPreferenceFragment.class, "SETTINGS", null));
         if (hasOnlineProfile()) {
             mInstallJarButton.setOnClickListener(v -> runInstallerWithConfirmation(false));
             mInstallJarButton.setOnLongClickListener(v -> {
@@ -90,7 +75,12 @@ public class MainMenuFragment extends Fragment {
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
-            Tools.swapFragment(requireActivity(), ManageModsFragment.class, ManageModsFragment.TAG, null);
+            if (Tools.isDemoProfile(v.getContext())){ // Say a different message when on demo profile since they might see the hidden demo folder
+                hasNoOnlineProfileDialog(getActivity(), getString(R.string.demo_unsupported), getString(R.string.change_account));
+            } else if (!hasOnlineProfile()) { // Otherwise display the generic pop-up to log in
+                hasNoOnlineProfileDialog(requireActivity());
+            } else openPath(v.getContext(), getCurrentProfileDirectory(), false);
+
         });
 
 
