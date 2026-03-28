@@ -97,6 +97,7 @@
     <string name="manage_mods_empty">No mods installed for this profile.</string>
     <string name="manage_mods_delete_confirm">Delete %s?</string>
     <string name="mod_install_success">%s installed to mods folder.</string>
+    <string name="hint_search_mod">Search for mods</string>
     <string name="global_default">Default</string>
     <string name="global_off">Off</string>
 

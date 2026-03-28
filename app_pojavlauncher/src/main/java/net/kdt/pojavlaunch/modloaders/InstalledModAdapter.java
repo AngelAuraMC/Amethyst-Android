@@ -99,7 +99,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
         void bind(ModEntry entry, int adapterPos) {
             name.setText(entry.displayName());
             version.setText(entry.file.getName());
-            icon.setImageResource(android.R.drawable.ic_menu_agenda); // default placeholder
+            icon.setImageResource(R.drawable.ic_add_modded); // default placeholder
 
             // Async icon extraction from pack.png inside the JAR
             PojavApplication.sExecutorService.execute(() -> {

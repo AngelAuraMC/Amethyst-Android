@@ -76,7 +76,7 @@
                 android:id="@+id/open_files_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
-                android:drawableStart="@drawable/ic_folder"
+                android:drawableStart="@drawable/ic_folder_managed"
                 android:text="@string/mcl_button_manage_mods"
                 app:layout_constraintTop_toBottomOf="@id/custom_control_button"/>
 

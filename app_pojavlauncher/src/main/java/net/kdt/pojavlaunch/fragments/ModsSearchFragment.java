@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -120,6 +121,10 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
         });
 
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
+
+        // Override hint — the layout uses fragment_mod_search which says "Search for modpacks"
+        mSearchEditText.setHint(R.string.hint_search_mod);
+
         searchMods(null);
     }
 
@@ -263,13 +268,16 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
                 try {
                     DownloadUtils.downloadFile(url, destFile);
                     ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
-                    Tools.runOnUiThread(() ->
-                        new AlertDialog.Builder(context)
+                    Tools.runOnUiThread(() -> {
+                        // context here is getApplicationContext() from ModItemAdapter —
+                        // must wrap with AppTheme or AlertDialog crashes on Android 9
+                        Context themedCtx = new ContextThemeWrapper(context, R.style.AppTheme);
+                        new AlertDialog.Builder(themedCtx)
                             .setTitle(modDetail.title)
                             .setMessage(context.getString(R.string.mod_install_success, finalFileName))
                             .setPositiveButton(android.R.string.ok, null)
-                            .show()
-                    );
+                            .show();
+                    });
                 } catch (IOException e) {
                     ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
                     Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e);
