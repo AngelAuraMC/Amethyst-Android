@@ -248,7 +248,7 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
             String url = modDetail.versionUrls[selectedVersion];
             if (url == null || url.isEmpty()) {
                 Tools.showErrorRemote(context, R.string.modpack_install_download_failed,
-                        new IOException("No download URL available"));
+                        new IOException("No download URL available for this mod"));
                 return;
             }
 
@@ -278,7 +278,7 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
                             .setPositiveButton(android.R.string.ok, null)
                             .show();
                     });
-                } catch (IOException e) {
+                } catch (Exception e) {
                     ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
                     Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e);
                 }
