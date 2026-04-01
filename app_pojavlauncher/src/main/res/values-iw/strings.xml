@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -382,7 +381,6 @@
     <string name="mg_renderer_summary_gl43exts">עשוי לעזור עם תקלות ב-shaderpack. השבת אם אין צורך בכך, עלול לגרום לקריסות.</string>
     <string name="mg_renderer_title_computeShaderext">פרסם את הרחבת Shader החישוב הניסיונית</string>
     <string name="mg_renderer_summary_computeShaderext">עשוי לעזור עם תקלות ב-shaderpack. השבת אם אין צורך בכך, עלול לגרום לקריסות.</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">רק Vanilla 1.3.1 ומעלה נתמכים בחשבונות דמו.</string>
     <string name="demo_unsupported">פרופיל demo אינו נתמך</string>
     <string name="change_account">בבקשה תשנה או תשני חשבונות כדי להשתמש באפשרות זו</string>
