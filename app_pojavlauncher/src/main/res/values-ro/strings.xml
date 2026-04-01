@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -256,6 +255,5 @@ Previne cursorul din a apăsa pe layoutul de control touch.</string>
     <string name="controller_button_select">Selectați</string>
     <string name="customctrl_visibility_title">Vizibilitate</string>
     <string name="preference_experimental_title">Lucruri experimentale</string>
-    <string name="app_short_name">Amethyst</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
