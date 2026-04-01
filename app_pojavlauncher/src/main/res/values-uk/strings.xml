@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Вибрати встановлювач мода</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst був зупинений у результаті збою</string>
+    <string name="error_fatal">Amethyst зупинено в результаті збою</string>
     <string name="error_no_version">Немає версії!</string>
     <string name="error_show_more">Розвернути</string>
     <string name="error_show_less">Звернути</string>
@@ -51,6 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Спеціальні параметри промальовування.</string>
     <string name="mcl_setting_category_renderer">Промальовування</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES — лише 1.21.4&lt;, швидкий</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Crypton Wrapper — усі версії, швидкий</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) — усі версії, посередній</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) — лише 1.17+, швидкий</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) — лише 1.17+</string>
