@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -282,6 +281,5 @@
     <string name="controller_button_select">選択...</string>
     <string name="customctrl_visibility_title">コントロールの可視性</string>
     <string name="preference_experimental_title">実験的なもの</string>
-    <string name="app_short_name">Amethyst</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
