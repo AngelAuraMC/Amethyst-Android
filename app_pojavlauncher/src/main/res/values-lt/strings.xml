@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Ametistas</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -243,6 +242,5 @@
     <string name="controller_button_select">Pasirinkti</string>
     <string name="customctrl_visibility_title">Matomumas</string>
     <string name="preference_experimental_title">Eksperimentiniai dalykai</string>
-    <string name="app_short_name">Ametistas</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
