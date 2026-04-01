@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -411,7 +410,6 @@
     <string name="mg_renderer_summary_computeShaderext">Może pomóc w przypadku problemów z shaderpackami. Jeśli nie jest potrzebne, wyłącz je, ponieważ może powodować awarie.</string>
     <string name="mg_renderer_title_multidrawCompute">Użyj emulacji obliczeniowej Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Wykorzystuje shadery obliczeniowe do emulacji Multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Na kontach demonstracyjnych obsługiwane są wyłącznie wersje Vanilla 1.3.1 i nowsze</string>
     <string name="demo_unsupported">Profil demonstracyjny nie jest obsługiwany</string>
     <string name="change_account">Aby skorzystać z tej funkcji, zmień konto</string>
