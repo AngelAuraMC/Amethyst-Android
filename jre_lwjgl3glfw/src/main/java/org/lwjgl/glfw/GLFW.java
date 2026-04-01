@@ -1047,23 +1047,27 @@ public class GLFW
         boolean turnipLoad = System.getenv("POJAV_LOAD_TURNIP") != null &&
                 System.getenv("POJAV_LOAD_TURNIP").equals("1");
         // These values can be found at headings_array.xml
-        if (turnipLoad && System.getenv("AMETHYST_RENDERER").equals("vulkan_zink")) {
+        String glDriver = System.getenv("AMETHYST_RENDERER");
+        if (turnipLoad && glDriver.equals("vulkan_zink")) {
             glMajor = 4;
             glMinor = 6;
-        } else if (System.getenv("AMETHYST_RENDERER").equals("opengles3_virgl")) {
+        } else if (glDriver.equals("opengles3_virgl")) {
             glMajor = 4;
             glMinor = 3;
-        } else if (System.getenv("AMETHYST_RENDERER").equals("opengles_mobileglues")) {
+        } else if (glDriver.equals("opengles_mobileglues")) {
             glMajor = 4;
             glMinor = 0;
         }
-
-        // This somehow fixes a bunch of issues like glGetString sigsegv'ing on krypton wrapper.
-        glfwMakeContextCurrent(ptr);
-
-        // Get the real values properly
+        // Get the real values properly, but only if they're higher
         FunctionProvider functionProvider = org.lwjgl.opengl.GL.getFunctionProvider();
         if (functionProvider != null) {
+            // Save the old context so we can swap back to it later after getting driver info
+            // This is because sometimes there are early loading windows like forge that get context
+            // and not returning it causes some obvious issues
+            long oldPtr = glfwGetCurrentContext();
+            // Need to swap context to us so glFuncs work
+            glfwMakeContextCurrent(ptr);
+
             // We don't assume createCapabilities has been called nor do we call it
             // This was based from LWJGL GL.createCapabilities()
             long GetError    = functionProvider.getFunctionAddress("glGetError");
@@ -1077,19 +1081,24 @@ public class GLFW
                     APIVersion apiVersion = apiParseVersion(versionString);
                     if (3 <= apiVersion.major && apiVersion.major <= 4) glMajor = apiVersion.major;
                     if (3 <= apiVersion.minor && apiVersion.minor <= 6) glMinor = apiVersion.minor;
+                    System.out.println("Driver "+glDriver+" GL string returned "+apiVersion.major+apiVersion.minor);
                 } catch (Throwable ignored){} // In case the string is invalid/garbage
             }
-
             // Try to get values from GL30+ driver directly, only use if higher ver
             try (MemoryStack stack = stackPush()) {
-                IntBuffer version = stack.ints(0);
-                callPV(GL_MAJOR_VERSION, memAddress(version), GetIntegerv);
+                IntBuffer version = stack.ints(0, 0);
+                callPV(GL_MAJOR_VERSION, memAddress(version, 0), GetIntegerv);
                 if (callI(GetError) == GL_NO_ERROR &&
                         3 <= version.get(0) && version.get(0) <= 4) glMajor = version.get(0);
-                callPV(GL_MINOR_VERSION, memAddress(version), GetIntegerv);
+                callPV(GL_MINOR_VERSION, memAddress(version, 1), GetIntegerv);
                 if (callI(GetError) == GL_NO_ERROR &&
-                        3 <= version.get(0) && version.get(0) <= 4) glMinor = version.get(0);
+                        3 <= version.get(0) && version.get(1) <= 4) glMinor = version.get(1);
+                System.out.println("Driver "+glDriver+" GL version returned "+version.get(0)+version.get(1));
             }
+            System.out.println("Using GL version "+glMajor+glMinor+" for GLFW window context!");
+
+            // We finished getting the driver info, we can return it back to its original state now
+            glfwMakeContextCurrent(oldPtr);
         }
         win.windowAttribs.put(GLFW_CONTEXT_VERSION_MAJOR, glMajor);
         win.windowAttribs.put(GLFW_CONTEXT_VERSION_MINOR, glMinor);
