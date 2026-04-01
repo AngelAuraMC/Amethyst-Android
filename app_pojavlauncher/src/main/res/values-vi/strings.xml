@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -411,7 +410,6 @@
     <string name="mg_renderer_summary_computeShaderext">Có thể giúp giảm hiện tượng lỗi trên các gói shader. Tính năng cũng có thể gây thoát đột ngột, hãy tắt nếu không cần thiết.</string>
     <string name="mg_renderer_title_multidrawCompute">Mô phỏng tính toán Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Dùng shader tính toán để mô phỏng Multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Tài khoản chơi thử chỉ hỗ trợ chạy phiên bản từ 1.3.1 trở lên</string>
     <string name="demo_unsupported">Không hỗ trợ chế độ chơi thử</string>
     <string name="change_account">Vui lòng thay đổi tài khoản để sử dụng chức năng này</string>
