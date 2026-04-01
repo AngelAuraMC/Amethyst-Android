@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -411,7 +410,6 @@
     <string name="mg_renderer_summary_computeShaderext">Може допомогти у вирішенні збоїв пакетів шейдерів. Вимкніть, якщо не потрібно, це може призвести до збоїв.</string>
     <string name="mg_renderer_title_multidrawCompute">Викор. емуляцію обчислення Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Використовує обчислювальні шейдери для емуляції Multidraw.</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Лише усталена версія 1.3.1 і вище підтримуються демо обліковим записом</string>
     <string name="demo_unsupported">Демопрофіль не підтримується</string>
     <string name="change_account">Будь ласка, змініть обліковий запис для використання функції</string>
