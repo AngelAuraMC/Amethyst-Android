@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -409,7 +408,6 @@
     <string name="mg_renderer_summary_computeShaderext">Mungkin membantu mengatasi glitch pada shaderpack. Nonaktifkan jika tidak diperlukan, karena bisa menyebabkan crash.</string>
     <string name="mg_renderer_title_multidrawCompute">Gunakan Emulasi Multidraw Compute</string>
     <string name="mg_renderer_summary_multidrawCompute">Menggunakan compute shaders untuk emulasi multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Hanya Minecraft Vanilla versi 1.3.1 ke atas yang didukung untuk akun demo</string>
     <string name="demo_unsupported">Profil Demo tidak di dukung</string>
     <string name="change_account">Ganti akun terlebih dahulu untuk menggunakan fitur ini</string>
