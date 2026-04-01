@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -403,7 +402,6 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="mg_renderer_summary_computeShaderext">Può aiutare con glich dei shaderpack. Disabilitare se non necessario, può causare crash.</string>
     <string name="mg_renderer_title_multidrawCompute">Utilizza Calcola Emulazione Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Usa i compute shaders per l\'emulazione multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Solo Vanilla 1.3.1 e superiori sono supportati su account demo</string>
     <string name="demo_unsupported">Profilo demo non supportato</string>
     <string name="change_account">Si prega di cambiare account per utilizzare questa funzione</string>
