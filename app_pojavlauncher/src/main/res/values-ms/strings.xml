@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -411,7 +410,6 @@
     <string name="mg_renderer_summary_computeShaderext">Boleh membantu dengan gangguan dengan pek pembayang. Nyahdayakan jika tidak diperlukan, boleh menyebabkan ranap.</string>
     <string name="mg_renderer_title_multidrawCompute">Gunakan Emulasi Compute Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Menggunakan pembayang compute untuk emulasi multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Hanya versi 1.3.1 Vanila dan ke atas disokong pada akaun demo</string>
     <string name="demo_unsupported">Profil Demo tidak disokong</string>
     <string name="change_account">Sila tukar akaun untuk menggunakan fungsi ini</string>
