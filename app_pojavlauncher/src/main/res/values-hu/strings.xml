@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Ametiszt</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -403,7 +402,6 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="mg_renderer_summary_gl43exts">Ez segíthet a modok összeomlásai ellen. Kikapcsolható, ha nem szükséges.</string>
     <string name="mg_renderer_title_computeShaderext">Kísérleti Compute Shader bővítmény reklámozása</string>
     <string name="mg_renderer_summary_computeShaderext">Ez segíthet a shaderpackok összeomlásain ellen. Kikapcsolható, ha nem szükséges.</string>
-    <string name="app_short_name">Ametiszt</string>
     <string name="demo_versions_supported">Csakis Vanilla 1.3.1 vagy újabb verziók támogatják a demó fiókokat</string>
     <string name="demo_unsupported">Demó Profil nem támogatott</string>
     <string name="change_account">Válts egy másik fiókot a funkió használatához</string>
