@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Copper</string>
+    <string name="app_name" translatable="false">Copper</string>
 
     <!-- Action bar part -->
 
@@ -471,7 +471,7 @@
     <string name="mg_renderer_summary_computeShaderext">May help with shaderpack glitches. Disable if not needed, can cause crashes.</string>
     <string name="mg_renderer_title_multidrawCompute">Use Compute Multidraw Emulation</string>
     <string name="mg_renderer_summary_multidrawCompute">Uses compute shaders for multidraw emulation</string>
-    <string name="app_short_name">Copper</string>
+    <string name="app_short_name" translatable="false">Copper</string>
     <string name="demo_versions_supported">Only Vanilla 1.3.1 and above are supported on demo accounts</string>
     <string name="demo_unsupported">Demo Profile not supported</string>
     <string name="change_account">Please change accounts to use this function</string>
@@ -504,7 +504,7 @@
     <string name="autorendererselectfailed">Auto-renderer select failed, defaulting to HolyGL4ES</string>
     <string name="sodium_warning_title">Sodium detected!</string>
     <string name="sodium_warning_message">It appears you are using sodium, this is unsupported and may lead to graphical issues or crashes. Please remove it and all dependent mods.</string>
-    <string name="delete_sodium">Delete Sodium and Launch</string>
+    <string name="delete_sodium">Delete Sodium and Launch report this if you see this it should have been removed</string>
     <string name="sodium_override_title">Run sodium forcefully</string>
     <string name="sodium_override_summaryOff">Using sodium may cause visual bugs and crashes. You have been warned.</string>
     <string name="sodium_override_summaryOn">Sodium is not supported. No help will be given if you encounter any issues.</string>
