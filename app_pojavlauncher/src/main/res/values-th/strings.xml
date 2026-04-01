@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">อเมทิสต์</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -339,6 +338,5 @@
     <string name="execute_jar_incompatible_runtime">การรัน .jar ไม่รองรับกับจาวา %d</string>
     <string name="controller_button_select">เลือก</string>
     <string name="preference_experimental_title">การตั้งค่าที่ทดสอบ</string>
-    <string name="app_short_name">อเมทิสต์</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
