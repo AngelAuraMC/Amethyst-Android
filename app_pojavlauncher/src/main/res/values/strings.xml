@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name" translatable="false">Amethyst</string>
 
     <!-- Action bar part -->
 
@@ -456,7 +456,7 @@
     <string name="mg_renderer_summary_computeShaderext">May help with shaderpack glitches. Disable if not needed, can cause crashes.</string>
     <string name="mg_renderer_title_multidrawCompute">Use Compute Multidraw Emulation</string>
     <string name="mg_renderer_summary_multidrawCompute">Uses compute shaders for multidraw emulation</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name" translatable="false">Amethyst</string>
     <string name="demo_versions_supported">Only Vanilla 1.3.1 and above are supported on demo accounts</string>
     <string name="demo_unsupported">Demo Profile not supported</string>
     <string name="change_account">Please change accounts to use this function</string>
