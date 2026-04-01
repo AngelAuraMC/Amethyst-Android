@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -409,7 +408,6 @@
     <string name="mg_renderer_summary_computeShaderext">Může pomoci s chybami shaderpacků. Zakažte, pokud to není třeba, může samo způsobovat pády.</string>
     <string name="mg_renderer_title_multidrawCompute">Použít výpočty mnohonásobnou emulace</string>
     <string name="mg_renderer_summary_multidrawCompute">Používá výpočty stínů pro mnohonásobnou emulaci</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Na demo účtech jsou podporovány pouze Vanilla verze 1.3.1 a výše</string>
     <string name="demo_unsupported">Demo profil není podporován</string>
     <string name="change_account">Pro použití této funkce prosím změňte účty</string>
