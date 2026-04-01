@@ -147,7 +147,7 @@ android {
             // multiDexEnabled = true
             // debuggable = true
             resValue "string", "app_name", "Amethyst"
-            resValue "string", "app_short_name", "Amethyst (Debug)"
+            resValue "string", "app_short_name", "Amethyst"
             resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder'
             resValue 'string', 'application_package', 'org.angelauramc.amethyst'
         }
