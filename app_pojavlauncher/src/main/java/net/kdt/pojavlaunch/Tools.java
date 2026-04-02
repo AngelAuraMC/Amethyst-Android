@@ -360,10 +360,12 @@ public final class Tools {
         return info.isAdreno() && info.glesMajorVersion >= 3;
     }
 
+    private static String[] sodiumMods = {"sodium", "embeddium", "rubidium", "xenon"};
+
     private static boolean affectedByLTWRenderDistanceIssue() {
         if(!"opengles3_ltw".equals(Tools.LOCAL_RENDERER)) return false;
         if(!affectedByRenderDistanceIssue()) return false;
-        if(hasMods("sodium", "embeddium", "rubidium")) return false;
+        if(hasMods(sodiumMods)) return false;
 
         int renderDistance;
         try {
@@ -472,7 +474,37 @@ public final class Tools {
         javaArgList.add("-Dimgui.library.name=imgui-java");
         // We use an abomination to support all DH versions with a single library.
         javaArgList.add("-DZstdNativePath="+Tools.NATIVE_LIB_DIR+"/libzstd-jni-1.5.7-6-dhcompat.so");
+        // We only ever reach this point when user has already used the force run switch
+        boolean hasSodiumMod = false;
+        for (String modName : sodiumMods) {
+            if (hasMods(sodiumMods)) {
+                hasSodiumMod = true;
+                File mixinPropertiesConfigFile = new File(getGameDir(), "config/" + modName + "-mixins.properties");
+                // Write mixin configs to somewhat help stability. We don't want more people complaining.
+                String[] propertiesToAdd = {
+                        "mixin.features.buffer_builder.intrinsics=false",
+                        "mixin.features.chunk_rendering=false"
+                };
+                List<String> mixinPropertiesConfigStrings = null;
+                try {
+                    mixinPropertiesConfigStrings = org.apache.commons.io.FileUtils.readLines(mixinPropertiesConfigFile, "UTF-8");
+                } catch (IOException ignored) {}
+                if (mixinPropertiesConfigStrings == null) {
+                    mixinPropertiesConfigStrings = new ArrayList<>();
+                }
+                for (String newLine : propertiesToAdd) {
+                    if (!mixinPropertiesConfigStrings.contains(newLine)) {
+                        mixinPropertiesConfigStrings.add(newLine);
+                    }
+                }
+                try {
+                    org.apache.commons.io.FileUtils.writeLines(mixinPropertiesConfigFile, mixinPropertiesConfigStrings);
+                } catch (IOException ignored) {} // If we can't write it, we tried our best.
 
+            }
+        }
+        // We use a janky lwjgl setup. We don't want more people complaining it crashes.
+        if (hasSodiumMod) javaArgList.add("-Dsodium.checks.issue2561=false");
         javaArgList.add(versionInfo.mainClass);
         javaArgList.addAll(Arrays.asList(launchArgs));
         // ctx.appendlnToLog("full args: "+javaArgList.toString());
