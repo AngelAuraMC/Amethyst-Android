@@ -1,18 +1,34 @@
 package net.kdt.pojavlaunch;
 
 import static net.kdt.pojavlaunch.Architecture.archAsString;
+import static net.kdt.pojavlaunch.Architecture.getDeviceArchitecture;
+import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
+import static net.kdt.pojavlaunch.Tools.downloadFile;
+import static net.kdt.pojavlaunch.Tools.isOnline;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.util.Log;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.kdt.mcgui.ProgressLayout;
+
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
+import net.kdt.pojavlaunch.progresskeeper.DownloaderProgressWrapper;
+import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
+import net.kdt.pojavlaunch.utils.DownloadUtils;
+import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.MathUtils;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -84,7 +100,7 @@ public class NewJREUtil {
             // Check whether the selection is an internal runtime
             InternalRuntime internalRuntime = getInternalRuntime(runtime);
             // If it is, check if updates are available from the APK file
-            if(internalRuntime != null) {
+            if (internalRuntime != null) {
                 // Not calling showRuntimeFail on failure here because we did, technically, find the compatible runtime
                 return checkInternalRuntime(assetManager, internalRuntime);
             }
@@ -99,6 +115,18 @@ public class NewJREUtil {
         MathUtils.RankedValue<?> selectedRankedRuntime = MathUtils.objectMin(
                 nearestInternalRuntime, nearestInstalledRuntime, (value)->value.rank
         );
+
+        // Check if the selected runtime actually exists in the APK, else download it
+        // If it isn't InternalRuntime then it wasn't in the apk in the first place!
+        if (selectedRankedRuntime.value instanceof InternalRuntime)
+            if (!checkInternalRuntime(assetManager, (InternalRuntime) selectedRankedRuntime.value)) {
+                if (nearestInstalledRuntime == null) // If this was non-null then it would be a valid runtime and we can leave it be
+                    tryDownloadRuntime(activity, gameRequiredVersion);
+                // This means the internal runtime didn't extract so let's use installed instead
+                // This also refreshes it so after the runtime download, it can find the new runtime
+                selectedRankedRuntime = getNearestInstalledRuntime(gameRequiredVersion);
+            }
+
 
         // No possible selections
         if(selectedRankedRuntime == null) {
@@ -139,6 +167,46 @@ public class NewJREUtil {
     private static void showRuntimeFail(Activity activity, JMinecraftVersionList.Version verInfo) {
         Tools.dialogOnUiThread(activity, activity.getString(R.string.global_error),
                 activity.getString(R.string.multirt_nocompatiblert, verInfo.javaVersion.majorVersion));
+    }
+
+    public static boolean isValidJavaVersion(int version) {
+        for (InternalRuntime javaVersion : InternalRuntime.values()) {
+            if (javaVersion.majorVersion == version) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static String getJreSource(int javaVersion, String arch){
+        return String.format("https://github.com/AngelAuraMC/angelauramc-openjdk-build/releases/latest/download/jre%s-android-%s.tar.xz", javaVersion, arch);
+    }
+    /**
+     * @return whether installation was successful or not
+     */
+    private static boolean tryDownloadRuntime(Activity activity, int gameRequiredVersion){
+        if (!isOnline(activity)) return false;
+        String arch = archAsString(getDeviceArchitecture());
+        if (!isValidJavaVersion(gameRequiredVersion)) return false;
+        try {
+            File outputFile = new File(Tools.DIR_CACHE, String.format("jre%s-android-%s.tar.xz", gameRequiredVersion, arch));
+            DownloaderProgressWrapper monitor = new DownloaderProgressWrapper(R.string.newdl_downloading_jre_runtime,
+                    ProgressLayout.UNPACK_RUNTIME);
+            monitor.extraString = Integer.toString(gameRequiredVersion);
+            DownloadUtils.downloadFileMonitored(
+                    getJreSource(gameRequiredVersion, arch),
+                    outputFile,
+                    null,
+                    monitor
+            );
+            String jreName = "External-" + gameRequiredVersion;
+            MultiRTUtils.installRuntimeNamed(NATIVE_LIB_DIR, new FileInputStream(outputFile), jreName);
+            MultiRTUtils.postPrepare(jreName);
+            outputFile.delete();
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to download Java "+gameRequiredVersion+" for "+arch, e);
+        }
+        return true;
     }
 
     private enum InternalRuntime {
