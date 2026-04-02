@@ -268,6 +268,7 @@ public final class Tools {
 
     /**
      * Searches for mod in mods directory of current selected profile
+     * Not case-sensitive
      * @param filenames Filename(s) of the .jar mod(s)
      * @return Whether or not the .jar is found
      */
@@ -278,7 +279,7 @@ public final class Tools {
         if (modFiles == null) return false;
         for (File file : modFiles) {
             for (String filename : filenames)
-                if (file.getName().contains(filename)) return true;
+                if (file.getName().toLowerCase().contains(filename.toLowerCase())) return true;
         }
         return false;
     }
