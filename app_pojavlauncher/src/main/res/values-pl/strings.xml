@@ -51,6 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Ustawienia specyficzne dla silnika renderującego</string>
     <string name="mcl_setting_category_renderer">Silnik renderujący</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (tylko &lt;1.21.4, szybki)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (wszystkie wersje, szybki)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (wszystkie wersje, średni)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (tylko 1.17+, szybki)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - tylko 1.17+</string>
