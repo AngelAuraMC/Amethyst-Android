@@ -106,6 +106,7 @@ jobs:
           rm -rf app_pojavlauncher/src/main/assets/components/jre
           rm -rf app_pojavlauncher/src/main/assets/components/jre-new
           rm -rf app_pojavlauncher/src/main/assets/components/jre-21
+          rm -rf app_pojavlauncher/src/main/assets/components/jre-25
           ./gradlew assembleDebug
           mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug-noruntime.apk
       
