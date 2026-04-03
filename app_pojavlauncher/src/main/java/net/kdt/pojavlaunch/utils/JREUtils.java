@@ -314,7 +314,12 @@ public class JREUtils {
 
         // Force LWJGL to use the Freetype library intended for it, instead of using the one
         // that we ship with Java (since it may be older than what's needed)
-        userArgs.add("-Dorg.lwjgl.freetype.libname="+ NATIVE_LIB_DIR+"/libfreetype.so");
+        userArgs.add("-Dorg.lwjgl.freetype.libname="+ Tools.lwjglNativesDir +"/libfreetype.so");
+        // Our spirv-cross is compiled shared, so it gets named shared.
+        userArgs.add("-Dorg.lwjgl.spvc.libname=spirv-cross-c-shared");
+
+        // We don't have jemalloc for our LWJGL so set the allocator to system to avoid error logs
+        userArgs.add("-Dorg.lwjgl.system.allocator=system");
 
         // Some phones are not using the right number of cores, fix that
         userArgs.add("-XX:ActiveProcessorCount=" + java.lang.Runtime.getRuntime().availableProcessors());

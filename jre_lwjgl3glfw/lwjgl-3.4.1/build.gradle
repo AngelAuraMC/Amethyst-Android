@@ -1,0 +1,92 @@
+plugins {
+    id 'java'
+}
+def lwjglVersion = "3.4.1"
+group = 'org.lwjgl.glfw'
+
+configurations {
+    lwjglModules {
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs/lwjgl-$lwjglVersion", include: ['*.jar'])
+    lwjglModules fileTree(dir: "libs/lwjgl-$lwjglVersion", include: ['*.jar'])
+    implementation "org.jspecify:jspecify:1.0.0" // lwjgl3.3.3 has jsr305 included as a jar
+}
+
+jar {
+    // Modules to copy over to the components directory instead of patching and merging
+    String[] excludedModules = [
+            "lwjgl-lwjglx.jar",
+            "lwjgl.jar",
+            "jsr305.jar",
+            "lwjgl-freetype.jar",
+            "lwjgl-jemalloc.jar",
+            "lwjgl-nanovg.jar",
+            "lwjgl-openal.jar",
+            "lwjgl-stb.jar",
+            "lwjgl-tinyfd.jar",
+            "lwjgl-opengl.jar"
+    ]
+
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    archiveBaseName.set("lwjgl-${lwjglVersion}-merged-modules")
+//    destinationDirectory.set(project(":jre_lwjgl3glfw").layout.buildDirectory.dir("libs/lwjgl-${lwjglVersion}"))
+    destinationDirectory = file("${project(':app_pojavlauncher').layout.projectDirectory}/src/main/assets/components/lwjgl3/${lwjglVersion}")
+
+    // Mark as using multiple Java versions.
+    manifest {
+        attributes "Multi-Release": "true"
+    }
+
+    from {
+        // Ensure that the core lwjgl jar is processed first so duplicates in META-INF from other classes
+        // are ignored. This avoids InvalidModuleDescriptorException due to say, using the module-info.class
+        // from lwjgl-jemalloc.
+        def includedModules = configurations.lwjglModules.findAll { dep ->
+            !excludedModules.any { it == dep.name }
+        }
+        def coreJar = includedModules.find { it.name == "lwjgl.jar" }
+        def jarList = [coreJar] + (includedModules - coreJar)
+        if (coreJar == null) jarList = jarList - coreJar
+        println("Merging LWJGL $lwjglVersion modules in the order: ")
+        (jarList).collect {
+            println(it.getName())
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    // Makes the jar reproducible so the version file actually is a version file
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+
+    def versionFile = new File(destinationDirectory.get().asFile, "version")
+    def jarFile = archiveFile.get().asFile
+    doLast {
+        def excludedModulesFileList = excludedModules.collectMany { fileName ->
+            configurations.lwjglModules.findAll { it.name == fileName }
+        }
+        copy {
+            // Copy excluded modules to the lwjgl classes dir
+            from excludedModulesFileList
+            into archiveFile.get().asFile.parentFile
+        }
+        writeVersionFile([jarFile] as File[] + excludedModulesFileList, versionFile)
+    }
+    // Adds the jank to outputs
+    outputs.file(versionFile)
+    outputs.files excludedModules.collect { path -> new File(destinationDirectory.get().asFile, path) }
+////  Prints out the output.files for troubleshooting
+//    println "Task outputs:"
+//    outputs.files.each { file ->
+//        println "  ${file}"
+//    }
+    exclude 'net/java/openjdk/cacio/ctc/**'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
