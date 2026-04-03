@@ -6,60 +6,107 @@ plugins {
 
 group = 'org.lwjgl.glfw'
 
-configurations.default.setCanBeResolved(true)
-
-jar {
-    String lwjglxJarName = "lwjgl-lwjglx.jar" // Name of the jar with LWJGLX (LWJGL2 Compatibility) Classes
-    String lwjglxFinalJarName = "lwjglx-classes.jar" // What lwjglxJarName is renamed to
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveBaseName.set("lwjgl-glfw-classes")
-    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl3/"))
-
-    // Mark as using multiple Java versions.
-    manifest {
-        attributes "Multi-Release": "true"
-    }
-
-    from {
-        // Ensure that the core lwjgl jar is processed first so duplicates in META-INF from other classes
-        // are ignored. This avoids InvalidModuleDescriptorException due to say, using the module-info.class
-        // from lwjgl-jemalloc.
-        def files = configurations.default.findAll { it.name != lwjglxJarName }
-        def coreJar = files.find { it.name == "lwjgl.jar" }
-        def others = files - coreJar
-        ([coreJar] + others).collect {
-            println(it.getName())
-            it.isDirectory() ? it : zipTree(it)
-        }
-    }
-    // Makes the jar reproducible so the version file actually is a version file
-    preserveFileTimestamps = false
-    reproducibleFileOrder = true
-    // Write version file
-    def versionFile  = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/lwjgl3/version")
-    def lwjglxFinalFile = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/lwjgl3/" + lwjglxFinalJarName)
-    def jarFile = archiveFile.get().asFile
-    doLast {
-        copy {
-            // Copy lwjglx to the lwjgl classes dir
-            from configurations.default.find { it.name == lwjglxJarName }
-            into archiveFile.get().asFile.parentFile
-            rename lwjglxJarName, lwjglxFinalJarName
-        }
-        writeVersionFile([jarFile, lwjglxFinalFile] as File[], versionFile)
-    }
-    // Adds the jank to outputs
-    outputs.file(versionFile)
-    outputs.file(lwjglxFinalFile)
-
-    exclude 'net/java/openjdk/cacio/ctc/**'
-}
-
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+configurations {
+    lwjgl333
+    lwjgl341
+}
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    lwjgl333 fileTree(dir: 'libs/lwjgl-3.3.3', include: ['*.jar'])
+    lwjgl341 fileTree(dir: 'libs/lwjgl-3.4.1', include: ['*.jar'])
+}
+
+def lwjglConfigMap = [
+        "3.3.3": configurations.lwjgl333,
+        "3.4.1": configurations.lwjgl341
+]
+
+def lwjglVersions = ["3.3.3", "3.4.1"]
+
+lwjglVersions.each { version ->
+    task("lwjgl${version.replace('.', '')}Jar", type: Jar) {
+        // Modules to copy over to the components directory instead of patching and merging
+        String[] excludedModules = [
+                "lwjgl-lwjglx.jar",
+                "lwjgl.jar",
+                "jsr305.jar",
+                "lwjgl-freetype.jar",
+                "lwjgl-jemalloc.jar",
+                "lwjgl-nanovg.jar",
+                "lwjgl-openal.jar",
+                "lwjgl-stb.jar",
+                "lwjgl-tinyfd.jar",
+                "lwjgl-opengl.jar"
+        ]
+
+        // Mark as using multiple Java versions.
+        manifest {
+            attributes "Multi-Release": "true"
+        }
+
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        archiveBaseName.set("lwjgl-$version-merged-classes")
+        destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl-$version/"))
+
+        from {
+            // Ensure that the core lwjgl jar is processed first so duplicates in META-INF from other classes
+            // are ignored. This avoids InvalidModuleDescriptorException due to say, using the module-info.class
+            // from lwjgl-jemalloc.
+            def includedModules = lwjglConfigMap[version].findAll { dep ->
+                !excludedModules.any { it == dep.name }
+            }
+            def coreJar = includedModules.find { it.name == "lwjgl.jar" }
+            def jarList = [coreJar] + (includedModules - coreJar)
+            if (coreJar == null) jarList = jarList - coreJar
+//            println("Merging LWJGL ${version} modules in the order: ")
+            (jarList).collect {
+//                println(it.getName())
+                it.isDirectory() ? it : zipTree(it)
+            }
+        }
+
+        from {
+            sourceSets.main.output
+        }
+
+        // Makes the jar reproducible so the version file actually is a version file
+        preserveFileTimestamps = false
+        reproducibleFileOrder = true
+
+        def rootProjDir = project(":app_pojavlauncher").projectDir
+        def versionFile  = new File(rootProjDir, "src/main/assets/components/lwjgl-$version/version")
+        def jarFile = archiveFile.get().asFile
+        doLast {
+            def excludedModulesFileList = excludedModules.collectMany { fileName ->
+                lwjglConfigMap[version].findAll { it.name == fileName }
+            }
+            copy {
+                // Copy excluded modules to the lwjgl classes dir
+                from excludedModulesFileList
+                into archiveFile.get().asFile.parentFile
+            }
+            writeVersionFile([jarFile] as File[] + excludedModulesFileList, versionFile)
+        }
+        // Adds the jank to outputs
+        outputs.file(versionFile)
+        outputs.files excludedModules.collect { path -> file(rootProjDir.path + "/src/main/assets/components/lwjgl-$version/" + path) }
+//        // Prints out the output.files for troubleshooting
+//        println "Task outputs:"
+//        outputs.files.each { file ->
+//            println "  ${file}"
+//        }
+
+    }
+    tasks.named('jar'){
+        dependsOn tasks.named("lwjgl${version.replace('.', '')}Jar");
+    }
+    // Needed to compile with the proper libs
+    tasks.named('compileJava') {
+        classpath += lwjglConfigMap[version]
+    }
 }

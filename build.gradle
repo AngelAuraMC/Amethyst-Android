@@ -6,6 +6,7 @@ plugins{
 }
 
 static void hashFileWithDigest(File fileToHash, MessageDigest digest){
+//    println("Hashing "+fileToHash.name)
     fileToHash.withInputStream { is ->
         byte[] buffer = new byte[8192]
         int read

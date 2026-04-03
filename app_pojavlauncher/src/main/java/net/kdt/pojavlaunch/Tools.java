@@ -145,7 +145,7 @@ public final class Tools {
     public static String CTRLMAP_PATH;
     public static String CTRLDEF_FILE;
     private static RenderersList sCompatibleRenderers;
-    private static boolean isLwjgl3 = true;
+    private static int lwjglVersion = 0;
 
 
     private static File getPojavStorageRoot(Context ctx) {
@@ -842,20 +842,30 @@ public final class Tools {
     }
     public static String generateLaunchClasspath(JMinecraftVersionList.Version info, String actualname) {
         StringBuilder launchClasspath = new StringBuilder(); //versnDir + "/" + version + "/" + version + ".jar:";
-        String lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3").getAbsolutePath();
-        String lwjgl3File = lwjgl3Folder + "/lwjgl-glfw-classes.jar";
-        String lwjglxFile = lwjgl3Folder + "/lwjglx-classes.jar";
+        String internalLwjglVersion = lwjglVersion >= 341 ? "3.4.1" : "3.3.3";
+        File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, internalLwjglVersion);
+        String lwjglCore = lwjgl3Folder.getAbsolutePath() + "/lwjgl.jar";
+        String lwjglxFile = lwjgl3Folder + "/lwjgl-lwjglx.jar";
 
-        launchClasspath.append(lwjgl3File).append(":");
+        launchClasspath.append(lwjglCore).append(":");
+
+        File[] lwjglModules = lwjgl3Folder.listFiles(pathname ->
+                pathname.getName().endsWith(".jar") &&
+            // Exclude our two special jars which goes first and last
+                !pathname.getName().equals("lwjgl.jar") &&
+                !pathname.getName().endsWith("lwjglx.jar"));
+
+        if (lwjglModules != null) {
+            for (File lwjglModule : lwjglModules)
+                launchClasspath.append(lwjglModule.getAbsolutePath()).append(":");
+        } else Log.e("generateLaunchClasspath", "lwjgl modules are missing from components!");
+
         launchClasspath.append(getLibClasspath(info)).append(":");
         launchClasspath.append(getClientClasspath(actualname));
-        if (!isLwjgl3) launchClasspath.append(":").append(lwjglxFile);
+        // Anything LWJGL2 gets LWJGLX
+        if (lwjglVersion <= 299) launchClasspath.append(":").append(lwjglxFile);
         return launchClasspath.toString();
     }
-
-
-
-
 
     public static DisplayMetrics getDisplayMetrics(Activity activity) {
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -1136,7 +1146,28 @@ public final class Tools {
     public static String[] generateLibClasspath(JMinecraftVersionList.Version info) {
         List<String> libDir = new ArrayList<>();
         for (DependentLibrary libItem: info.libraries) {
-            if(libItem.name.startsWith("org.lwjgl.lwjgl:lwjgl:2.")) isLwjgl3 = false;
+            // Look for LWJGL version
+            int libItemVersionStringOffset = 0;
+            if(libItem.name.startsWith("org.lwjgl.lwjgl:lwjgl:")) {
+                libItemVersionStringOffset = "org.lwjgl.lwjgl:lwjgl:".length();
+            } else if (libItem.name.startsWith("org.lwjgl:lwjgl:")) {
+                libItemVersionStringOffset = "org.lwjgl:lwjgl:".length();
+            }
+            // If we already have a valid LWJGL version, skip this block
+            if (libItemVersionStringOffset != 0 && (lwjglVersion < 200 || lwjglVersion > 999)) {
+                while (libItemVersionStringOffset < libItem.name.length()) {
+                    char c = libItem.name.charAt(libItemVersionStringOffset);
+                    if (c >= '0' && c <= '9') {
+                        lwjglVersion = lwjglVersion * 10 + (c - '0');
+                    } else if (c == '.') {
+                        // skip dots
+                    } else {
+                        break; // If the dots and numbers stop then its time to finish
+                    }
+                    libItemVersionStringOffset++;
+                }
+            }
+
             String libPath = Tools.DIR_HOME_LIBRARY + "/" + artifactToPath(libItem);
             if (!FileUtils.exists(libPath)) {
                 Log.d(APP_NAME, "Ignored non-exists file: " + libPath);
@@ -1151,6 +1182,8 @@ public final class Tools {
                 }} ));
             }
         }
+        // Scary message, but we aren't getting LWJGL 1.9.9 or 3.10.100 any time soon
+        if (lwjglVersion < 200 || lwjglVersion > 999) throw new RuntimeException("Unable to determine LWJGL version, JSON may be corrupt.");
         return libDir.toArray(new String[0]);
     }
 
