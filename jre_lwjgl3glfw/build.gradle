@@ -19,6 +19,7 @@ configurations {
 dependencies {
     lwjgl333 fileTree(dir: 'libs/lwjgl-3.3.3', include: ['*.jar'])
     lwjgl341 fileTree(dir: 'libs/lwjgl-3.4.1', include: ['*.jar'])
+    lwjgl341 "org.jspecify:jspecify:1.0.0"
 }
 
 def lwjglConfigMap = [
@@ -71,6 +72,7 @@ lwjglVersions.each { version ->
         }
 
         from {
+            println ("from block triggered on "+version+" with "+sourceSets.main.java.srcDirs)
             sourceSets.main.output
         }
 
@@ -107,6 +109,7 @@ lwjglVersions.each { version ->
     }
     // Needed to compile with the proper libs
     tasks.named('compileJava') {
-        classpath += lwjglConfigMap[version]
+        sourceSets.main.java.srcDirs = ["src/main/java/lwjgl-$version"]
+        classpath = lwjglConfigMap[version]
     }
 }
