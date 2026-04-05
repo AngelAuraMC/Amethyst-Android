@@ -338,6 +338,7 @@
     <string name="preference_vsync_in_zink_description">允许启动器使用内部系统 API 为 Zink 启用垂直同步。如果系统更新后，您在使用 Zink 时崩溃，请关闭此项设置。</string>
     <string name="exception_failed_to_unpack_jre17">JRE 17 安装失败</string>
     <string name="newdl_starting">正在读取游戏元数据…</string>
+    <string name="newdl_downloading_jre_runtime">正在下载 Java %s 运行时环境 (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">正在下载游戏元数据（%s）</string>
     <string name="newdl_downloading_game_files">正在下载游戏…（%d/%d，%.2f MB/s）</string>
     <string name="newdl_downloading_game_files_size">正在下载游戏…（%.2f/%.2f MB，%.2f MB/s）</string>
@@ -450,4 +451,8 @@
     <string name="sodium_override_summaryOn">Sodium 模组不受支持。若你遇到任何问题，我们将不会提供任何帮助。</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">这不是整合包文件！</string>
+    <string name="global_not_installed">未安装</string>
+    <string name="global_download">下载</string>
+    <string name="multirt_no_internet">下载失败，请检查互联网连接。</string>
+    <string name="global_installing">安装中…</string>
 </resources>
