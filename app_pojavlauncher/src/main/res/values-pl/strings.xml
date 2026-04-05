@@ -337,6 +337,7 @@
     <string name="preference_vsync_in_zink_description">Umożliwia launcherowi korzystanie z wewnętrznych interfejsów API systemu w celu włączenia funkcji V-Sync dla Zink. Wyłącz tę opcję, jeśli launcher nagle ulegnie awarii wraz z Zink po aktualizacji systemu.</string>
     <string name="exception_failed_to_unpack_jre17">Nie udało się zainstalować JRE 17</string>
     <string name="newdl_starting">Wczytywanie metadanych gry…</string>
+    <string name="newdl_downloading_jre_runtime">Pobieranie środowiska Java %s (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Pobieranie metadanych gry (%s)</string>
     <string name="newdl_downloading_game_files">Pobieranie gry... (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">Pobieranie gry... (%.2f/%.2f MB, %.2f MB/s)</string>
@@ -449,4 +450,8 @@
     <string name="sodium_override_summaryOn">Modyfikacja Sodium nie jest obsługiwana. W razie jakichkolwiek problemów nie udzielimy żadnej pomocy.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">To nie jest plik paczki modów!</string>
+    <string name="global_not_installed">Nie zainstalowano</string>
+    <string name="global_download">Pobierz</string>
+    <string name="multirt_no_internet">Pobieranie nie powiodło się. Sprawdź połączenie internetowe.</string>
+    <string name="global_installing">Instalowanie…</string>
 </resources>
