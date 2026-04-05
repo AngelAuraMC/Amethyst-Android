@@ -141,9 +141,7 @@ public class MinecraftDownloader {
         mDownloaderThreadException = new AtomicReference<>(null);
         mUseFileCounter = false;
 
-        if(!downloadAndProcessMetadata(activity, verInfo, versionName)) {
-            throw new RuntimeException(activity.getString(R.string.exception_failed_to_unpack_jre17));
-        }
+        downloadAndProcessMetadata(activity, verInfo, versionName);
 
         ArrayBlockingQueue<Runnable> taskQueue =
                 new ArrayBlockingQueue<>(mScheduledDownloadTasks.size(), false);
@@ -293,7 +291,7 @@ public class MinecraftDownloader {
         }
 
         if(activity != null && !NewJREUtil.installNewJreIfNeeded(activity, verInfo)){
-            return false;
+            throw new RuntimeException(activity.getString(R.string.exception_failed_to_unpack_jre17));
         }
 
         JAssets assets = downloadAssetsIndex(verInfo);
