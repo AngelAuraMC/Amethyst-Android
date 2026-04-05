@@ -337,6 +337,7 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="preference_vsync_in_zink_description">Ermöglicht dem Launcher, interne System-APIs zu verwenden, um V-Sync für Zink zu aktivieren. Sollte deaktiviert werden, wenn der Launcher nach einer Systemaktualisierung plötzlich mit Zink abstürzt.</string>
     <string name="exception_failed_to_unpack_jre17">Konnte JRE 17 nicht installieren</string>
     <string name="newdl_starting">Lese Spiel-Metadaten…</string>
+    <string name="newdl_downloading_jre_runtime">Herunterladen von Java %s Laufzeitumgebung (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Lade Spiel-Metadaten herunter (%s)</string>
     <string name="newdl_downloading_game_files">Lade das Spiel herunter… (%d/%d, %.2f MB)</string>
     <string name="newdl_downloading_game_files_size">Lade das Spiel herunter… (%.2f/%.2f MB, %.2f MB/s)</string>
@@ -449,4 +450,8 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="sodium_override_summaryOn">Sodium wird nicht unterstützt. Bei etwaigen Problemen wird keine Hilfe geleistet.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">Keine Modpack Datei!</string>
+    <string name="global_not_installed">Nicht installiert</string>
+    <string name="global_download">Herunterladen</string>
+    <string name="multirt_no_internet">Herunterladen fehlgeschlagen, überprüfe deine Internetverbindung.</string>
+    <string name="global_installing">Installieren…</string>
 </resources>
