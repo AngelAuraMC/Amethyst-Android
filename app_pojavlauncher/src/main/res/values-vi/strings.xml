@@ -51,6 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Cài đặt riêng của trình kết xuất</string>
     <string name="mcl_setting_category_renderer">Trình kết xuất</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (chỉ 1.21.4 trở xuống, nhanh)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Wrapper Krypton - (tất cả phiên bản, nhanh)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (chỉ 1.17 trở lên, nhanh)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - chỉ 1.17 trở lên</string>
@@ -336,6 +337,7 @@
     <string name="preference_vsync_in_zink_description">Cho phép trình khởi chạy dùng các API nội bộ trong hệ thống để bật đồng bộ hóa dọc khi sử dụng trình kết xuất Zink. Tắt tùy chọn này nếu ứng dụng bị thoát đột ngột khi sử dụng Zink sau khi cập nhật hệ thống.</string>
     <string name="exception_failed_to_unpack_jre17">Không thể cài đặt JRE 17</string>
     <string name="newdl_starting">Đang đọc dữ liệu thuộc tính trò chơi…</string>
+    <string name="newdl_downloading_jre_runtime">Đang tải trình chạy Java %s (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Đang tải dữ liệu thuộc tính trò chơi (%s)</string>
     <string name="newdl_downloading_game_files">Đang tải trò chơi… (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">Đang tải trò chơi… (%.2f/%.2f MB, %.2f MB/s)</string>
@@ -448,4 +450,8 @@
     <string name="sodium_override_summaryOn">Sodium không được hỗ trợ. Bạn sẽ không được nhận hỗ trợ cho các vấn đề gặp phải.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">Không phải tệp modpack!</string>
+    <string name="global_not_installed">Chưa cài đặt</string>
+    <string name="global_download">Tải xuống</string>
+    <string name="multirt_no_internet">Không thể tải xuống, hãy kiểm tra kết nối Internet.</string>
+    <string name="global_installing">Đang cài đặt…</string>
 </resources>
