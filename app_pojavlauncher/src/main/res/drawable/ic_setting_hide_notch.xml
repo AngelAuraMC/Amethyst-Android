@@ -1,11 +1,5 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="70dp"
-    android:height="50dp"
-    android:viewportWidth="70"
-    android:viewportHeight="50">
-  <group android:scaleX="2.91667" android:scaleY="2.08333">
-    <path
-        android:fillColor="#FFCC80"
-        android:pathData="M7 23Q6.175 23 5.5875 22.4125Q5 21.825 5 21V3Q5 2.175 5.5875 1.5875Q6.175 1 7 1H17Q17.825 1 18.4125 1.5875Q19 2.175 19 3V6.1Q19.45 6.275 19.725 6.65Q20 7.025 20 7.5V9.5Q20 9.975 19.725 10.35Q19.45 10.725 19 10.9V21Q19 21.825 18.4125 22.4125Q17.825 23 17 23ZM7 21H17Q17 21 17 21Q17 21 17 21V3Q17 3 17 3Q17 3 17 3H7Q7 3 7 3Q7 3 7 3V21Q7 21 7 21Q7 21 7 21ZM7 21Q7 21 7 21Q7 21 7 21V3Q7 3 7 3Q7 3 7 3Q7 3 7 3Q7 3 7 3V21Q7 21 7 21Q7 21 7 21ZM12 20Q12.425 20 12.7125 19.7125Q13 19.425 13 19Q13 18.575 12.7125 18.2875Q12.425 18 12 18Q11.575 18 11.2875 18.2875Q11 18.575 11 19Q11 19.425 11.2875 19.7125Q11.575 20 12 20Z"/>
-  </group>
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="120dp" android:viewportHeight="24" android:viewportWidth="24" android:width="120dp">
+      
+    <path android:fillColor="#FFFFFF" android:pathData="m2,20v2L6,22L6,20L4,20L4,4L6,4L6,2L2,2ZM20,22h-2v-2h2L20,4L18,4L18,2h4L22,22ZM11,6v5h2L13,6h2v2h2L17,6L15,6L15,4L13,4L13,2L11,2L11,4L9,4L9,6L7,6L7,8L9,8L9,6ZM11,13v5L9,18L9,16L7,16v2h2v2h2v2h2v-2h2v-2h2v-2h-2v2h-2v-5z"/>
+    
 </vector>
