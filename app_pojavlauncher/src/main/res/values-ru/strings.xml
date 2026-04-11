@@ -50,7 +50,8 @@
     <string name="mcl_setting_title_renderer_settings">Дополнительные настройки визуализации</string>
     <string name="mcl_setting_title_renderer_subtitle">Особые настройки визуализации</string>
     <string name="mcl_setting_category_renderer">Визуализатор</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; только, быстрый)</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (только 1.21.4&lt;, быстро)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (все версии, быстро)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan; все версии, средний)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (только 1.17+, быстро)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3; 1.17 и выше)</string>
@@ -336,6 +337,7 @@
     <string name="preference_vsync_in_zink_description">Позволяет использовать внутренние системные API для активации вертикальной синхронизации при работе с Zink. Отключите, если игра начнёт вылетать после обновления системы.</string>
     <string name="exception_failed_to_unpack_jre17">Не удалось установить JRE 17</string>
     <string name="newdl_starting">Чтение метаданных игры…</string>
+    <string name="newdl_downloading_jre_runtime">Скачивание Java %s runtime (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Загрузка метаданных игры (%s)</string>
     <string name="newdl_downloading_game_files">Загрузка файлов игры… (%d/%d, %.2f МБ/с)</string>
     <string name="newdl_downloading_game_files_size">Загрузка файлов игры… (%.2f/%.2f МБ, %.2f МБ/с)</string>
@@ -446,4 +448,8 @@
     <string name="sodium_override_summaryOn">Sodium не поддерживается.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">Не является файлом сборки!</string>
+    <string name="global_not_installed">Не установлено</string>
+    <string name="global_download">Скачать</string>
+    <string name="multirt_no_internet">Ошибка скачивания, проверьте интернет-соединение.</string>
+    <string name="global_installing">Установка…</string>
 </resources>
