@@ -437,9 +437,11 @@
     <string name="oldL4JFound">Вы используете версию Legacy4J без исправлений для Android! Для получения наилучших результатов вам потребуется вручную включить SDL в настройках контроллера!</string>
     <string name="global_warning">Предупреждение!</string>
     <string name="controllableFound">Controllable сейчас имеет случайный шанс крашнуть игру на запуске. Либо продолжайте пробовать или используйте другой мод как Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Включить поддержку экспериментального расширения Direct State Access</string>
     <string name="mg_renderer_summary_dsaExt">Может помочь с шейдер-паками для Iris, обязателен для AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">Апскейлинг AMD FSR 1</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (все версии, среднее)</string>
+    <string name="autorendererselectfailed">Ошибка выбора визуализатора, возврат к визуализатору HolyGL4ES</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (все версии, среднее быстродействие)</string>
     <string name="sodium_warning_title">Обнаружен Sodium!</string>
     <string name="sodium_warning_message">Похоже, вы используете Sodium, он не поддерживается и может привести к графическим проблемам или крашам, Пожалуйста удалите его.</string>
     <string name="delete_sodium">Удалить Sodium и запустить</string>
