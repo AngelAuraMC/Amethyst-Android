@@ -83,7 +83,6 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
         // Wrap CommonApi so installation goes to mods folder instead of creating a new instance
         mModpackApi = new ModsInstallApi(context.getString(R.string.curseforge_api_key));
         // Auto-detect MC version from current profile
-        mSearchFilters.mcVersion = detectMcVersion();
     }
 
     @Override
@@ -148,11 +147,11 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
         switch (error) {
             case ERROR_INTERNAL:
                 mStatusTextView.setTextColor(Color.RED);
-                mStatusTextView.setText(R.string.search_modpack_error);
+                mStatusTextView.setText(R.string.search_mod_error);
                 break;
             case ERROR_NO_RESULTS:
                 mStatusTextView.setTextColor(mDefaultTextColor);
-                mStatusTextView.setText(R.string.search_modpack_no_result);
+                mStatusTextView.setText(R.string.search_mod_no_result);
                 break;
         }
     }
@@ -196,34 +195,6 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
     // ── Helpers ──────────────────────────────────────────────────────────────
 
     /** Parse MC version from lastVersionId like "fabric-loader-0.16.14-1.21.4" → "1.21.4" or "1.21.4" → "1.21.4" */
-    private String detectMcVersion() {
-        try {
-            String key = LauncherPreferences.DEFAULT_PREF
-                    .getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, null);
-            if (key == null || key.isEmpty()) return null;
-            LauncherProfiles.load();
-            MinecraftProfile profile = LauncherProfiles.mainProfileJson.profiles.get(key);
-            if (profile == null || profile.lastVersionId == null) return null;
-
-            String vid = profile.lastVersionId;
-            // fabric-loader-X.Y.Z-MC  → last segment after last "-MC" block
-            // forge-MC-loaderVer       → second segment
-            // 1.21.4                   → as-is
-            if (vid.startsWith("fabric-loader-") || vid.startsWith("quilt-loader-")) {
-                // fabric-loader-0.16.14-1.21.4 — MC is everything after the loader version
-                String[] parts = vid.split("-");
-                if (parts.length >= 4) return parts[parts.length - 1];
-            }
-            if (vid.contains("-forge-") || vid.contains("-neoforge-")) {
-                // 1.21.4-forge-xxx — MC is first part
-                return vid.split("-")[0];
-            }
-            // Plain version id
-            return vid;
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     // ── ModsInstallApi ───────────────────────────────────────────────────────
 

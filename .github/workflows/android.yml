@@ -33,7 +33,7 @@ jobs:
           sudo apt update && sudo apt install -y wget
           mkdir -p app_pojavlauncher/libs
           cd app_pojavlauncher/libs
-          wget https://github.com/Copper-launcher/LTW/releases/latest/download/ltw-release.aar
+          wget https://github.com/CopperLauncher/LTW/releases/latest/download/ltw-release.aar
       
       - name: Get JRE8
         uses: dawidd6/action-download-artifact@v6
