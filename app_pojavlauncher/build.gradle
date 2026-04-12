@@ -7,7 +7,7 @@ static def getDate() { return new Date().format('yyyyMMdd') }
 def getVersionName = {
     // Get the last version tag, as well as the short head of the last commit
     ByteArrayOutputStream TAG = new ByteArrayOutputStream()
-    String semVer = "1.0.0"
+    String semVer = "1.1.0"
     // Used by the fallback for github actions
     ByteArrayOutputStream TAG_PART_COMMIT = new ByteArrayOutputStream()
     String TAG_STRING

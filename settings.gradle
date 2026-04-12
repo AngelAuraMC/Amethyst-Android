@@ -16,6 +16,8 @@ dependencyResolutionManagement {
 
 rootProject.name='Copper'
 include ':jre_lwjgl3glfw'
+include ":jre_lwjgl3glfw:lwjgl-3.3.3"
+include ":jre_lwjgl3glfw:lwjgl-3.4.1"
 include ':app_pojavlauncher'
 
 include ':arc_dns_injector'
