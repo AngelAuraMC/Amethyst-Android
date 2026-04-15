@@ -357,6 +357,10 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
         JREUtils.redirectAndPrintJRELog();
         try {
             List<String> javaArgList = new ArrayList<>();
+            // FIXME: Freetype is shipped inside lwjgl. We should ship it outside and use lwjgl native jars instead.
+            String javaLibraryPath = Tools.lwjglNativesDir + ":" +
+                    Tools.NATIVE_LIB_DIR;
+            javaArgList.add("-Djava.library.path="+ javaLibraryPath);
 
             // Enable Caciocavallo
             Tools.getCacioJavaArgs(javaArgList,runtime.javaVersion == 8, this);
