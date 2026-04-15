@@ -1,6 +1,8 @@
 package net.kdt.pojavlaunch.utils;
 
 import static net.kdt.pojavlaunch.Architecture.ARCH_X86;
+import static net.kdt.pojavlaunch.Architecture.archAsStringAndroid;
+import static net.kdt.pojavlaunch.Architecture.getDeviceArchitecture;
 import static net.kdt.pojavlaunch.Architecture.is64BitsDevice;
 import static net.kdt.pojavlaunch.Tools.LOCAL_RENDERER;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
@@ -167,6 +169,8 @@ public class JREUtils {
                 .append("/vendor/").append(libName).append(":")
                 .append("/vendor/").append(libName).append("/hw:")
                 .append(NATIVE_LIB_DIR);
+        // FIXME: Freetype is shipped inside lwjgl. We should ship it outside and use lwjgl native jars instead.
+        ldLibraryPath.append(String.format(":%s/lwjgl-3.3.3-natives/%s", Tools.DIR_DATA, archAsStringAndroid(getDeviceArchitecture())));
         LD_LIBRARY_PATH = ldLibraryPath.toString();
     }
 
