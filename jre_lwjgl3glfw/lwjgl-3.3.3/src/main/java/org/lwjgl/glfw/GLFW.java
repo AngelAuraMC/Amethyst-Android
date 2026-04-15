@@ -1049,21 +1049,25 @@ public class GLFW
             if (versionString != null) {
                 try {
                     APIVersion apiVersion = apiParseVersion(versionString);
-                    if (3 <= apiVersion.major && apiVersion.major <= 4) glMajor = apiVersion.major;
-                    if (3 <= apiVersion.minor && apiVersion.minor <= 6) glMinor = apiVersion.minor;
-                    System.out.println("Driver "+glDriver+" GL string returned "+apiVersion.major+apiVersion.minor);
+                    int parsedGlMajor = apiVersion.major;
+                    int parsedGlMinor = apiVersion.minor;
+                    if (3 <= parsedGlMajor && parsedGlMajor <= 4) glMajor = parsedGlMajor;
+                    if (3 <= parsedGlMinor && parsedGlMinor <= 6) glMinor = parsedGlMinor;
+                    System.out.println("Driver "+glDriver+" GL string returned "+ parsedGlMajor + parsedGlMinor);
                 } catch (Throwable ignored){} // In case the string is invalid/garbage
             }
             // Try to get values from GL30+ driver directly, only use if higher ver
             try (MemoryStack stack = stackPush()) {
                 IntBuffer version = stack.ints(0, 0);
                 callPV(GL_MAJOR_VERSION, memAddress(version, 0), GetIntegerv);
+                int parsedGlMajor = version.get(0);
+                int parsedGlMinor = version.get(1);
                 if (callI(GetError) == GL_NO_ERROR &&
-                        3 <= version.get(0) && version.get(0) <= 4) glMajor = version.get(0);
+                        3 <= parsedGlMajor && parsedGlMajor <= 4) glMajor = parsedGlMajor;
                 callPV(GL_MINOR_VERSION, memAddress(version, 1), GetIntegerv);
                 if (callI(GetError) == GL_NO_ERROR &&
-                        3 <= version.get(0) && version.get(1) <= 4) glMinor = version.get(1);
-                System.out.println("Driver "+glDriver+" GL version returned "+version.get(0)+version.get(1));
+                        3 <= parsedGlMinor && parsedGlMinor <= 4) glMinor = parsedGlMinor;
+                System.out.println("Driver "+glDriver+" GL version returned "+ parsedGlMajor + parsedGlMinor);
             }
             System.out.println("Using GL version "+glMajor+glMinor+" for GLFW window context!");
 
