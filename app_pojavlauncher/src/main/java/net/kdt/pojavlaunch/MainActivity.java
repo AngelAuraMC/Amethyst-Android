@@ -123,8 +123,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 // Just in case that gets deleted off the internet:
                 // "On Android only the main executable and LD_PRELOADs are considered to be
                 // RTLD_GLOBAL, all the dependencies of the main executable remain RTLD_LOCAL." - dimitry
-                SDL.loadLibrary("SDL3", this);
-                SDL.loadLibrary("SDL2", this);
+                System.loadLibrary("SDL3");
+                System.loadLibrary("SDL2");
                 SDL.initialize();
                 SDL.setupJNI();
                 SDL.setContext(this);
