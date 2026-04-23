@@ -5,6 +5,7 @@
 
 package org.libsdl.app;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -217,7 +218,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     public static boolean mBrokenLibraries = true;
 
     // Main components
-    protected static SDLActivity mSingleton;
+    protected static Activity mSingleton;
     protected static SDLSurface mSurface;
     protected static SDLDummyEdit mTextEdit;
     protected static ViewGroup mLayout;
@@ -257,29 +258,30 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
      * It can be overridden by derived classes.
      */
     protected void main() {
-        String library = SDLActivity.mSingleton.getMainSharedObject();
-        String function = SDLActivity.mSingleton.getMainFunction();
-        String[] arguments = SDLActivity.mSingleton.getArguments();
-
-        Log.v("SDL", "Running main function " + function + " from library " + library);
-        SDLActivity.nativeRunMain(library, function, arguments);
-        Log.v("SDL", "Finished main function");
+        throw new IllegalStateException("We do not have a main() program to run. Why are you calling this?");
+//        String library = SDLActivity.mSingleton.getMainSharedObject();
+//        String function = SDLActivity.mSingleton.getMainFunction();
+//        String[] arguments = SDLActivity.mSingleton.getArguments();
+//
+//        Log.v("SDL", "Running main function " + function + " from library " + library);
+//        SDLActivity.nativeRunMain(library, function, arguments);
+//        Log.v("SDL", "Finished main function");
     }
 
     /**
      * This method returns the name of the shared object with the application entry point
      * It can be overridden by derived classes.
      */
-    protected String getMainSharedObject() {
-        String library;
-        String[] libraries = SDLActivity.mSingleton.getLibraries();
-        if (libraries.length > 0) {
-            library = "lib" + libraries[libraries.length - 1] + ".so";
-        } else {
-            library = "libmain.so";
-        }
-        return getContext().getApplicationInfo().nativeLibraryDir + "/" + library;
-    }
+//    protected String getMainSharedObject() {
+//        String library;
+//        String[] libraries = SDLActivity.mSingleton.getLibraries();
+//        if (libraries.length > 0) {
+//            library = "lib" + libraries[libraries.length - 1] + ".so";
+//        } else {
+//            library = "libmain.so";
+//        }
+//        return getContext().getApplicationInfo().nativeLibraryDir + "/" + library;
+//    }
 
     /**
      * This method returns the name of the application entry point
@@ -342,167 +344,198 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         mCurrentNativeState = NativeState.INIT;
     }
 
+    public static void externalInitialize(Activity singleton, SDLSurface surface, ViewGroup layout, Surface nativeSurface) {
+        // Note: This doesn't dlopen it for the mod, they still have to do it themselves
+        // Why? https://github.com/android/ndk/issues/201#issuecomment-248060092
+        // Just in case that gets deleted off the internet:
+        // "On Android only the main executable and LD_PRELOADs are considered to be
+        // RTLD_GLOBAL, all the dependencies of the main executable remain RTLD_LOCAL." - dimitry
+        System.loadLibrary("SDL3");
+        System.loadLibrary("SDL2");
+        SDL.initialize(); // Implicitly loads SDLActivity
+        SDL.setupJNI(); // Implicitly loads SDLActivity
+
+        mSingleton = singleton;
+        surface.setNativeSurface(nativeSurface);
+        mSurface = surface;
+        mTextEdit = null;
+        mLayout = layout;
+        SDL.setContext(singleton); // Important!! SDLClipboardHandler needs it.
+        mClipboardHandler = new SDLClipboardHandler();
+        mCursors = new Hashtable<Integer, PointerIcon>();
+        mLastCursorID = 0;
+        // These are unused because we do not have a main()
+        mSDLThread = null;
+        mIsResumedCalled = false;
+        mHasFocus = true;
+        mNextNativeState = NativeState.INIT;
+        mCurrentNativeState = NativeState.INIT;
+    }
+
     protected SDLSurface createSDLSurface(Context context) {
         return new SDLSurface(context);
     }
 
     // Setup
+    @SuppressLint("MissingSuperCall")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.v(TAG, "Manufacturer: " + Build.MANUFACTURER);
-        Log.v(TAG, "Device: " + Build.DEVICE);
-        Log.v(TAG, "Model: " + Build.MODEL);
-        Log.v(TAG, "onCreate()");
-        super.onCreate(savedInstanceState);
-
-
-        /* Control activity re-creation */
-        if (mSDLMainFinished || mActivityCreated) {
-              boolean allow_recreate = SDLActivity.nativeAllowRecreateActivity();
-              if (mSDLMainFinished) {
-                  Log.v(TAG, "SDL main() finished");
-              }
-              if (allow_recreate) {
-                  Log.v(TAG, "activity re-created");
-              } else {
-                  Log.v(TAG, "activity finished");
-                  System.exit(0);
-                  return;
-              }
-        }
-
-        mActivityCreated = true;
-
-        try {
-            Thread.currentThread().setName("SDLActivity");
-        } catch (Exception e) {
-            Log.v(TAG, "modify thread properties failed " + e.toString());
-        }
-
-        // Load shared libraries
-        String errorMsgBrokenLib = "";
-        try {
-            loadLibraries();
-            mBrokenLibraries = false; /* success */
-        } catch(UnsatisfiedLinkError e) {
-            System.err.println(e.getMessage());
-            mBrokenLibraries = true;
-            errorMsgBrokenLib = e.getMessage();
-        } catch(Exception e) {
-            System.err.println(e.getMessage());
-            mBrokenLibraries = true;
-            errorMsgBrokenLib = e.getMessage();
-        }
-
-        if (!mBrokenLibraries) {
-            String expected_version = String.valueOf(SDL_MAJOR_VERSION) + "." +
-                                      String.valueOf(SDL_MINOR_VERSION) + "." +
-                                      String.valueOf(SDL_MICRO_VERSION);
-            String version = nativeGetVersion();
-            if (!version.equals(expected_version)) {
-                mBrokenLibraries = true;
-                errorMsgBrokenLib = "SDL C/Java version mismatch (expected " + expected_version + ", got " + version + ")";
-            }
-        }
-
-        if (mBrokenLibraries) {
-            mSingleton = this;
-            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
-            dlgAlert.setMessage("An error occurred while trying to start the application. Please try again and/or reinstall."
-                  + System.getProperty("line.separator")
-                  + System.getProperty("line.separator")
-                  + "Error: " + errorMsgBrokenLib);
-            dlgAlert.setTitle("SDL Error");
-            dlgAlert.setPositiveButton("Exit",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, close current activity
-                        SDLActivity.mSingleton.finish();
-                    }
-                });
-           dlgAlert.setCancelable(false);
-           dlgAlert.create().show();
-
-           return;
-        }
-
-
-        /* Control activity re-creation */
-        /* Robustness: check that the native code is run for the first time.
-         * (Maybe Activity was reset, but not the native code.) */
-        {
-            int run_count = SDLActivity.nativeCheckSDLThreadCounter(); /* get and increment a native counter */
-            if (run_count != 0) {
-                boolean allow_recreate = SDLActivity.nativeAllowRecreateActivity();
-                if (allow_recreate) {
-                    Log.v(TAG, "activity re-created // run_count: " + run_count);
-                } else {
-                    Log.v(TAG, "activity finished // run_count: " + run_count);
-                    System.exit(0);
-                    return;
-                }
-            }
-        }
-
-        // Set up JNI
-        SDL.setupJNI();
-
-        // Initialize state
-        SDL.initialize();
-
-        // So we can call stuff from static callbacks
-        mSingleton = this;
-        SDL.setContext(this);
-
-        mClipboardHandler = new SDLClipboardHandler();
-
-        mHIDDeviceManager = HIDDeviceManager.acquire(this);
-
-        // Set up the surface
-        mSurface = createSDLSurface(this);
-
-        mLayout = new RelativeLayout(this);
-        mLayout.addView(mSurface);
-
-        // Get our current screen orientation and pass it down.
-        SDLActivity.nativeSetNaturalOrientation(SDLActivity.getNaturalOrientation());
-        mCurrentRotation = SDLActivity.getCurrentRotation();
-        SDLActivity.onNativeRotationChanged(mCurrentRotation);
-
-        try {
-            if (Build.VERSION.SDK_INT < 24 /* Android 7.0 (N) */) {
-                mCurrentLocale = getContext().getResources().getConfiguration().locale;
-            } else {
-                mCurrentLocale = getContext().getResources().getConfiguration().getLocales().get(0);
-            }
-        } catch(Exception ignored) {
-        }
-
-        switch (getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
-        case Configuration.UI_MODE_NIGHT_NO:
-            SDLActivity.onNativeDarkModeChanged(false);
-            break;
-        case Configuration.UI_MODE_NIGHT_YES:
-            SDLActivity.onNativeDarkModeChanged(true);
-            break;
-        }
-
-        setContentView(mLayout);
-
-        setWindowStyle(false);
-
-        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
-
-        // Get filename from "Open with" of another application
-        Intent intent = getIntent();
-        if (intent != null && intent.getData() != null) {
-            String filename = intent.getData().getPath();
-            if (filename != null) {
-                Log.v(TAG, "Got filename: " + filename);
-                SDLActivity.onNativeDropFile(filename);
-            }
-        }
+        throw new IllegalStateException("We do not run SDLActivity as an activity." +
+                "This only exists as a bridge to JNI. We manually set up everything else.");
+//        Log.v(TAG, "Manufacturer: " + Build.MANUFACTURER);
+//        Log.v(TAG, "Device: " + Build.DEVICE);
+//        Log.v(TAG, "Model: " + Build.MODEL);
+//        Log.v(TAG, "onCreate()");
+//        super.onCreate(savedInstanceState);
+//
+//
+//        /* Control activity re-creation */
+//        if (mSDLMainFinished || mActivityCreated) {
+//              boolean allow_recreate = SDLActivity.nativeAllowRecreateActivity();
+//              if (mSDLMainFinished) {
+//                  Log.v(TAG, "SDL main() finished");
+//              }
+//              if (allow_recreate) {
+//                  Log.v(TAG, "activity re-created");
+//              } else {
+//                  Log.v(TAG, "activity finished");
+//                  System.exit(0);
+//                  return;
+//              }
+//        }
+//
+//        mActivityCreated = true;
+//
+//        try {
+//            Thread.currentThread().setName("SDLActivity");
+//        } catch (Exception e) {
+//            Log.v(TAG, "modify thread properties failed " + e.toString());
+//        }
+//
+//        // Load shared libraries
+//        String errorMsgBrokenLib = "";
+//        try {
+//            loadLibraries();
+//            mBrokenLibraries = false; /* success */
+//        } catch(UnsatisfiedLinkError e) {
+//            System.err.println(e.getMessage());
+//            mBrokenLibraries = true;
+//            errorMsgBrokenLib = e.getMessage();
+//        } catch(Exception e) {
+//            System.err.println(e.getMessage());
+//            mBrokenLibraries = true;
+//            errorMsgBrokenLib = e.getMessage();
+//        }
+//
+//        if (!mBrokenLibraries) {
+//            String expected_version = String.valueOf(SDL_MAJOR_VERSION) + "." +
+//                                      String.valueOf(SDL_MINOR_VERSION) + "." +
+//                                      String.valueOf(SDL_MICRO_VERSION);
+//            String version = nativeGetVersion();
+//            if (!version.equals(expected_version)) {
+//                mBrokenLibraries = true;
+//                errorMsgBrokenLib = "SDL C/Java version mismatch (expected " + expected_version + ", got " + version + ")";
+//            }
+//        }
+//
+//        if (mBrokenLibraries) {
+//            mSingleton = this;
+//            AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+//            dlgAlert.setMessage("An error occurred while trying to start the application. Please try again and/or reinstall."
+//                  + System.getProperty("line.separator")
+//                  + System.getProperty("line.separator")
+//                  + "Error: " + errorMsgBrokenLib);
+//            dlgAlert.setTitle("SDL Error");
+//            dlgAlert.setPositiveButton("Exit",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog,int id) {
+//                        // if this button is clicked, close current activity
+//                        SDLActivity.mSingleton.finish();
+//                    }
+//                });
+//           dlgAlert.setCancelable(false);
+//           dlgAlert.create().show();
+//
+//           return;
+//        }
+//
+//
+//        /* Control activity re-creation */
+//        /* Robustness: check that the native code is run for the first time.
+//         * (Maybe Activity was reset, but not the native code.) */
+//        {
+//            int run_count = SDLActivity.nativeCheckSDLThreadCounter(); /* get and increment a native counter */
+//            if (run_count != 0) {
+//                boolean allow_recreate = SDLActivity.nativeAllowRecreateActivity();
+//                if (allow_recreate) {
+//                    Log.v(TAG, "activity re-created // run_count: " + run_count);
+//                } else {
+//                    Log.v(TAG, "activity finished // run_count: " + run_count);
+//                    System.exit(0);
+//                    return;
+//                }
+//            }
+//        }
+//
+//        // Set up JNI
+//        SDL.setupJNI();
+//
+//        // Initialize state
+//        SDL.initialize();
+//
+//        // So we can call stuff from static callbacks
+//        mSingleton = this;
+//        SDL.setContext(this);
+//
+//        mClipboardHandler = new SDLClipboardHandler();
+//
+//        mHIDDeviceManager = HIDDeviceManager.acquire(this);
+//
+//        // Set up the surface
+//        mSurface = createSDLSurface(this);
+//
+//        mLayout = new RelativeLayout(this);
+//        mLayout.addView(mSurface);
+//
+//        // Get our current screen orientation and pass it down.
+//        SDLActivity.nativeSetNaturalOrientation(SDLActivity.getNaturalOrientation());
+//        mCurrentRotation = SDLActivity.getCurrentRotation();
+//        SDLActivity.onNativeRotationChanged(mCurrentRotation);
+//
+//        try {
+//            if (Build.VERSION.SDK_INT < 24 /* Android 7.0 (N) */) {
+//                mCurrentLocale = getContext().getResources().getConfiguration().locale;
+//            } else {
+//                mCurrentLocale = getContext().getResources().getConfiguration().getLocales().get(0);
+//            }
+//        } catch(Exception ignored) {
+//        }
+//
+//        switch (getContext().getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+//        case Configuration.UI_MODE_NIGHT_NO:
+//            SDLActivity.onNativeDarkModeChanged(false);
+//            break;
+//        case Configuration.UI_MODE_NIGHT_YES:
+//            SDLActivity.onNativeDarkModeChanged(true);
+//            break;
+//        }
+//
+//        setContentView(mLayout);
+//
+//        setWindowStyle(false);
+//
+//        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(this);
+//
+//        // Get filename from "Open with" of another application
+//        Intent intent = getIntent();
+//        if (intent != null && intent.getData() != null) {
+//            String filename = intent.getData().getPath();
+//            if (filename != null) {
+//                Log.v(TAG, "Got filename: " + filename);
+//                SDLActivity.onNativeDropFile(filename);
+//            }
+//        }
     }
 
     protected void pauseNativeThread() {
@@ -774,20 +807,25 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
     // Called by JNI from SDL.
     public static void manualBackButton() {
-        mSingleton.pressBackButton();
-    }
-
-    // Used to get us onto the activity's main thread
-    public void pressBackButton() {
-        runOnUiThread(new Runnable() {
+        mSingleton.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (!SDLActivity.this.isFinishing()) {
-                    SDLActivity.this.superOnBackPressed();
-                }
+                if (!mSingleton.isFinishing()) mSingleton.onBackPressed();
             }
         });
     }
+
+//    // Used to get us onto the activity's main thread
+//    public void pressBackButton() {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (!SDLActivity.this.isFinishing()) {
+//                    SDLActivity.this.superOnBackPressed();
+//                }
+//            }
+//        });
+//    }
 
     // Used to access the system back behavior.
     public void superOnBackPressed() {
@@ -850,24 +888,24 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
         // Try a transition to resumed state
         if (mNextNativeState == NativeState.RESUMED) {
-            if (mSurface.mIsSurfaceReady && (mHasFocus || mHasMultiWindow) && mIsResumedCalled) {
-                if (mSDLThread == null) {
-                    // This is the entry point to the C app.
-                    // Start up the C app thread and enable sensor input for the first time
-                    // FIXME: Why aren't we enabling sensor input at start?
-
-                    mSDLThread = new Thread(new SDLMain(), "SDLThread");
-                    mSurface.enableSensor(Sensor.TYPE_ACCELEROMETER, true);
-                    mSDLThread.start();
-
-                    // No nativeResume(), don't signal Android_ResumeSem
-                } else {
-                    nativeResume();
-                }
+//            if (mSurface.mIsSurfaceReady && (mHasFocus || mHasMultiWindow) && mIsResumedCalled) {
+//                if (mSDLThread == null) {
+//                    // This is the entry point to the C app.
+//                    // Start up the C app thread and enable sensor input for the first time
+//                    // FIXME: Why aren't we enabling sensor input at start?
+//
+//                    mSDLThread = new Thread(new SDLMain(), "SDLThread");
+//                    mSurface.enableSensor(Sensor.TYPE_ACCELEROMETER, true);
+//                    mSDLThread.start();
+//
+//                    // No nativeResume(), don't signal Android_ResumeSem
+//                } else {
+//                    nativeResume();
+//                }
                 mSurface.handleResume();
-
+//
                 mCurrentNativeState = mNextNativeState;
-            }
+//            }
         }
     }
 
@@ -985,10 +1023,9 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
     }
 
     // Handler for the messages
-    Handler commandHandler = new SDLCommandHandler();
-
+    static Handler commandHandler = new SDLCommandHandler();
     // Send a message from the SDLMain thread
-    protected boolean sendCommand(int command, Object data) {
+    protected static boolean sendCommand(int command, Object data) {
         Message msg = commandHandler.obtainMessage();
         msg.arg1 = command;
         msg.obj = data;
@@ -1002,7 +1039,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 
             if (data instanceof Integer) {
                 // Let's figure out if we're already laid out fullscreen or not.
-                Display display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
+                Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
                 DisplayMetrics realMetrics = new DisplayMetrics();
                 display.getRealMetrics(realMetrics);
 
@@ -1100,7 +1137,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
      */
     public static boolean setActivityTitle(String title) {
         // Called from SDLMain() thread and can't directly affect the view
-        return mSingleton.sendCommand(COMMAND_CHANGE_TITLE, title);
+        return sendCommand(COMMAND_CHANGE_TITLE, title);
     }
 
     /**
@@ -1108,7 +1145,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
      */
     public static void setWindowStyle(boolean fullscreen) {
         // Called from SDLMain() thread and can't directly affect the view
-        mSingleton.sendCommand(COMMAND_CHANGE_WINDOW_STYLE, fullscreen ? 1 : 0);
+        sendCommand(COMMAND_CHANGE_WINDOW_STYLE, fullscreen ? 1 : 0);
     }
 
     /**
@@ -1118,80 +1155,81 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
      */
     public static void setOrientation(int w, int h, boolean resizable, String hint)
     {
-        if (mSingleton != null) {
-            mSingleton.setOrientationBis(w, h, resizable, hint);
-        }
+        setOrientationBis(w, h, resizable, hint);
     }
 
     /**
      * This can be overridden
      */
-    public void setOrientationBis(int w, int h, boolean resizable, String hint)
+    public static void setOrientationBis(int w, int h, boolean resizable, String hint)
     {
-        int orientation_landscape = -1;
-        int orientation_portrait = -1;
+        if (mSingleton != null) {
+            int orientation_landscape = -1;
+            int orientation_portrait = -1;
 
-        if (w <= 1 || h <= 1) {
-            // Invalid width/height, ignore this request
-            return;
-        }
-
-        /* If set, hint "explicitly controls which UI orientations are allowed". */
-        if (hint.contains("LandscapeRight") && hint.contains("LandscapeLeft")) {
-            orientation_landscape = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
-        } else if (hint.contains("LandscapeLeft")) {
-            orientation_landscape = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-        } else if (hint.contains("LandscapeRight")) {
-            orientation_landscape = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
-        }
-
-        /* exact match to 'Portrait' to distinguish with PortraitUpsideDown */
-        boolean contains_Portrait = hint.contains("Portrait ") || hint.endsWith("Portrait");
-
-        if (contains_Portrait && hint.contains("PortraitUpsideDown")) {
-            orientation_portrait = ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
-        } else if (contains_Portrait) {
-            orientation_portrait = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-        } else if (hint.contains("PortraitUpsideDown")) {
-            orientation_portrait = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
-        }
-
-        boolean is_landscape_allowed = (orientation_landscape != -1);
-        boolean is_portrait_allowed = (orientation_portrait != -1);
-        int req; /* Requested orientation */
-
-        /* No valid hint, nothing is explicitly allowed */
-        if (!is_portrait_allowed && !is_landscape_allowed) {
-            if (resizable) {
-                /* All orientations are allowed, respecting user orientation lock setting */
-                req = ActivityInfo.SCREEN_ORIENTATION_FULL_USER;
-            } else {
-                /* Fixed window and nothing specified. Get orientation from w/h of created window */
-                req = (w > h ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            if (w <= 1 || h <= 1) {
+                // Invalid width/height, ignore this request
+                return;
             }
-        } else {
-            /* At least one orientation is allowed */
-            if (resizable) {
-                if (is_portrait_allowed && is_landscape_allowed) {
-                    /* hint allows both landscape and portrait, promote to full user */
-                    req = ActivityInfo.SCREEN_ORIENTATION_FULL_USER;
+
+            /* If set, hint "explicitly controls which UI orientations are allowed". */
+            if (hint.contains("LandscapeRight") && hint.contains("LandscapeLeft")) {
+                orientation_landscape = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
+            } else if (hint.contains("LandscapeLeft")) {
+                orientation_landscape = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            } else if (hint.contains("LandscapeRight")) {
+                orientation_landscape = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE;
+            }
+
+            /* exact match to 'Portrait' to distinguish with PortraitUpsideDown */
+            boolean contains_Portrait = hint.contains("Portrait ") || hint.endsWith("Portrait");
+
+            if (contains_Portrait && hint.contains("PortraitUpsideDown")) {
+                orientation_portrait = ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT;
+            } else if (contains_Portrait) {
+                orientation_portrait = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            } else if (hint.contains("PortraitUpsideDown")) {
+                orientation_portrait = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT;
+            }
+
+            boolean is_landscape_allowed = (orientation_landscape != -1);
+            boolean is_portrait_allowed = (orientation_portrait != -1);
+            int req; /* Requested orientation */
+
+            /* No valid hint, nothing is explicitly allowed */
+            if (!is_portrait_allowed && !is_landscape_allowed) {
+                if (resizable) {
+                    /* All orientations are allowed, respecting user orientation lock setting */
+                    // Screw that, we minecraft here, landscape it is.
+                    req = ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE;
                 } else {
-                    /* Use the only one allowed "orientation" */
-                    req = (is_landscape_allowed ? orientation_landscape : orientation_portrait);
+                    /* Fixed window and nothing specified. Get orientation from w/h of created window */
+                    req = (w > h ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE : ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
                 }
             } else {
-                /* Fixed window and both orientations are allowed. Choose one. */
-                if (is_portrait_allowed && is_landscape_allowed) {
-                    req = (w > h ? orientation_landscape : orientation_portrait);
+                /* At least one orientation is allowed */
+                if (resizable) {
+                    if (is_portrait_allowed && is_landscape_allowed) {
+                        /* hint allows both landscape and portrait, promote to full user */
+                        req = ActivityInfo.SCREEN_ORIENTATION_FULL_USER;
+                    } else {
+                        /* Use the only one allowed "orientation" */
+                        req = (is_landscape_allowed ? orientation_landscape : orientation_portrait);
+                    }
                 } else {
-                    /* Use the only one allowed "orientation" */
-                    req = (is_landscape_allowed ? orientation_landscape : orientation_portrait);
+                    /* Fixed window and both orientations are allowed. Choose one. */
+                    if (is_portrait_allowed && is_landscape_allowed) {
+                        req = (w > h ? orientation_landscape : orientation_portrait);
+                    } else {
+                        /* Use the only one allowed "orientation" */
+                        req = (is_landscape_allowed ? orientation_landscape : orientation_portrait);
+                    }
                 }
             }
-        }
 
-        Log.v(TAG, "setOrientation() requestedOrientation=" + req + " width=" + w +" height="+ h +" resizable=" + resizable + " hint=" + hint);
-        mSingleton.setRequestedOrientation(req);
+            Log.v(TAG, "setOrientation() requestedOrientation=" + req + " width=" + w + " height=" + h + " resizable=" + resizable + " hint=" + hint);
+            mSingleton.setRequestedOrientation(req);
+        } else Log.v(TAG, "setOrientation() failed");
     }
 
     /**
@@ -1254,7 +1292,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         if (mSingleton == null) {
             return false;
         }
-        return mSingleton.sendCommand(command, param);
+        return sendCommand(command, param);
     }
 
     /**
@@ -1446,7 +1484,7 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
      */
     public static boolean showTextInput(int input_type, int x, int y, int w, int h) {
         // Transfer the task to the main thread as a Runnable
-        return mSingleton.commandHandler.post(new ShowTextInputTask(input_type, x, y, w, h));
+        return commandHandler.post(new ShowTextInputTask(input_type, x, y, w, h));
     }
 
     public static boolean isTextInputEvent(KeyEvent event) {
@@ -2157,24 +2195,24 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
 class SDLMain implements Runnable {
     @Override
     public void run() {
-        // Runs SDLActivity.main()
-
-        try {
-            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_DISPLAY);
-        } catch (Exception e) {
-            Log.v("SDL", "modify thread properties failed " + e.toString());
-        }
-
-        SDLActivity.nativeInitMainThread();
-        SDLActivity.mSingleton.main();
-        SDLActivity.nativeCleanupMainThread();
-
-        if (SDLActivity.mSingleton != null && !SDLActivity.mSingleton.isFinishing()) {
-            // Let's finish the Activity
-            SDLActivity.mSDLThread = null;
-            SDLActivity.mSDLMainFinished = true;
-            SDLActivity.mSingleton.finish();
-        }  // else: Activity is already being destroyed
+//        // Runs SDLActivity.main()
+//
+//        try {
+//            android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_DISPLAY);
+//        } catch (Exception e) {
+//            Log.v("SDL", "modify thread properties failed " + e.toString());
+//        }
+//
+//        SDLActivity.nativeInitMainThread();
+//        SDLActivity.mSingleton.main();
+//        SDLActivity.nativeCleanupMainThread();
+//
+//        if (SDLActivity.mSingleton != null && !SDLActivity.mSingleton.isFinishing()) {
+//            // Let's finish the Activity
+//            SDLActivity.mSDLThread = null;
+//            SDLActivity.mSDLMainFinished = true;
+//            SDLActivity.mSingleton.finish();
+//        }  // else: Activity is already being destroyed
 
     }
 }

@@ -83,7 +83,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     public static final String INTENT_MINECRAFT_VERSION = "intent_version";
 
     volatile public static boolean isInputStackCall;
-    protected static View.OnGenericMotionListener motionListener = (v, event) -> false;
 
     public static TouchCharInput touchCharInput;
     private TouchControllerInputView touchControllerInputView;
@@ -110,36 +109,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (LauncherPreferences.PREF_GAMEPAD_SDL_PASSTHRU) {
-            // TODO: Use lower level HID capture that needs a dialogue box from the user for the
-            // app to fully take focus of the input devices. Might cause issues with older android
-            // versions so we don't use that right now. Needs testing.
-            // Currently tried but only identification works OOTB, inputs aren't being sent.
-
-            // TODO: Use a hook to load SDL logic depending on whether libSDL3.so is loaded.
-            try {
-                // Note: This doesn't dlopen it for the mod, they still have to do it themselves
-                // Why? https://github.com/android/ndk/issues/201#issuecomment-248060092
-                // Just in case that gets deleted off the internet:
-                // "On Android only the main executable and LD_PRELOADs are considered to be
-                // RTLD_GLOBAL, all the dependencies of the main executable remain RTLD_LOCAL." - dimitry
-                System.loadLibrary("SDL3");
-                System.loadLibrary("SDL2");
-                SDL.initialize();
-                SDL.setupJNI();
-                SDL.setContext(this);
-                new SDLSurface(this);
-                motionListener = (View.OnGenericMotionListener)
-                        runMethodbyReflection("org.libsdl.app.SDLActivity",
-                                "getMotionListener");
-                if (LauncherPreferences.PREF_GAMEPAD_FORCEDSDL_PASSTHRU) Tools.SDL.initializeControllerSubsystems();
-            } catch (UnsatisfiedLinkError ignored) {
-                // Ignore because if SDL.setupJNI(); fails, SDL wasn't loaded.
-            } catch (ReflectiveOperationException e) {
-                Tools.showErrorRemote("SDL did not load properly.", e);
-            }
-        }
-
         minecraftProfile = LauncherProfiles.getCurrentProfile();
 
         String gameDirPath = Tools.getGameDirPath(minecraftProfile).getAbsolutePath();
