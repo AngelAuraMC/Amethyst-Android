@@ -52,6 +52,7 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
     // Pinch events
     private final ScaleGestureDetector scaleGestureDetector;
+    static Surface mNativeSurface;
 
     // Startup
     public SDLSurface(Context context) {
@@ -93,8 +94,12 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         enableSensor(Sensor.TYPE_ACCELEROMETER, true);
     }
 
-    protected Surface getNativeSurface() {
-        return getHolder().getSurface();
+    public static Surface getNativeSurface() {
+        return mNativeSurface;
+    }
+
+    public static void setNativeSurface(Surface nativeSurface) {
+        mNativeSurface = nativeSurface;
     }
 
     // Called when we have a valid drawing surface

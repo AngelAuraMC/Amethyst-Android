@@ -84,6 +84,7 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
     final Object mSurfaceReadyListenerLock = new Object();
     /* View holding the surface, either a SurfaceView or a TextureView */
     View mSurface;
+    Surface mNativeSurface;
     String TAG = "MinecraftGLSurface";
 
     private final InGameEventProcessor mIngameProcessor = new InGameEventProcessor(mSensitivityFactor);
@@ -127,18 +128,19 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
         if(useSurfaceView){
             SurfaceView surfaceView = new SurfaceView(getContext());
             mSurface = surfaceView;
+            mNativeSurface = surfaceView.getHolder().getSurface();
 
             surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
                 private boolean isCalled = isAlreadyRunning;
                 @Override
                 public void surfaceCreated(@NonNull SurfaceHolder holder) {
                     if(isCalled) {
-                        JREUtils.setupBridgeWindow(surfaceView.getHolder().getSurface());
+                        JREUtils.setupBridgeWindow(mNativeSurface);
                         return;
                     }
                     isCalled = true;
 
-                    realStart(surfaceView.getHolder().getSurface());
+                    realStart(mNativeSurface);
                 }
 
                 @Override
@@ -169,14 +171,14 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
                 private boolean isCalled = isAlreadyRunning;
                 @Override
                 public void onSurfaceTextureAvailable(@NonNull SurfaceTexture surface, int width, int height) {
-                    Surface tSurface = new Surface(surface);
+                    mNativeSurface = new Surface(surface);
                     if(isCalled) {
-                        JREUtils.setupBridgeWindow(tSurface);
+                        JREUtils.setupBridgeWindow(mNativeSurface);
                         return;
                     }
                     isCalled = true;
 
-                    realStart(tSurface);
+                    realStart(mNativeSurface);
                 }
 
                 @Override
