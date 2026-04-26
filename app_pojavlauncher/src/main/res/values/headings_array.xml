@@ -5,6 +5,8 @@
         <item name="1">@string/mcl_setting_renderer_vulkan_kopper_zink</item>
         <item name="2">@string/mcl_setting_renderer_vulkan_zink</item>
         <item name="3">@string/mcl_setting_renderer_mobileglues</item>
+        <item name="3">@string/mcl_setting_renderer_mobilegl_gles</item>
+        <item name="3">@string/mcl_setting_renderer_mobilegl_vk</item>
         <item name="4">@string/mcl_setting_renderer_ltw</item>
     </string-array>
 
@@ -41,6 +43,8 @@
         <item>opengles3_desktopgl_zink_kopper</item> <!-- Swung's Kopper Zink backport to 23.0.4 -->
         <item>vulkan_zink</item> <!-- osmesa 23.0.4 -->
         <item>opengles_mobileglues</item>
+        <item>opengles_mobilegl_gles</item>
+        <item>opengles_mobilegl_vk</item>
         <item>opengles3_ltw</item>
     </string-array>
     <string-array name="download_source_names">
