@@ -6,6 +6,7 @@
     <uses-feature
         android:name="android.hardware.type.pc"
         android:required="false" />
+    <uses-sdk android:minSdkVersion="26" tools:overrideLibrary="top.mobilegl.mobileglues"/>
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission
