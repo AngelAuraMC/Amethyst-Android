@@ -68,7 +68,7 @@ jobs:
       #     branch: Build_JRE_25
       #     name: jre25-multiarch
 
-      - uses: gradle/actions/setup-gradle@v4
+      - uses: gradle/actions/setup-gradle@v6
         with:
           validate-wrappers: false
           gradle-version: "8.11"
