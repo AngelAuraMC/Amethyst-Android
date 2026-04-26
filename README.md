@@ -1,15 +1,15 @@
 <h1 align="center">Copper Launcher</h1>
 
-<img src="https://raw.githubusercontent.com/CopperLauncher/CopperLauncher/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
+<img src="https://raw.githubusercontent.com/CopperLauncher/Copper-Android/refs/heads/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Copper logo">
 
 <p align="center">
-  <img src="https://img.shields.io/github/commit-activity/m/CopperLauncher/CopperLauncher" alt="GitHub commit activity"/>
+  <img src="https://img.shields.io/github/commit-activity/m/CopperLauncher/Copper-Android" alt="GitHub commit activity"/>
   <img src="https://img.shields.io/badge/platform-Android-green" alt="Platform"/>
   <img src="https://img.shields.io/badge/minSdk-26-blue" alt="Min SDK"/>
-  <img src="https://github.com/CopperLauncher/CopperLauncher/workflows/Android%20CI/badge.svg" alt="Android CI"/>
+  <img src="https://github.com/CopperLauncher/Copper-Android/workflows/Android%20CI/badge.svg" alt="Android CI"/>
   <img src="https://badges.crowdin.net/pojavlauncher/localized.svg" alt="Crowdin"/>
   <a href="https://discord.com/invite/r8wUtzMzUe"><img src="https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat" alt="Discord"></a>
-  <a href="https://github.com/CopperLauncher/CopperLauncher"><img src="https://img.shields.io/badge/github-CopperLauncher-orange?logo=github" alt="GitHub"></a>
+  <a href="https://github.com/CopperLauncher"><img src="https://img.shields.io/badge/github-CopperLauncher-orange?logo=github" alt="GitHub"></a>
   <a href="https://www.curseforge.com/members/maxjubayeryt/projects"><img src="https://img.shields.io/badge/curseforge-maxjubayeryt-orange?logo=curseforge" alt="CurseForge"></a>
   <a href="https://modrinth.com/user/maxjubayeryt"><img src="https://img.shields.io/badge/modrinth-maxjubayeryt-green?logo=modrinth" alt="Modrinth User"></a>
   <a href="https://modrinth.com/organization/copperlauncher"><img src="https://img.shields.io/badge/modrinth-CopperLauncher-green?logo=modrinth" alt="Modrinth Org"></a>
@@ -45,8 +45,8 @@ Copper is a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android) 
 
 You can get Copper via three methods:
 
-1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/CopperLauncher/workflows/android/v3_openjdk/app-debug%20(recommended).zip)
-2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/CopperLauncher/CopperLauncher/releases/)
+1. **Nightly** Download the latest artifact from [Nightly.link](https://nightly.link/CopperLauncher/Copper-Android/workflows/android/v3_openjdk?preview)
+2. **Releases:** Download the latest prebuilt app [from Releases](https://github.com/CopperLauncher/Copper-android/releases/)
 3. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
