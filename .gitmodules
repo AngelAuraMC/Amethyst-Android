@@ -1,9 +1,12 @@
 [submodule "MobileGlues"]
 	path = MobileGlues
 	url = https://github.com/MobileGL-Dev/MobileGlues.git
-[submodule "SDL"]
-	path = app_pojavlauncher/src/main/jni/SDL
-	url = https://github.com/libsdl-org/SDL.git
-[submodule "sdl2-compat"]
+[submodule "app_pojavlauncher/src/main/jni/sdl2-compat"]
 	path = app_pojavlauncher/src/main/jni/sdl2-compat
 	url = https://github.com/libsdl-org/sdl2-compat.git
+[submodule "app_pojavlauncher/src/main/jni/SDL3"]
+	path = app_pojavlauncher/src/main/jni/SDL3
+	url = https://github.com/libsdl-org/SDL
+[submodule "MobileGL"]
+	path = MobileGL
+	url = https://github.com/MobileGL-Dev/MobileGL.git
