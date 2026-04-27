@@ -72,6 +72,11 @@ jobs:
         with:
           validate-wrappers: false
           gradle-version: "8.11"
+          cache-read-only: false
+
+      - name: Update glslang external sources
+        working-directory: 3rdparty/glslang
+        run: python update_glslang_sources.py
 
       - name: Run scripts
         run: |
