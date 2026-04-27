@@ -75,7 +75,7 @@ jobs:
           cache-read-only: false
 
       - name: Update glslang external sources
-        working-directory: 3rdparty/glslang
+        working-directory: MobileGL/3rdparty/glslang
         run: python update_glslang_sources.py
 
       - name: Run scripts
@@ -83,21 +83,21 @@ jobs:
           ./scripts/languagelist_updater.sh
           mkdir out
 
-      - name: Build Release .apk
-        run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleRelease
-          mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk out/app-release.apk
-
-      - name: Gen md5sums
-        run: |
-          md5sum out/app-release.apk > out/app-release.md5
-
+      # - name: Build Release .apk
+      #   run: |
+      #     # Build the launcher
+      #     gradle :app_pojavlauncher:assembleRelease
+      #     mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk out/app-release.apk
+      #
+      #- name: Gen md5sums
+      #  run: |
+      #    md5sum out/app-release.apk > out/app-release.md5
+      #
       - name: Build Debug .apk
         run: |
           # Build the launcher
-          gradle :app_pojavlauncher:assembleDebug
-          mv app_pojavlauncher/build/outputs/apk/debug/app_pojavlauncher-debug.apk out/app-debug.apk
+          gradle :app_pojavlauncher:assembleDebug -Pandroid.injected.build.abi=arm64-v8a -Pandroid.injected.testOnly=false
+          mv app_pojavlauncher/build/intermediates/apk/debug/app_pojavlauncher-debug.apk out/app-debug.apk
 
       - name: Gen md5sums
         run: |
