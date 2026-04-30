@@ -28,7 +28,7 @@ public class ASM5OverrideInjector extends ClassVisitor {
                     name.endsWith("AnnotationVisitor") ||
                     name.endsWith("SignatureVisitor")) {
                     try { // Minecraft makes it ugly if we use println
-                        System.out.print("Amethyst-Android: Modifying ASM classes for ASM4 comaptibility...\n");
+                        System.out.print("Copper-Android: Modifying ASM classes for ASM4 comaptibility...\n");
                     } catch (Exception ignored) {}
                     ClassReader cr = new ClassReader(b);
                     ClassWriter cw = new ClassWriter(cr, 0);

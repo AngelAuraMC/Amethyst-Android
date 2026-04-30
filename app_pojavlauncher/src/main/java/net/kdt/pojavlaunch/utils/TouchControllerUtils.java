@@ -25,7 +25,7 @@ public class TouchControllerUtils {
     }
 
     public static LauncherProxyClient proxyClient;
-    private static final String socketName = "Amethyst";
+    private static final String socketName = "Copper";
 
     private static class VibrationHandler implements LauncherProxyClient.VibrationHandler {
         private final Vibrator vibrator;
