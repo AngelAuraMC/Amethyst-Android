@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Chọn một trình cài đặt mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst đã bị thoát đột ngột</string>
+    <string name="error_fatal">Copper đã bị thoát đột ngột</string>
     <string name="error_no_version">Không có phiên bản nào!</string>
     <string name="error_show_more">Hiện thêm</string>
     <string name="error_show_less">Thu gọn</string>
@@ -210,7 +210,7 @@
     <string name="arc_capes_title">Áo choàng Cosmetica</string>
     <string name="arc_capes_desc">Sử dụng áo choàng từ Cosmetica (trước đây gọi là Arc). Để biết thêm thông tin, hãy truy cập https://cosmetica.cc. Yêu cầu sử dụng OptiFine.</string>
     <string name="notif_channel_name">Chung</string>
-    <string name="lazy_service_default_title">Dịch vụ tiền cảnh Amethyst</string>
+    <string name="lazy_service_default_title">Dịch vụ tiền cảnh Copper</string>
     <string name="mcl_setting_veroption_installed">Đã cài đặt</string>
     <string name="use_global_default">(Sử dụng mặc định chung)</string>
     <string name="default_control">Bố cục điều khiển mặc định</string>
@@ -408,7 +408,7 @@
     <string name="mg_renderer_summary_computeShaderext">Có thể giúp giảm hiện tượng lỗi trên các gói shader. Tính năng cũng có thể gây thoát đột ngột, hãy tắt nếu không cần thiết.</string>
     <string name="mg_renderer_title_multidrawCompute">Mô phỏng tính toán Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Dùng shader tính toán để mô phỏng Multidraw</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">Tài khoản chơi thử chỉ hỗ trợ chạy phiên bản từ 1.3.1 trở lên</string>
     <string name="demo_unsupported">Không hỗ trợ chế độ chơi thử</string>
     <string name="change_account">Vui lòng thay đổi tài khoản để sử dụng chức năng này</string>

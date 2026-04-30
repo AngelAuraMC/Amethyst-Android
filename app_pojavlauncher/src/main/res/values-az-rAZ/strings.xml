@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Mod quraşdırıcısını seçin</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst gözlənilmədən çökdü</string>
+    <string name="error_fatal">Copper gözlənilmədən çökdü</string>
     <string name="error_no_version">Versiya yoxdur!</string>
     <string name="error_show_more">Daha çox göstər</string>
     <string name="error_show_less">Daha az göstər</string>
@@ -149,7 +149,7 @@
     <string name="global_delete">Sil</string>
     <string name="arc_capes_desc">Cosmetica-dan (əvvəllər Arc) qapaqları işə salır. Əlavə məlumat üçün https://cosmetica.cc saytına daxil olun. OptiFine tələb edir.</string>
     <string name="notif_channel_name">Ümumi</string>
-    <string name="lazy_service_default_title">Amethyst Önplan Xidməti</string>
+    <string name="lazy_service_default_title">Copper Önplan Xidməti</string>
     <string name="use_global_default">(Qlobal defoltdan istifadə edin)</string>
     <string name="default_control">Defolt controlmap</string>
     <string name="progresslayout_tasks_in_progress">%d tapşırıq davam edir</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Выберите установщик мода</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst был остановлен в результате сбоя</string>
+    <string name="error_fatal">Copper был остановлен в результате сбоя</string>
     <string name="error_no_version">Нет версий!</string>
     <string name="error_show_more">Развернуть</string>
     <string name="error_show_less">Свернуть</string>
@@ -207,7 +207,7 @@
     <string name="arc_capes_title">Плащи Cosmetica</string>
     <string name="arc_capes_desc">Включает плащи от Cosmetica (ранее Arc). Для получения дополнительной информации посетите https://cosmetica.cc. Требуется OptiFine.</string>
     <string name="notif_channel_name">Общее</string>
-    <string name="lazy_service_default_title">Активная служба Amethyst</string>
+    <string name="lazy_service_default_title">Активная служба Copper</string>
     <string name="mcl_setting_veroption_installed">Установлено</string>
     <string name="use_global_default">(Как везде)</string>
     <string name="default_control">Раскладка управления</string>
@@ -405,7 +405,7 @@
     <string name="mg_renderer_summary_computeShaderext">Может помочь при сбоях набора шейдеров. Отключите, если не требуется, может привести к сбоям.</string>
     <string name="mg_renderer_title_multidrawCompute">Использовать вычислительную эмуляцию MultiDraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Использует вычислительные шейдеры для эмуляции MultiDraw</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">Только ванильные версии от 1.3.1 поддерживается для демонстрационных учётных записей</string>
     <string name="demo_unsupported">Демо-профиль не поддерживается</string>
     <string name="change_account">Пожалуйста, измените учётную запись для использования этой функции</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">选择模组安装器</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst 意外崩溃</string>
+    <string name="error_fatal">Copper 意外崩溃</string>
     <string name="error_no_version">无可用版本！</string>
     <string name="error_show_more">显示详情</string>
     <string name="error_show_less">隐藏详情</string>
@@ -213,7 +213,7 @@
     <string name="arc_capes_title">Cosmetica 披风</string>
     <string name="arc_capes_desc">启用来自 Cosmetica（原 Arc）的披风。欲了解更多信息，请访问 https://cosmetica.cc。需要 OptiFine。</string>
     <string name="notif_channel_name">通用</string>
-    <string name="lazy_service_default_title">Amethyst 前台服务</string>
+    <string name="lazy_service_default_title">Copper 前台服务</string>
     <string name="mcl_setting_veroption_installed">已安装</string>
     <string name="use_global_default">（使用全局默认设置）</string>
     <string name="default_control">默认控制键布局</string>
@@ -417,7 +417,7 @@
     <string name="preference_touchcontroller_vibrate_length_description">设置使用 TouchController 时的震动长度。</string>
     <string name="mg_renderer_title_multidrawCompute">使用计算多重绘制模拟</string>
     <string name="mg_renderer_summary_multidrawCompute">使用计算着色器进行多重绘制模拟</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">试玩账户仅支持原版 1.3.1 及以上版本</string>
     <string name="demo_unsupported">不支持试玩玩家档案</string>
     <string name="change_account">请更换账户以使用此功能</string>

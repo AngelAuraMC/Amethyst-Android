@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Velg en mod installasjonprogram</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst har uventet krasjet</string>
+    <string name="error_fatal">Copper har uventet krasjet</string>
     <string name="error_no_version">Ingen versjon!</string>
     <string name="error_show_more">Vis mer</string>
     <string name="error_show_less">Vis mindre</string>

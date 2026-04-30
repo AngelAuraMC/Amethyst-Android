@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Выберите установщикъ модификаціи</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst былъ остановленъ въ результатѣ курьёза</string>
+    <string name="error_fatal">Copper былъ остановленъ въ результатѣ курьёза</string>
     <string name="error_no_version">Нѣтъ версій!</string>
     <string name="error_show_more">Развернуть</string>
     <string name="error_show_less">Свернуть</string>

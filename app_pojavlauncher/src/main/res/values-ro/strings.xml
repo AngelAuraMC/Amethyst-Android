@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Selectează un instalator de mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst s-a oprit neașteptat</string>
+    <string name="error_fatal">Copper s-a oprit neașteptat</string>
     <string name="error_no_version">Fără versiune!</string>
     <string name="error_show_more">Arată mai mult</string>
     <string name="error_show_less">Arată mai puțin</string>
@@ -134,7 +134,7 @@
     <string name="pedit_renderer">Randator</string>
     <string name="arc_capes_title">Pelerine Cosmetica</string>
     <string name="arc_capes_desc">Activează pelerinele de la Cosmetica (anterior Arc). Pentru mai multe informații, vizitează https://cosmetica.cc. Necesită OptiFine.</string>
-    <string name="lazy_service_default_title">Serviciu Amethyst prim-plan</string>
+    <string name="lazy_service_default_title">Serviciu Copper prim-plan</string>
     <string name="mcl_setting_veroption_installed">Instalat</string>
     <string name="use_global_default">(Utilizare implicită globală)</string>
     <string name="progresslayout_tasks_in_progress">%d sarcini în curs</string>

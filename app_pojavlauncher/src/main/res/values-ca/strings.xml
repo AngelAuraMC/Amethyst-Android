@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Selecciona un mod per afegir</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst s’ha parat inesperadament</string>
+    <string name="error_fatal">Copper s’ha parat inesperadament</string>
     <string name="error_no_version">Cap versio!</string>
     <string name="error_show_more">Mostra més</string>
     <string name="error_show_less">Mostrar menys</string>
@@ -94,7 +94,7 @@
     <string name="pedit_java_runtime">Runtime de Java</string>
     <string name="pedit_renderer">Renderitzador</string>
     <string name="arc_capes_desc">Activa les capes de Cosmetica (anteriorment Arc). Per a més informació visiteu https://cosmetica.cc. Requereix l\'OptiFine.</string>
-    <string name="lazy_service_default_title">Servei de primer plà del Amethyst</string>
+    <string name="lazy_service_default_title">Servei de primer plà del Copper</string>
     <string name="use_global_default">(Usa el valor global per defecte)</string>
     <string name="default_control">Mapa de control per defecte</string>
     <string name="progresslayout_tasks_in_progress">%d tasques en procés</string>

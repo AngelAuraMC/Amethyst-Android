@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Sélectionnez un installateur de mods</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst a cessé de fonctionner de façon inattendue</string>
+    <string name="error_fatal">Copper a cessé de fonctionner de façon inattendue</string>
     <string name="error_no_version">Aucune version !</string>
     <string name="error_show_more">Afficher plus</string>
     <string name="error_show_less">Afficher moins</string>
@@ -204,7 +204,7 @@
     <string name="arc_capes_title">Capes Cosmetica</string>
     <string name="arc_capes_desc">Active les capes Cosmetica. Pour plus d\'informations visitez https://cosmetica.cc. Nécessite OptiFine.</string>
     <string name="notif_channel_name">Général</string>
-    <string name="lazy_service_default_title">Service de premier plan de Amethyst</string>
+    <string name="lazy_service_default_title">Service de premier plan de Copper</string>
     <string name="mcl_setting_veroption_installed">Installés</string>
     <string name="use_global_default">(Utiliser la valeur globale par défaut)</string>
     <string name="default_control">Contrôles par défaut</string>
@@ -395,7 +395,7 @@
     <string name="mg_renderer_summary_computeShaderext">Peut aider pour des bugs de shaders. À désactiver si ce n\'est pas nécessaire, peut causer des plantages.</string>
     <string name="mg_renderer_title_multidrawCompute">Utiliser l\'émulation de calcul multidessin</string>
     <string name="mg_renderer_summary_multidrawCompute">Utilise les nuanceurs de calcul pour l\'émulation multidessin</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">Seules les versions Vanilla 1.3.1 et supérieures sont supportées sur les comptes de démo</string>
     <string name="demo_unsupported">Profil de démo non pris en charge</string>
     <string name="change_account">Veuillez changer de compte pour utiliser cette fonction</string>

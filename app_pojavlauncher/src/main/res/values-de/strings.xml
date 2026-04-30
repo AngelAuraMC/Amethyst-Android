@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Wähle einen Mod-Installer</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst ist unerwartet abgestürzt</string>
+    <string name="error_fatal">Copper ist unerwartet abgestürzt</string>
     <string name="error_no_version">Keine Version!</string>
     <string name="error_show_more">Mehr anzeigen</string>
     <string name="error_show_less">Weniger anzeigen</string>
@@ -210,7 +210,7 @@
     <string name="arc_capes_title">Cosmetica-Umhänge</string>
     <string name="arc_capes_desc">Aktiviert Umhänge von Cosmetica (früher Arc). Für weitere Informationen, siehe https://cosmetica.cc. OptiFine wird benötigt.</string>
     <string name="notif_channel_name">Allgemein</string>
-    <string name="lazy_service_default_title">Amethyst-Vordergrunddienst</string>
+    <string name="lazy_service_default_title">Copper-Vordergrunddienst</string>
     <string name="mcl_setting_veroption_installed">Installiert</string>
     <string name="use_global_default">(Standardvorgaben verwenden)</string>
     <string name="default_control">Standard-Steuerung</string>
@@ -402,7 +402,7 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="mg_renderer_summary_computeShaderext">Kann bei Shaderpack-Problemen helfen. Deaktivieren, wenn nicht benötigt, kann Abstürze verursachen.</string>
     <string name="mg_renderer_title_multidrawCompute">Nutze die Compute Multidraw-Emulation</string>
     <string name="mg_renderer_summary_multidrawCompute">Verwendet den Compute-Shader Shader für die Multidraw-Emulation</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">Auf Demo-Konten wird nur Vanilla 1.3.1 unterstützt</string>
     <string name="demo_unsupported">Demo-Profil wird nicht unterstützt</string>
     <string name="change_account">Bitte wechsle das Konto, um diese Funktion zu nutzen</string>

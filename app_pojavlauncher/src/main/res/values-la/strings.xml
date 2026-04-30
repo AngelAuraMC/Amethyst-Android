@@ -9,7 +9,7 @@
     <string name="warning_remove_account">Et ob hoc remotus!</string>
     <!-- AlertDialog title -->
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst crashed subito</string>
+    <string name="error_fatal">Copper crashed subito</string>
     <!-- Toast messages -->
     <!--
     <string name="toast_3">Exit</string>

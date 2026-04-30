@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Wahlweise einen Mod-Installer</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst ist unerwartet abgestürzt</string>
+    <string name="error_fatal">Copper ist unerwartet abgestürzt</string>
     <string name="error_no_version">Keine Version!</string>
     <string name="error_show_more">Mehr anzeigen</string>
     <string name="error_show_less">Weniger anzeigen</string>

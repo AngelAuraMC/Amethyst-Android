@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Chooz mod installr</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst haz unexpectadly crashd</string>
+    <string name="error_fatal">Copper haz unexpectadly crashd</string>
     <string name="error_no_version">No vershun!</string>
     <string name="error_show_more">Show mor</string>
     <string name="error_show_less">Show les</string>
@@ -155,7 +155,7 @@
     <string name="pedit_java_runtime">Java runtime</string>
     <string name="arc_capes_desc">Enablez capez from cosmetica (previously arc). For more informashun pleez visit https://cosmetica.cc. Requirez optifine.</string>
     <string name="notif_channel_name">Geneal</string>
-    <string name="lazy_service_default_title">Amethyst background police</string>
+    <string name="lazy_service_default_title">Copper background police</string>
     <string name="use_global_default">(Use Base Normal)</string>
     <string name="progresslayout_tasks_in_progress">%d taskz in progress</string>
     <string name="notification_terminate">Get rid of it</string>

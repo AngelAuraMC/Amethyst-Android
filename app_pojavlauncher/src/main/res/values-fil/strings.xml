@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Pumili ng mod installer</string>
     <!-- Error messages -->
-    <string name="error_fatal">Ang Amethyst ay hindi inaasahang nag-crash</string>
+    <string name="error_fatal">Ang Copper ay hindi inaasahang nag-crash</string>
     <string name="error_no_version">Walang bersyon!</string>
     <string name="error_show_more">Tignan ang error</string>
     <string name="error_show_less">Magpakita ng kaunti</string>
@@ -131,7 +131,7 @@
     <string name="arc_capes_title">Capes galing sa Cosmetica</string>
     <string name="arc_capes_desc">Pinapagana ang mga kapa mula sa Cosmetica (ang dating Arc). Para sa karagdagang impormasyon mangyaring bisitahin ang https://cosmetica.cc  Kinagangailangan ng OptiFine.</string>
     <string name="notif_channel_name">Pangkalahatan</string>
-    <string name="lazy_service_default_title">Serbisyong Harapan ng Amethyst</string>
+    <string name="lazy_service_default_title">Serbisyong Harapan ng Copper</string>
     <string name="mcl_setting_veroption_installed">Naka-Install</string>
     <string name="of_dl_progress">Nagda-download %s</string>
     <string name="preference_category_java_tweaks">Mga tweaks sa Java</string>

@@ -69,7 +69,7 @@
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (all versions, mid)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ only, fast)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ only</string>
-    <string name="mcl_setting_renderer_KW">Krypton Wrapper - (1.21.8&lt; only, fast)</string>
+    <string name="mcl_setting_renderer_KW">Krypton Wrapper - (all versions, fast)</string>
     <string name="mcl_setting_veroption_release">Release</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Old-alpha</string>

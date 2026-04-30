@@ -11,7 +11,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Seleciona um Instalador de mods</string>
     <!-- Error messages -->
-    <string name="error_fatal">O Amethyst falhou inesperadamente</string>
+    <string name="error_fatal">O Copper falhou inesperadamente</string>
     <string name="error_no_version">Não existem versões!</string>
     <string name="error_show_more">Mostrar mais</string>
     <string name="error_show_less">Mostrar menos</string>

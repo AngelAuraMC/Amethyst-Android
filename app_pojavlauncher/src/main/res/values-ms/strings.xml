@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Pilih sebuah pemasang mod</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst telah ranap tanpa diduga</string>
+    <string name="error_fatal">Copper telah ranap tanpa diduga</string>
     <string name="error_no_version">Tiada versi!</string>
     <string name="error_show_more">Tunjuk lebih banyak</string>
     <string name="error_show_less">Tunjuk lebih sedikit</string>
@@ -210,7 +210,7 @@
     <string name="arc_capes_title">Mantel Cosmetica</string>
     <string name="arc_capes_desc">Mendayakan mantel daripada Cosmetica (sebelum ini Arc). Untuk maklumat lanjut sila layari https://cosmetica.cc. Memerlukan OptiFine.</string>
     <string name="notif_channel_name">Umum</string>
-    <string name="lazy_service_default_title">Perkhidmatan Latar Depan Amethyst</string>
+    <string name="lazy_service_default_title">Perkhidmatan Latar Depan Copper</string>
     <string name="mcl_setting_veroption_installed">Dipasang</string>
     <string name="use_global_default">(Gunakan lalai global)</string>
     <string name="default_control">Peta kawalan lalai</string>
@@ -408,7 +408,7 @@
     <string name="mg_renderer_summary_computeShaderext">Boleh membantu dengan gangguan dengan pek pembayang. Nyahdayakan jika tidak diperlukan, boleh menyebabkan ranap.</string>
     <string name="mg_renderer_title_multidrawCompute">Gunakan Emulasi Compute Multidraw</string>
     <string name="mg_renderer_summary_multidrawCompute">Menggunakan pembayang compute untuk emulasi multidraw</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">Hanya versi 1.3.1 Vanila dan ke atas disokong pada akaun demo</string>
     <string name="demo_unsupported">Profil Demo tidak disokong</string>
     <string name="change_account">Sila tukar akaun untuk menggunakan fungsi ini</string>

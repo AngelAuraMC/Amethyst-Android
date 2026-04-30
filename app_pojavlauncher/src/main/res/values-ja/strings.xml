@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">Mod インストーラーを選択</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst が異常終了しました</string>
+    <string name="error_fatal">Copper が異常終了しました</string>
     <string name="error_no_version">バージョンがありません</string>
     <string name="error_show_more">詳細を表示</string>
     <string name="error_show_less">詳細を閉じる</string>
@@ -184,7 +184,7 @@
     <string name="arc_capes_title">コスメチカ・ケープズ</string>
     <string name="arc_capes_desc">Cosmetica（以前のArc）のケープを有効にします。詳細については、https：//cosmetica.ccをご覧ください。 OptiFineが必要です。</string>
     <string name="notif_channel_name">一般</string>
-    <string name="lazy_service_default_title">Amethyst フォアグラウンドサービス</string>
+    <string name="lazy_service_default_title">Copper フォアグラウンドサービス</string>
     <string name="mcl_setting_veroption_installed">インストール済み</string>
     <string name="use_global_default">(グローバル既定値を使用する)</string>
     <string name="progresslayout_tasks_in_progress">%d タスクが進行中</string>
@@ -282,5 +282,5 @@
     <string name="controller_button_select">選択...</string>
     <string name="customctrl_visibility_title">コントロールの可視性</string>
     <string name="preference_experimental_title">実験的なもの</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
 </resources>

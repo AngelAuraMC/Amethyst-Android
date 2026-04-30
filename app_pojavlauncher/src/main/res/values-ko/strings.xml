@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name">Copper</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -14,7 +14,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">모드 설치기를 선택하세요</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst에 예기치 못한 충돌이 발생했어요</string>
+    <string name="error_fatal">Copper에 예기치 못한 충돌이 발생했어요</string>
     <string name="error_no_version">버전이 없습니다!</string>
     <string name="error_show_more">더 보기</string>
     <string name="error_show_less">간략히 보기</string>
@@ -209,7 +209,7 @@
 더 많은 정보를 위해 https://cosmetica.cc 를 방문해주세요.
 옵티파인이 필요합니다.</string>
     <string name="notif_channel_name">일반</string>
-    <string name="lazy_service_default_title">Amethyst 포그라운드 서비스</string>
+    <string name="lazy_service_default_title">Copper 포그라운드 서비스</string>
     <string name="mcl_setting_veroption_installed">설치됨</string>
     <string name="use_global_default">(글로벌 기본값 사용)</string>
     <string name="default_control">기본 조작</string>
@@ -399,7 +399,7 @@
     <string name="mg_renderer_summary_computeShaderext">쉐이더팩 버그 현상에 도움이 될 수 있습니다. 충돌을 유발할 수 있으므로 필요하지 않다면 비활성화하세요.</string>
     <string name="mg_renderer_title_multidrawCompute">Compute 기반 Multidraw 에뮬레이션 사용</string>
     <string name="mg_renderer_summary_multidrawCompute">Multidraw 에뮬레이션에 Compute 쉐이더를 사용합니다</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name">Copper</string>
     <string name="demo_versions_supported">데모 계정에서는 바닐라 1.3.1 이상만 지원합니다</string>
     <string name="demo_unsupported">데모 프로필 지원 안함</string>
     <string name="change_account">이 기능을 사용하려면 계정을 변경하세요</string>
