@@ -335,6 +335,7 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="preference_vsync_in_zink_description">런처가 내부 시스템 API를 사용하여 Zink용 수직 동기화를 활성화할 수 있도록 허용합니다. 시스템 업데이트 후 런처가 갑자기 Zink와 충돌하는 경우 이 기능을 비활성화하세요.</string>
     <string name="exception_failed_to_unpack_jre17">JRE 17 다운로드에 실패하였습니다</string>
     <string name="newdl_starting">게임 메타데이터를 읽고 있습니다…</string>
+    <string name="newdl_downloading_jre_runtime">자바 런타임 %s버전 다운로드 중 (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">게임 메타데이터를 다운로드하고 있습니다 (%s)</string>
     <string name="newdl_downloading_game_files">다운로드 중… (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">다운로드 중… (%.2f/%.2f MB, %.2f MB/s)</string>
