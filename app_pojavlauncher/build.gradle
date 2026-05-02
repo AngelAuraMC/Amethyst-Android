@@ -122,11 +122,11 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue "string", "app_name", "Amethyst (Debug)"
-            resValue "string", "app_short_name", "Amethyst (Debug)"
-            resValue 'string', 'application_package', 'org.angelauramc.amethyst.debug'
-            resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder.debug'
-            resValue 'string', 'shareProviderAuthority', 'org.angelauramc.amethyst.scoped.controlfolder.debug'
+            resValue "string", "app_name", "Quartz (Debug)"
+            resValue "string", "app_short_name", "Quartz (Debug)"
+            resValue 'string', 'application_package', 'com.echoloji.quartz.debug'
+            resValue 'string', 'storageProviderAuthorities', 'com.echoloji.quartz.scoped.gamefolder.debug'
+            resValue 'string', 'shareProviderAuthority', 'com.echoloji.quartz.scoped.controlfolder.debug'
         }
         proguard {
             initWith debug
@@ -146,10 +146,10 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue "string", "app_name", "Amethyst"
-            resValue "string", "app_short_name", "Amethyst"
-            resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder'
-            resValue 'string', 'application_package', 'org.angelauramc.amethyst'
+            resValue "string", "app_name", "Quartz"
+            resValue "string", "app_short_name", "Quartz"
+            resValue 'string', 'storageProviderAuthorities', 'com.echoloji.quartz.scoped.gamefolder'
+            resValue 'string', 'application_package', 'com.echoloji.quartz'
         }
         gplay {
             initWith release
