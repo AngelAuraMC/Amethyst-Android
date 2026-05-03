@@ -86,32 +86,73 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
+        return getModDetails(item, null);
+    }
 
+    public ModDetail getModDetails(ModItem item, String filterMcVersion) {
         JsonArray response = mApiHandler.get(String.format("project/%s/version", item.id), JsonArray.class);
         if(response == null) return null;
-        System.out.println(response);
-        String[] names = new String[response.size()];
-        String[] mcNames = new String[response.size()];
-        String[] urls = new String[response.size()];
-        String[] hashes = new String[response.size()];
 
-        for (int i=0; i<response.size(); ++i) {
-            JsonObject version = response.get(i).getAsJsonObject();
-            names[i] = version.get("name").getAsString();
-            mcNames[i] = version.get("game_versions").getAsJsonArray().get(0).getAsString();
-            urls[i] = version.get("files").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
-            // Assume there may not be hashes, in case the API changes
-            JsonObject hashesMap = version.getAsJsonArray("files").get(0).getAsJsonObject()
-                    .get("hashes").getAsJsonObject();
-            if(hashesMap == null || hashesMap.get("sha1") == null){
-                hashes[i] = null;
-                continue;
+        // Collect versions, optionally filtering by MC version
+        java.util.List<JsonObject> versions = new java.util.ArrayList<>();
+        for (int i = 0; i < response.size(); i++) {
+            JsonObject v = response.get(i).getAsJsonObject();
+            if (filterMcVersion != null && !filterMcVersion.isEmpty()) {
+                JsonArray gameVersions = v.get("game_versions").getAsJsonArray();
+                boolean matches = false;
+                for (int j = 0; j < gameVersions.size(); j++) {
+                    if (filterMcVersion.equals(gameVersions.get(j).getAsString())) {
+                        matches = true;
+                        break;
+                    }
+                }
+                if (!matches) continue;
             }
-
-            hashes[i] = hashesMap.get("sha1").getAsString();
+            versions.add(v);
         }
 
-        return new ModDetail(item, names, mcNames, urls, hashes);
+        if (versions.isEmpty()) return null;
+
+        int size = versions.size();
+        String[] names      = new String[size];
+        String[] mcNames    = new String[size];
+        String[] urls       = new String[size];
+        String[] hashes     = new String[size];
+        String[][] depIds   = new String[size][];
+        String[][] depTypes = new String[size][];
+
+        for (int i = 0; i < size; i++) {
+            JsonObject version = versions.get(i);
+            names[i]   = version.get("name").getAsString();
+            mcNames[i] = version.get("game_versions").getAsJsonArray().get(0).getAsString();
+            urls[i]    = version.get("files").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
+
+            JsonObject hashesMap = version.getAsJsonArray("files").get(0).getAsJsonObject()
+                    .get("hashes").getAsJsonObject();
+            hashes[i] = (hashesMap == null || hashesMap.get("sha1") == null) ? null
+                    : hashesMap.get("sha1").getAsString();
+
+            // Capture dependencies
+            if (version.has("dependencies") && !version.get("dependencies").isJsonNull()) {
+                JsonArray deps = version.getAsJsonArray("dependencies");
+                java.util.List<String> ids   = new java.util.ArrayList<>();
+                java.util.List<String> types = new java.util.ArrayList<>();
+                for (int j = 0; j < deps.size(); j++) {
+                    JsonObject dep = deps.get(j).getAsJsonObject();
+                    if (dep.has("project_id") && !dep.get("project_id").isJsonNull()) {
+                        ids.add(dep.get("project_id").getAsString());
+                        types.add(dep.has("dependency_type") ? dep.get("dependency_type").getAsString() : "required");
+                    }
+                }
+                depIds[i]   = ids.toArray(new String[0]);
+                depTypes[i] = types.toArray(new String[0]);
+            } else {
+                depIds[i]   = new String[0];
+                depTypes[i] = new String[0];
+            }
+        }
+
+        return new ModDetail(item, names, mcNames, urls, hashes, depIds, depTypes);
     }
 
     @Override

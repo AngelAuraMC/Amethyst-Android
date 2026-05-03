@@ -147,7 +147,7 @@ android {
             // multiDexEnabled = true
             // debuggable = true
             resValue "string", "app_name", "Copper"
-            resValue "string", "app_short_name", "Copper (Debug)"
+            resValue "string", "app_short_name", "Copper"
             resValue 'string', 'storageProviderAuthorities', 'com.maxjubayeryt.copper.gamefolder'
             resValue 'string', 'application_package', 'com.maxjubayeryt.copper'
         }

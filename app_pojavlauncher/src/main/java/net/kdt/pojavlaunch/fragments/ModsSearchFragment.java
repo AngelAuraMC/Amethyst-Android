@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 import android.view.View;
@@ -29,9 +31,10 @@ import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.modloaders.modpacks.ModItemAdapter;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.CommonApi;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.ModpackApi;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.ModrinthApi;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.ModDetail;
+import net.kdt.pojavlaunch.modloaders.modpacks.models.ModItem;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
-import net.kdt.pojavlaunch.modloaders.modpacks.models.Constants;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.profiles.VersionSelectorDialog;
@@ -41,10 +44,14 @@ import net.kdt.pojavlaunch.utils.DownloadUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Searches and installs individual mods (not modpacks) into the current instance's mods folder.
- * Auto-detects MC version from the selected profile's lastVersionId.
+ * Searches and installs individual mods into the current instance's mods folder.
+ * - Version filter: when an MC version is selected, only versions matching it are shown.
+ * - Dependency dialog: shown before download, matching the ModBundle UI.
  */
 public class ModsSearchFragment extends Fragment implements ModItemAdapter.SearchResultCallback {
 
@@ -74,15 +81,14 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
     public ModsSearchFragment() {
         super(R.layout.fragment_mod_search);
         mSearchFilters = new SearchFilters();
-        mSearchFilters.isModpack = false; // individual mods, not modpacks
+        mSearchFilters.isModpack = false;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        // Wrap CommonApi so installation goes to mods folder instead of creating a new instance
-        mModpackApi = new ModsInstallApi(context.getString(R.string.curseforge_api_key));
-        // Auto-detect MC version from current profile
+        mModpackApi = new ModsInstallApi(context.getString(R.string.curseforge_api_key), mSearchFilters);
+        ((ModsInstallApi) mModpackApi).mActivityContext = context;
     }
 
     @Override
@@ -120,10 +126,7 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
         });
 
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
-
-        // Override hint — the layout uses fragment_mod_search which says "Search for modpacks"
         mSearchEditText.setHint(R.string.hint_search_mod);
-
         searchMods(null);
     }
 
@@ -192,26 +195,37 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
         dialog.show();
     }
 
-    // ── Helpers ──────────────────────────────────────────────────────────────
+    // ── ModsInstallApi ────────────────────────────────────────────────────────
 
-    /** Parse MC version from lastVersionId like "fabric-loader-0.16.14-1.21.4" → "1.21.4" or "1.21.4" → "1.21.4" */
-
-    // ── ModsInstallApi ───────────────────────────────────────────────────────
-
-    /**
-     * Wraps CommonApi and overrides handleInstallation to download the mod JAR
-     * directly into the current instance's mods/ folder instead of installing a modpack.
-     */
     private static class ModsInstallApi extends CommonApi {
 
-        ModsInstallApi(String curseforgeApiKey) {
+        private final SearchFilters mFilters;
+        private final ModrinthApi mModrinthApi = new ModrinthApi();
+        private final Handler mMainHandler = new Handler(Looper.getMainLooper());
+        private Context mActivityContext;
+
+        ModsInstallApi(String curseforgeApiKey, SearchFilters filters) {
             super(curseforgeApiKey);
+            mFilters = filters;
+        }
+
+        /**
+         * Override getModDetails to filter versions by the selected MC version.
+         * Only versions matching the filter are shown in the version dropdown.
+         */
+        @Override
+        public ModDetail getModDetails(ModItem item) {
+            if (item.apiSource == net.kdt.pojavlaunch.modloaders.modpacks.models.Constants.SOURCE_MODRINTH) {
+                String filterVer = (mFilters.mcVersion != null && !mFilters.mcVersion.isEmpty())
+                        ? mFilters.mcVersion : null;
+                return mModrinthApi.getModDetails(item, filterVer);
+            }
+            return super.getModDetails(item);
         }
 
         @Override
         public void handleInstallation(Context context, ModDetail modDetail, int selectedVersion) {
             if (modDetail.isModpack) {
-                // Fall back to normal modpack install
                 super.handleInstallation(context, modDetail, selectedVersion);
                 return;
             }
@@ -223,32 +237,131 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
                 return;
             }
 
-            // Determine file name from URL
-            String fileName = url.substring(url.lastIndexOf('/') + 1);
-            if (!fileName.endsWith(".jar")) fileName += ".jar";
-            // Strip query params if present
-            if (fileName.contains("?")) fileName = fileName.substring(0, fileName.indexOf('?'));
+            // Extract filename
+            String rawName = url.substring(url.lastIndexOf('/') + 1);
+            if (rawName.contains("?")) rawName = rawName.substring(0, rawName.indexOf('?'));
+            final String fileName = rawName.endsWith(".jar") ? rawName : rawName + ".jar";
 
+            // Check if this version has dependencies
+            String[] depIds   = (modDetail.versionDependencyIds   != null) ? modDetail.versionDependencyIds[selectedVersion]   : null;
+            String[] depTypes = (modDetail.versionDependencyTypes != null) ? modDetail.versionDependencyTypes[selectedVersion] : null;
+
+            if (depIds == null || depIds.length == 0) {
+                // No deps — download directly
+                downloadMod(context, url, fileName, new String[0], new String[0]);
+                return;
+            }
+
+            // Fetch project names for all deps, then show dialog
+            String[] labels = new String[depIds.length];
+            final boolean[] checkedDefaults = new boolean[depIds.length];
+            AtomicInteger remaining = new AtomicInteger(depIds.length);
+
+            for (int i = 0; i < depIds.length; i++) {
+                final int idx = i;
+                final String type = (depTypes != null && idx < depTypes.length) ? depTypes[idx] : "required";
+                final String prefix = "required".equals(type) ? "Required: " : "Optional: ";
+                checkedDefaults[idx] = "required".equals(type);
+
+                final String projectId = depIds[idx];
+                PojavApplication.sExecutorService.execute(() -> {
+                    // Fetch project name from Modrinth
+                    String name = fetchProjectName(projectId);
+                    labels[idx] = prefix + (name != null ? name : projectId);
+                    if (remaining.decrementAndGet() == 0) {
+                        mMainHandler.post(() -> showDepsDialog(context, url, fileName,
+                                depIds, depTypes, labels, checkedDefaults));
+                    }
+                });
+            }
+        }
+
+        private void showDepsDialog(Context context, String url, String fileName,
+                                    String[] depIds, String[] depTypes,
+                                    String[] labels, boolean[] checkedDefaults) {
+            // context here is getApplicationContext() from ModItemAdapter — no window token.
+            // Use the stored Activity reference instead.
+            Context dialogCtx = mActivityContext != null ? mActivityContext : context;
+            boolean[] selected = checkedDefaults.clone();
+
+            new AlertDialog.Builder(dialogCtx)
+                    .setTitle(R.string.mod_deps_title)
+                    .setMultiChoiceItems(labels, selected,
+                            (dialog, which, isChecked) -> selected[which] = isChecked)
+                    .setPositiveButton(R.string.mod_deps_install_selected, (d, w) -> {
+                        List<String> selectedIds = new ArrayList<>();
+                        for (int i = 0; i < depIds.length; i++) {
+                            if (selected[i]) selectedIds.add(depIds[i]);
+                        }
+                        downloadMod(context, url, fileName,
+                                selectedIds.toArray(new String[0]), depTypes);
+                    })
+                    .setNeutralButton(R.string.mod_deps_install_without,
+                            (d, w) -> downloadMod(context, url, fileName, new String[0], new String[0]))
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+        }
+
+        private void downloadMod(Context context, String url, String fileName,
+                                  String[] depIds, String[] depTypes) {
             File modsDir = getModsDir();
             if (!modsDir.exists()) modsDir.mkdirs();
-            File destFile = new File(modsDir, fileName);
 
-            String finalFileName = fileName;
             ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, 0, R.string.global_waiting);
             PojavApplication.sExecutorService.execute(() -> {
                 try {
-                    DownloadUtils.downloadFile(url, destFile);
+                    // Download main mod
+                    DownloadUtils.downloadFile(url, new File(modsDir, fileName));
+
+                    // Download selected dependencies
+                    for (String depId : depIds) {
+                        if (depId == null || depId.isEmpty()) continue;
+                        downloadDependency(depId, modsDir);
+                    }
+
                     ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
                     Tools.runOnUiThread(() ->
-                        Toast.makeText(context,
-                            context.getString(R.string.mod_install_success, finalFileName),
-                            Toast.LENGTH_LONG).show()
-                    );
+                            Toast.makeText(context,
+                                    context.getString(R.string.mod_install_success, fileName),
+                                    Toast.LENGTH_LONG).show());
                 } catch (Exception e) {
                     ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
                     Tools.showErrorRemote(context, R.string.modpack_install_download_failed, e);
                 }
             });
+        }
+
+        private void downloadDependency(String projectId, File modsDir) {
+            // Fetch latest version for the current MC version/loader filter
+            try {
+                String filterVer = (mFilters.mcVersion != null && !mFilters.mcVersion.isEmpty())
+                        ? mFilters.mcVersion : "";
+                ModItem depItem = new ModItem(
+                        net.kdt.pojavlaunch.modloaders.modpacks.models.Constants.SOURCE_MODRINTH,
+                        false, projectId, projectId, "", "");
+                ModDetail depDetail = mModrinthApi.getModDetails(depItem, filterVer.isEmpty() ? null : filterVer);
+                if (depDetail == null || depDetail.versionUrls == null || depDetail.versionUrls.length == 0) return;
+
+                String depUrl = depDetail.versionUrls[0];
+                String depName = depUrl.substring(depUrl.lastIndexOf('/') + 1);
+                if (depName.contains("?")) depName = depName.substring(0, depName.indexOf('?'));
+                if (!depName.endsWith(".jar")) depName += ".jar";
+
+                DownloadUtils.downloadFile(depUrl, new File(modsDir, depName));
+            } catch (Exception e) {
+                Log.w(TAG, "Failed to download dependency " + projectId + ": " + e.getMessage());
+            }
+        }
+
+        private String fetchProjectName(String projectId) {
+            try {
+                net.kdt.pojavlaunch.modloaders.modpacks.api.ApiHandler handler =
+                        new net.kdt.pojavlaunch.modloaders.modpacks.api.ApiHandler("https://api.modrinth.com/v2");
+                com.google.gson.JsonObject obj = handler.get("project/" + projectId,
+                        com.google.gson.JsonObject.class);
+                if (obj != null && obj.has("title")) return obj.get("title").getAsString();
+            } catch (Exception ignored) {}
+            return null;
         }
 
         private static File getModsDir() {
@@ -258,9 +371,7 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
                 if (key != null && !key.isEmpty()) {
                     LauncherProfiles.load();
                     MinecraftProfile profile = LauncherProfiles.mainProfileJson.profiles.get(key);
-                    if (profile != null) {
-                        return new File(Tools.getGameDirPath(profile), "mods");
-                    }
+                    if (profile != null) return new File(Tools.getGameDirPath(profile), "mods");
                 }
             } catch (Exception ignored) {}
             return new File(Tools.DIR_GAME_NEW, "mods");

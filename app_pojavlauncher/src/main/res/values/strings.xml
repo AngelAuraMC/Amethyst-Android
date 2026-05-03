@@ -521,4 +521,7 @@
     <string name="multirt_no_internet">Failed to download, check your internet connection.</string>
     <string name="global_installing">Installing…</string>
 
+    <string name="mod_deps_title">Select dependencies to install</string>
+    <string name="mod_deps_install_selected">Install selected</string>
+    <string name="mod_deps_install_without">Install without deps</string>
 </resources>
