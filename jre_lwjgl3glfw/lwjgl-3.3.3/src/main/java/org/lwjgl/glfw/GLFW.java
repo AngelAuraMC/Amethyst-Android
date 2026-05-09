@@ -522,10 +522,13 @@ public class GLFW
     private static final String PROP_WINDOW_HEIGHT= "glfwstub.windowHeight";
     public static long mainContext = 0;
     private static long gamepadDataPointer;
-
+    private static native void nativeInitializeGLFWNativeBridge();
     static {
         try {
+            // Mods like LWJGL3ify have more of a chance of overriding the other classes so
+            // lets just load it here again just to be safe.
             System.loadLibrary("pojavexec");
+            nativeInitializeGLFWNativeBridge();
         } catch (UnsatisfiedLinkError e) {
             e.printStackTrace();
         }

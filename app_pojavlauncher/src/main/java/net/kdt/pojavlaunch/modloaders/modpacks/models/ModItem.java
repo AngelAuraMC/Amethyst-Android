@@ -8,6 +8,8 @@ public class ModItem extends ModSource {
     public String title;
     public String description;
     public String imageUrl;
+    /** True if the mod author blocked third-party distribution (CF allowModDistribution=false) */
+    public boolean isRestricted;
 
     public ModItem(int apiSource, boolean isModpack, String id, String title, String description, String imageUrl) {
         this.apiSource = apiSource;

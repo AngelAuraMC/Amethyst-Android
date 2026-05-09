@@ -33,7 +33,7 @@ public class ModDetail extends ModItem {
 
         // Add the mc version to the version model
         for (int i=0; i<versionNames.length; i++){
-            if (!versionNames[i].contains(mcVersionNames[i]))
+            if (mcVersionNames[i] != null && !versionNames[i].contains(mcVersionNames[i]))
                 versionNames[i] += " - " + mcVersionNames[i];
         }
     }
@@ -44,7 +44,7 @@ public class ModDetail extends ModItem {
         return "ModDetail{" +
                 "versionNames=" + Arrays.toString(versionNames) +
                 ", mcVersionNames=" + Arrays.toString(mcVersionNames) +
-                ", versionIds=" + Arrays.toString(versionUrls) +
+                ", versionUrls=" + Arrays.toString(versionUrls) +
                 ", id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +

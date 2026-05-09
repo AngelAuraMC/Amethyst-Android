@@ -78,16 +78,17 @@ public class CurseforgeApi implements ModpackApi{
             JsonElement allowModDistribution = dataElement.get("allowModDistribution");
             // Gson automatically casts null to false, which leans to issues
             // So, only check the distribution flag if it is non-null
-            if(!allowModDistribution.isJsonNull() && !allowModDistribution.getAsBoolean()) {
-                Log.i("CurseforgeApi", "Skipping modpack "+dataElement.get("name").getAsString() + " because curseforge sucks");
-                continue;
-            }
+            boolean restricted = !allowModDistribution.isJsonNull() && !allowModDistribution.getAsBoolean();
+            JsonObject logo = dataElement.getAsJsonObject("logo");
+            String thumbnailUrl = (logo != null && logo.has("thumbnailUrl") && !logo.get("thumbnailUrl").isJsonNull())
+                    ? logo.get("thumbnailUrl").getAsString() : "";
             ModItem modItem = new ModItem(Constants.SOURCE_CURSEFORGE,
                     searchFilters.isModpack,
                     dataElement.get("id").getAsString(),
                     dataElement.get("name").getAsString(),
                     dataElement.get("summary").getAsString(),
-                    dataElement.getAsJsonObject("logo").get("thumbnailUrl").getAsString());
+                    thumbnailUrl);
+            modItem.isRestricted = restricted;
             modItemList.add(modItem);
         }
         if(curseforgeSearchResult == null) curseforgeSearchResult = new CurseforgeSearchResult();
@@ -100,6 +101,14 @@ public class CurseforgeApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
+        // Short-circuit for restricted mods — no point fetching versions
+        if (item.isRestricted) {
+            return new ModDetail(item,
+                    new String[]{"Blocked by the author!"},
+                    new String[]{null},
+                    new String[]{null},
+                    new String[]{null});
+        }
         ArrayList<JsonObject> allModDetails = new ArrayList<>();
         int index = 0;
         while(index != CURSEFORGE_PAGINATION_END_REACHED &&
@@ -108,6 +117,26 @@ public class CurseforgeApi implements ModpackApi{
         }
         if(index == CURSEFORGE_PAGINATION_ERROR) return null;
         int length = allModDetails.size();
+
+        // Check if ALL versions have null downloadUrl (fully restricted mod)
+        boolean allRestricted = length > 0;
+        for (int i = 0; i < length; i++) {
+            JsonElement url = allModDetails.get(i).get("downloadUrl");
+            if (url != null && !url.isJsonNull()) {
+                allRestricted = false;
+                break;
+            }
+        }
+        if (allRestricted || length == 0) {
+            // All versions restricted - return a ModDetail with one entry that signals this.
+            // The version name shown in spinner makes it clear, tapping Install shows CF dialog.
+            return new ModDetail(item,
+                    new String[]{"Blocked by the author! By clicking the install button it will open the CurseForge page."},
+                    new String[]{null},
+                    new String[]{null},
+                    new String[]{null});
+        }
+
         String[] versionNames = new String[length];
         String[] mcVersionNames = new String[length];
         String[] versionUrls = new String[length];
@@ -118,11 +147,7 @@ public class CurseforgeApi implements ModpackApi{
 
             JsonElement downloadUrl = modDetail.get("downloadUrl");
             if (downloadUrl == null || downloadUrl.isJsonNull()) {
-                // CF restricts direct download for some mods — build edge CDN URL instead
-                int fileId = modDetail.get("id").getAsInt();
-                String fileName = modDetail.get("fileName").getAsString();
-                versionUrls[i] = String.format("https://edge.forgecdn.net/files/%s/%s/%s",
-                        fileId / 1000, fileId % 1000, fileName);
+                versionUrls[i] = null;
             } else {
                 versionUrls[i] = downloadUrl.getAsString();
             }

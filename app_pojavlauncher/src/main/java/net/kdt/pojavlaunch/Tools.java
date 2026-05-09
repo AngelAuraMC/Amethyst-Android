@@ -696,21 +696,44 @@ public final class Tools {
 
     public static String[] getMinecraftJVMArgs(String versionName, File gameDir) {
         JMinecraftVersionList.Version versionInfo = Tools.getVersionInfo(versionName, true);
-        // Parse Forge 1.17+ additional JVM Arguments
-        if (versionInfo.inheritsFrom == null || versionInfo.arguments == null || versionInfo.arguments.jvm == null) {
-            return new String[0];
-        }
 
         Map<String, String> varArgMap = new ArrayMap<>();
         varArgMap.put("classpath_separator", ":");
         varArgMap.put("library_directory", DIR_HOME_LIBRARY);
         varArgMap.put("version_name", versionInfo.id);
-        varArgMap.put("natives_directory", Tools.NATIVE_LIB_DIR);
+        varArgMap.put("natives_directory", Tools.DIR_CACHE.getAbsolutePath());
 
         List<String> minecraftArgs = new ArrayList<>();
-        if (versionInfo.arguments != null) {
+        if (versionInfo.arguments.jvm != null) {
             for (Object arg : versionInfo.arguments.jvm) {
                 if (arg instanceof String) {
+                    // These are defined later on
+                    if (((String) arg).contains("java.library.path")) {
+                        continue;
+                    }
+                    if (arg.equals("-cp")) {
+                        continue;
+                    }
+                    if (arg.equals("${classpath}")){
+                        continue;
+                    }
+                    // Should fix Forge 1.17.1-37.0.12 and older from crashing
+                    // Fixed in forge on https://github.com/MinecraftForge/MinecraftForge/pull/7919
+                    // Released as Forge 1.17.1-37.0.13 in https://maven.minecraftforge.net/net/minecraftforge/forge/1.17.1-37.0.13/forge-1.17.1-37.0.13-changelog.txt
+                    // yes this duplicates it, it's fine.
+                    // FIXME: Workaround old bootstraplauncher <0.1.17 buggy behaviour. See FCL workaround
+                    //  https://github.com/FCL-Team/FoldCraftLauncher/blob/00e96bcf8ddc8a550e9aba6091a73d5bee973b54/FCLCore/src/main/java/com/tungsten/fclcore/download/MaintainTask.java#L198-L200
+                    if (((String) arg).startsWith("-DignoreList=")){
+                        minecraftArgs.add(arg+",${version_name}.jar");
+                        continue;
+                    }
+
+                    // TODO: Implement adding launcher brand and version
+                    if (((String) arg).contains("minecraft.launcher.brand") ||
+                        ((String) arg).contains("minecraft.launcher.version")) {
+                        continue;
+                    }
+
                     minecraftArgs.add((String) arg);
                 } //TODO: implement (?maybe?)
             }
@@ -800,7 +823,7 @@ public final class Tools {
             library.downloads.artifact.path != null)
             return library.downloads.artifact.path;
         String[] libInfos = library.name.split(":");
-        return libInfos[0].replaceAll("\\.", "/") + "/" + libInfos[1] + "/" + libInfos[2] + "/" + libInfos[1] + "-" + libInfos[2] + ".jar";
+        return libInfos[0].replaceAll("\\.", "/") + "/" + libInfos[1] + "/" + libInfos[2] + "/" + libInfos[1] + "-" + libInfos[2] + (libInfos.length == 4 ? "-" + libInfos[3] : "") + ".jar";
     }
 
     private static String getLibClasspath(JMinecraftVersionList.Version info){
@@ -823,9 +846,13 @@ public final class Tools {
         String internalLwjglVersion = iLwjglVersion >= 341 ? "3.4.1" : "3.3.3";
         File lwjgl3Folder = new File(Tools.DIR_GAME_HOME, "lwjgl3/"+internalLwjglVersion);
         String lwjglCore = lwjgl3Folder.getAbsolutePath() + "/lwjgl.jar";
+        String lwjglMerged = lwjgl3Folder.getAbsolutePath() + "/lwjgl-"+internalLwjglVersion+"-merged-modules";
         String lwjglxFile = lwjgl3Folder + "/lwjgl-lwjglx.jar";
 
+
         launchClasspath.append(lwjglCore).append(":");
+        // 2nd in priority in case we need to merge lwjgl.jar again for testing
+        launchClasspath.append(lwjglMerged).append(":");
 
         File[] lwjglModules = lwjgl3Folder.listFiles(pathname ->
                 pathname.getName().endsWith(".jar") &&

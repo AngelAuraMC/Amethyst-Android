@@ -35,6 +35,7 @@ import net.kdt.pojavlaunch.modloaders.modpacks.api.ModrinthApi;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.ModDetail;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.ModItem;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
+import net.kdt.pojavlaunch.modloaders.modpacks.models.Constants;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.profiles.VersionSelectorDialog;
@@ -231,6 +232,27 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
             }
 
             String url = modDetail.versionUrls[selectedVersion];
+
+            // Check if this is a CF-restricted mod using the flag set during search
+            boolean isCfRestricted = modDetail.apiSource == Constants.SOURCE_CURSEFORGE
+                    && (modDetail.isRestricted || url == null || url.isEmpty());
+
+            if (isCfRestricted) {
+                // Show dialog directing user to download from CurseForge website
+                String cfUrl = "https://www.curseforge.com/minecraft/mc-mods/" + modDetail.id;
+                Context dialogCtx = mActivityContext != null ? mActivityContext : context;
+                mMainHandler.post(() ->
+                    new AlertDialog.Builder(dialogCtx)
+                        .setTitle(modDetail.title)
+                        .setMessage("This mod restricts third-party downloads.\n\nDownload it manually from CurseForge and place it in your mods folder:\n\n" + cfUrl)
+                        .setPositiveButton("Open CurseForge", (d, w) ->
+                            Tools.openURL((android.app.Activity) dialogCtx, cfUrl))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show()
+                );
+                return;
+            }
+
             if (url == null || url.isEmpty()) {
                 Tools.showErrorRemote(context, R.string.modpack_install_download_failed,
                         new IOException("No download URL available for this mod"));
