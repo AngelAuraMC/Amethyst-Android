@@ -238,8 +238,9 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
                     && (modDetail.isRestricted || url == null || url.isEmpty());
 
             if (isCfRestricted) {
-                // Show dialog directing user to download from CurseForge website
-                String cfUrl = "https://www.curseforge.com/minecraft/mc-mods/" + modDetail.id;
+                String cfUrl = (modDetail.websiteUrl != null && !modDetail.websiteUrl.isEmpty())
+                        ? modDetail.websiteUrl
+                        : "https://www.curseforge.com/minecraft/mc-mods/" + modDetail.id;
                 Context dialogCtx = mActivityContext != null ? mActivityContext : context;
                 mMainHandler.post(() ->
                     new AlertDialog.Builder(dialogCtx)

@@ -79,6 +79,12 @@ public class CurseforgeApi implements ModpackApi{
             // Gson automatically casts null to false, which leans to issues
             // So, only check the distribution flag if it is non-null
             boolean restricted = !allowModDistribution.isJsonNull() && !allowModDistribution.getAsBoolean();
+            // For modpacks, skip restricted entries entirely (same as before)
+            // For individual mods, keep them so we can show the CF website dialog
+            if (restricted && searchFilters.isModpack) {
+                Log.i("CurseforgeApi", "Skipping modpack "+dataElement.get("name").getAsString() + " because curseforge sucks");
+                continue;
+            }
             JsonObject logo = dataElement.getAsJsonObject("logo");
             String thumbnailUrl = (logo != null && logo.has("thumbnailUrl") && !logo.get("thumbnailUrl").isJsonNull())
                     ? logo.get("thumbnailUrl").getAsString() : "";
@@ -89,6 +95,16 @@ public class CurseforgeApi implements ModpackApi{
                     dataElement.get("summary").getAsString(),
                     thumbnailUrl);
             modItem.isRestricted = restricted;
+            // Capture the mod page URL from CF API for use in restriction dialog
+            JsonObject links = dataElement.getAsJsonObject("links");
+            if (links != null && links.has("websiteUrl") && !links.get("websiteUrl").isJsonNull()) {
+                modItem.websiteUrl = links.get("websiteUrl").getAsString();
+            } else {
+                // Fallback using slug if available, otherwise numeric id
+                String slug = dataElement.has("slug") && !dataElement.get("slug").isJsonNull()
+                        ? dataElement.get("slug").getAsString() : modItem.id;
+                modItem.websiteUrl = "https://www.curseforge.com/minecraft/mc-mods/" + slug;
+            }
             modItemList.add(modItem);
         }
         if(curseforgeSearchResult == null) curseforgeSearchResult = new CurseforgeSearchResult();
