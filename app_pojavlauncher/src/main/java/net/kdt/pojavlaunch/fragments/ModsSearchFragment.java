@@ -175,22 +175,57 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
             TextView mSelectedVersion = dialog.findViewById(R.id.search_mod_selected_mc_version_textview);
             Button mSelectVersionButton = dialog.findViewById(R.id.search_mod_mc_version_button);
             Button mApplyButton = dialog.findViewById(R.id.search_mod_apply_filters);
+            android.widget.Spinner mLoaderSpinner = dialog.findViewById(R.id.search_mod_loader_spinner);
 
             assert mSelectedVersion != null;
             assert mSelectVersionButton != null;
             assert mApplyButton != null;
 
-            mSelectVersionButton.setOnClickListener(v ->
-                    VersionSelectorDialog.open(v.getContext(), true,
-                            (id, snapshot) -> mSelectedVersion.setText(id)));
+            // Set up loader spinner
+            if (mLoaderSpinner != null) {
+                String[] loaderLabels = {"Any loader", "Fabric", "Forge", "Quilt", "NeoForge"};
+                final String[] loaderValues = {"", "fabric", "forge", "quilt", "neoforge"};
+                android.widget.ArrayAdapter<String> loaderAdapter = new android.widget.ArrayAdapter<>(
+                        requireContext(), android.R.layout.simple_spinner_item, loaderLabels);
+                loaderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                mLoaderSpinner.setAdapter(loaderAdapter);
 
-            mSelectedVersion.setText(mSearchFilters.mcVersion);
+                // Restore current selection
+                String currentLoader = mSearchFilters.modLoader != null ? mSearchFilters.modLoader : "";
+                for (int i = 0; i < loaderValues.length; i++) {
+                    if (loaderValues[i].equals(currentLoader)) {
+                        mLoaderSpinner.setSelection(i);
+                        break;
+                    }
+                }
 
-            mApplyButton.setOnClickListener(v -> {
-                mSearchFilters.mcVersion = mSelectedVersion.getText().toString();
-                searchMods(mSearchEditText.getText().toString());
-                dialogInterface.dismiss();
-            });
+                mSelectVersionButton.setOnClickListener(v ->
+                        VersionSelectorDialog.open(v.getContext(), true,
+                                (id, snapshot) -> mSelectedVersion.setText(id)));
+
+                mSelectedVersion.setText(mSearchFilters.mcVersion);
+
+                mApplyButton.setOnClickListener(v -> {
+                    mSearchFilters.mcVersion = mSelectedVersion.getText().toString();
+                    int pos = mLoaderSpinner.getSelectedItemPosition();
+                    mSearchFilters.modLoader = loaderValues[pos];
+                    searchMods(mSearchEditText.getText().toString());
+                    dialogInterface.dismiss();
+                });
+            } else {
+                // Fallback if spinner view not found
+                mSelectVersionButton.setOnClickListener(v ->
+                        VersionSelectorDialog.open(v.getContext(), true,
+                                (id, snapshot) -> mSelectedVersion.setText(id)));
+
+                mSelectedVersion.setText(mSearchFilters.mcVersion);
+
+                mApplyButton.setOnClickListener(v -> {
+                    mSearchFilters.mcVersion = mSelectedVersion.getText().toString();
+                    searchMods(mSearchEditText.getText().toString());
+                    dialogInterface.dismiss();
+                });
+            }
         });
 
         dialog.show();
@@ -219,7 +254,9 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
             if (item.apiSource == net.kdt.pojavlaunch.modloaders.modpacks.models.Constants.SOURCE_MODRINTH) {
                 String filterVer = (mFilters.mcVersion != null && !mFilters.mcVersion.isEmpty())
                         ? mFilters.mcVersion : null;
-                return mModrinthApi.getModDetails(item, filterVer);
+                String filterLoader = (mFilters.modLoader != null && !mFilters.modLoader.isEmpty())
+                        ? mFilters.modLoader : null;
+                return mModrinthApi.getModDetails(item, filterVer, filterLoader);
             }
             return super.getModDetails(item);
         }
@@ -359,10 +396,12 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
             try {
                 String filterVer = (mFilters.mcVersion != null && !mFilters.mcVersion.isEmpty())
                         ? mFilters.mcVersion : "";
+                String filterLoader = (mFilters.modLoader != null && !mFilters.modLoader.isEmpty())
+                        ? mFilters.modLoader : null;
                 ModItem depItem = new ModItem(
                         net.kdt.pojavlaunch.modloaders.modpacks.models.Constants.SOURCE_MODRINTH,
                         false, projectId, projectId, "", "");
-                ModDetail depDetail = mModrinthApi.getModDetails(depItem, filterVer.isEmpty() ? null : filterVer);
+                ModDetail depDetail = mModrinthApi.getModDetails(depItem, filterVer.isEmpty() ? null : filterVer, filterLoader);
                 if (depDetail == null || depDetail.versionUrls == null || depDetail.versionUrls.length == 0) return;
 
                 String depUrl = depDetail.versionUrls[0];

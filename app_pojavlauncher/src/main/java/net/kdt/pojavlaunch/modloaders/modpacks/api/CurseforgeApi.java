@@ -64,6 +64,17 @@ public class CurseforgeApi implements ModpackApi{
         params.put("sortOrder", "desc");
         if(searchFilters.mcVersion != null && !searchFilters.mcVersion.isEmpty())
             params.put("gameVersion", searchFilters.mcVersion);
+        if(searchFilters.modLoader != null && !searchFilters.modLoader.isEmpty()) {
+            // CF modLoaderType: 1=Forge, 4=Fabric, 5=Quilt, 6=NeoForge
+            int modLoaderType = 0;
+            switch(searchFilters.modLoader.toLowerCase()) {
+                case "forge":    modLoaderType = 1; break;
+                case "fabric":   modLoaderType = 4; break;
+                case "quilt":    modLoaderType = 5; break;
+                case "neoforge": modLoaderType = 6; break;
+            }
+            if(modLoaderType != 0) params.put("modLoaderType", modLoaderType);
+        }
         if(previousPageResult != null)
             params.put("index", curseforgeSearchResult.previousOffset);
 

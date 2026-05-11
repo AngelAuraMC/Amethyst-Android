@@ -52,6 +52,8 @@ public class ModrinthApi implements ModpackApi{
         facetString.append(String.format("[\"project_type:%s\"]", searchFilters.isModpack ? "modpack" : "mod"));
         if(searchFilters.mcVersion != null && !searchFilters.mcVersion.isEmpty())
             facetString.append(String.format(",[\"versions:%s\"]", searchFilters.mcVersion));
+        if(searchFilters.modLoader != null && !searchFilters.modLoader.isEmpty())
+            facetString.append(String.format(",[\"categories:%s\"]", searchFilters.modLoader));
         facetString.append("]");
         params.put("facets", facetString.toString());
         params.put("query", searchFilters.name);
@@ -86,14 +88,18 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
-        return getModDetails(item, null);
+        return getModDetails(item, null, null);
     }
 
     public ModDetail getModDetails(ModItem item, String filterMcVersion) {
+        return getModDetails(item, filterMcVersion, null);
+    }
+
+    public ModDetail getModDetails(ModItem item, String filterMcVersion, String filterLoader) {
         JsonArray response = mApiHandler.get(String.format("project/%s/version", item.id), JsonArray.class);
         if(response == null) return null;
 
-        // Collect versions, optionally filtering by MC version
+        // Collect versions, optionally filtering by MC version and/or loader
         java.util.List<JsonObject> versions = new java.util.ArrayList<>();
         for (int i = 0; i < response.size(); i++) {
             JsonObject v = response.get(i).getAsJsonObject();
@@ -102,6 +108,17 @@ public class ModrinthApi implements ModpackApi{
                 boolean matches = false;
                 for (int j = 0; j < gameVersions.size(); j++) {
                     if (filterMcVersion.equals(gameVersions.get(j).getAsString())) {
+                        matches = true;
+                        break;
+                    }
+                }
+                if (!matches) continue;
+            }
+            if (filterLoader != null && !filterLoader.isEmpty()) {
+                JsonArray loaders = v.get("loaders").getAsJsonArray();
+                boolean matches = false;
+                for (int j = 0; j < loaders.size(); j++) {
+                    if (filterLoader.equalsIgnoreCase(loaders.get(j).getAsString())) {
                         matches = true;
                         break;
                     }
