@@ -25,6 +25,10 @@ import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.modloaders.modpacks.ModItemAdapter;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.CommonApi;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.ModpackApi;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.ModrinthApi;
+import net.kdt.pojavlaunch.modloaders.modpacks.models.Constants;
+import net.kdt.pojavlaunch.modloaders.modpacks.models.ModDetail;
+import net.kdt.pojavlaunch.modloaders.modpacks.models.ModItem;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
 import net.kdt.pojavlaunch.profiles.VersionSelectorDialog;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
@@ -63,7 +67,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        modpackApi = new CommonApi(context.getString(R.string.curseforge_api_key));
+        modpackApi = new ModpackSearchApi(context.getString(R.string.curseforge_api_key), mSearchFilters);
     }
 
     @Override
@@ -201,5 +205,34 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         });
 
         dialog.show();
+    }
+
+    // ── ModpackSearchApi ──────────────────────────────────────────────────────
+
+    private static class ModpackSearchApi extends CommonApi {
+        private final SearchFilters mFilters;
+        private final ModrinthApi mModrinthApi = new ModrinthApi();
+
+        ModpackSearchApi(String curseforgeApiKey, SearchFilters filters) {
+            super(curseforgeApiKey);
+            mFilters = filters;
+        }
+
+        /**
+         * Override getModDetails so the version dropdown only shows versions
+         * matching the selected MC version and loader filter.
+         */
+        @Override
+        public ModDetail getModDetails(ModItem item) {
+            if (item.apiSource == Constants.SOURCE_MODRINTH) {
+                String filterVer = (mFilters.mcVersion != null && !mFilters.mcVersion.isEmpty())
+                        ? mFilters.mcVersion : null;
+                String filterLoader = (mFilters.modLoader != null && !mFilters.modLoader.isEmpty())
+                        ? mFilters.modLoader : null;
+                return mModrinthApi.getModDetails(item, filterVer, filterLoader);
+            }
+            // CurseForge: delegate normally (CF search already filters by version/loader)
+            return super.getModDetails(item);
+        }
     }
 }
