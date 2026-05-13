@@ -127,6 +127,8 @@ void updateWindowSize(void* window) {
 
 void pojavPumpEvents(void* window) {
     if(pojav_environ->shouldUpdateMouse) {
+        // Floored because some anticheats (Hypixel) don't like the input being too accurate.
+        // Actual GLFW actually uses doubles so this is totally wrong on their end.
         pojav_environ->GLFW_invoke_CursorPos(window, floor(pojav_environ->cursorX),
                                              floor(pojav_environ->cursorY));
     }
@@ -389,8 +391,10 @@ void critical_send_cursor_pos(jfloat x, jfloat y) {
         }
 
         if (!pojav_environ->isUseStackQueueCall) {
+            // Truncated by int cast in LWJGLX
             pojav_environ->GLFW_invoke_CursorPos((void*) pojav_environ->showingWindow, (double) (x), (double) (y));
         } else {
+            // Floored in pojavPumpEvents
             pojav_environ->cursorX = x;
             pojav_environ->cursorY = y;
         }
