@@ -1,6 +1,7 @@
 package net.kdt.pojavlaunch.fragments;
 
 import static net.kdt.pojavlaunch.Tools.dialogOnUiThread;
+import static net.kdt.pojavlaunch.Tools.hasMods;
 import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
 import static net.kdt.pojavlaunch.Tools.hasOnlineProfile;
 import static net.kdt.pojavlaunch.Tools.openPath;
@@ -27,12 +28,14 @@ import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
+import net.kdt.pojavlaunch.modloaders.LWJGL3ifyUtils;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.io.File;
+import java.util.List;
 
 public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";
@@ -80,8 +83,13 @@ public class MainMenuFragment extends Fragment {
                         .create();
                 sodiumWarningDialog.show();
             } else ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
-
-
+//            if (hasMods("lwjgl3ify-3")) {
+//                Tools.dialogOnUiThread(requireActivity(), "Error!", "This version of LWJGL3ify is unsupported and won't work!");
+//            }
+//            List<File> f = Tools.getMods("lwjgl3ify-2");
+//            if(!f.isEmpty()) {
+//
+//            }
         });
 
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));

@@ -12,12 +12,16 @@ public class ModDetail extends ModItem {
     public String[] versionUrls;
     /* SHA 1 hashes, null if a hash is unavailable */
     public String[] versionHashes;
-    public ModDetail(ModItem item, String[] versionNames, String[] mcVersionNames, String[] versionUrls, String[] hashes) {
+    public String[] versionIds;
+    public Dependencies[][] dependencies;
+    public ModDetail(ModItem item, String[] versionNames, String[] versionIds, String[] mcVersionNames, String[] versionUrls, String[] hashes, Dependencies[][] dependencies) {
         super(item.apiSource, item.isModpack, item.id, item.title, item.description, item.imageUrl);
         this.versionNames = versionNames;
         this.mcVersionNames = mcVersionNames;
+        this.versionIds = versionIds;
         this.versionUrls = versionUrls;
         this.versionHashes = hashes;
+        this.dependencies = dependencies;
 
         // Add the mc version to the version model
         for (int i=0; i<versionNames.length; i++){
@@ -32,7 +36,8 @@ public class ModDetail extends ModItem {
         return "ModDetail{" +
                 "versionNames=" + Arrays.toString(versionNames) +
                 ", mcVersionNames=" + Arrays.toString(mcVersionNames) +
-                ", versionIds=" + Arrays.toString(versionUrls) +
+                ", versionIds=" + Arrays.toString(versionIds) +
+                ", versionUrls=" + Arrays.toString(versionUrls) +
                 ", id='" + id + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
@@ -41,4 +46,17 @@ public class ModDetail extends ModItem {
                 ", isModpack=" + isModpack +
                 '}';
     }
+    public static class Dependencies{
+        public String project_id; // the main id in item.id
+        public String version_id;
+        public String file_name;
+        public String dependency_type;
+        public Dependencies(String project_id, String version_id, String file_name, String dependency_type){
+            this.project_id = project_id;
+            this.version_id = version_id;
+            this.file_name = file_name;
+            this.dependency_type = dependency_type;
+        }
+    }
+
 }

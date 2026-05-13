@@ -280,15 +280,29 @@ public final class Tools {
      * @return Whether or not the .jar is found
      */
     public static boolean hasMods(String... filenames) {
+        return !getMods(filenames).isEmpty();
+    }
+
+    /**
+     * Searches for mod in mods directory of current selected profile
+     * Not case-sensitive
+     * @param filenames Filename(s) of the .jar mod(s)
+     * @return The found mods
+     */
+    public static List<File> getMods(String... filenames) {
         File gameDir = getGameDir();
         File modsDir = new File(gameDir, "mods");
-        File[] modFiles = modsDir.listFiles(file -> file.isFile() && file.getName().endsWith(".jar"));
-        if (modFiles == null) return false;
+        File[] modFiles = modsDir.listFiles(file -> file.isFile() && file.getName().toLowerCase().endsWith(".jar"));
+        if (modFiles == null) return new ArrayList<>();
+        List<File> foundModFiles = new ArrayList<>();
         for (File file : modFiles) {
             for (String filename : filenames)
-                if (file.getName().toLowerCase().contains(filename.toLowerCase())) return true;
+                if (file.getName().toLowerCase().contains(filename.toLowerCase())) {
+                    foundModFiles.add(file);
+                    break;
+                }
         }
-        return false;
+        return foundModFiles;
     }
 
     /**

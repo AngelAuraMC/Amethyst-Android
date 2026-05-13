@@ -508,5 +508,9 @@
     <string name="global_download">Download</string>
     <string name="multirt_no_internet">Failed to download, check your internet connection.</string>
     <string name="global_installing">Installing…</string>
+    <string name="create_lwjgl3ify_profile">Create LWJGL3ify profile</string>
+    <string name="select_lwjgl3ify_version">Select LWJGL3ify version</string>
+    <string name="lwjgl3ify_installer_available_versions">Supported LWJGL3IFY versions</string>
+    <string name="lwjgl3ify_installer_broken_versions">Broken LWJGL3ify versions (SDL)</string>
 
 </resources>

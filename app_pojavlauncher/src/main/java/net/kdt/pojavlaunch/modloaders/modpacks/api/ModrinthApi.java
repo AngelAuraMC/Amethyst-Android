@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.net.Uri;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.kdt.mcgui.ProgressLayout;
 
@@ -16,12 +17,15 @@ import net.kdt.pojavlaunch.modloaders.modpacks.models.ModrinthIndex;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchResult;
 import net.kdt.pojavlaunch.progresskeeper.DownloaderProgressWrapper;
+import net.kdt.pojavlaunch.utils.GsonJsonUtils;
 import net.kdt.pojavlaunch.utils.ZipUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipFile;
 
@@ -86,18 +90,35 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
-
+        fillInMissingModItemData(item);
         JsonArray response = mApiHandler.get(String.format("project/%s/version", item.id), JsonArray.class);
         if(response == null) return null;
         System.out.println(response);
         String[] names = new String[response.size()];
+        String[] ids = new String[response.size()];
         String[] mcNames = new String[response.size()];
         String[] urls = new String[response.size()];
         String[] hashes = new String[response.size()];
+        ModDetail.Dependencies[][] dependencies = new ModDetail.Dependencies[response.size()][];
 
         for (int i=0; i<response.size(); ++i) {
             JsonObject version = response.get(i).getAsJsonObject();
             names[i] = version.get("name").getAsString();
+            ids[i] = version.get("id").getAsString();
+            try {
+                JsonArray dependenciesJsonArray = version.getAsJsonArray("dependencies");
+                dependencies[i] = new ModDetail.Dependencies[dependenciesJsonArray.size()];
+                for (int i1 = 0; i1 < dependenciesJsonArray.size(); ++i1) {
+                    JsonObject obj = dependenciesJsonArray.get(i1).getAsJsonObject();
+                    dependencies[i][i1] = new ModDetail.Dependencies(
+                            GsonJsonUtils.getStringSafe(obj, "project_id"),
+                            GsonJsonUtils.getStringSafe(obj, "version_id"),
+                            GsonJsonUtils.getStringSafe(obj, "file_name"),
+                            GsonJsonUtils.getStringSafe(obj, "dependency_type")
+                    );
+                }
+            } catch (Exception ignored) {}
+
             mcNames[i] = version.get("game_versions").getAsJsonArray().get(0).getAsString();
             urls[i] = version.get("files").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
             // Assume there may not be hashes, in case the API changes
@@ -111,7 +132,25 @@ public class ModrinthApi implements ModpackApi{
             hashes[i] = hashesMap.get("sha1").getAsString();
         }
 
-        return new ModDetail(item, names, mcNames, urls, hashes);
+        return new ModDetail(item, names, ids, mcNames, urls, hashes, dependencies);
+    }
+
+    private void fillInMissingModItemData(ModItem item) {
+        if (!(item.title == null || item.description == null || item.imageUrl == null)) return;
+        JsonObject projectResponse = mApiHandler.get(String.format("project/%s", item.id), JsonObject.class);
+        if (projectResponse == null) return;
+        if (item.title == null) {
+            JsonElement title = projectResponse.get("title");
+            item.title = title != null ? title.getAsString() : "";
+        }
+        if (item.description == null) {
+            JsonElement description = projectResponse.get("description");
+            item.description = description != null ? description.getAsString() : "";
+        }
+        if (item.imageUrl == null) {
+            JsonElement imageUrl = projectResponse.get("icon_url");
+            item.imageUrl = imageUrl != null ? imageUrl.getAsString() : null;
+        }
     }
 
     @Override
