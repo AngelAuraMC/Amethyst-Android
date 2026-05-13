@@ -5,7 +5,6 @@ import static net.kdt.pojavlaunch.prefs.LauncherPreferences.PREF_MOUSE_GRAB_FORC
 
 import android.content.SharedPreferences;
 import android.os.Build;
-import android.util.Log;
 import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +19,8 @@ import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 import org.lwjgl.glfw.CallbackBridge;
+
+import java.util.function.Consumer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChangeListener, View.OnCapturedPointerListener, GrabListener, SharedPreferences.OnSharedPreferenceChangeListener {
@@ -85,28 +86,57 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
     @Override
     public boolean onCapturedPointer(View view, MotionEvent event) {
         checkSameDevice(event.getDevice());
-        // Yes, we actually not only receive relative mouse events here, but also absolute touchpad ones!
-        // Therefore, we need to know when it's a touchpad and when it's a mouse.
-
-        if((event.getSource() & InputDevice.SOURCE_CLASS_TRACKBALL) != 0) {
-            // If the source claims to be a relative device by belonging to the trackball class,
-            // use its coordinates directly.
-            if(mDeviceSupportsRelativeAxis) {
-                // If some OEM decides to do a funny and make an absolute touchpad report itself as
-                // a trackball, we will at least have semi-valid relative positions
-                mVector[0] = event.getAxisValue(MotionEvent.AXIS_RELATIVE_X);
-                mVector[1] = event.getAxisValue(MotionEvent.AXIS_RELATIVE_Y);
-            }else {
-                // Otherwise trust the OS, i guess??
-                mVector[0] = event.getX();
-                mVector[1] = event.getY();
-            }
-        }else {
-            // If it's not a trackball, it's likely a touchpad and needs tracking like a touchscreen.
-            mPointerTracker.trackEvent(event);
-            // The relative position will already be written down into the mVector variable.
+        int axisX, axisY;
+        // Sources can claim to be a relative device by belonging to the trackball class, if so then
+        // we could just use the relative axis directly but some OEMs report absolute touchpads as
+        // trackballs, verify that it gives us relative input with mDeviceSupportsRelativeAxis and
+        // hope whatever relative value it spits out is valid, otherwise, revert to non-relative and
+        // hope the OS does magic
+        if (mDeviceSupportsRelativeAxis) {
+            axisX = MotionEvent.AXIS_RELATIVE_X;
+            axisY = MotionEvent.AXIS_RELATIVE_Y;
+        } else {
+            axisX = MotionEvent.AXIS_X;
+            axisY = MotionEvent.AXIS_Y;
         }
 
+        // Yes, we actually not only receive relative mouse events here, but also absolute touchpad ones!
+        // Therefore, we need to know when it's a touchpad and when it's a mouse.
+        if ((event.getSource() & InputDevice.SOURCE_CLASS_TRACKBALL) != 0){
+            processBatchEvents(event, axisX, axisY, this::processMousePos);
+            mVector[0] = event.getAxisValue(axisX);
+            mVector[1] = event.getAxisValue(axisY);
+            return processAndSendMotionEvent(event);
+        }
+        // If it's not a trackball, it's likely a touchpad and needs tracking like a touchscreen.
+        processBatchEvents(event, MotionEvent.AXIS_X, MotionEvent.AXIS_Y, mPointerTracker::trackEvent);
+        // Touchscreens should never be using relative axis...right? Well it's an easy fix if there's
+        // a bug report!
+        mPointerTracker.trackEvent(event); // This also updates the mVector variable.
+        return processAndSendMotionEvent(event);
+    }
+
+    /**
+     * Android handles high refresh rate mice by batching their movements in between screen refresh.
+     * This basically locks your input hz to what your screen hz is.
+     * Screw that, handle it as the high hz input that it is, to the extent permitted by the rules.
+     * Processes historical batched events one by one, sets mVector, and runs {@code moveCursorWithEvent}.
+     * @param event The MotionEvent
+     * @param axisX The axis identifier for the axis value to retrieve
+     * @param axisY The axis identifier for the axis value to retrieve
+     * @param moveCursorWithEvent Lambda that triggers cursor movement. Runs after mVector update.
+     */
+    private void processBatchEvents(MotionEvent event, int axisX, int axisY, Consumer<MotionEvent> moveCursorWithEvent){
+        // Process batched events first as said in Android docs https://developer.android.com/reference/android/view/MotionEvent#batching
+        for (int h = 0; h < event.getHistorySize(); h++){
+            mVector[0] = event.getHistoricalAxisValue(axisX, h);
+            mVector[1] = event.getHistoricalAxisValue(axisY, h);
+            // All historical values are ACTION_MOVE. This is the lamest part. Damn your rules.
+            moveCursorWithEvent.accept(event);
+        }
+    }
+
+    private void processMousePos(MotionEvent event) {
         if(!CallbackBridge.isGrabbing()) {
             enableTouchpadIfNecessary();
             // Yes, if the user's touchpad is multi-touch we will also receive events for that.
@@ -125,6 +155,10 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
             CallbackBridge.mouseY += (mVector[1] * LauncherPreferences.PREF_SCALE_FACTOR);
             CallbackBridge.sendCursorPos(CallbackBridge.mouseX, CallbackBridge.mouseY);
         }
+    }
+
+    private boolean processAndSendMotionEvent(MotionEvent event) {
+        processMousePos(event);
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_MOVE:
