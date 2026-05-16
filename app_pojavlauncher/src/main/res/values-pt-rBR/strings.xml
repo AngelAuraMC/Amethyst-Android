@@ -47,8 +47,12 @@
     <string name="mcl_setting_subtitle_mousescale">Alterar o tamanho do cursor virtual.</string>
     <string name="mcl_setting_title_javaargs">Argumentos JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Cuidado, isto pode causar falhas no seu jogo caso modificado sem conhecimento.</string>
+    <string name="mcl_setting_title_renderer_subtitle">Configurações específicas do renderizador</string>
     <string name="mcl_setting_category_renderer">Renderizador</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - ( apenas 1.21.4&Lt; rápido)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (todas as versões, rápido)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas as versões, mediano)</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - ( apenas 1.17+, rápido)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - apenas 1.17+</string>
     <string name="mcl_setting_veroption_release">Versões finais</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha antiga</string>
@@ -71,6 +75,7 @@
     <string name="global_select">Selecionar</string>
     <string name="global_retry">Tente novamente</string>
     <string name="global_default">Padrão</string>
+    <string name="global_off">Off</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">Aplicativo/jogo fechou com o código %d, verifique latestlog.txt para mais detalhes.</string>
     <string name="mcn_signal_title">Aplicativo/jogo fechou com o código %d, verifique latestlog.txt para mais detalhes.</string>
@@ -129,6 +134,7 @@
     <string name="mcl_disable_swap_hand_subtitle">Desativa o toque duplo em um item da hotbar para trocá-lo na segunda mão.</string>
     <string name="mcl_setting_title_mousespeed">Velocidade do mouse</string>
     <string name="mcl_setting_subtitle_mousespeed">Altera a velocidade do mouse virtual.</string>
+    <string name="mcl_setting_title_grab_mouse">Usar o cursor virtual</string>
     <string name="customctrl_passthru">Mouse pode atravessar</string>
     <string name="customctrl_swipeable">Deslizável</string>
     <string name="customctrl_absolute_tracking">Movimento absoluto</string>
@@ -138,6 +144,7 @@
     <string name="mcl_memory_allocation_subtitle">Controla o quanto de RAM será disponibilizado para o Minecraft.</string>
     <string name="multirt_runtime_corrupt">Java Runtime corrompido</string>
     <string name="multirt_runtime_incompatiblearch">Arquitetura incompatível: %s</string>
+    <string name="multirt_config_title">Runtimes do Java</string>
     <string name="multirt_config_add">Adicionar nova</string>
     <string name="multirt_title">Gerenciador do Runtime</string>
     <string name="multirt_subtitle">Gerenciar Java VMs instalados.</string>
@@ -183,10 +190,12 @@
     <string name="profiles_latest_release">Última versão</string>
     <string name="profiles_profile_name">Nome</string>
     <string name="global_delete">Excluir</string>
+    <string name="pedit_java_runtime">Runtime do Java</string>
     <string name="pedit_renderer">Renderizador</string>
     <string name="arc_capes_title">Capas da Cosmetica</string>
     <string name="arc_capes_desc">Ativa capas da Cosmetica (anteriormente Arc). Para mais informações visite https://cosmetica.cc. Requer OptiFine.</string>
     <string name="notif_channel_name">Geral</string>
+    <string name="lazy_service_default_title">Serviço em Segundo Plano do MojoLauncher</string>
     <string name="mcl_setting_veroption_installed">Instalado</string>
     <string name="use_global_default">(Usar padrão global)</string>
     <string name="default_control">Controle padrão</string>
@@ -238,6 +247,7 @@
     <string name="version_select_hint">Selecione uma versão</string>
     <string name="forge_dl_progress">Baixando instalador %s</string>
     <string name="forge_dl_searching">Procurando pelo número da versão do Forge</string>
+    <string name="neoforge_dl_searching">Procurando por número da versão para o NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Falha ao carregar a lista de versões!</string>
     <string name="forge_dl_no_installer">Desculpe, mas essa versão do Forge não tem um instalador compatível.</string>
     <string name="forge_dl_select_version">Selecione a versão do Forge</string>
@@ -346,6 +356,25 @@
     <string name="local_login_bad_username_title">Nome de usuário inadequado</string>
     <string name="local_login_bad_username_text">O nome de usuário deve ter entre 3 a 16 caracteres, deve conter somente letras latinas, número de 0 a 9 e sublinhados.</string>
     <string name="quick_setting_title">Configurações rápidas</string>
+    <string name="create_bta_profile">Criar perfil do \"Better Than Adventure!\"</string>
+    <string name="select_bta_version">Selecione versão do \"Better Than Adventure!\"</string>
+    <string name="bta_installer_available_versions">Versões compatíveis do BTA</string>
+    <string name="bta_installer_untested_versions">Versões não testadas do BTA</string>
+    <string name="bta_installer_nightly_versions">Versões teste do BTA</string>
+    <string name="newdl_extracting_native_libraries">Extraindo livrarias nativas (%d/%d)</string>
+    <string name="toast_not_available_demo">Isso não está disponível na versão demo</string>
+    <string name="preference_renderer_mobileglues_settings">Configurações de renderizador do MobileGlues</string>
+    <string name="mg_renderer_glsl_cache">Tamanho máximo do cachê GLSL</string>
+    <string name="mg_renderer_angle">Usar o ANGLE como driver</string>
+    <string name="mg_renderer_title_timerQueryExt">Disabilitar Utilização da GPU no menu F3</string>
+    <string name="mg_renderer_summary_timerQueryExt">Arruma crashes aleatórios quando o F3 está aberto em alguns dispositivos Mali</string>
+    <string name="preference_ANGLE_only">Opções somente para ANGLE</string>
+    <string name="mg_renderer_summary_angleDepthClearFixMode">Apenas afeta o ANGLE, pode afetar o desempenho.</string>
     <string name="preference_experimental_title">Opções experimentais</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Permite que versões antigas do Legacy4J usem o backend SDL</string>
+    <string name="preference_category_SDL_settings">Configurações do SDL</string>
+    <string name="controllableFound">Controllable atualmente possui uma chance aleatória de crashar ao iniciar o jogo. Você pode ou continuar novamente e esperar que o jogo inicie ou use um outro mod como o Controlify.</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (todas as versões, mediano)</string>
+    <string name="sodium_warning_title">Sodium detectado!</string>
     <!--  Make sure the people turning this on can read English.  -->
 </resources>
