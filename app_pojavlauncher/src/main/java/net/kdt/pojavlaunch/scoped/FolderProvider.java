@@ -44,6 +44,7 @@ import java.util.List;
  * - <a href="http://developer.android.com/guide/topics/providers/document-provider.html#43">...</a>
  */
 public class FolderProvider extends DocumentsProvider {
+    private static final List<String> BLOCKED_PACKAGES = List.of("com.dnamobile.modlymodmanager");
 
     private static final String ALL_MIME_TYPES = "*/*";
 
@@ -101,6 +102,8 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryDocument(String documentId, String[] projection) throws FileNotFoundException {
+        if(BLOCKED_PACKAGES.contains(getCallingPackage()))
+            throw new RuntimeException("Unsupported package caller!");
         final MatrixCursor result = new MatrixCursor(projection != null ? projection : DEFAULT_DOCUMENT_PROJECTION);
         // Future-proofing in case if we implement realtime file watching
         result.setNotificationUri(mContentResolver, createUriForDocId(documentId));
@@ -110,6 +113,8 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public Cursor queryChildDocuments(String parentDocumentId, String[] projection, String sortOrder) throws FileNotFoundException {
+        if(BLOCKED_PACKAGES.contains(getCallingPackage()))
+            throw new RuntimeException("Unsupported package caller!");
         final MatrixCursor result = new MatrixCursor(projection != null ? projection : DEFAULT_DOCUMENT_PROJECTION);
         final File parent = getFileForDocId(parentDocumentId);
         final File[] children = parent.listFiles();
@@ -138,9 +143,9 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public boolean onCreate() {
-        if(Tools.checkStorageRoot(getContext())) {
+        if (Tools.checkStorageRoot(getContext())) {
             Tools.initStorageConstants(getContext());
-        }else {
+        } else {
             return false;
         }
         BASE_DIR = new File(Tools.DIR_GAME_HOME);
@@ -151,6 +156,8 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public String createDocument(String parentDocumentId, String mimeType, String displayName) throws FileNotFoundException {
+        if(BLOCKED_PACKAGES.contains(getCallingPackage()))
+            throw new RuntimeException("Unsupported package caller!");
         File newFile = new File(parentDocumentId, displayName);
         int noConflictId = 2;
         while (newFile.exists()) {
