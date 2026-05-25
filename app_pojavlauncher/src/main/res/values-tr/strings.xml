@@ -51,6 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">İşleyiciye özgü ayarlar</string>
     <string name="mcl_setting_category_renderer">İşleyici</string>
     <string name="mcl_setting_renderer_gles2_4">Kutsal GL4ES- (1.21.4&lt; sadece, Hızlı)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Kripton Toplayıcı - (bütün sürümler, hızlı)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tüm sürümler için, orta)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (sadece 1.17+, hızlı)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - sadece 1.17+</string>
@@ -94,7 +95,7 @@
     <string name="control_right">▶</string>
     <string name="control_down">▼</string>
     <string name="control_jump">⬛</string>
-    <string name="control_thirdperson">3rd</string>
+    <string name="control_thirdperson">3.</string>
     <string name="control_listplayers">Tab</string>
     <string name="control_mouse">İmleç</string>
     <string name="control_mouseoff">İmleç: kapalı</string>
