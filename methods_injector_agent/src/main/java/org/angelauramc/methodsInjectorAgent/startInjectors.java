@@ -2,7 +2,7 @@ package org.angelauramc.methodsInjectorAgent;
 
 import org.angelauramc.methodsInjectorAgent.lwjgl2_methods_injector.ALC10Injector;
 import org.angelauramc.methodsInjectorAgent.lwjgl2_methods_injector.ASM5OverrideInjector;
-import org.angelauramc.methodsInjectorAgent.mod_compatibility_injector.VeilImguiOverrideDisable;
+import org.angelauramc.methodsInjectorAgent.mods_compatibility_injector.VeilImguiOverrideDisable;
 
 import java.lang.instrument.Instrumentation;
 
