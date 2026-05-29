@@ -1,10 +1,11 @@
-package org.angelauramc.methodsInjectorAgent.mod_compatibility_injector;
-
+package org.angelauramc.methodsInjectorAgent.mods_compatibility_injector;
+// If you dare call this mod_compatibility_injector old forge will try to load you as a class from
+// a mod. See https://github.com/MinecraftForge/FML/blob/57be417b7c29bb23e152f400752f68f33115915d/common/cpw/mods/fml/common/Loader.java#L66
+// Do not name any package name that gets loaded into classpath starting with "mod_", case-sensitive
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.Instrumentation;
 import java.security.ProtectionDomain;
 
-import org.angelauramc.methodsInjectorAgent.lwjgl2_methods_injector.ALC10Injector;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;

@@ -239,10 +239,12 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
         private final ModrinthApi mModrinthApi = new ModrinthApi();
         private final Handler mMainHandler = new Handler(Looper.getMainLooper());
         private Context mActivityContext;
+        private final net.kdt.pojavlaunch.modloaders.modpacks.api.CurseforgeApi mCurseforgeApi;
 
         ModsInstallApi(String curseforgeApiKey, SearchFilters filters) {
             super(curseforgeApiKey);
             mFilters = filters;
+            mCurseforgeApi = new net.kdt.pojavlaunch.modloaders.modpacks.api.CurseforgeApi(curseforgeApiKey);
         }
 
         /**
@@ -257,6 +259,11 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
                 String filterLoader = (mFilters.modLoader != null && !mFilters.modLoader.isEmpty())
                         ? mFilters.modLoader : null;
                 return mModrinthApi.getModDetails(item, filterVer, filterLoader);
+            }
+            if (item.apiSource == net.kdt.pojavlaunch.modloaders.modpacks.models.Constants.SOURCE_CURSEFORGE) {
+                String filterVer = (mFilters.mcVersion != null && !mFilters.mcVersion.isEmpty())
+                        ? mFilters.mcVersion : null;
+                return mCurseforgeApi.getModDetails(item, filterVer);
             }
             return super.getModDetails(item);
         }

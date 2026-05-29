@@ -116,17 +116,30 @@ public class LauncherActivity extends BaseActivity {
         // Allow starting the add account only from the main menu, should it be moved to fragment itself ?
         if(!(fragment instanceof MainMenuFragment)) return false;
 
-        Tools.swapFragment(this, SelectAuthFragment.class, SelectAuthFragment.TAG, null);
+        // In landscape two-pane mode, load into right pane; otherwise full-screen swap
+        MainMenuFragment mmf = (MainMenuFragment) fragment;
+        if (!mmf.tryOpenInRightPane(SelectAuthFragment.class, SelectAuthFragment.TAG, null)) {
+            Tools.swapFragment(this, SelectAuthFragment.class, SelectAuthFragment.TAG, null);
+        }
         return false;
     };
 
     /* Listener for the settings fragment */
     private final View.OnClickListener mSettingButtonListener = v -> {
         Fragment fragment = getSupportFragmentManager().findFragmentById(mFragmentView.getId());
-        if(fragment instanceof MainMenuFragment){
-            Tools.swapFragment(this, LauncherPreferenceFragment.class, SETTING_FRAGMENT_TAG, null);
-        } else{
-            // The setting button doubles as a home button now
+        if (fragment instanceof MainMenuFragment) {
+            MainMenuFragment mmf = (MainMenuFragment) fragment;
+            // In two-pane landscape: if right pane already has content, pressing the
+            // gear/home button pops back to home. If pane is at home, open settings.
+            if (mmf.isRightPaneActive()) {
+                mmf.clearRightPane();
+            } else {
+                if (!mmf.tryOpenInRightPane(LauncherPreferenceFragment.class, SETTING_FRAGMENT_TAG, null)) {
+                    Tools.swapFragment(this, LauncherPreferenceFragment.class, SETTING_FRAGMENT_TAG, null);
+                }
+            }
+        } else {
+            // Portrait: the settings button doubles as a home button when not on main menu
             Tools.backToMainMenu(this);
         }
     };
@@ -311,6 +324,18 @@ public class LauncherActivity extends BaseActivity {
                 fragment.goBack();
                 return;
             }
+        }
+
+        // In landscape two-pane mode: if the right pane has content, pop it instead of exiting
+        Fragment rootFrag = getVisibleFragment("ROOT");
+        if (rootFrag instanceof MainMenuFragment) {
+            MainMenuFragment mmf = (MainMenuFragment) rootFrag;
+            if (mmf.isRightPaneActive()) {
+                mmf.popRightPane();
+                return;
+            }
+            finish();
+            return;
         }
 
         // Check if we are at the root then

@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="control_button_color">#4CC4C4C4</color>
-    <color name="control_button_pressed_color">#4D000000</color>
 
-    <color name="minebutton_color">#FFA602</color>
-    <color name="background_app">#181818</color>
-    <color name="divider">@color/background_overlay</color>
-    <color name="background_overlay">#464646</color>
-    <color name="background_status_bar">#242424</color>
-    <color name="background_bottom_bar">#232323</color>
+    <!-- Control Buttons (copper glow style - softened, not neon orange anymore) -->
+    <color name="control_button_color">#66C97A2B</color>
+    <color name="control_button_pressed_color">#99A85C1A</color>
 
-    <color name="primary_text">#FFFFFF</color>
-    <color name="secondary_text">#B2B2B2</color>
+    <!-- Main Button (hot copper highlight - toned down for consistency) -->
+    <color name="minebutton_color">#ff5900</color>
+
+    <!-- BACKGROUND SYSTEM (COPPER METAL THEME) -->
+    <!-- Dark copper layered surfaces -->
+
+    <color name="background_app">#181818</color>          
+    <color name="background_overlay">#464646</color>      
+    <color name="background_surface">#464646</color>      
+    <color name="divider">#464646</color>                
+    <color name="background_status_bar">#232323</color>   
+    <color name="background_bottom_bar">#272727</color>   
+
+    <!-- TEXT (FIXED: removed orange tint, improved readability) -->
+    <color name="primary_text">#F5F5F5</color>
+    <color name="secondary_text">#B8B8B8</color>
+
 </resources>

@@ -1,6 +1,76 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true" android:drawable="@drawable/mine_button_focused" />
-    <item android:state_enabled="false" android:drawable="@drawable/mine_button_focused" />
-    <item android:drawable="@drawable/mine_button_unfocused" />
+
+    <!-- PRESSED STATE -->
+    <item android:state_pressed="true">
+        <layer-list>
+            <!-- Outer glow -->
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:startColor="#3C3C3C"
+                        android:endColor="#3C3C3C"
+                        android:angle="270"/>
+                    <corners android:radius="12dp"/>
+                </shape>
+            </item>
+
+            <!-- Inner pressed surface -->
+            <item
+                android:left="1dp"
+                android:top="1dp"
+                android:right="1dp"
+                android:bottom="1dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:startColor="#3C3C3C"
+                        android:endColor="#3C3C3C"
+                        android:angle="270"/>
+                    <corners android:radius="11dp"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+    <!-- DISABLED STATE -->
+    <item android:state_enabled="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#2A1A12"/>
+            <corners android:radius="12dp"/>
+        </shape>
+    </item>
+
+    <!-- DEFAULT STATE -->
+    <item>
+        <layer-list>
+
+            <!-- Outer glow -->
+            <item>
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:startColor="#ff5900"
+                        android:endColor="#ff5900"
+                        android:angle="270"/>
+                    <corners android:radius="12dp"/>
+                </shape>
+            </item>
+
+            <!-- Inner body -->
+            <item
+                android:left="1dp"
+                android:top="1dp"
+                android:right="1dp"
+                android:bottom="1dp">
+                <shape android:shape="rectangle">
+                    <gradient
+                        android:startColor="#ff5900"
+                        android:endColor="#ff5900"
+                        android:angle="270"/>
+                    <corners android:radius="11dp"/>
+                </shape>
+            </item>
+
+        </layer-list>
+    </item>
+
 </selector>

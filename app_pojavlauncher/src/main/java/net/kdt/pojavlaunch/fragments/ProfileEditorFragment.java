@@ -43,6 +43,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
     public static final String TAG = "ProfileEditorFragment";
     public static final String DELETED_PROFILE = "deleted_profile";
@@ -93,7 +95,14 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mSaveButton.setOnClickListener(v -> {
             ProfileIconCache.dropIcon(mProfileKey);
             save();
-            Tools.backToMainMenu(requireActivity());
+            Fragment parentFrag = getParentFragment();
+            if (parentFrag instanceof MainMenuFragment) {
+                MainMenuFragment mmf = (MainMenuFragment) parentFrag;
+                mmf.clearRightPane();
+                mmf.reloadSpinner();
+            } else {
+                Tools.backToMainMenu(requireActivity());
+            }
         });
 
         mDeleteButton.setOnClickListener(v -> {
@@ -101,10 +110,17 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
                 ProfileIconCache.dropIcon(mProfileKey);
                 LauncherProfiles.mainProfileJson.profiles.remove(mProfileKey);
                 LauncherProfiles.write();
-                ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, DELETED_PROFILE);
+                ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, ProfileEditorFragment.DELETED_PROFILE);
             }
-
-            Tools.removeCurrentFragment(requireActivity());
+            Fragment parentFrag = getParentFragment();
+            if (parentFrag instanceof MainMenuFragment) {
+                MainMenuFragment mmf = (MainMenuFragment) parentFrag;
+                mmf.clearRightPane();
+                // Reload spinner now so deleted profile is gone immediately
+                mmf.reloadSpinner();
+            } else {
+                Tools.removeCurrentFragment(requireActivity());
+            }
         });
 
 
@@ -265,6 +281,22 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         LauncherProfiles.mainProfileJson.profiles.put(mProfileKey, mTempProfile);
         LauncherProfiles.write();
         ExtraCore.setValue(ExtraConstants.REFRESH_VERSION_SPINNER, mProfileKey);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        // Always drop the icon cache when leaving, even without saving,
+        // so the next reloadProfiles() re-fetches with correct bounds.
+        if (mProfileKey != null) {
+            ProfileIconCache.dropIcon(mProfileKey);
+            // Reload the spinner so the icon redraws at correct size immediately
+            // (covers Android back button path where reloadSpinner() isn't called explicitly)
+            Fragment parent = getParentFragment();
+            if (parent instanceof MainMenuFragment) {
+                ((MainMenuFragment) parent).reloadSpinner();
+            }
+        }
     }
 
     @Override

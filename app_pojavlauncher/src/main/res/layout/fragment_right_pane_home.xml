@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app">
+
+    <!-- Rory xmas cat — rendered at natural size, centred in pane -->
+    <ImageView
+        android:id="@+id/right_pane_wallpaper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:maxWidth="280dp"
+        android:maxHeight="280dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/bg_rory_xmas"
+        android:contentDescription="@null" />
+
+    <!-- Wiki + Discord pinned to the top of the pane -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="top">
+
+        <com.kdt.mcgui.LauncherMenuButton
+            android:id="@+id/news_button_pane"
+            style="@style/LauncherMenuButton.Universal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_menu_news"
+            android:text="@string/mcl_tab_wiki" />
+
+        <View
+            android:layout_width="@dimen/padding_tiny"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="@dimen/padding_large"
+            android:background="@color/divider" />
+
+        <com.kdt.mcgui.LauncherMenuButton
+            android:id="@+id/discord_button_pane"
+            style="@style/LauncherMenuButton.Universal"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_discord"
+            android:text="@string/mcl_button_discord" />
+
+    </LinearLayout>
+
+</FrameLayout>

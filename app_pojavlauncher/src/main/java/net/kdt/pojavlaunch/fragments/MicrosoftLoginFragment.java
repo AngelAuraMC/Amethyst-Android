@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
@@ -106,8 +107,16 @@ public class MicrosoftLoginFragment extends Fragment {
                 // Should be captured by the activity to kill the fragment and get
                 ExtraCore.setValue(ExtraConstants.MICROSOFT_LOGIN_TODO, Uri.parse(url));
                 Toast.makeText(view.getContext(), "Login started !", Toast.LENGTH_SHORT).show();
-                Tools.backToMainMenu(requireActivity());
-
+                // Navigate back to home — use right pane pop if inside MainMenuFragment
+                Fragment parent = getParentFragment();
+                while (parent != null && !(parent instanceof MainMenuFragment)) {
+                    parent = parent.getParentFragment();
+                }
+                if (parent instanceof MainMenuFragment) {
+                    ((MainMenuFragment) parent).clearRightPane();
+                } else {
+                    Tools.backToMainMenu(requireActivity());
+                }
                 return true;
             }
 

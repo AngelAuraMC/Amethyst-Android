@@ -37,12 +37,13 @@ public class ManageModsFragment extends Fragment {
         RecyclerView recycler   = view.findViewById(R.id.manage_mods_recycler);
         View        emptyState  = view.findViewById(R.id.manage_mods_empty);
 
-        // Back
-        backButton.setOnClickListener(v -> Tools.removeCurrentFragment(requireActivity()));
+        // Back — delegate to the activity which handles both portrait (pop activity stack)
+        // and landscape two-pane (pop right pane) in one reliable place.
+        backButton.setOnClickListener(v -> requireActivity().onBackPressed());
 
-        // Add → open mod store
+        // Add → open mod store — stay in right pane if we're inside one
         addButton.setOnClickListener(v ->
-                Tools.swapFragment(requireActivity(), ModsSearchFragment.class, ModsSearchFragment.TAG, null));
+                navigateToFragment(ModsSearchFragment.class, ModsSearchFragment.TAG));
 
         // Title: "ProfileName - Mods"
         String profileName = getCurrentProfileName();
@@ -91,5 +92,31 @@ public class ManageModsFragment extends Fragment {
             }
         } catch (Exception ignored) {}
         return new File(Tools.DIR_GAME_NEW, "mods");
+    }
+
+    /** Go back — pops the parent's child stack synchronously when inside right pane. */
+    private void navigateBack() {
+        Fragment parent = getParentFragment();
+        if (parent != null) {
+            // Synchronous pop — no race condition with the view lifecycle
+            parent.getChildFragmentManager().popBackStackImmediate();
+        } else {
+            Tools.removeCurrentFragment(requireActivity());
+        }
+    }
+
+    /** Navigate to a fragment — stays inside the right pane when running as a child fragment. */
+    private void navigateToFragment(Class<? extends Fragment> fragmentClass, String tag) {
+        Fragment parent = getParentFragment();
+        if (parent != null) {
+            parent.getChildFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.right_pane_container, fragmentClass, null, tag)
+                    .addToBackStack(tag)
+                    .commit();
+        } else {
+            Tools.swapFragment(requireActivity(), fragmentClass, tag, null);
+        }
     }
 }

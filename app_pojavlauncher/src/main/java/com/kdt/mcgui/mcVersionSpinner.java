@@ -92,6 +92,19 @@ public class mcVersionSpinner extends ExtendedTextView {
     /** Reload profiles from the file, forcing the spinner to consider the new data */
     public void reloadProfiles(){
         mProfileAdapter.reloadProfiles();
+        // Re-apply selection so the spinner redraws the icon at the correct size.
+        // Also handles deletion: REFRESH_VERSION_SPINNER extra is consumed here.
+        String extra_value = (String) ExtraCore.consumeValue(ExtraConstants.REFRESH_VERSION_SPINNER);
+        int newIndex;
+        if (extra_value != null) {
+            newIndex = extra_value.equals(DELETED_PROFILE) ? 0
+                    : Math.max(0, getProfileAdapter().resolveProfileIndex(extra_value));
+        } else {
+            newIndex = Math.max(0, mProfileAdapter.resolveProfileIndex(
+                    LauncherPreferences.DEFAULT_PREF
+                            .getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "")));
+        }
+        setProfileSelection(newIndex);
     }
 
     /** Initialize various behaviors */

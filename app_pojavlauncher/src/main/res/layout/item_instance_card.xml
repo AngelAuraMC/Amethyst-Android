@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_card"
+    android:layout_marginVertical="@dimen/padding_medium"
+    android:foreground="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Instance icon -->
+    <ImageView
+        android:id="@+id/instance_icon"
+        android:layout_width="@dimen/_52sdp"
+        android:layout_height="@dimen/_52sdp"
+        android:padding="@dimen/padding_moderate"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@mipmap/ic_launcher_foreground" />
+
+    <!-- Selected checkmark badge -->
+    <ImageView
+        android:id="@+id/instance_selected_badge"
+        android:layout_width="@dimen/_18sdp"
+        android:layout_height="@dimen/_18sdp"
+        android:layout_marginEnd="@dimen/padding_medium"
+        android:layout_marginTop="@dimen/padding_medium"
+        android:src="@drawable/ic_check_circle"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Instance name -->
+    <TextView
+        android:id="@+id/instance_name"
+        style="@style/TextAppearance.AppCompat.Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/primary_text"
+        android:textStyle="bold"
+        android:layout_marginStart="@dimen/padding_moderate"
+        android:layout_marginTop="@dimen/padding_medium"
+        app:layout_constraintStart_toEndOf="@id/instance_icon"
+        app:layout_constraintEnd_toStartOf="@id/instance_selected_badge"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Forge 1.20.1" />
+
+    <!-- Version label -->
+    <TextView
+        android:id="@+id/instance_version"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/secondary_text"
+        android:layout_marginStart="@dimen/padding_moderate"
+        android:layout_marginBottom="@dimen/padding_medium"
+        app:layout_constraintStart_toEndOf="@id/instance_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/instance_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:text="1.20.1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

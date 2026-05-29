@@ -128,6 +128,10 @@ public class CurseforgeApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
+        return getModDetails(item, null);
+    }
+
+    public ModDetail getModDetails(ModItem item, String filterMcVersion) {
         // Short-circuit for restricted mods — no point fetching versions
         if (item.isRestricted) {
             return new ModDetail(item,
@@ -143,6 +147,22 @@ public class CurseforgeApi implements ModpackApi{
             index = getPaginatedDetails(allModDetails, index, item.id);
         }
         if(index == CURSEFORGE_PAGINATION_ERROR) return null;
+
+        // Filter by MC version if specified
+        if (filterMcVersion != null && !filterMcVersion.isEmpty()) {
+            ArrayList<JsonObject> filtered = new ArrayList<>();
+            for (JsonObject v : allModDetails) {
+                JsonArray gameVersions = v.getAsJsonArray("gameVersions");
+                for (JsonElement el : gameVersions) {
+                    if (filterMcVersion.equals(el.getAsString())) {
+                        filtered.add(v);
+                        break;
+                    }
+                }
+            }
+            allModDetails = filtered;
+        }
+
         int length = allModDetails.size();
 
         // Check if ALL versions have null downloadUrl (fully restricted mod)

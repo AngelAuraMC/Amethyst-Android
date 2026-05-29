@@ -44,7 +44,16 @@ public class ModpackCreateFragment extends Fragment {
         if(!hasOnlineProfile()){
             hasNoOnlineProfileDialog(requireActivity());
         } else {
-            Tools.swapFragment(requireActivity(), fragmentClass, tag, null);
+            // Walk up to find MainMenuFragment
+            Fragment parent = getParentFragment();
+            while (parent != null && !(parent instanceof MainMenuFragment)) {
+                parent = parent.getParentFragment();
+            }
+            if (parent instanceof MainMenuFragment) {
+                ((MainMenuFragment) parent).openChildPane(fragmentClass, tag, null);
+            } else {
+                Tools.swapFragment(requireActivity(), fragmentClass, tag, null);
+            }
         }
     }
 }

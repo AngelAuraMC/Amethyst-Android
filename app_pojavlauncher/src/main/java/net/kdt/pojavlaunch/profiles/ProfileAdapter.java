@@ -93,6 +93,11 @@ public class ProfileAdapter extends BaseAdapter {
         MinecraftProfile minecraftProfile = mProfiles.get(nm);
         if(minecraftProfile == null) minecraftProfile = dummy;
         Drawable cachedIcon = ProfileIconCache.fetchIcon(v.getResources(), nm, minecraftProfile.icon);
+        // Explicitly set bounds to match ExtendedTextView's drawableStartSize (_36sdp).
+        // Without this, BitmapDrawable uses raw pixel dimensions causing size inconsistency
+        // after profile edits (when the icon cache is dropped and re-fetched).
+        int iconSize = (int) v.getResources().getDimension(R.dimen._36sdp);
+        cachedIcon.setBounds(0, 0, iconSize, iconSize);
         extendedTextView.setCompoundDrawablesRelative(cachedIcon, null, extendedTextView.getCompoundsDrawables()[2], null);
 
         // Historically, the profile name "New" was hardcoded as the default profile name

@@ -25,7 +25,18 @@ public class SelectAuthFragment extends Fragment {
         Button mMicrosoftButton = view.findViewById(R.id.button_microsoft_authentication);
         Button mLocalButton = view.findViewById(R.id.button_local_authentication);
 
-        mMicrosoftButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), MicrosoftLoginFragment.class, MicrosoftLoginFragment.TAG, null));
-        mLocalButton.setOnClickListener(v -> hasNoOnlineProfileDialog(requireActivity(), () -> Tools.swapFragment(requireActivity(), LocalLoginFragment.class, LocalLoginFragment.TAG, null)));
+        mMicrosoftButton.setOnClickListener(v -> navigateTo(MicrosoftLoginFragment.class, MicrosoftLoginFragment.TAG, null));
+        mLocalButton.setOnClickListener(v -> hasNoOnlineProfileDialog(requireActivity(),
+                () -> navigateTo(LocalLoginFragment.class, LocalLoginFragment.TAG, null)));
+    }
+
+    /** Navigate within right pane if inside MainMenuFragment, otherwise full-screen swap. */
+    private void navigateTo(Class<? extends Fragment> cls, String tag, android.os.Bundle args) {
+        Fragment parent = getParentFragment();
+        if (parent instanceof MainMenuFragment) {
+            ((MainMenuFragment) parent).openChildPane(cls, tag, args);
+        } else {
+            Tools.swapFragment(requireActivity(), cls, tag, args);
+        }
     }
 }

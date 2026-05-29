@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/minSdk-26-blue" alt="Min SDK"/>
   <img src="https://github.com/CopperLauncher/Copper-Android/workflows/Android%20CI/badge.svg" alt="Android CI"/>
   <img src="https://badges.crowdin.net/pojavlauncher/localized.svg" alt="Crowdin"/>
-  <a href="https://discord.com/invite/r8wUtzMzUe"><img src="https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat" alt="Discord"></a>
+  <a href="https://discord.gg/4Azk5quBtZ"><img src="https://img.shields.io/discord/1355213558631366897?color=5865F2&logo=discord&logoColor=white&label=&style=flat" alt="Discord"></a>
   <a href="https://github.com/CopperLauncher"><img src="https://img.shields.io/badge/github-CopperLauncher-orange?logo=github" alt="GitHub"></a>
   <a href="https://www.curseforge.com/members/maxjubayeryt/projects"><img src="https://img.shields.io/badge/curseforge-maxjubayeryt-orange?logo=curseforge" alt="CurseForge"></a>
   <a href="https://modrinth.com/user/maxjubayeryt"><img src="https://img.shields.io/badge/modrinth-maxjubayeryt-green?logo=modrinth" alt="Modrinth User"></a>
@@ -85,29 +85,15 @@ If you need more control over the build process, follow these steps:
 
 ## Current Status
 
-* [x] OpenJDK 8 Mobile port: ARM32, ARM64, x86, x86_64
-* [x] OpenJDK 17 Mobile port: ARM32, ARM64, x86, x86_64
-* [x] OpenJDK 21 Mobile port: ARM32, ARM64, x86, x86_64
-* [x] Headless mod installer
-* [x] Mod installer with GUI
-* [x] OpenGL in OpenJDK environment
-* [x] OpenAL (works on most devices)
-* [x] Support for Minecraft 1.12.2 and below
-* [x] Support for Minecraft 1.13 and above
-* [x] Support for Minecraft 1.17 (22w13a) and above
-* [x] Game surface zooming
-* [x] New input pipe rewritten to native code
-* [x] Rewritten entire controls system
-* [x] Added piracy support.
-* [x] Added Sodium support.
-* [x] Added new theme.
-* [x] Added Krypton Wrapper.
-* [x] Readded LTW.
-      
+* [x] New UI
+* [x] Bug Fixes
+* [ ] Fix GL4ES and KW in older versions
+* [ ] Add More Renders
+
 
 ## Known Issues
 
-See Copper's [issue tracker](https://github.com/CopperLauncher/CopperLauncher/issues) for a list of known issues and their current status.
+See Copper's [issue tracker](https://github.com/CopperLauncher/Copper-Android/issues) for a list of known issues and their current status.
 
 ## Support
 
@@ -115,12 +101,14 @@ For support, please join our [Discord server](https://dsc.gg/Copper-launcher)
 
 ## License
 
-Copper is licensed under [GNU LGPLv3](https://github.com/Copper-launcher/Copper-Android/blob/v3_openjdk/LICENSE).
+Copper is licensed under [GNU LGPLv3](https://github.com/CopperLauncher/Copper-Android/blob/v3_openjdk/LICENSE).
 
 ## Credits & Dependencies
 
 * [Boardwalk](https://github.com/zhuowei/Boardwalk) (JVM Launcher): Unknown License/[Apache License 2.0](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) or GNU GPLv2.
 * [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher): [GLGPL](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE)
+* [Amethyst Launcher](https://github.com/AngelAuraMC/Amethyst-Android/): [LGPL-3.0 license](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE)
+* [MojoLauncher](https://github.com/MojoLauncher/MojoLauncher/): [LGPL-3.0 license](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE)
 * Android Support Libraries: [Apache License 2.0](https://android.googlesource.com/platform/prebuilts/maven_repo/android/+/master/NOTICE.txt).
 * [GL4ES](https://github.com/AngelAuraMC/gl4es): [MIT License](https://github.com/ptitSeb/gl4es/blob/master/LICENSE).
 * [MobileGlues](https://github.com/MobileGL-Dev/MobileGlues): [LGPL-2.1 License](https://github.com/MobileGL-Dev/MobileGlues/blob/dev-es/LICENSE).
@@ -151,4 +139,4 @@ Future plans include:
 * Improving stability and performance.
 * Enhancing the mod installation experience.
 
-We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/Copper-launcher/Copper-Android/issues).
+We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/CopperLauncher/Copper-Android/issues).
