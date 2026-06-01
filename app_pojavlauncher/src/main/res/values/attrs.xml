@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorBgApp"         format="color"/>
+    <attr name="colorBgBottomBar"   format="color"/>
+    <attr name="colorBgStatusBar"   format="color"/>
+    <attr name="colorDivider"       format="color"/>
+    <attr name="copperAccent"        format="color"/>
+    <attr name="colorTextPrimary"   format="color"/>
+    <attr name="colorTextSecondary" format="color"/>
+    <attr name="bgMainDrawable"     format="reference|color"/>
+</resources>

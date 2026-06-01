@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_app"
+    android:background="?attr/bgMainDrawable"
     android:orientation="vertical"
     >
     <ScrollView
@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:fadeScrollbars="true"
-        android:scrollbarThumbVertical="@color/minebutton_color">
+        android:scrollbarThumbVertical="?attr/copperAccent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,7 +26,6 @@
                 android:layout_height="@dimen/_50sdp"
                 android:layout_marginTop="@dimen/padding_heavy"
                 android:paddingHorizontal="@dimen/profile_editor_image_padding"
-
                 android:paddingVertical="@dimen/profile_editor_image_padding"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

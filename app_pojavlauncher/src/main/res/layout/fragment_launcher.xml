@@ -5,7 +5,7 @@
     android:id="@+id/fragment_menu_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_app">
+    android:background="?attr/bgMainDrawable">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/center_guideline"
@@ -44,7 +44,7 @@
                     android:id="@+id/social_divider"
                     android:layout_width="@dimen/padding_tiny"
                     android:layout_height="match_parent"
-                    android:background="@color/divider"
+                    android:background="?attr/colorDivider"
                     android:layout_marginVertical="@dimen/padding_large" />
 
                 <com.kdt.mcgui.LauncherMenuButton
@@ -60,7 +60,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/divider" />
+                android:background="?attr/colorDivider" />
 
             <!-- ── QUICK ACTIONS ── -->
             <TextView
@@ -69,7 +69,7 @@
                 android:text="@string/mcl_section_quick_actions"
                 android:textAllCaps="true"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/secondary_text"
+                android:textColor="?attr/colorTextSecondary"
                 android:letterSpacing="0.08"
                 android:paddingHorizontal="@dimen/padding_heavy"
                 android:paddingTop="@dimen/padding_large"
@@ -94,7 +94,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/divider"
+                android:background="?attr/colorDivider"
                 android:layout_marginTop="@dimen/padding_medium" />
 
             <!-- ── INSTANCE TOOLS ── -->
@@ -104,7 +104,7 @@
                 android:text="@string/mcl_section_instance_tools"
                 android:textAllCaps="true"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/secondary_text"
+                android:textColor="?attr/colorTextSecondary"
                 android:letterSpacing="0.08"
                 android:paddingHorizontal="@dimen/padding_heavy"
                 android:paddingTop="@dimen/padding_large"
@@ -159,6 +159,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/_52sdp"
         android:background="@android:color/transparent"
+        android:scrollbarThumbVertical="?attr/copperAccent"
         android:drawableEnd="@drawable/spinner_arrow"
         app:drawableEndSize="@dimen/padding_heavy"
         app:drawableStartIntegerScaling="true"
@@ -182,7 +183,7 @@
         android:id="@+id/_background_display_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/background_bottom_bar"
+        android:background="?attr/colorBgBottomBar"
         android:translationZ="-1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />

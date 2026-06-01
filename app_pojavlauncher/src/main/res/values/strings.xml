@@ -305,6 +305,22 @@
 
     <string name="preference_force_big_core_title">Force the renderer to run on the big core</string>
     <string name="preference_force_big_core_desc">Forces the Minecraft render thread to run on the core with the highest maximum frequency.</string>
+    <string name="preference_force_landscape_title">Force landscape orientation</string>
+    <string name="preference_force_landscape_summary">Always rotate the launcher to landscape, regardless of device orientation.</string>
+    <string name="preference_category_launcher_appearance">Launcher appearance</string>
+    <string name="preference_set_custom_bg_title">Set custom launcher background</string>
+    <string name="preference_set_custom_bg_summary">Pick an image from your gallery to use as the launcher background.</string>
+    <string name="preference_remove_custom_bg_title">Remove custom launcher background</string>
+    <string name="preference_remove_custom_bg_summary">Reset the launcher background to the default (no image).</string>
+    <string name="preference_custom_bg_set_success">Custom background applied.</string>
+    <string name="preference_custom_bg_removed">Custom background removed.</string>
+    <string name="preference_custom_bg_error">Failed to load the selected image.</string>
+    <string name="preference_colour_presets_title">Colour theme presets</string>
+    <string name="preference_colour_presets_summary">Choose a built-in colour scheme or reset to default.</string>
+    <string name="preference_colour_reset">Reset to default</string>
+    <string name="preference_colour_theme_applied">Theme applied. Restart the launcher for full effect.</string>
+    <string name="preference_bg_gradient_title">Background Color</string>
+    <string name="preference_bg_gradient_summary">Enable theme background colours.</string>
     <string name="version_select_hint">Select a version</string>
     <string name="forge_dl_progress">Downloading installer for %s</string>
     <string name="forge_dl_searching">Searching for Forge version number</string>
@@ -438,9 +454,9 @@
     <string name="mcl_section_quick_actions">Quick Actions</string>
     <string name="mcl_section_instance_tools">Instance Tools</string>
     <string name="mcl_section_instances">Select Instance</string>
-    <string name="mcl_button_mod_store">Mod Store</string>
+    <string name="mcl_button_mod_store">Browse Mods</string>
     <string name="mcl_button_settings">Settings</string>
-    <string name="mcl_button_manage_mods">Manage Mods &amp; Tools</string>
+    <string name="mcl_button_manage_mods">Manage Mods</string>
     <string name="mcl_button_install_modpack">Install Modpack (.mrpack/zip)</string>
     <string name="delete">Delete</string>
     <string name="ltw_render_distance_warning_msg">Your GPU is not capable of rendering above 7 render distance without Sodium or other similar mods. The render distance will be automatically reduced when you click "OK".</string>

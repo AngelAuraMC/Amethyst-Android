@@ -7,19 +7,68 @@
 
     <!-- Main Button (hot copper highlight - toned down for consistency) -->
     <color name="minebutton_color">#ff5900</color>
+    <color name="cu_bg_app">#1A0E00</color>
+    <color name="cu_bg_status_bar">#2A1800</color>
+    <color name="cu_bg_bottom_bar">#231200</color>
+    <color name="cu_divider">#3D2200</color>
 
     <!-- BACKGROUND SYSTEM (COPPER METAL THEME) -->
     <!-- Dark copper layered surfaces -->
 
-    <color name="background_app">#181818</color>          
+    <color name="background_app">#181818</color>
     <color name="background_overlay">#464646</color>      
     <color name="background_surface">#464646</color>      
     <color name="divider">#464646</color>                
-    <color name="background_status_bar">#232323</color>   
-    <color name="background_bottom_bar">#272727</color>   
+    <color name="background_status_bar">#232323</color>
+    <color name="background_bottom_bar">#272727</color>
 
     <!-- TEXT (FIXED: removed orange tint, improved readability) -->
     <color name="primary_text">#F5F5F5</color>
     <color name="secondary_text">#B8B8B8</color>
+
+    <!-- ── Midnight Blue preset ───────────────────────────────────────── -->
+    <color name="mb_bg_app">#0D1B2A</color>
+    <color name="mb_bg_bottom_bar">#1B2A3B</color>
+    <color name="mb_bg_status_bar">#0A1522</color>
+    <color name="mb_divider">#1E3A5F</color>
+    <color name="mb_accent">#1E90FF</color>
+    <color name="mb_text_primary">#E8EFF5</color>
+    <color name="mb_text_secondary">#8BAABF</color>
+
+    <!-- ── Forest Green preset ───────────────────────────────────────── -->
+    <color name="fg_bg_app">#0F1F0F</color>
+    <color name="fg_bg_bottom_bar">#1A2E1A</color>
+    <color name="fg_bg_status_bar">#0C1A0C</color>
+    <color name="fg_divider">#2D4A2D</color>
+    <color name="fg_accent">#4CAF50</color>
+    <color name="fg_text_primary">#E8F5E9</color>
+    <color name="fg_text_secondary">#9CCC9C</color>
+
+    <!-- ── Crimson preset ────────────────────────────────────────────── -->
+    <color name="cr_bg_app">#1A0A0A</color>
+    <color name="cr_bg_bottom_bar">#2A1010</color>
+    <color name="cr_bg_status_bar">#150808</color>
+    <color name="cr_divider">#4A1A1A</color>
+    <color name="cr_accent">#E53935</color>
+    <color name="cr_text_primary">#FFF0F0</color>
+    <color name="cr_text_secondary">#CCA0A0</color>
+
+    <!-- ── Amethyst preset ───────────────────────────────────────────── -->
+    <color name="am_bg_app">#13091A</color>
+    <color name="am_bg_bottom_bar">#1E1028</color>
+    <color name="am_bg_status_bar">#0F0714</color>
+    <color name="am_divider">#3A1F52</color>
+    <color name="am_accent">#9C27B0</color>
+    <color name="am_text_primary">#F3E5F5</color>
+    <color name="am_text_secondary">#CBA8D4</color>
+
+    <!-- ── Arctic preset ─────────────────────────────────────────────── -->
+    <color name="ar_bg_app">#0E1A20</color>
+    <color name="ar_bg_bottom_bar">#162530</color>
+    <color name="ar_bg_status_bar">#0B1418</color>
+    <color name="ar_divider">#1E3A47</color>
+    <color name="ar_accent">#00BCD4</color>
+    <color name="ar_text_primary">#E0F7FA</color>
+    <color name="ar_text_secondary">#80C8D4</color>
 
 </resources>

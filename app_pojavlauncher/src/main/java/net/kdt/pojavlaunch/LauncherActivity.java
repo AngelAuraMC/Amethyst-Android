@@ -222,6 +222,12 @@ public class LauncherActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Apply saved colour theme before layout inflation
+        setTheme(net.kdt.pojavlaunch.theme.ThemeManager.getSavedTheme());
+        // Apply force-landscape preference before layout inflation
+        if (LauncherPreferences.DEFAULT_PREF.getBoolean("force_landscape", false)) {
+            setRequestedOrientation(android.content.pm.ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        }
         setContentView(R.layout.activity_pojav_launcher);
         FragmentManager fragmentManager = getSupportFragmentManager();
         // If we don't have a back stack root yet...

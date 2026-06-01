@@ -34,7 +34,7 @@ public class TextProgressBar extends ProgressBar {
     private String mText = "";
 
     private void init(){
-        setProgressDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.view_text_progressbar, null));
+        setProgressDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.view_text_progressbar, getContext().getTheme()));
         setProgress(35);
         mTextPaint = new Paint();
         mTextPaint.setColor(Color.WHITE);

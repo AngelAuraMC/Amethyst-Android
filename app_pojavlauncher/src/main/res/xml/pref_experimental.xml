@@ -14,5 +14,42 @@
             android:key="bigCoreAffinity"
             android:title="@string/preference_force_big_core_title"
             android:summary="@string/preference_force_big_core_desc" />
+
+        <!-- Force landscape orientation -->
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="force_landscape"
+            android:title="@string/preference_force_landscape_title"
+            android:summary="@string/preference_force_landscape_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/preference_category_launcher_appearance">
+
+        <!-- Set custom launcher background from gallery -->
+        <Preference
+            android:key="set_custom_launcher_bg"
+            android:title="@string/preference_set_custom_bg_title"
+            android:summary="@string/preference_set_custom_bg_summary" />
+
+        <!-- Remove custom launcher background -->
+        <Preference
+            android:key="remove_custom_launcher_bg"
+            android:title="@string/preference_remove_custom_bg_title"
+            android:summary="@string/preference_remove_custom_bg_summary" />
+
+        <!-- Colour theme presets + reset -->
+        <Preference
+            android:key="colour_theme_presets"
+            android:title="@string/preference_colour_presets_title"
+            android:summary="@string/preference_colour_presets_summary" />
+
+        <!-- Background gradient toggle -->
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="enable_bg_gradient"
+            android:title="@string/preference_bg_gradient_title"
+            android:summary="@string/preference_bg_gradient_summary" />
+
     </PreferenceCategory>
 </PreferenceScreen>

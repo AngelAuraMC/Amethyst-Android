@@ -7,5 +7,5 @@
         android:left="@dimen/_2sdp"
         android:right="@dimen/_2sdp"
         android:top="@dimen/_2sdp" />
-    <solid android:color="@color/background_status_bar"/>
+    <solid android:color="?attr/colorBgStatusBar"/>
 </shape>

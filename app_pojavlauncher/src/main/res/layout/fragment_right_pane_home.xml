@@ -5,17 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/background_app">
 
-    <!-- Rory xmas cat — rendered at natural size, centred in pane -->
+    <!-- Custom wallpaper — loaded dynamically by RightPaneHomeFragment; invisible by default -->
     <ImageView
         android:id="@+id/right_pane_wallpaper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:adjustViewBounds="true"
-        android:maxWidth="280dp"
-        android:maxHeight="280dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/bg_rory_xmas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
         android:contentDescription="@null" />
 
     <!-- Wiki + Discord pinned to the top of the pane -->
