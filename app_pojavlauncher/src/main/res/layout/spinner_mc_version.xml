@@ -6,8 +6,8 @@
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:fadeScrollbars="false"
-    android:scrollbarThumbVertical="@color/minebutton_color"
+    android:scrollbarThumbVertical="?attr/copperAccent"
     android:paddingVertical="@dimen/_14sdp"
     android:scrollbarSize="@dimen/padding_medium"
-    android:background="@color/background_bottom_bar"
+    android:background="?attr/colorBgBottomBar"
     android:divider="@null" />

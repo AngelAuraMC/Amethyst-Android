@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/background_app"
+    android:background="?attr/bgMainDrawable"
     android:paddingHorizontal="@dimen/fragment_padding_medium">
 
 
@@ -32,10 +32,10 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text=""
-        android:textColor="@color/primary_text" />
+        android:textColor="?attr/colorTextPrimary" />
 
     <ExpandableListView
-        android:scrollbarThumbVertical="@color/minebutton_color"
+        android:scrollbarThumbVertical="?attr/copperAccent"
         android:id="@+id/mod_dl_expandable_version_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -5,7 +5,7 @@
     android:id="@+id/fragment_menu_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_app">
+    android:background="?attr/bgMainDrawable">
 
     <!-- Guideline: left sidebar = 33%, right pane = 67% -->
     <androidx.constraintlayout.widget.Guideline
@@ -34,7 +34,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/divider" />
+                android:background="?attr/colorDivider" />
 
             <!-- QUICK ACTIONS -->
             <TextView
@@ -43,7 +43,7 @@
                 android:text="@string/mcl_section_quick_actions"
                 android:textAllCaps="true"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/secondary_text"
+                android:textColor="?attr/colorTextSecondary"
                 android:letterSpacing="0.08"
                 android:paddingHorizontal="@dimen/padding_heavy"
                 android:paddingTop="@dimen/padding_large"
@@ -66,7 +66,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"
-                android:background="@color/divider"
+                android:background="?attr/colorDivider"
                 android:layout_marginTop="@dimen/padding_medium" />
 
             <!-- INSTANCE TOOLS -->
@@ -76,7 +76,7 @@
                 android:text="@string/mcl_section_instance_tools"
                 android:textAllCaps="true"
                 android:textSize="@dimen/_11ssp"
-                android:textColor="@color/secondary_text"
+                android:textColor="?attr/colorTextSecondary"
                 android:letterSpacing="0.08"
                 android:paddingHorizontal="@dimen/padding_heavy"
                 android:paddingTop="@dimen/padding_large"
@@ -144,7 +144,7 @@
         android:id="@+id/pane_divider"
         android:layout_width="@dimen/padding_tiny"
         android:layout_height="0dp"
-        android:background="@color/divider"
+        android:background="?attr/colorDivider"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@id/pane_guideline"
@@ -176,7 +176,7 @@
         android:layout_height="@dimen/_48sdp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:background="@color/background_bottom_bar"
+        android:background="?attr/colorBgBottomBar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/pane_divider"
         app:layout_constraintEnd_toEndOf="parent">

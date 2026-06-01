@@ -1,13 +1,17 @@
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@android:id/background">
-        <color android:color="@color/background_app"/>
+        <shape android:shape="rectangle">
+            <solid android:color="?attr/colorBgApp"/>
+        </shape>
     </item>
-
 
     <item android:id="@android:id/progress">
         <clip>
-             <color android:color='@color/minebutton_color'/>
+            <shape android:shape="rectangle">
+                <solid android:color="?attr/copperAccent"/>
+            </shape>
         </clip>
     </item>
 

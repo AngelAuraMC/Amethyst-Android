@@ -4,28 +4,19 @@
     <!-- PRESSED STATE -->
     <item android:state_pressed="true">
         <layer-list>
-            <!-- Outer glow -->
             <item>
                 <shape android:shape="rectangle">
-                    <gradient
-                        android:startColor="#3C3C3C"
-                        android:endColor="#3C3C3C"
-                        android:angle="270"/>
+                    <solid android:color="#3C3C3C"/>
                     <corners android:radius="12dp"/>
                 </shape>
             </item>
-
-            <!-- Inner pressed surface -->
             <item
                 android:left="1dp"
                 android:top="1dp"
                 android:right="1dp"
                 android:bottom="1dp">
                 <shape android:shape="rectangle">
-                    <gradient
-                        android:startColor="#3C3C3C"
-                        android:endColor="#3C3C3C"
-                        android:angle="270"/>
+                    <solid android:color="#3C3C3C"/>
                     <corners android:radius="11dp"/>
                 </shape>
             </item>
@@ -35,41 +26,30 @@
     <!-- DISABLED STATE -->
     <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <solid android:color="#2A1A12"/>
+            <solid android:color="#2A2A2A"/>
             <corners android:radius="12dp"/>
         </shape>
     </item>
 
-    <!-- DEFAULT STATE -->
+    <!-- DEFAULT STATE — uses theme accent colour -->
     <item>
         <layer-list>
-
-            <!-- Outer glow -->
             <item>
                 <shape android:shape="rectangle">
-                    <gradient
-                        android:startColor="#ff5900"
-                        android:endColor="#ff5900"
-                        android:angle="270"/>
+                    <solid android:color="?attr/copperAccent"/>
                     <corners android:radius="12dp"/>
                 </shape>
             </item>
-
-            <!-- Inner body -->
             <item
                 android:left="1dp"
                 android:top="1dp"
                 android:right="1dp"
                 android:bottom="1dp">
                 <shape android:shape="rectangle">
-                    <gradient
-                        android:startColor="#ff5900"
-                        android:endColor="#ff5900"
-                        android:angle="270"/>
+                    <solid android:color="?attr/copperAccent"/>
                     <corners android:radius="11dp"/>
                 </shape>
             </item>
-
         </layer-list>
     </item>
 
