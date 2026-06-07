@@ -150,6 +150,39 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
     };
 
 
+    /* Track touch start — hold ACTION_DOWN until we confirm it's a tap, not a swipe */
+    private float mTouchDownX, mTouchDownY;
+
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                // Record position but don't forward to super yet —
+                // AppCompatSpinner opens its popup immediately on ACTION_DOWN.
+                mTouchDownX = event.getX();
+                mTouchDownY = event.getY();
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                return true; // consume all move events
+            case MotionEvent.ACTION_UP: {
+                float slop = 12 * getResources().getDisplayMetrics().density;
+                boolean isTap = Math.abs(event.getX() - mTouchDownX) <= slop
+                             && Math.abs(event.getY() - mTouchDownY) <= slop;
+                if (!isTap) return true; // swipe — drop it
+                // Replay DOWN then UP so AppCompatSpinner shows the dropdown
+                MotionEvent down = MotionEvent.obtain(event);
+                down.setAction(MotionEvent.ACTION_DOWN);
+                super.onTouchEvent(down);
+                down.recycle();
+                return super.onTouchEvent(event);
+            }
+            case MotionEvent.ACTION_CANCEL:
+                return true;
+        }
+        return super.onTouchEvent(event);
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void init(){
         // Set visual properties
