@@ -21,14 +21,14 @@
         <item name="colorTextSecondary">@color/secondary_text</item>
         <item name="bgMainDrawable">#181818</item>
         <item name="android:windowBackground">#181818</item>
-        <item name="colorAccent">#ff5900</item>
+        <item name="colorAccent">#64B5F6</item>
     </style>
     <style name="AppTheme.Gradient">
         <item name="bgMainDrawable">@drawable/bg_gradient_copper</item>
         <item name="android:windowBackground">@drawable/bg_gradient_copper</item>
         <item name="colorBgBottomBar">@color/cu_bg_bottom_bar</item>
         <item name="colorBgStatusBar">@color/cu_bg_status_bar</item>
-        <item name="colorAccent">#ff5900</item>
+        <item name="colorAccent">#64B5F6</item>
     </style>
 
     <!-- ── Midnight Blue ────────────────────────────────────── -->

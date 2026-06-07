@@ -225,7 +225,7 @@
     <string name="preference_force_english_description">Allows you to see original strings, as intended by developers. Requires a restart.</string>
     <string name="preference_edit_controls_title">Edit custom controls</string>
     <string name="preference_edit_controls_summary">Tweak the control scheme to fit your needs.</string>
-
+    
     <string name="preference_category_gyro_controls">Gyroscope controls</string>
     <string name="preference_category_virtual_mouse">Virtual mouse</string>
 
@@ -320,7 +320,7 @@
     <string name="preference_colour_reset">Reset to default</string>
     <string name="preference_colour_theme_applied">Theme applied. Restart the launcher for full effect.</string>
     <string name="preference_bg_gradient_title">Background Color</string>
-    <string name="preference_bg_gradient_summary">Enable theme background colours.</string>
+    <string name="preference_bg_gradient_summary">Enable theme background colors.</string>
     <string name="version_select_hint">Select a version</string>
     <string name="forge_dl_progress">Downloading installer for %s</string>
     <string name="forge_dl_searching">Searching for Forge version number</string>
@@ -461,7 +461,7 @@
     <string name="delete">Delete</string>
     <string name="ltw_render_distance_warning_msg">Your GPU is not capable of rendering above 7 render distance without Sodium or other similar mods. The render distance will be automatically reduced when you click "OK".</string>
     <string name="mcl_button_open_directory">Open game directory</string>
-    <string name="discord_invite" translatable="false">https://discord.gg/8WzF2RVAq4</string>
+    <string name="discord_invite" translatable="false">https://discord.gg/j8GTQv3YvY</string>
     <string name="local_login_bad_username_title">Unsuitable username</string>
     <string name="local_login_bad_username_text">The username must be between 3–16 characters long, and must only contain latin letters, numbers 0–9 and underscores.</string>
     <string name="quick_setting_title">Quick settings</string>

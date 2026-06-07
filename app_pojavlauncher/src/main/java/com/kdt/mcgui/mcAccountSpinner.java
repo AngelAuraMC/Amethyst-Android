@@ -238,8 +238,17 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         }
 
         // Make the spinner act like a button, since there is no item to really select
+        final float[] touchDown = new float[2];
         setOnTouchListener((v, event) -> {
-            if(event.getAction() != MotionEvent.ACTION_UP) return false;
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                touchDown[0] = event.getX();
+                touchDown[1] = event.getY();
+                return false;
+            }
+            if (event.getAction() != MotionEvent.ACTION_UP) return false;
+            float slop = 20 * getResources().getDisplayMetrics().density;
+            if (Math.abs(event.getX() - touchDown[0]) > slop ||
+                Math.abs(event.getY() - touchDown[1]) > slop) return true; // swipe — ignore
             // The activity should intercept this and spawn another fragment
             ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
             return true;

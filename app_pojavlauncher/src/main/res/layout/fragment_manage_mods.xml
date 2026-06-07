@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/background_app">
+    android:background="?attr/bgMainDrawable">
 
     <!-- ── Header bar: back arrow | profile name - Mods | + | ⋮ ── -->
     <LinearLayout
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginHorizontal="@dimen/padding_moderate"
-            android:textColor="@color/primary_text"
+            android:textColor="?attr/colorTextPrimary"
             android:textStyle="bold"
             android:textSize="@dimen/_14ssp"
             android:maxLines="1"
@@ -50,7 +50,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
-        android:background="@color/divider" />
+        android:background="?attr/colorDivider" />
 
     <!-- Mod list -->
     <androidx.recyclerview.widget.RecyclerView
@@ -69,7 +69,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:textColor="@color/secondary_text"
+        android:textColor="?attr/colorTextSecondary"
         android:textSize="@dimen/_13ssp"
         android:visibility="gone"
         android:text="@string/manage_mods_empty" />

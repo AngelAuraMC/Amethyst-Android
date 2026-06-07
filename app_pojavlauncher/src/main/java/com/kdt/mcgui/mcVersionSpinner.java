@@ -211,4 +211,29 @@ public class mcVersionSpinner extends ExtendedTextView {
     public ProfileAdapter getProfileAdapter() {
         return mProfileAdapter;
     }
+
+    // Only open the spinner on a tap, not a swipe.
+    // This prevents the notification panel swipe from accidentally triggering the popup.
+    private float mTouchDownX, mTouchDownY;
+    private static final int TAP_SLOP = 20; // dp threshold
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                mTouchDownX = event.getX();
+                mTouchDownY = event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                float dx = Math.abs(event.getX() - mTouchDownX);
+                float dy = Math.abs(event.getY() - mTouchDownY);
+                float slop = TAP_SLOP * getResources().getDisplayMetrics().density;
+                if (dx > slop || dy > slop) {
+                    // It's a swipe — ignore, don't call super
+                    return true;
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
 }
