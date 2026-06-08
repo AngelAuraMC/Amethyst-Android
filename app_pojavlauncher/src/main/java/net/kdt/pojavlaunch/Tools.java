@@ -1386,10 +1386,13 @@ public final class Tools {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    public static void printLauncherInfo(String gameVersion, String javaArguments) {
+    public static void printLauncherInfo(String gameVersion, String javaArguments, Context ctx) {
         Logger.appendToLog("Info: Launcher version: " + BuildConfig.VERSION_NAME);
         Logger.appendToLog("Info: Architecture: " + Architecture.archAsString(DEVICE_ARCHITECTURE));
         Logger.appendToLog("Info: Device model: " + Build.MANUFACTURER + " " +Build.MODEL);
+        int deviceRam = Tools.getTotalDeviceMemory(ctx);
+        Logger.appendToLog("Info: Device RAM: " + deviceRam + "MB");
+        Logger.appendToLog("Info: Minecraft RAM: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB");
         Logger.appendToLog("Info: API version: " + SDK_INT);
         Logger.appendToLog("Info: Selected Minecraft version: " + gameVersion);
         Logger.appendToLog("Info: Custom Java arguments: \"" + javaArguments + "\"");
