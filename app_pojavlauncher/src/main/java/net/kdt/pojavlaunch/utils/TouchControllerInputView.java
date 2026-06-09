@@ -113,14 +113,18 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
 
     @Override
     public void updateCursor(FloatRect cursorRect) {
-        TouchControllerInputView.this.cursorRect = cursorRect;
-        updateCursorAnchorInfo();
+        post(() -> {
+            TouchControllerInputView.this.cursorRect = cursorRect;
+            updateCursorAnchorInfo();
+        });
     }
 
     @Override
     public void updateArea(FloatRect inputAreaRect) {
-        TouchControllerInputView.this.inputAreaRect = inputAreaRect;
-        updateCursorAnchorInfo();
+        post(() -> {
+            TouchControllerInputView.this.inputAreaRect = inputAreaRect;
+            updateCursorAnchorInfo();
+        });
     }
 
     @Override
