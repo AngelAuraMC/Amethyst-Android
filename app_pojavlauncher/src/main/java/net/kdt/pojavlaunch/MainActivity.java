@@ -109,10 +109,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     @Nullable
     private RectF inputAreaRect;
-    @Nullable
-    private WindowInsetsAnimationCompat imeAnimation;
-    private int fullImeHeight;
-    private int targetImeHeight;
+    private int imeHeight;
+    private boolean hasOngoingImeAnimation;
 
     MinecraftProfile minecraftProfile;
 
@@ -204,53 +202,35 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         MCOptionUtils.addMCOptionListener(optionListener);
         mControlLayout.setModifiable(false);
 
-        // Listen to IME offsets
+        // Listen to IME insets animation
         ViewCompat.setWindowInsetsAnimationCallback(contentFrame, new WindowInsetsAnimationCompat.Callback(WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_STOP) {
             @Override
             public void onPrepare(@NonNull WindowInsetsAnimationCompat animation) {
                 if ((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0) {
-                    imeAnimation = animation;
+                    hasOngoingImeAnimation = true;
                 }
-            }
-
-            @NonNull
-            @Override
-            public WindowInsetsAnimationCompat.BoundsCompat onStart(@NonNull WindowInsetsAnimationCompat animation, @NonNull WindowInsetsAnimationCompat.BoundsCompat bounds) {
-                if ((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0) {
-                    refreshImeTranslation();
-                }
-                return bounds;
             }
 
             @NonNull
             @Override
             public WindowInsetsCompat onProgress(@NonNull WindowInsetsCompat insets, @NonNull List<WindowInsetsAnimationCompat> runningAnimations) {
-                // Find an IME animation
-                for (WindowInsetsAnimationCompat animation : runningAnimations) {
-                    if ((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0) {
-                        imeAnimation = animation;
-                        break;
-                    }
-                }
+                imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
                 refreshImeTranslation();
                 return insets;
             }
 
             @Override
             public void onEnd(@NonNull WindowInsetsAnimationCompat animation) {
-                imeAnimation = null;
-                refreshImeTranslation();
+                if ((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0) {
+                    hasOngoingImeAnimation = false;
+                }
             }
         });
         ViewCompat.setOnApplyWindowInsetsListener(contentFrame, (v, insets) -> {
-            boolean imeVisible = insets.isVisible(WindowInsetsCompat.Type.ime());
-            if (imeVisible) {
-                int height = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
-                fullImeHeight = height;
-                targetImeHeight = height;
-            } else {
-                // Retain last value of fullImeHeight
-                targetImeHeight = 0;
+            // Only refresh translation if IME change insets itself, not the animation
+            if (!hasOngoingImeAnimation) {
+                imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+                refreshImeTranslation();
             }
             return insets;
         });
@@ -792,7 +772,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     }
 
     private void refreshImeTranslation() {
-        if (fullImeHeight == 0) {
+        if (imeHeight == 0) {
             // Early exit
             contentFrame.setTranslationY(0);
             return;
@@ -808,20 +788,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             return;
         }
 
-        int animationImeHeight;
-        if (imeAnimation != null) {
-            if (targetImeHeight == 0) {
-                // Collapsing
-                animationImeHeight = (int) (fullImeHeight * (1 - imeAnimation.getInterpolatedFraction()));
-            } else {
-                // Expanding
-                animationImeHeight = (int) (targetImeHeight * imeAnimation.getInterpolatedFraction());
-            }
-        } else {
-            animationImeHeight = targetImeHeight;
-        }
         int bottomDistance = contentFrame.getHeight() - inputAreaBottom;
-        int bottomPadding = Math.max(animationImeHeight - bottomDistance, 0);
+        int bottomPadding = Math.max(imeHeight - bottomDistance, 0);
 
         contentFrame.setTranslationY(-bottomPadding);
     }
