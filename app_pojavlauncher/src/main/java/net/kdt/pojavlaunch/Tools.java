@@ -1386,12 +1386,15 @@ public final class Tools {
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
-    public static void printLauncherInfo(String gameVersion, String javaArguments, Context ctx) {
+    public static void printLauncherInfo(String gameVersion, String javaArguments, int deviceRam) {
         Logger.appendToLog("Info: Launcher version: " + BuildConfig.VERSION_NAME);
         Logger.appendToLog("Info: Architecture: " + Architecture.archAsString(DEVICE_ARCHITECTURE));
         Logger.appendToLog("Info: Device model: " + Build.MANUFACTURER + " " +Build.MODEL);
-        int deviceRam = Tools.getTotalDeviceMemory(ctx);
-        Logger.appendToLog("Info: Total RAM: " + deviceRam + "MB");
+        // java has top tier nullability and types vs kotlin
+        Integer deviceMemory = deviceRam;
+        if (deviceMemory != null) {
+            Logger.appendToLog("Info: Total RAM: " + deviceRam + "MB");
+        }
         Logger.appendToLog("Info: Allocated RAM: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB");
         Logger.appendToLog("Info: API version: " + SDK_INT);
         Logger.appendToLog("Info: Selected Minecraft version: " + gameVersion);
