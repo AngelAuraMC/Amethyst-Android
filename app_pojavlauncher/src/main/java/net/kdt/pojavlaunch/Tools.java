@@ -1391,8 +1391,8 @@ public final class Tools {
         Logger.appendToLog("Info: Architecture: " + Architecture.archAsString(DEVICE_ARCHITECTURE));
         Logger.appendToLog("Info: Device model: " + Build.MANUFACTURER + " " +Build.MODEL);
         int deviceRam = Tools.getTotalDeviceMemory(ctx);
-        Logger.appendToLog("Info: Device RAM: " + deviceRam + "MB");
-        Logger.appendToLog("Info: Minecraft RAM: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB");
+        Logger.appendToLog("Info: Total RAM: " + deviceRam + "MB");
+        Logger.appendToLog("Info: Allocated RAM: " + LauncherPreferences.PREF_RAM_ALLOCATION + "MB");
         Logger.appendToLog("Info: API version: " + SDK_INT);
         Logger.appendToLog("Info: Selected Minecraft version: " + gameVersion);
         Logger.appendToLog("Info: Custom Java arguments: \"" + javaArguments + "\"");
