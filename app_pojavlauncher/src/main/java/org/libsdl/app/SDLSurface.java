@@ -30,6 +30,8 @@ import android.view.WindowManager;
 
 import android.view.ScaleGestureDetector;
 
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
+
 /**
     SDLSurface. This is what we draw on, so we need to know when it's created
     in order to do anything useful.
@@ -152,7 +154,9 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             // In case we're waiting on a size change after going fullscreen, send a notification.
             SDLActivity.getContext().notifyAll();
         }
-
+        // We must always be full screen because SDL uses a different mechanism for downscaling.
+        // TODO: Add resolution slider support for SDL via SDL_SetRenderLogicalPresentation
+        LauncherPreferences.PREF_SCALE_FACTOR = 1f;
         Log.v("SDL", "Window size: " + width + "x" + height);
         Log.v("SDL", "Device size: " + nDeviceWidth + "x" + nDeviceHeight);
         SDLActivity.nativeSetScreenResolution(width, height, nDeviceWidth, nDeviceHeight, density, mDisplay.getRefreshRate());
