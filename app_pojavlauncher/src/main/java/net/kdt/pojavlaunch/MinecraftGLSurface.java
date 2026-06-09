@@ -129,7 +129,6 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
                 motionListener = SDLActivity.getMotionListener();
                 if (mNativeSurface == null) throw new IllegalStateException("Surface not yet loaded, can't set native surface for SDLSurface");
                 SDLActivity.externalInitialize(activity, surface, ((ViewGroup)getParent()), mNativeSurface);
-                if (LauncherPreferences.PREF_GAMEPAD_FORCEDSDL_PASSTHRU) Tools.SDL.initializeControllerSubsystems();
             } catch (UnsatisfiedLinkError ignored) {
                 // Ignore because if SDL.setupJNI(); fails, SDL wasn't loaded.
             }

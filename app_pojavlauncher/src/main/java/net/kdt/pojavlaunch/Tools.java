@@ -1925,7 +1925,7 @@ public final class Tools {
         return motionListener;
     }
 
-    static class SDL {
+    public static class SDL {
         /**
          * Initializes gamepad, joystick, and event subsystems.
          * This triggers {@link SDLControllerManager#pollInputDevices()} and subsequently disables
