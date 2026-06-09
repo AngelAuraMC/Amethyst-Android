@@ -62,6 +62,11 @@
             android:title="@string/mcl_setting_title_buttonallcaps"
             android:summary="@string/mcl_setting_subtitle_buttonallcaps"
             />
+        <androidx.preference.SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="keyboardPanning"
+            android:summary="@string/mcl_setting_subtitle_keyboard_panning"
+            android:title="@string/mcl_setting_title_keyboard_panning" />
 
     </PreferenceCategory>
 
