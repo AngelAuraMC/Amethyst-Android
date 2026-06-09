@@ -582,16 +582,15 @@ Java_org_lwjgl_glfw_CallbackBridge_nativeCreateGamepadAxisBuffer(JNIEnv *env, jc
 
 // HACK: Legacy4J has faulty detection that hardwires us to GLFW unless we init SDL ourselves.
 // This is a horribly made function that should really have more checks around it but meh.
-#define SDL_INIT_JOYSTICK   0x00000200u
-#define SDL_INIT_GAMEPAD    0x00002000u
-#define SDL_INIT_EVENTS     0x00004000u
-
+#include <SDL3/SDL_init.h>
+#include <SDL3/SDL_render.h>
 static inline void initSubsystem(void) {
     typedef int (*SDL_Init_Func)(uint32_t flags);
     void* handle = dlopen("libSDL3.so", RTLD_NOW);
     SDL_Init_Func SDL_Init = (SDL_Init_Func)dlsym(handle, "SDL_Init");
     SDL_Init(SDL_INIT_GAMEPAD | SDL_INIT_JOYSTICK | SDL_INIT_EVENTS);
 }
+
 JNIEXPORT void JNICALL
 Java_net_kdt_pojavlaunch_Tools_00024SDL_initializeControllerSubsystems(JNIEnv *env, jclass clazz){
     // Please ensure that you have already dlopen'ed SDL3 before calling this.
