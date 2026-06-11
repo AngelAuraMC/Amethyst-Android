@@ -227,7 +227,6 @@ class SDLJoystickHandler {
      */
     synchronized void pollInputDevices() {
         if (!firstPollDone) {
-            MinecraftGLSurface.sdlEnabled = true;
             if (sDirectGamepadEnableHandler != null){
                 sDirectGamepadEnableHandler.onDirectGamepadEnabled();
             }

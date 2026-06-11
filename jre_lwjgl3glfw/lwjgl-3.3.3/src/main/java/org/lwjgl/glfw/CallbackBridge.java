@@ -19,6 +19,11 @@ public class CallbackBridge {
     
     public static final boolean INPUT_DEBUG_ENABLED;
 
+    // Notification types
+    public static final int SDL = 0;
+    // Notification actions
+    public static final int INIT = 0;
+
     public static boolean sGamepadDirectEnabled;
     
     // TODO send grab state event to Android
@@ -58,5 +63,6 @@ public class CallbackBridge {
     public static native ByteBuffer nativeCreateGamepadAxisBuffer();
     private static native boolean nativeEnableGamepadDirectInput();
     public static native float nativeGetAndroidDPI();
+    public static native boolean nativeNotifyLauncher(int type, int... action);
 }
 
