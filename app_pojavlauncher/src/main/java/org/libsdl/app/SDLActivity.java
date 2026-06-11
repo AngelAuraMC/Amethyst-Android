@@ -372,6 +372,10 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         mCurrentNativeState = NativeState.INIT;
     }
 
+    public static SDLSurface getSDLSurface() {
+        return mSurface;
+    }
+
     protected SDLSurface createSDLSurface(Context context) {
         return new SDLSurface(context);
     }
