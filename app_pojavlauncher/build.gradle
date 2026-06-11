@@ -7,7 +7,7 @@ static def getDate() { return new Date().format('yyyyMMdd') }
 def getVersionName = {
     // Get the last version tag, as well as the short head of the last commit
     ByteArrayOutputStream TAG = new ByteArrayOutputStream()
-    ByteArrayOutputStream BRANCH = new ByteArrayOutputStream()
+    String semVer = "1.1.5"
     // Used by the fallback for github actions
     ByteArrayOutputStream TAG_PART_COMMIT = new ByteArrayOutputStream()
     String TAG_STRING
@@ -48,23 +48,13 @@ def getVersionName = {
 
     }
 
-    exec {
-        try {
-            commandLine 'git', 'branch', '--show-current'
-            ignoreExitValue true
-            standardOutput = BRANCH
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    return TAG_STRING.trim().replace("-g", "-") + "-" + BRANCH.toString().trim()
+    return TAG_STRING.trim().replace("-g", "-") + "-" + semVer
 }
 
 def getCFApiKey = {
     String key = System.getenv("CURSEFORGE_API_KEY");
     if(key != null) return key;
-    File curseforgeKeyFile = new File("./curseforge_key.txt");
+    File curseforgeKeyFile = new File("$projectDir/curseforge_key.txt");
     if(curseforgeKeyFile.canRead() && curseforgeKeyFile.isFile()) {
         return curseforgeKeyFile.text;
     }
@@ -95,6 +85,12 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+        customRelease {
+            storeFile file("aamc_upload.jks")
+            storePassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
+            keyAlias "android_github_release"
+            keyPassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
+        }
         googlePlayBuild {
             storeFile file("upload.jks")
             storePassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
@@ -111,6 +107,12 @@ android {
         versionName getVersionName()
         multiDexEnabled true //important
         resValue 'string', 'curseforge_api_key', getCFApiKey()
+        externalNativeBuild {
+            ndkBuild {
+                // Fix for Windows command line length limit
+                arguments "APP_SHORT_COMMANDS=true"
+            }
+        }
     }
 
     buildTypes {
@@ -120,6 +122,8 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
+            resValue "string", "app_name", "Minecraft (Debug)"
+            resValue "string", "app_short_name", "Minecraft (Debug)"
             resValue 'string', 'application_package', 'com.teknixstuff.launchjava'
             resValue 'string', 'storageProviderAuthorities', 'com.teknixstuff.launchjava.scoped.gamefolder.debug'
             resValue 'string', 'shareProviderAuthority', 'com.teknixstuff.launchjava.scoped.controlfolder.debug'
@@ -138,9 +142,12 @@ android {
             // Don't set to true or java.awt will be a.a or something similar.
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.customRelease
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
+            resValue "string", "app_name", "Minecraft"
+            resValue "string", "app_short_name", "Minecraft"
             resValue 'string', 'storageProviderAuthorities', 'com.teknixstuff.launchjava.scoped.gamefolder'
             resValue 'string', 'application_package', 'com.teknixstuff.launchjava'
         }
@@ -151,7 +158,7 @@ android {
         }
     }
 
-    ndkVersion = "25.2.9519653"
+    ndkVersion = "27.3.13750724"
 
     externalNativeBuild {
         ndkBuild {
@@ -190,7 +197,8 @@ android {
 
 afterEvaluate {
     // Explicit dependencies for which the apk relies on
-    tasks.mergeDebugAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":lwjgl2_methods_injector:jar", ":jre_lwjgl3glfw:jar")
+    tasks.mergeDebugAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":methods_injector_agent:jar", ":jre_lwjgl3glfw:jar")
+    tasks.mergeReleaseAssets.dependsOn(":forge_installer:jar", ":arc_dns_injector:jar", ":methods_injector_agent:jar", ":jre_lwjgl3glfw:jar")
 }
 
 dependencies {
@@ -227,5 +235,6 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
-    implementation project(":MobileGlues")
+    implementation "net.java.dev.jna:jna:5.13.0@aar"
+
 }

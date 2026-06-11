@@ -20,6 +20,9 @@ public class ProfileTypeSelectFragment extends Fragment {
     public ProfileTypeSelectFragment() {
         super(R.layout.fragment_profile_type);
     }
+    public ProfileTypeSelectFragment(int layout) {
+        super(layout);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class ProfileTypeSelectFragment extends Fragment {
         view.findViewById(R.id.modded_profile_neoforge).setOnClickListener((v)->
                 tryInstall(NeoForgeInstallFragment.class, NeoForgeInstallFragment.TAG));
         view.findViewById(R.id.modded_profile_modpack).setOnClickListener((v)->
-                tryInstall(SearchModFragment.class, SearchModFragment.TAG));
+                tryInstall(ModpackCreateFragment.class, ModpackCreateFragment.TAG));
         view.findViewById(R.id.modded_profile_quilt).setOnClickListener((v)->
                 tryInstall(QuiltInstallFragment.class, QuiltInstallFragment.TAG));
         view.findViewById(R.id.modded_profile_bta).setOnClickListener((v)->

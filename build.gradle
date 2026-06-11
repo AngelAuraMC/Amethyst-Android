@@ -1,33 +1,30 @@
-import java.io.IOException
+import java.security.MessageDigest
+
 plugins{
     id 'com.android.application' version '8.7.2' apply false
     id 'com.android.library' version '8.7.2' apply false
 }
 
-String getGitHash(File project) {
-    def command = Runtime.getRuntime().exec("git rev-list -1 HEAD " + project + "/src")
-    def returnCode = command.waitFor()
-    if (returnCode != 0) {
-        throw new IOException("Command 'getGitHash()' exited with " + returnCode)
+static void hashFileWithDigest(File fileToHash, MessageDigest digest){
+    fileToHash.withInputStream { is ->
+        byte[] buffer = new byte[8192]
+        int read
+        while ((read = is.read(buffer)) != -1) {
+            digest.update(buffer, 0, read)
+        }
     }
-    String gitCommitHash = command.inputStream.text.trim()
-    return gitCommitHash
 }
 
-Boolean gitUsed() {
-    def returnCode = Runtime.getRuntime().exec("git rev-parse --is-inside-work-tree").waitFor()
-    switch(returnCode){
-        case 127:
-          println("git not found");
-          return false;
-          break;
-        case 128:
-          println("not inside a git repository");
-          return false;
-          break;
-        case 0:
-          return true;
-        default:
-          throw new IOException("Command 'gitUsed()' exited with " + returnCode)
-  }
+static void writeVersionFile(File jarFile, File versionFile){
+    def sha1 = MessageDigest.getInstance("SHA-1")
+    hashFileWithDigest(jarFile, sha1)
+    versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
+}
+
+static void writeVersionFile(File[] jarFileArray, File versionFile){
+    def sha1 = MessageDigest.getInstance("SHA-1")
+    jarFileArray.each {jarFile ->
+        hashFileWithDigest(jarFile, sha1)
+    }
+    versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
 }

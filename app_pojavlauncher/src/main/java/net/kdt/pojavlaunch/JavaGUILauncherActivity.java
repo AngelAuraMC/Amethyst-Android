@@ -357,9 +357,8 @@ public class JavaGUILauncherActivity extends BaseActivity implements View.OnTouc
         JREUtils.redirectAndPrintJRELog();
         try {
             List<String> javaArgList = new ArrayList<>();
-
             // Enable Caciocavallo
-            Tools.getCacioJavaArgs(javaArgList,runtime.javaVersion == 8);
+            Tools.getCacioJavaArgs(javaArgList,runtime.javaVersion == 8, this);
             if(javaArgs != null) {
                 javaArgList.addAll(javaArgs);
             }

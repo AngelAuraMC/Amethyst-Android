@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -36,6 +37,10 @@ import net.kdt.pojavlaunch.fragments.SelectAuthFragment;
 import net.kdt.pojavlaunch.lifecycle.ContextAwareDoneListener;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutor;
 import net.kdt.pojavlaunch.modloaders.modpacks.ModloaderInstallTracker;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.CommonApi;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.ModLoader;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.ModpackInstaller;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.NotificationDownloadListener;
 import net.kdt.pojavlaunch.modloaders.modpacks.imagecache.IconCacheJanitor;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
@@ -50,7 +55,9 @@ import net.kdt.pojavlaunch.utils.NotificationUtils;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 
 public class LauncherActivity extends BaseActivity {
@@ -59,6 +66,25 @@ public class LauncherActivity extends BaseActivity {
     public final ActivityResultLauncher<Object> modInstallerLauncher =
             registerForActivityResult(new OpenDocumentWithExtension("jar"), (data)->{
                 if(data != null) Tools.launchModInstaller(this, data);
+            });
+    public final ActivityResultLauncher<Object> modpackImportLauncher =
+            registerForActivityResult(new OpenDocumentWithExtension(new String[]{"zip", "mrpack"}), (data)->{
+                if(data != null) {
+                    PojavApplication.sExecutorService.execute(() -> {
+                        try {
+                            ModLoader loaderInfo = new CommonApi(getString(R.string.curseforge_api_key)).importModpack(this, data);
+                            if (loaderInfo == null) return;
+                            loaderInfo.getDownloadTask(new NotificationDownloadListener(this, loaderInfo)).run();
+                        } catch (IOException e) {
+                            Tools.showErrorRemote(this, R.string.modpack_install_download_failed, e);
+                        } catch (IllegalArgumentException e) {
+                            Tools.showError(this, R.string.not_modpack_file, e);
+                        } catch (NoSuchAlgorithmException e) {
+                            // Should literally never happen because SHA-1 is required Java spec
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
             });
 
     private mcAccountSpinner mAccountSpinner;

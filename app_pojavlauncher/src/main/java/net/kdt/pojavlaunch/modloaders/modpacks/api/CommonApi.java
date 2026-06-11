@@ -1,21 +1,32 @@
 package net.kdt.pojavlaunch.modloaders.modpacks.api;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import net.kdt.pojavlaunch.PojavApplication;
+import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.Constants;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.ModDetail;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.ModItem;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchResult;
 
+import org.jdom2.IllegalDataException;
+
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Future;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Group all apis under the same umbrella, as another layer of abstraction
@@ -112,6 +123,11 @@ public class CommonApi implements ModpackApi {
         return getModpackApi(modDetail.apiSource).installMod(modDetail, selectedVersion);
     }
 
+    @Override
+    public ModLoader importModpack(Activity activity, Uri zipUri) throws IOException, NoSuchAlgorithmException {
+        return getModpackApi(activity, zipUri).importModpack(activity, zipUri);
+    }
+
     private @NonNull ModpackApi getModpackApi(int apiSource) {
         switch (apiSource) {
             case Constants.SOURCE_MODRINTH:
@@ -121,6 +137,31 @@ public class CommonApi implements ModpackApi {
             default:
                 throw new UnsupportedOperationException("Unknown API source: " + apiSource);
         }
+    }
+
+    private @NonNull ModpackApi getModpackApi(Activity activity, Uri zipUri){
+        String modrinthPackInfoFileName = "modrinth.index.json";
+        String curseforgePackInfoFileName = "manifest.json";
+        InputStream inputStream = null;
+        try {
+            inputStream = activity.getContentResolver().openInputStream(zipUri);
+            ZipInputStream zipInputStream = new ZipInputStream(inputStream);
+            ZipEntry zipEntry;
+            boolean isModrinth;
+            boolean isCurseforge;
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                isModrinth = zipEntry.getName().equals(modrinthPackInfoFileName);
+                isCurseforge = zipEntry.getName().equals(curseforgePackInfoFileName);
+                if(isModrinth) {
+                    return mModrinthApi;
+                } else if (isCurseforge) {
+                    return mCurseforgeApi;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        throw new IllegalArgumentException("Zip provided does not contain a manifest file");
     }
 
     /** Fuse the arrays in a way that's fair for every endpoint */

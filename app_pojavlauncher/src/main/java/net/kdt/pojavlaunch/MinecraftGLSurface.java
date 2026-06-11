@@ -147,7 +147,15 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
                 }
 
                 @Override
-                public void surfaceDestroyed(@NonNull SurfaceHolder holder) {}
+                public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
+                    /*
+                    Surface recreation in SurfaceView happens very often. When tabbing back in from
+                    out, when minimizing floating window, when turning into floating window, etc.
+                    Whenever the surface isn't in view, it is destroyed. When going into floating
+                    window, it appears to automatically release the associated ANativeWindow. This
+                    can cause a crash if not handled.
+                     */
+                }
             });
 
             ((ViewGroup)getParent()).addView(surfaceView);
@@ -178,11 +186,18 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
 
                 @Override
                 public boolean onSurfaceTextureDestroyed(@NonNull SurfaceTexture surface) {
+                    /*
+                    Surface recreation in TextureView can only really happen once, when turning
+                    into a floating window. Subsequent turns to floating window no longer trigger
+                    recreation. Tabbing out and in does not trigger recreation.
+                     */
                     return true;
                 }
 
                 @Override
-                public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {}
+                public void onSurfaceTextureUpdated(@NonNull SurfaceTexture surface) {
+                    // TODO: Triggers on eglSwapBuffers. Add a loading message and make it end here
+                }
             });
 
             ((ViewGroup)getParent()).addView(textureView);
@@ -469,9 +484,10 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
     }
 
     private void updateGrabState(boolean isGrabbing) {
-        if(mLastGrabState != isGrabbing) {
+        TouchEventProcessor desiredProcessor = pickEventProcessor(isGrabbing);
+        if (mLastGrabState != isGrabbing || mCurrentTouchProcessor != desiredProcessor) {
             mCurrentTouchProcessor.cancelPendingActions();
-            mCurrentTouchProcessor = pickEventProcessor(isGrabbing);
+            mCurrentTouchProcessor = desiredProcessor;
             mLastGrabState = isGrabbing;
         }
     }

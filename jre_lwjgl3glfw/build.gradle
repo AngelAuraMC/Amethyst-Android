@@ -1,34 +1,35 @@
-plugins {
-    id 'java'
-}
+import java.security.MessageDigest
 
-group = 'org.lwjgl.glfw'
+// Yes this is duplicate, no I don't care, this makes it able to live on its own
+// You, yes you! can copy paste this anywhere and it will build! (just remember to change the destinationDir).
 
-configurations.default.setCanBeResolved(true)
-
-jar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    archiveBaseName = "lwjgl-glfw-classes"
-    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/lwjgl3/"))
-    if (gitUsed()){
-      File versionFile = file("../app_pojavlauncher/src/main/assets/components/lwjgl3/version")
-      versionFile.write(getGitHash(project.projectDir))
-    }
-    from {
-        configurations.default.collect {
-            println(it.getName())
-            it.isDirectory() ? it : zipTree(it)
+static void hashFileWithDigest(File fileToHash, MessageDigest digest){
+    fileToHash.withInputStream { is ->
+        byte[] buffer = new byte[8192]
+        int read
+        while ((read = is.read(buffer)) != -1) {
+            digest.update(buffer, 0, read)
         }
     }
-    exclude 'net/java/openjdk/cacio/ctc/**'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(8)
+static void writeVersionFile(File jarFile, File versionFile){
+    def sha1 = MessageDigest.getInstance("SHA-1")
+    hashFileWithDigest(jarFile, sha1)
+    versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
+}
+
+static void writeVersionFile(File[] jarFileArray, File versionFile){
+    def sha1 = MessageDigest.getInstance("SHA-1")
+    jarFileArray.each {jarFile ->
+        hashFileWithDigest(jarFile, sha1)
     }
+    versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
 }
+def lwjglVersions = ["lwjgl-3.3.3", "lwjgl-3.4.1"]
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+tasks.register("jar") {
+    lwjglVersions.each { version ->
+        dependsOn(":jre_lwjgl3glfw:$version:jar")
+    }
 }

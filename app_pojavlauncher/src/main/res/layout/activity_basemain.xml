@@ -49,6 +49,11 @@
 				android:inputType="textFilter|textImeMultiLine|textAutoComplete|textAutoCorrect"
 				tools:ignore="TouchTargetSizeCheck" />
 
+			<net.kdt.pojavlaunch.utils.TouchControllerInputView
+				android:id="@+id/touch_controller_input"
+				android:layout_width="1dp"
+				android:layout_height="1dp" />
+
 			<net.kdt.pojavlaunch.customcontrols.handleview.DrawerPullButton
 				android:id="@+id/drawer_button"
 				android:layout_width="40dp"

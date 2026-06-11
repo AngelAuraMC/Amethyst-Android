@@ -1,7 +1,9 @@
 package net.kdt.pojavlaunch.modloaders.modpacks.api;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.net.Uri;
 
 import com.kdt.mcgui.ProgressLayout;
 
@@ -12,8 +14,12 @@ import net.kdt.pojavlaunch.modloaders.modpacks.models.ModDetail;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.ModItem;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchResult;
+import net.kdt.pojavlaunch.modloaders.modpacks.models.Constants;
 
 import java.io.IOException;
+import java.io.File;
+import java.security.NoSuchAlgorithmException;
+
 
 /**
  *
@@ -70,4 +76,13 @@ public interface ModpackApi {
      * @param selectedVersion The selected version
      */
     ModLoader installMod(ModDetail modDetail, int selectedVersion) throws IOException;
+
+    /**
+     * Imports the mod(pack) from a file.
+     * May require the download of additional files.
+     * May requires launching the installation of a modloader
+     * @param activity any activity
+     * @param zipUri URI to DocumentsUI selected zip file
+     */
+    ModLoader importModpack(Activity activity, Uri zipUri) throws IOException, NoSuchAlgorithmException;
 }

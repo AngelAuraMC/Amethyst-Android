@@ -42,7 +42,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 public class ProfileEditorFragment extends Fragment implements CropperUtils.CropperListener{
     public static final String TAG = "ProfileEditorFragment";
@@ -173,7 +172,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         );
 
         // Runtime spinner
-        List<Runtime> runtimes = MultiRTUtils.getRuntimes();
+        List<Runtime> runtimes = MultiRTUtils.getInstalledRuntimes();
         int jvmIndex = runtimes.indexOf(new Runtime("<Default>"));
         if (mTempProfile.javaDir != null) {
             String selectedRuntime = mTempProfile.javaDir.substring(Tools.LAUNCHERPROFILES_RTPREFIX.length());
@@ -246,7 +245,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.lastVersionId = mDefaultVersion.getText().toString();
         mTempProfile.controlFile = mDefaultControl.getText().toString();
         mTempProfile.name = mDefaultName.getText().toString();
-        mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
+        mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString()
+                .replaceAll("[\r\n]+", " ")
+                .trim();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
         if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;

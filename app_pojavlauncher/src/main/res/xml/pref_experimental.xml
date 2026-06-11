@@ -14,6 +14,12 @@
             android:key="bigCoreAffinity"
             android:title="@string/preference_force_big_core_title"
             android:summary="@string/preference_force_big_core_desc" />
+        <net.kdt.pojavlaunch.prefs.MathQuestionPreference
+            android:title="@string/sodium_override_title"
+            android:summaryOff="@string/sodium_override_summaryOff"
+            android:summaryOn="@string/sodium_override_summaryOn"
+            android:key="sodium_override"
+            />
 
     </PreferenceCategory>
 </PreferenceScreen>
