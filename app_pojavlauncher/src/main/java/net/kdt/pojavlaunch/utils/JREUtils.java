@@ -324,7 +324,10 @@ public class JREUtils {
             Log.wtf("RENDER_LIBRARY", "Failed to load set SDL env vars");
         }
         // Init must run after SDL env vars are set else they don't apply
-        if (LauncherPreferences.PREF_GAMEPAD_FORCEDSDL_PASSTHRU) Tools.SDL.initializeControllerSubsystems();
+        if (LauncherPreferences.PREF_GAMEPAD_FORCEDSDL_PASSTHRU) {
+            Tools.SDL.initializeControllerSubsystems();
+            MinecraftGLSurface.sdlEnabled = true;
+        }
 
         List<String> userArgs = getJavaArgs(activity, runtimeHome, userArgsString);
 
@@ -531,7 +534,7 @@ public class JREUtils {
         if(LOCAL_RENDERER.equals("opengles_mobileglues")){
             try {
                 Os.setenv("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues", true);
-                Os.setenv("POJAVEXEC_EGL",renderLibrary, true);
+                Os.setenv("POJAVEXEC_EGL", renderLibrary, true);
             } catch (ErrnoException e) {
                 Log.wtf("RENDER_LIBRARY", "Failed to load MobileGlues settings");
             }

@@ -228,11 +228,11 @@ public class ControlButton extends TextView implements ControlInterface {
                 break;
 
             case ControlData.SPECIALBTN_SCROLLDOWN:
-                if (!isDown) CallbackBridge.sendScroll(0, 1d);
+                if (!isDown) CallbackBridge.sendScroll(0, 1f);
                 break;
 
             case ControlData.SPECIALBTN_SCROLLUP:
-                if (!isDown) CallbackBridge.sendScroll(0, -1d);
+                if (!isDown) CallbackBridge.sendScroll(0, -1f);
                 break;
             case ControlData.SPECIALBTN_MENU:
                 mControlLayout.notifyAppMenu();

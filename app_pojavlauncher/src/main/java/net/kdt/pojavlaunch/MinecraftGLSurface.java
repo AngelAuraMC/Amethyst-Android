@@ -278,7 +278,6 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
             return true; //mouse event handled successfully
         }
         TouchControllerUtils.processTouchEvent(e, this);
-        SDLActivity.getSDLSurface().onTouch(null, e);
         if (mIngameProcessor == null || mInGUIProcessor == null) return true;
         return mCurrentTouchProcessor.processTouchEvent(e);
     }
@@ -297,6 +296,7 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
     @SuppressLint("NewApi")
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        SDLActivity.getSDLSurface().onCapturedPointerEvent(event);
         if(sdlEnabled && Gamepad.isGamepadEvent(event)) {
             final MotionEvent copy = MotionEvent.obtain(event);
             PojavApplication.sExecutorService.execute(()->{

@@ -356,8 +356,8 @@ public class SDLActivity extends Activity implements View.OnSystemUiVisibilityCh
         SDL.setupJNI(); // Implicitly loads SDLActivity
 
         mSingleton = singleton;
-        surface.setNativeSurface(nativeSurface);
-        mSurface = surface;
+        mSurface = surface; // Must set here before set native surface
+        SDLSurface.setNativeSurface(nativeSurface);
         mTextEdit = null;
         mLayout = layout;
         SDL.setContext(singleton); // Important!! SDLClipboardHandler needs it.

@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import net.kdt.pojavlaunch.GrabListener;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
+import org.libsdl.app.SDLActivity;
 import org.lwjgl.glfw.CallbackBridge;
 
 /**
@@ -125,6 +127,8 @@ public class Touchpad extends View implements GrabListener, AbstractTouchpad {
     public void applyMotionVector(float x, float y) {
         mMouseX = Math.max(0, Math.min(currentDisplayMetrics.widthPixels, mMouseX + x * LauncherPreferences.PREF_MOUSESPEED));
         mMouseY = Math.max(0, Math.min(currentDisplayMetrics.heightPixels, mMouseY + y * LauncherPreferences.PREF_MOUSESPEED));
+        // HOVER_MOVE and MOVE are equivalent in SDL
+        SDLActivity.onNativeMouse(0, MotionEvent.ACTION_MOVE, x, y, true);
         updateMousePosition();
     }
 

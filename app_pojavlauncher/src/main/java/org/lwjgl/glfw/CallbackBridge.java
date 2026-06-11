@@ -8,9 +8,12 @@ import android.content.*;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
+import android.view.MotionEvent;
 
 import androidx.annotation.Keep;
 import androidx.annotation.Nullable;
+
+import org.libsdl.app.SDLActivity;
 
 import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
@@ -56,6 +59,8 @@ public class CallbackBridge {
         mouseX = x;
         mouseY = y;
         nativeSendCursorPos(mouseX, mouseY);
+        // HOVER_MOVE and MOVE are equivalent in SDL
+        SDLActivity.onNativeMouse(0, MotionEvent.ACTION_MOVE, x, y, true);
     }
 
     /**
@@ -117,6 +122,7 @@ public class CallbackBridge {
     public static void sendMouseKeycode(int button, int modifiers, boolean isDown) {
         // if (isGrabbing()) DEBUG_STRING.append("MouseGrabStrace: " + android.util.Log.getStackTraceString(new Throwable()) + "\n");
         nativeSendMouseButton(button, isDown ? 1 : 0, modifiers);
+        SDLActivity.onNativeMouse(button, isDown ? MotionEvent.ACTION_DOWN : MotionEvent.ACTION_UP, mouseX, mouseY, true);
     }
 
     public static void sendMouseKeycode(int keycode) {
@@ -124,8 +130,9 @@ public class CallbackBridge {
         sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), false);
     }
     
-    public static void sendScroll(double xoffset, double yoffset) {
+    public static void sendScroll(float xoffset, float yoffset) {
         nativeSendScroll(xoffset, yoffset);
+        SDLActivity.onNativeMouse(0, MotionEvent.ACTION_SCROLL, xoffset, yoffset, false);
     }
 
     public static void sendUpdateWindowSize(int w, int h) {

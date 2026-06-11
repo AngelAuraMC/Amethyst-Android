@@ -30,6 +30,8 @@ import android.view.WindowManager;
 
 import android.view.ScaleGestureDetector;
 
+import net.kdt.pojavlaunch.MinecraftGLSurface;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 /**
@@ -75,9 +77,14 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
         setOnGenericMotionListener(SDLActivity.getMotionListener());
 
-        // Some arbitrary defaults to avoid a potential division by zero
-        mWidth = 1.0f;
-        mHeight = 1.0f;
+//        // Some arbitrary defaults to avoid a potential division by zero
+//        mWidth = 1.0f;
+//        mHeight = 1.0f;
+        // These values are used in calculating the position of inputs. SDL's scaling is independent
+        // of those, it only cares about the actual native surface resolution. Logical rendering
+        // resolution is set via SDL_SetRenderLogicalPresentation, not here.
+        mWidth = Tools.currentDisplayMetrics.widthPixels;
+        mHeight = Tools.currentDisplayMetrics.heightPixels;
 
         mIsSurfaceReady = false;
     }
@@ -102,6 +109,7 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
     public static void setNativeSurface(Surface nativeSurface) {
         mNativeSurface = nativeSurface;
+        SDLActivity.getSDLSurface().surfaceCreated(null);
     }
 
     // Called when we have a valid drawing surface
@@ -122,6 +130,11 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
         mIsSurfaceReady = false;
         SDLActivity.onNativeSurfaceDestroyed();
+    }
+
+    public void surfaceChanged(){
+        // The first two args are ignored
+        surfaceChanged(null, 0, Tools.currentDisplayMetrics.widthPixels, Tools.currentDisplayMetrics.heightPixels);
     }
 
     // Called when the surface is resized

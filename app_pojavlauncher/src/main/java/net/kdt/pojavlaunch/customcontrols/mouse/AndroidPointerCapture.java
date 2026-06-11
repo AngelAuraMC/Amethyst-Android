@@ -18,6 +18,7 @@ import net.kdt.pojavlaunch.MinecraftGLSurface;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
+import org.libsdl.app.SDLActivity;
 import org.lwjgl.glfw.CallbackBridge;
 
 import java.util.function.Consumer;
@@ -85,6 +86,7 @@ public class AndroidPointerCapture implements ViewTreeObserver.OnWindowFocusChan
 
     @Override
     public boolean onCapturedPointer(View view, MotionEvent event) {
+        SDLActivity.getSDLSurface().onCapturedPointerEvent(event);
         checkSameDevice(event.getDevice());
         int axisX, axisY;
         // Sources can claim to be a relative device by belonging to the trackball class, if so then
