@@ -63,6 +63,7 @@ import net.kdt.pojavlaunch.prefs.QuickSettingSideDialog;
 import net.kdt.pojavlaunch.services.GameService;
 import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.MCOptionUtils;
+import net.kdt.pojavlaunch.utils.TouchControllerInputView;
 import net.kdt.pojavlaunch.utils.TouchControllerUtils;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
@@ -85,6 +86,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     protected static View.OnGenericMotionListener motionListener = (v, event) -> false;
 
     public static TouchCharInput touchCharInput;
+    private TouchControllerInputView touchControllerInputView;
     private MinecraftGLSurface minecraftGLView;
     private static Touchpad touchpad;
     private LoggerView loggerView;
@@ -142,9 +144,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
         String gameDirPath = Tools.getGameDirPath(minecraftProfile).getAbsolutePath();
         MCOptionUtils.load(gameDirPath);
-        if (Tools.hasTouchController(new File(gameDirPath)) || LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
-            TouchControllerUtils.initialize(this);
-        }
 
         Intent gameServiceIntent = new Intent(this, GameService.class);
         // Start the service a bit early
@@ -152,6 +151,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         initLayout(R.layout.activity_basemain);
         CallbackBridge.addGrabListener(touchpad);
         CallbackBridge.addGrabListener(minecraftGLView);
+
+        if (Tools.hasTouchController(new File(gameDirPath)) || LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
+            TouchControllerUtils.initialize(this, touchControllerInputView);
+        }
 
         mGyroControl = new GyroControl(this);
 
@@ -205,6 +208,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             // FIXME: is it safe for multi thread?
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
+
+            touchControllerInputView.setSize(minecraftGLView.getWidth(), minecraftGLView.getHeight());
 
             if(minecraftProfile.pojavRendererName != null) {
                 Log.i("RdrDebug","__P_renderer="+minecraftProfile.pojavRendererName);
@@ -306,6 +311,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         loggerView = findViewById(R.id.mainLoggerView);
         mControlLayout = findViewById(R.id.main_control_layout);
         touchCharInput = findViewById(R.id.mainTouchCharInput);
+        touchControllerInputView = findViewById(R.id.touch_controller_input);
         mDrawerPullButton = findViewById(R.id.drawer_button);
         mHotbarView = findViewById(R.id.hotbar_view);
     }
@@ -367,6 +373,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             minecraftGLView.refreshSize();
             Tools.updateWindowSize(this);
             mControlLayout.refreshControlButtonPositions();
+            touchControllerInputView.setSize(minecraftGLView.getWidth(), minecraftGLView.getHeight());
         });
     }
 
@@ -455,6 +462,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         } catch (NumberFormatException e) { folder.mkdir(); }
 
         MinecraftAccount minecraftAccount = PojavProfile.getCurrentProfileContent(this, null);
+        if (hasMods("sodium"))
+            Logger.appendToLog("WARNING: Sodium is being used, Copper-Android does support this mod, but it may cause some visual glitches and/or crashes. If you encounter any issues, report it in our Discord server!");
+        Tools.printLauncherInfo(versionId, Tools.isValidString(minecraftProfile.javaArgs) ? minecraftProfile.javaArgs : LauncherPreferences.PREF_CUSTOM_JAVA_ARGS, Tools.getTotalDeviceMemory(this));
+        if(Tools.LOCAL_RENDERER.equals("opengles_mobileglues")) {
+            LauncherPreferences.writeMGRendererSettings();
+        }
         JREUtils.redirectAndPrintJRELog();
         LauncherProfiles.load();
         int requiredJavaVersion = 8;
