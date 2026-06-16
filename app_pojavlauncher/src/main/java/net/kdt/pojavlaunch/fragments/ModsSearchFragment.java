@@ -327,7 +327,13 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
             for (int i = 0; i < depIds.length; i++) {
                 final int idx = i;
                 final String type = (depTypes != null && idx < depTypes.length) ? depTypes[idx] : "required";
-                final String prefix = "required".equals(type) ? "Required: " : "Optional: ";
+                final String prefix;
+                switch (type) {
+                    case "required":      prefix = "Required: ";     break;
+                    case "incompatible":  prefix = "Incompatible: "; break;
+                    case "embedded":      prefix = "Embedded: ";     break;
+                    default:              prefix = "Optional: ";     break;
+                }
                 checkedDefaults[idx] = "required".equals(type);
 
                 final String projectId = depIds[idx];

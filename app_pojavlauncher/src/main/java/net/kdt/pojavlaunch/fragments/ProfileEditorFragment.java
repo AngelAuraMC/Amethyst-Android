@@ -24,6 +24,7 @@ import androidx.fragment.app.Fragment;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.fragments.MainMenuFragment;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.multirt.MultiRTUtils;
@@ -143,28 +144,35 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         loadValues(LauncherPreferences.DEFAULT_PREF.getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, ""), view.getContext());
     }
 
+    private void openFileSelector(Bundle bundle) {
+        Fragment parent = getParentFragment();
+        if (parent instanceof MainMenuFragment) {
+            MainMenuFragment mmf = (MainMenuFragment) parent;
+            if (mmf.tryOpenInRightPane(FileSelectorFragment.class, FileSelectorFragment.TAG, bundle)) {
+                return;
+            }
+        }
+        Tools.swapFragment(requireActivity(), FileSelectorFragment.class, FileSelectorFragment.TAG, bundle);
+    }
+
     private View.OnClickListener getGameDirListener() {
         return v -> {
-            Bundle bundle = new Bundle(2);
+            Bundle bundle = new Bundle(3);
             bundle.putBoolean(FileSelectorFragment.BUNDLE_SELECT_FOLDER, true);
             bundle.putString(FileSelectorFragment.BUNDLE_ROOT_PATH, Tools.DIR_GAME_HOME);
             bundle.putBoolean(FileSelectorFragment.BUNDLE_SHOW_FILE, false);
             mValueToConsume = FileSelectorFragment.BUNDLE_SELECT_FOLDER;
-
-            Tools.swapFragment(requireActivity(),
-                    FileSelectorFragment.class, FileSelectorFragment.TAG, bundle);
+            openFileSelector(bundle);
         };
     }
 
     private View.OnClickListener getControlSelectListener() {
         return v -> {
-            Bundle bundle = new Bundle(3);
+            Bundle bundle = new Bundle(2);
             bundle.putBoolean(FileSelectorFragment.BUNDLE_SELECT_FOLDER, false);
             bundle.putString(FileSelectorFragment.BUNDLE_ROOT_PATH, Tools.CTRLMAP_PATH);
             mValueToConsume = FileSelectorFragment.BUNDLE_SELECT_FILE;
-
-            Tools.swapFragment(requireActivity(),
-                    FileSelectorFragment.class, FileSelectorFragment.TAG, bundle);
+            openFileSelector(bundle);
         };
     }
 

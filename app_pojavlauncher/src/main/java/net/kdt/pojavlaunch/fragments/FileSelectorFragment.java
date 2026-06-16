@@ -78,16 +78,25 @@ public class FileSelectorFragment extends Fragment {
 
         mSelectFolderButton.setOnClickListener(v -> {
             ExtraCore.setValue(ExtraConstants.FILE_SELECTOR, removeLockPath(mFileListView.getFullPath().getAbsolutePath()));
-            Tools.removeCurrentFragment(requireActivity());
+            dismiss();
         });
 
         mFileListView.setFileSelectedListener(new FileSelectedListener() {
             @Override
             public void onFileSelected(File file, String path) {
                 ExtraCore.setValue(ExtraConstants.FILE_SELECTOR, removeLockPath(path));
-                Tools.removeCurrentFragment(requireActivity());
+                dismiss();
             }
         });
+    }
+
+    /** Pop whichever back stack we actually live in: child (right pane) or activity. */
+    private void dismiss() {
+        if (getParentFragment() != null) {
+            requireParentFragment().getChildFragmentManager().popBackStack();
+        } else {
+            requireActivity().getSupportFragmentManager().popBackStack();
+        }
     }
 
     private String removeLockPath(String path){
