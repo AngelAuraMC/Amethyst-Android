@@ -47,6 +47,7 @@
     <string name="mcl_setting_subtitle_mousescale">Alterar o tamanho do cursor virtual.</string>
     <string name="mcl_setting_title_javaargs">Argumentos JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Cuidado, isto pode causar falhas no seu jogo caso modificado sem conhecimento.</string>
+    <string name="mcl_setting_title_renderer_settings">Opções de Renderização Extra</string>
     <string name="mcl_setting_title_renderer_subtitle">Configurações específicas do renderizador</string>
     <string name="mcl_setting_category_renderer">Renderizador</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - ( apenas 1.21.4&Lt; rápido)</string>
@@ -421,6 +422,7 @@
     <string name="preference_ask_for_microphone_title">Permitir microfone</string>
     <string name="preference_ask_for_microphone_description">Clique para pedir novamente a permissão da notificação, requerida para mods de chat de voz como o Simple Voice Chat.</string>
     <string name="mcl_gamepad_forcedSDL_subtitle">Permite que versões antigas do Legacy4J usem o backend SDL</string>
+    <string name="mcl_gamepad_forcedSDL">Forçar inicialização do controle SDL</string>
     <string name="preference_category_SDL_settings">Configurações do SDL</string>
     <string name="controllableFound">Controllable atualmente possui uma chance aleatória de fechar ao iniciar o jogo. Você pode ou continuar novamente e esperar que o jogo inicie ou use um outro mod como o Controlify.</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (todas as versões, mediano)</string>
