@@ -97,6 +97,15 @@
     <string name="manage_mods_empty">No mods installed for this profile.</string>
     <string name="manage_mods_delete_confirm">Delete %s?</string>
     <string name="search_mod_filter">Filter mods</string>
+    <string name="mod_update">Update mod</string>
+    <string name="mod_check_updates">Check for updates</string>
+    <string name="mod_update_checking">Checking for updates…</string>
+    <string name="mod_update_available">Update available</string>
+    <string name="mod_update_none">All mods up to date</string>
+    <string name="mod_update_no_filter">Set a version filter first to check for updates</string>
+    <string name="mod_updating">Updating %s…</string>
+    <string name="mod_update_done">%s updated</string>
+    <string name="mod_update_failed">Update failed for %s</string>
     <string name="search_mod_any_loader">Any loader</string>
     <string name="manage_mods_filter_active">Filter active: %s / %s</string>
     <string name="manage_mods_filter_cleared">Filter cleared</string>

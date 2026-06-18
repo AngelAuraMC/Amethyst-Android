@@ -81,8 +81,21 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/padding_moderate"
         android:checked="true"
-        
-        
+        app:layout_constraintEnd_toStartOf="@+id/installed_mod_update"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Update button — hidden until an update is available, uses MineButton style -->
+    <com.kdt.mcgui.MineButton
+        android:id="@+id/installed_mod_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/padding_small"
+        android:text="@string/mod_update"
+        android:textSize="@dimen/_10ssp"
+        android:paddingHorizontal="@dimen/padding_moderate"
+        android:paddingVertical="@dimen/padding_small"
+        android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@+id/installed_mod_delete"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

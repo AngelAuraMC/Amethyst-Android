@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,12 +31,12 @@ public class ManageModsFragment extends Fragment {
 
     public static final String TAG = "ManageModsFragment";
 
-    // SharedPrefs keys — suffixed with the profile key so each instance is independent
-    private static final String PREF_FILE         = "mod_filters";
-    private static final String KEY_MC_VERSION    = "mc_version_";   // + profileKey
-    private static final String KEY_LOADER        = "loader_";        // + profileKey
+    private static final String PREF_FILE      = "mod_filters";
+    private static final String KEY_MC_VERSION = "mc_version_";
+    private static final String KEY_LOADER     = "loader_";
 
     private ImageButton mFilterButton;
+    private InstalledModAdapter mAdapter;
 
     public ManageModsFragment() {
         super(R.layout.fragment_manage_mods);
@@ -51,45 +52,48 @@ public class ManageModsFragment extends Fragment {
         View        emptyState = view.findViewById(R.id.manage_mods_empty);
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
-
-        // Filter button — opens dialog to set/clear this instance's version+loader filter
         mFilterButton.setOnClickListener(v -> showFilterDialog());
-
-        // Add → open mod store, carrying the saved filter for this instance
         addButton.setOnClickListener(v -> openModSearch());
 
-        // Title: "ProfileName - Mods"
         String profileName = getCurrentProfileName();
         title.setText(profileName.isEmpty()
                 ? getString(R.string.mcl_button_manage_mods)
                 : profileName + " - Mods");
 
-        // Reflect whether a filter is already saved for this instance
         refreshFilterButtonTint();
 
-        // Build mod list
-        File modsDir = getModsDir();
-        InstalledModAdapter adapter = new InstalledModAdapter(modsDir, isEmpty -> {
-            recycler.setVisibility(isEmpty ? View.GONE : View.VISIBLE);
+        // Build adapter, inject saved filter, then auto-check for updates
+        String profileKey = getCurrentProfileKey();
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences(PREF_FILE, android.content.Context.MODE_PRIVATE);
+        String savedVersion = prefs.getString(KEY_MC_VERSION + profileKey, "");
+        String savedLoader  = prefs.getString(KEY_LOADER      + profileKey, "");
+
+        mAdapter = new InstalledModAdapter(getModsDir(), isEmpty -> {
+            recycler.setVisibility(isEmpty ? View.GONE  : View.VISIBLE);
             emptyState.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         });
+        mAdapter.setFilter(savedVersion, savedLoader);
+
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recycler.setAdapter(adapter);
+        recycler.setAdapter(mAdapter);
+
+        // Auto-check for updates as soon as the screen opens
+        // If no filter is set, silently skip (nothing to compare against)
+        if (!savedVersion.isEmpty() || !savedLoader.isEmpty()) {
+            mAdapter.checkForUpdates(() -> {
+                // no-op — individual items already refresh themselves
+            });
+        }
     }
 
     // ── Filter dialog ────────────────────────────────────────────────────────
 
-    /**
-     * Opens the same dialog_mod_filters layout used by ModsSearchFragment,
-     * but saves the result to per-instance SharedPreferences instead of
-     * keeping it only in memory.  Each profile key gets its own saved filter.
-     */
     private void showFilterDialog() {
         String profileKey = getCurrentProfileKey();
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences(PREF_FILE, android.content.Context.MODE_PRIVATE);
 
-        // Load current saved values for this instance
         String savedVersion = prefs.getString(KEY_MC_VERSION + profileKey, "");
         String savedLoader  = prefs.getString(KEY_LOADER      + profileKey, "");
 
@@ -105,10 +109,8 @@ public class ManageModsFragment extends Fragment {
 
             if (versionText == null || selectVersion == null || applyButton == null) return;
 
-            // Pre-fill with this instance's saved filter
             versionText.setText(savedVersion);
 
-            // Loader spinner setup
             final String[] loaderValues = { "", "fabric", "forge", "quilt", "neoforge" };
             if (loaderSpinner != null) {
                 String[] loaderLabels = {
@@ -119,8 +121,6 @@ public class ManageModsFragment extends Fragment {
                         requireContext(), android.R.layout.simple_spinner_item, loaderLabels);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 loaderSpinner.setAdapter(adapter);
-
-                // Restore saved loader selection
                 for (int i = 0; i < loaderValues.length; i++) {
                     if (loaderValues[i].equals(savedLoader)) {
                         loaderSpinner.setSelection(i);
@@ -139,24 +139,27 @@ public class ManageModsFragment extends Fragment {
                         ? loaderValues[loaderSpinner.getSelectedItemPosition()]
                         : "";
 
-                // Save per-instance
                 prefs.edit()
                         .putString(KEY_MC_VERSION + profileKey, newVersion)
                         .putString(KEY_LOADER      + profileKey, newLoader)
                         .apply();
 
+                // Update the adapter's filter and re-run update check
+                if (mAdapter != null) {
+                    mAdapter.setFilter(newVersion, newLoader);
+                    if (!newVersion.isEmpty() || !newLoader.isEmpty()) {
+                        mAdapter.checkForUpdates(() -> {});
+                    }
+                }
+
                 refreshFilterButtonTint();
                 di.dismiss();
-
-                // Immediately open mod search with the new filter applied
-                openModSearch();
             });
         });
 
         dialog.show();
     }
 
-    /** Opens ModsSearchFragment, passing this instance's saved filter as args. */
     private void openModSearch() {
         String profileKey = getCurrentProfileKey();
         SharedPreferences prefs = requireContext()
@@ -169,27 +172,18 @@ public class ManageModsFragment extends Fragment {
         if (!version.isEmpty()) args.putString(ModsSearchFragment.ARG_PRESET_MC_VERSION, version);
         if (!loader.isEmpty())  args.putString(ModsSearchFragment.ARG_PRESET_LOADER,     loader);
 
-        // Always create a fresh instance so the args bundle is applied on every open.
-        // Reusing a back-stack cached instance would skip onViewCreated and the filter
-        // would never be seeded from the saved per-instance prefs.
         ModsSearchFragment fragment = new ModsSearchFragment();
-        fragment.setArguments(args.isEmpty() ? new Bundle() : args);
+        fragment.setArguments(args);
         navigateToFragment(fragment, ModsSearchFragment.TAG);
     }
 
-    /**
-     * Dims the filter icon when no filter is set for this instance (alpha 0.4),
-     * fully opaque when one is active. No colour change — just opacity.
-     */
     private void refreshFilterButtonTint() {
         if (mFilterButton == null || !isAdded()) return;
         String profileKey = getCurrentProfileKey();
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences(PREF_FILE, android.content.Context.MODE_PRIVATE);
-
         boolean active = !prefs.getString(KEY_MC_VERSION + profileKey, "").isEmpty()
                       || !prefs.getString(KEY_LOADER      + profileKey, "").isEmpty();
-
         mFilterButton.setAlpha(active ? 1.0f : 0.4f);
     }
 
