@@ -31,6 +31,8 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.io.File;
+import android.content.SharedPreferences;
+import net.kdt.pojavlaunch.fragments.ModsSearchFragment;
 
 public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";
@@ -133,6 +135,47 @@ public class MainMenuFragment extends Fragment {
     /**
      * Internal navigation: right pane in landscape, full-screen swap in portrait.
      */
+    /**
+     * Opens ModsSearchFragment with the saved per-instance filter pre-seeded.
+     * Always creates a fresh instance so the args bundle is applied on every open.
+     */
+    private void openModStore() {
+        String profileKey = LauncherPreferences.DEFAULT_PREF
+                .getString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "default");
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences("mod_filters", android.content.Context.MODE_PRIVATE);
+
+        String version = prefs.getString("mc_version_" + profileKey, "");
+        String loader  = prefs.getString("loader_"     + profileKey, "");
+
+        Bundle args = new Bundle();
+        if (!version.isEmpty()) args.putString(ModsSearchFragment.ARG_PRESET_MC_VERSION, version);
+        if (!loader.isEmpty())  args.putString(ModsSearchFragment.ARG_PRESET_LOADER,     loader);
+
+        ModsSearchFragment fragment = new ModsSearchFragment();
+        fragment.setArguments(args);
+        openPaneFragment(fragment, ModsSearchFragment.TAG);
+    }
+
+    /** Navigate to a pre-built fragment instance (preserves args on fresh instances). */
+    private void openPaneFragment(Fragment fragment, String tag) {
+        if (isTwoPane()) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.right_pane_container, fragment, tag)
+                    .addToBackStack(tag)
+                    .commit();
+        } else {
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.container_fragment, fragment, tag)
+                    .addToBackStack(tag)
+                    .commit();
+        }
+    }
+
     private void openPane(Class<? extends Fragment> fragmentClass, String tag,
                           @Nullable Bundle args) {
         if (isTwoPane()) {
@@ -243,8 +286,7 @@ public class MainMenuFragment extends Fragment {
 
         // Mod Store
         if (mModStoreButton != null)
-            mModStoreButton.setOnClickListener(v ->
-                    openPane(ModsSearchFragment.class, ModsSearchFragment.TAG, null));
+            mModStoreButton.setOnClickListener(v -> openModStore());
 
         // Execute .jar
         if (hasOnlineProfile()) {
