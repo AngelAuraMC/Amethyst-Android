@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -170,13 +169,17 @@ public class ManageModsFragment extends Fragment {
         if (!version.isEmpty()) args.putString(ModsSearchFragment.ARG_PRESET_MC_VERSION, version);
         if (!loader.isEmpty())  args.putString(ModsSearchFragment.ARG_PRESET_LOADER,     loader);
 
-        navigateToFragment(ModsSearchFragment.class, ModsSearchFragment.TAG,
-                args.isEmpty() ? null : args);
+        // Always create a fresh instance so the args bundle is applied on every open.
+        // Reusing a back-stack cached instance would skip onViewCreated and the filter
+        // would never be seeded from the saved per-instance prefs.
+        ModsSearchFragment fragment = new ModsSearchFragment();
+        fragment.setArguments(args.isEmpty() ? new Bundle() : args);
+        navigateToFragment(fragment, ModsSearchFragment.TAG);
     }
 
     /**
-     * Tints the filter icon with the brand accent colour when a filter is saved
-     * for this instance, or resets it to the default icon tint when cleared.
+     * Dims the filter icon when no filter is set for this instance (alpha 0.4),
+     * fully opaque when one is active. No colour change — just opacity.
      */
     private void refreshFilterButtonTint() {
         if (mFilterButton == null || !isAdded()) return;
@@ -187,13 +190,7 @@ public class ManageModsFragment extends Fragment {
         boolean active = !prefs.getString(KEY_MC_VERSION + profileKey, "").isEmpty()
                       || !prefs.getString(KEY_LOADER      + profileKey, "").isEmpty();
 
-        if (active) {
-            mFilterButton.setColorFilter(
-                    ContextCompat.getColor(requireContext(), R.color.minebutton_color),
-                    android.graphics.PorterDuff.Mode.SRC_IN);
-        } else {
-            mFilterButton.clearColorFilter();
-        }
+        mFilterButton.setAlpha(active ? 1.0f : 0.4f);
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────
@@ -230,18 +227,22 @@ public class ManageModsFragment extends Fragment {
         return new File(Tools.DIR_GAME_NEW, "mods");
     }
 
-    private void navigateToFragment(Class<? extends Fragment> fragmentClass, String tag,
-                                    @Nullable Bundle args) {
+    private void navigateToFragment(Fragment fragment, String tag) {
         Fragment parent = getParentFragment();
         if (parent != null) {
             parent.getChildFragmentManager()
                     .beginTransaction()
                     .setReorderingAllowed(true)
-                    .replace(R.id.right_pane_container, fragmentClass, args, tag)
+                    .replace(R.id.right_pane_container, fragment, tag)
                     .addToBackStack(tag)
                     .commit();
         } else {
-            Tools.swapFragment(requireActivity(), fragmentClass, tag, args);
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .setReorderingAllowed(true)
+                    .replace(R.id.container_fragment, fragment, tag)
+                    .addToBackStack(tag)
+                    .commit();
         }
     }
 }
