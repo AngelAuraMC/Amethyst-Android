@@ -96,6 +96,10 @@
     <string name="global_add">Add</string>
     <string name="manage_mods_empty">No mods installed for this profile.</string>
     <string name="manage_mods_delete_confirm">Delete %s?</string>
+    <string name="search_mod_filter">Filter mods</string>
+    <string name="search_mod_any_loader">Any loader</string>
+    <string name="manage_mods_filter_active">Filter active: %s / %s</string>
+    <string name="manage_mods_filter_cleared">Filter cleared</string>
     <string name="mod_install_success">%s installed to mods folder.</string>
     <string name="hint_search_mod">Search for mods</string>
     <string name="global_default">Default</string>

@@ -58,6 +58,11 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
 
     public static final String TAG = "ModsSearchFragment";
 
+    /** Bundle key: pre-seed the MC version filter (e.g. "1.20.1"). */
+    public static final String ARG_PRESET_MC_VERSION = "preset_mc_version";
+    /** Bundle key: pre-seed the mod loader filter ("fabric","forge","quilt","neoforge"). */
+    public static final String ARG_PRESET_LOADER     = "preset_loader";
+
     private View mOverlay;
     private float mOverlayTopCache;
 
@@ -128,7 +133,31 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
 
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
         mSearchEditText.setHint(R.string.hint_search_mod);
+
+        // Apply any pre-seeded filters passed in from ManageModsFragment filter button
+        applyPresetArgs();
+
         searchMods(null);
+    }
+
+    /**
+     * Reads ARG_PRESET_MC_VERSION / ARG_PRESET_LOADER from the fragment's arguments
+     * and seeds mSearchFilters before the first search.  This lets ManageModsFragment
+     * pass in the current instance's version+loader so the search is already filtered.
+     */
+    private void applyPresetArgs() {
+        Bundle args = getArguments();
+        if (args == null) return;
+
+        String presetVersion = args.getString(ARG_PRESET_MC_VERSION, null);
+        String presetLoader  = args.getString(ARG_PRESET_LOADER,     null);
+
+        if (presetVersion != null && !presetVersion.isEmpty()) {
+            mSearchFilters.mcVersion = presetVersion;
+        }
+        if (presetLoader != null && !presetLoader.isEmpty()) {
+            mSearchFilters.modLoader = presetLoader;
+        }
     }
 
     @Override
@@ -183,7 +212,7 @@ public class ModsSearchFragment extends Fragment implements ModItemAdapter.Searc
 
             // Set up loader spinner
             if (mLoaderSpinner != null) {
-                String[] loaderLabels = {"Any loader", "Fabric", "Forge", "Quilt", "NeoForge"};
+                String[] loaderLabels = {getString(R.string.search_mod_any_loader), "Fabric", "Forge", "Quilt", "NeoForge"};
                 final String[] loaderValues = {"", "fabric", "forge", "quilt", "neoforge"};
                 android.widget.ArrayAdapter<String> loaderAdapter = new android.widget.ArrayAdapter<>(
                         requireContext(), android.R.layout.simple_spinner_item, loaderLabels);

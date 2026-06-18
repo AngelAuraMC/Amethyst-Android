@@ -37,6 +37,15 @@
             android:text="@string/mcl_button_manage_mods" />
 
         <ImageButton
+            android:id="@+id/manage_mods_filter"
+            android:layout_width="@dimen/_38sdp"
+            android:layout_height="@dimen/_38sdp"
+            android:layout_marginEnd="@dimen/padding_small"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_filter"
+            android:contentDescription="@string/search_mod_filter" />
+
+        <ImageButton
             android:id="@+id/manage_mods_add"
             android:layout_width="@dimen/_38sdp"
             android:layout_height="@dimen/_38sdp"
