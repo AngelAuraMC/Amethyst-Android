@@ -3,20 +3,23 @@
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
-    <!-- Generic "missing mod icon" glyph: a dashed/outlined cube, distinct from
-         any real mod artwork and from the CopperLauncher brand mark, so it reads
-         clearly as "no icon available" rather than as a logo or a loading state. -->
+    <!-- Generic "missing mod icon" glyph: a clean isometric box outline, distinct
+         from any real mod artwork and from the CopperLauncher brand mark, so it
+         reads clearly as "no icon available" rather than as a logo or a loading
+         state. (Previous version overlaid a broken-looking exclamation bar through
+         the middle of the cube — removed, it just looked like a rendering glitch.) -->
     <path
         android:fillColor="#00000000"
         android:strokeColor="#8A8A8A"
-        android:strokeWidth="1.5"
+        android:strokeWidth="1.4"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
         android:pathData="M12,3 L20,7.5 L20,16.5 L12,21 L4,16.5 L4,7.5 Z" />
     <path
         android:fillColor="#00000000"
         android:strokeColor="#8A8A8A"
         android:strokeWidth="1.2"
+        android:strokeLineJoin="round"
+        android:strokeLineCap="round"
         android:pathData="M4,7.5 L12,12 L20,7.5 M12,12 L12,21" />
-    <path
-        android:fillColor="#8A8A8A"
-        android:pathData="M11.25,9.5h1.5v4.5h-1.5z M11.25,15.25h1.5v1.5h-1.5z"/>
 </vector>

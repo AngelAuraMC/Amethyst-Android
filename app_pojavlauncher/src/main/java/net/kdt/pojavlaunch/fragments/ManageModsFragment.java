@@ -55,7 +55,7 @@ public class ManageModsFragment extends Fragment {
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
         mFilterButton.setOnClickListener(v -> showFilterDialog());
-        mRefreshButton.setOnClickListener(v -> runUpdateCheck(true));
+        mRefreshButton.setOnClickListener(v -> runUpdateCheck());
         addButton.setOnClickListener(v -> openModSearch());
 
         String profileName = getCurrentProfileName();
@@ -65,7 +65,7 @@ public class ManageModsFragment extends Fragment {
 
         refreshFilterButtonTint();
 
-        // Build adapter, inject saved filter, then auto-check for updates
+        // Build adapter, inject saved filter (no auto update-check — opt-in via refresh button)
         String profileKey = getCurrentProfileKey();
         SharedPreferences prefs = requireContext()
                 .getSharedPreferences(PREF_FILE, android.content.Context.MODE_PRIVATE);
@@ -81,17 +81,19 @@ public class ManageModsFragment extends Fragment {
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
         recycler.setAdapter(mAdapter);
 
-        // Auto-check for updates as soon as the screen opens
-        runUpdateCheck(false);
+        // Update checking is opt-in: only runs when the user taps the refresh
+        // button (see mRefreshButton's listener above). Auto-checking here used
+        // to fire a network call per mod the instant this screen opened, which
+        // also fought with the initial icon-resolution pass and made icons
+        // flash to the placeholder glyph.
     }
 
     /**
      * Runs the Modrinth update check across all installed mods for this instance.
-     * @param manual true when triggered by the refresh button — shows toasts for
-     *               "no filter set" / "checking" / "all up to date" feedback.
-     *               false for the silent auto-check on screen open.
+     * Only ever triggered by the user tapping the refresh button — update
+     * checking is fully opt-in, never automatic.
      */
-    private void runUpdateCheck(boolean manual) {
+    private void runUpdateCheck() {
         if (mAdapter == null) return;
 
         String profileKey = getCurrentProfileKey();
@@ -101,25 +103,17 @@ public class ManageModsFragment extends Fragment {
         String loader  = prefs.getString(KEY_LOADER      + profileKey, "");
 
         if (version.isEmpty() && loader.isEmpty()) {
-            if (manual) {
-                Toast.makeText(requireContext(),
-                        R.string.mod_update_no_filter, Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(requireContext(),
+                    R.string.mod_update_no_filter, Toast.LENGTH_SHORT).show();
             return;
         }
 
         mAdapter.setFilter(version, loader);
 
-        if (manual) {
-            mRefreshButton.setEnabled(false);
-            Toast.makeText(requireContext(), R.string.mod_update_checking, Toast.LENGTH_SHORT).show();
-        }
+        mRefreshButton.setEnabled(false);
+        Toast.makeText(requireContext(), R.string.mod_update_checking, Toast.LENGTH_SHORT).show();
 
-        mAdapter.checkForUpdates(() -> {
-            if (manual) {
-                mRefreshButton.setEnabled(true);
-            }
-        });
+        mAdapter.checkForUpdates(() -> mRefreshButton.setEnabled(true));
     }
 
     // ── Filter dialog ────────────────────────────────────────────────────────
@@ -179,11 +173,11 @@ public class ManageModsFragment extends Fragment {
                         .putString(KEY_LOADER      + profileKey, newLoader)
                         .apply();
 
-                // Update the adapter's filter and re-run update check
+                // Update the adapter's filter. Update checking itself stays
+                // opt-in — only the refresh button triggers a check.
                 if (mAdapter != null) {
                     mAdapter.setFilter(newVersion, newLoader);
                 }
-                runUpdateCheck(false);
 
                 refreshFilterButtonTint();
                 di.dismiss();

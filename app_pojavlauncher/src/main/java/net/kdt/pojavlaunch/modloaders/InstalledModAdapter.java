@@ -70,6 +70,14 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     // CurseForge) also found nothing — these permanently show the placeholder glyph.
     private final java.util.Set<String> mIconCheckedNoResult = new java.util.HashSet<>();
 
+    // Jars currently being resolved (extraction + remote lookup in flight). Without
+    // this, a notifyItemChanged() that lands mid-resolution (e.g. from an update
+    // check completing on a different mod and rebinding this row too) would see no
+    // cache entry yet and kick off a second, redundant resolveIcon() — and briefly
+    // re-show the placeholder even though the first resolution was already in
+    // progress. This is what caused icons to "blink" away during update checks.
+    private final java.util.Set<String> mIconResolving = new java.util.HashSet<>();
+
     // Disk-backed cache for icons fetched from Modrinth/CurseForge, keyed by a tag
     // derived from the file path so each mod's remote icon is cached independently.
     private final ModIconCache mRemoteIconCache = new ModIconCache();
@@ -148,14 +156,19 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             final ModEntry entry = mMods.get(i);
 
             PojavApplication.sExecutorService.execute(() -> {
+                boolean updateFound = false;
                 try {
                     checkUpdateForEntry(entry);
+                    updateFound = entry.updateUrl != null;
                 } catch (Exception e) {
                     Log.w(TAG, "Update check failed for " + entry.displayName() + ": " + e.getMessage());
                 } finally {
+                    boolean finalUpdateFound = updateFound;
                     mMainHandler.post(() -> {
-                        // Refresh only this item
-                        if (index < mMods.size()) notifyItemChanged(index);
+                        // Only rebind this row if it actually changed — avoids
+                        // rebinding every mod's row (and its icon) for checks
+                        // that found nothing.
+                        if (finalUpdateFound && index < mMods.size()) notifyItemChanged(index);
                         done[0]++;
                         if (done[0] >= total) onComplete.run();
                     });
@@ -332,9 +345,15 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
                 // genuinely no icon exists anywhere. Show the missing-icon glyph and
                 // stop retrying on every rebind.
                 icon.setImageResource(R.drawable.ic_mod_placeholder);
+            } else if (mIconResolving.contains(path)) {
+                // Resolution already running for this jar (kicked off by an earlier
+                // bind) — don't start a second one, and don't stomp whatever's
+                // showing; leave the placeholder that's already there alone.
+                icon.setImageResource(R.drawable.ic_mod_placeholder);
             } else {
                 // First time seeing this mod — show the placeholder while we resolve.
                 icon.setImageResource(R.drawable.ic_mod_placeholder);
+                mIconResolving.add(path);
                 resolveIcon(entry, icon, path);
             }
 
@@ -436,7 +455,10 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             String remoteUrl = resolveRemoteIconUrl(jarFile);
             if (remoteUrl == null) {
                 // Genuinely nothing found anywhere.
-                mMainHandler.post(() -> mIconCheckedNoResult.add(path));
+                mMainHandler.post(() -> {
+                    mIconCheckedNoResult.add(path);
+                    mIconResolving.remove(path);
+                });
                 return;
             }
 
@@ -447,7 +469,10 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
                 if (bitmap != null) {
                     cacheAndApply(path, bitmap, expectedTag, iconRef);
                 } else {
-                    mMainHandler.post(() -> mIconCheckedNoResult.add(path));
+                    mMainHandler.post(() -> {
+                        mIconCheckedNoResult.add(path);
+                        mIconResolving.remove(path);
+                    });
                 }
             }, tag, remoteUrl);
         });
@@ -457,6 +482,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
                                 WeakReference<ImageView> iconRef) {
         mMainHandler.post(() -> {
             mIconCache.put(path, bmp);
+            mIconResolving.remove(path);
             ImageView iv = iconRef.get();
             if (iv != null && expectedTag.equals(iv.getTag())) {
                 iv.setImageBitmap(bmp);
