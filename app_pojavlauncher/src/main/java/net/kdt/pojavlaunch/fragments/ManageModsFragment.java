@@ -120,6 +120,7 @@ public class ManageModsFragment extends Fragment {
                 mRefreshButton.setEnabled(true);
             }
         });
+    }
 
     // ── Filter dialog ────────────────────────────────────────────────────────
 
