@@ -28,7 +28,10 @@ import com.google.gson.JsonParser;
 import net.kdt.pojavlaunch.PojavApplication;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.ApiHandler;
+import net.kdt.pojavlaunch.modloaders.modpacks.imagecache.ImageReceiver;
+import net.kdt.pojavlaunch.modloaders.modpacks.imagecache.ModIconCache;
 import net.kdt.pojavlaunch.utils.DownloadUtils;
+import net.kdt.pojavlaunch.utils.Murmur2;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -48,7 +51,8 @@ import java.util.zip.ZipFile;
 public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapter.ModViewHolder> {
 
     private static final String TAG = "ModAdapter";
-    private static final String MODRINTH_API = "https://api.modrinth.com/v2";
+    private static final String MODRINTH_API   = "https://api.modrinth.com/v2";
+    private static final String CURSEFORGE_API  = "https://api.curseforge.com/v1";
 
     public interface EmptyStateListener {
         void onEmptyStateChanged(boolean isEmpty);
@@ -58,19 +62,28 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     private final EmptyStateListener mEmptyListener;
     private final Handler mMainHandler = new Handler(Looper.getMainLooper());
 
-    // Icon cache — keyed by absolute file path. Avoids re-extracting from the jar
-    // (and blanking the ImageView) every time the row is rebound, e.g. during an
-    // update check which calls notifyItemChanged/notifyDataSetChanged.
-    // A cached null Bitmap means "checked, no icon found" — falls back to the
-    // default placeholder without retrying the zip read every time.
+    // Local-extraction icon cache — keyed by absolute file path. Avoids re-extracting
+    // from the jar (and blanking the ImageView) every time the row is rebound, e.g.
+    // during an update check which calls notifyItemChanged/notifyDataSetChanged.
     private final java.util.Map<String, Bitmap> mIconCache = new java.util.HashMap<>();
+    // Marks jars where local extraction found nothing AND the remote lookup (Modrinth/
+    // CurseForge) also found nothing — these permanently show the placeholder glyph.
     private final java.util.Set<String> mIconCheckedNoResult = new java.util.HashSet<>();
+
+    // Disk-backed cache for icons fetched from Modrinth/CurseForge, keyed by a tag
+    // derived from the file path so each mod's remote icon is cached independently.
+    private final ModIconCache mRemoteIconCache = new ModIconCache();
+
+    private final Context mContext;
+    private final String  mCurseforgeApiKey;
 
     // Per-instance filter — set by ManageModsFragment before triggering update check
     private String mFilterMcVersion = "";
     private String mFilterLoader    = "";
 
-    public InstalledModAdapter(File modsDir, EmptyStateListener listener) {
+    public InstalledModAdapter(Context context, File modsDir, EmptyStateListener listener) {
+        mContext = context.getApplicationContext();
+        mCurseforgeApiKey = context.getString(R.string.curseforge_api_key);
         mEmptyListener = listener;
         if (modsDir != null && modsDir.isDirectory()) {
             File[] files = modsDir.listFiles(f -> f.isFile() &&
@@ -273,7 +286,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     @Override
     public void onViewRecycled(@NonNull ModViewHolder holder) {
         holder.icon.setTag(null);
-        holder.icon.setImageResource(R.drawable.ic_add_modded);
+        holder.icon.setImageResource(R.drawable.ic_mod_placeholder);
         super.onViewRecycled(holder);
     }
 
@@ -315,35 +328,16 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             if (cached != null) {
                 icon.setImageBitmap(cached);
             } else if (mIconCheckedNoResult.contains(path)) {
-                // Already determined this jar has no icon — use the fallback
-                // and don't bother re-extracting on every rebind.
-                icon.setImageResource(R.drawable.ic_add_modded);
+                // Already exhausted local extraction AND remote lookup for this jar —
+                // genuinely no icon exists anywhere. Show the missing-icon glyph and
+                // stop retrying on every rebind.
+                icon.setImageResource(R.drawable.ic_mod_placeholder);
             } else {
-                // First time seeing this mod — show placeholder while we extract
-                icon.setImageResource(R.drawable.ic_add_modded);
-
-                final String expectedTag = path;
-                final WeakReference<ImageView> iconRef = new WeakReference<>(icon);
-                final File jarFile = entry.file;
-
-                PojavApplication.sExecutorService.execute(() -> {
-                    Bitmap bmp = extractModIcon(jarFile);
-                    mMainHandler.post(() -> {
-                        if (bmp != null) {
-                            mIconCache.put(path, bmp);
-                        } else {
-                            // Forge mods, very old mods, or jars with no embedded
-                            // icon at all — remember that so we stop retrying.
-                            mIconCheckedNoResult.add(path);
-                        }
-                        ImageView iv = iconRef.get();
-                        if (iv != null && expectedTag.equals(iv.getTag())) {
-                            if (bmp != null) iv.setImageBitmap(bmp);
-                            // else: already showing the placeholder, nothing to do
-                        }
-                    });
-                });
+                // First time seeing this mod — show the placeholder while we resolve.
+                icon.setImageResource(R.drawable.ic_mod_placeholder);
+                resolveIcon(entry, icon, path);
             }
+
 
             toggle.setOnCheckedChangeListener(null);
             toggle.setChecked(entry.enabled);
@@ -409,6 +403,143 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
                 file = target;
                 this.enabled = enable;
             }
+        }
+    }
+
+    // ── Icon resolution chain ───────────────────────────────────────────────
+
+    /**
+     * Resolves an icon for a mod that wasn't found in the in-memory cache yet.
+     * Order: (1) extract embedded icon from the jar itself, which covers most
+     * Fabric/Quilt mods and modern Forge mods that ship fabric.mod.json/
+     * mods.toml icon refs; (2) if that fails — common for old Forge 1.7-1.12
+     * mods and other jars with no embedded icon at all — hash the file and
+     * ask Modrinth for its project icon_url; (3) if Modrinth doesn't recognise
+     * the file, hash it with CurseForge's murmur2 fingerprint and ask
+     * CurseForge for its logo thumbnail. Whichever step succeeds wins; if all
+     * three fail, the jar is marked as having no resolvable icon at all.
+     */
+    private void resolveIcon(ModEntry entry, ImageView iconView, String path) {
+        final String expectedTag = path;
+        final WeakReference<ImageView> iconRef = new WeakReference<>(iconView);
+        final File jarFile = entry.file;
+
+        PojavApplication.sExecutorService.execute(() -> {
+            Bitmap bmp = extractModIcon(jarFile);
+
+            if (bmp != null) {
+                cacheAndApply(path, bmp, expectedTag, iconRef);
+                return;
+            }
+
+            // Not found locally — try Modrinth, then CurseForge, by file hash.
+            String remoteUrl = resolveRemoteIconUrl(jarFile);
+            if (remoteUrl == null) {
+                // Genuinely nothing found anywhere.
+                mMainHandler.post(() -> mIconCheckedNoResult.add(path));
+                return;
+            }
+
+            // Fetch (and disk-cache) the remote icon via the existing ModIconCache,
+            // tagged by the mod's file path so different mods don't collide.
+            String tag = "installed_" + path.hashCode();
+            mRemoteIconCache.getImage(bitmap -> {
+                if (bitmap != null) {
+                    cacheAndApply(path, bitmap, expectedTag, iconRef);
+                } else {
+                    mMainHandler.post(() -> mIconCheckedNoResult.add(path));
+                }
+            }, tag, remoteUrl);
+        });
+    }
+
+    private void cacheAndApply(String path, Bitmap bmp, String expectedTag,
+                                WeakReference<ImageView> iconRef) {
+        mMainHandler.post(() -> {
+            mIconCache.put(path, bmp);
+            ImageView iv = iconRef.get();
+            if (iv != null && expectedTag.equals(iv.getTag())) {
+                iv.setImageBitmap(bmp);
+            }
+        });
+    }
+
+    /**
+     * Looks up the project icon URL for a jar that has no embedded icon, trying
+     * Modrinth first (SHA1-based, simpler/faster), then CurseForge (murmur2
+     * fingerprint-based) as a fallback for mods only distributed there.
+     * Runs on a background thread; performs blocking network I/O.
+     */
+    @Nullable
+    private String resolveRemoteIconUrl(File jarFile) {
+        // 1. Modrinth — SHA1 hash → version_file → project → icon_url
+        try {
+            String sha1 = sha1Hex(jarFile);
+            if (sha1 != null) {
+                ApiHandler modrinth = new ApiHandler(MODRINTH_API);
+                java.util.HashMap<String, Object> hashParams = new java.util.HashMap<>();
+                hashParams.put("algorithm", "sha1");
+                JsonObject fileVersion = modrinth.get("version_file/" + sha1, hashParams, JsonObject.class);
+                if (fileVersion != null && fileVersion.has("project_id")) {
+                    String projectId = fileVersion.get("project_id").getAsString();
+                    JsonObject project = modrinth.get("project/" + projectId, JsonObject.class);
+                    if (project != null && project.has("icon_url") && !project.get("icon_url").isJsonNull()) {
+                        String url = project.get("icon_url").getAsString();
+                        if (url != null && !url.isEmpty()) return url;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Modrinth icon lookup failed for " + jarFile.getName() + ": " + e.getMessage());
+        }
+
+        // 2. CurseForge — murmur2 fingerprint → fingerprints/fuzzy match → logo.thumbnailUrl
+        //    This is the main path for old Forge mods (1.7–1.12) that predate
+        //    Modrinth entirely and were only ever uploaded to CurseForge.
+        if (mCurseforgeApiKey == null || mCurseforgeApiKey.isEmpty()) return null;
+        try {
+            long fingerprint = Murmur2.hashFile(jarFile);
+
+            JsonArray fingerprints = new JsonArray();
+            fingerprints.add(fingerprint);
+            JsonObject body = new JsonObject();
+            body.add("fingerprints", fingerprints);
+
+            java.util.Map<String, String> headers = new java.util.HashMap<>();
+            headers.put("x-api-key", mCurseforgeApiKey);
+            headers.put("Content-Type", "application/json");
+            headers.put("Accept", "application/json");
+
+            String responseRaw = ApiHandler.postRaw(headers,
+                    CURSEFORGE_API + "/fingerprints", body.toString());
+            if (responseRaw == null) return null;
+
+            JsonObject response = JsonParser.parseString(responseRaw).getAsJsonObject();
+            if (!response.has("data")) return null;
+            JsonObject data = response.getAsJsonObject("data");
+
+            JsonArray exactMatches = data.has("exactMatches") ? data.getAsJsonArray("exactMatches") : null;
+            if (exactMatches == null || exactMatches.size() == 0) return null;
+
+            JsonObject match = exactMatches.get(0).getAsJsonObject();
+            if (!match.has("file")) return null;
+            JsonObject file = match.getAsJsonObject("file");
+            if (!file.has("modId")) return null;
+            int modId = file.get("modId").getAsInt();
+
+            JsonObject modResponse = new ApiHandler(CURSEFORGE_API, mCurseforgeApiKey)
+                    .get("mods/" + modId, JsonObject.class);
+            if (modResponse == null || !modResponse.has("data")) return null;
+            JsonObject modData = modResponse.getAsJsonObject("data");
+            if (!modData.has("logo") || modData.get("logo").isJsonNull()) return null;
+            JsonObject logo = modData.getAsJsonObject("logo");
+            if (!logo.has("thumbnailUrl") || logo.get("thumbnailUrl").isJsonNull()) return null;
+
+            String url = logo.get("thumbnailUrl").getAsString();
+            return (url != null && !url.isEmpty()) ? url : null;
+        } catch (Exception e) {
+            Log.w(TAG, "CurseForge icon lookup failed for " + jarFile.getName() + ": " + e.getMessage());
+            return null;
         }
     }
 

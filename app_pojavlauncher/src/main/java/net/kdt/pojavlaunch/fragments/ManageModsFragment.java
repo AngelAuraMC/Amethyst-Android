@@ -72,7 +72,7 @@ public class ManageModsFragment extends Fragment {
         String savedVersion = prefs.getString(KEY_MC_VERSION + profileKey, "");
         String savedLoader  = prefs.getString(KEY_LOADER      + profileKey, "");
 
-        mAdapter = new InstalledModAdapter(getModsDir(), isEmpty -> {
+        mAdapter = new InstalledModAdapter(requireContext(), getModsDir(), isEmpty -> {
             recycler.setVisibility(isEmpty ? View.GONE  : View.VISIBLE);
             emptyState.setVisibility(isEmpty ? View.VISIBLE : View.GONE);
         });
