@@ -58,6 +58,14 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     private final EmptyStateListener mEmptyListener;
     private final Handler mMainHandler = new Handler(Looper.getMainLooper());
 
+    // Icon cache — keyed by absolute file path. Avoids re-extracting from the jar
+    // (and blanking the ImageView) every time the row is rebound, e.g. during an
+    // update check which calls notifyItemChanged/notifyDataSetChanged.
+    // A cached null Bitmap means "checked, no icon found" — falls back to the
+    // default placeholder without retrying the zip read every time.
+    private final java.util.Map<String, Bitmap> mIconCache = new java.util.HashMap<>();
+    private final java.util.Set<String> mIconCheckedNoResult = new java.util.HashSet<>();
+
     // Per-instance filter — set by ManageModsFragment before triggering update check
     private String mFilterMcVersion = "";
     private String mFilterLoader    = "";
@@ -94,12 +102,19 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
      *                   count of mods that have updates available.
      */
     public void checkForUpdates(Runnable onComplete) {
-        // Clear any previous update state
-        for (ModEntry e : mMods) {
-            e.updateUrl      = null;
-            e.updateFileName = null;
+        // Clear any previous update state. Only notify rows that actually had
+        // an update flag set — avoids a blanket notifyDataSetChanged() which
+        // would rebind every visible row and (without the icon cache) cause
+        // icons to flash. The icon cache makes this safe either way now, but
+        // this is still cheaper.
+        for (int i = 0; i < mMods.size(); i++) {
+            ModEntry e = mMods.get(i);
+            if (e.updateUrl != null || e.updateFileName != null) {
+                e.updateUrl      = null;
+                e.updateFileName = null;
+                notifyItemChanged(i);
+            }
         }
-        notifyDataSetChanged();
 
         if (mFilterMcVersion.isEmpty() && mFilterLoader.isEmpty()) {
             // No filter — can't meaningfully check; caller should warn the user
@@ -292,23 +307,43 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             name.setText(entry.displayName());
             version.setText(entry.file.getName());
 
-            icon.setTag(entry.file.getAbsolutePath());
-            icon.setImageResource(R.drawable.ic_add_modded);
+            final String path = entry.file.getAbsolutePath();
+            icon.setTag(path);
 
-            final String expectedTag = entry.file.getAbsolutePath();
-            final WeakReference<ImageView> iconRef = new WeakReference<>(icon);
-            final File jarFile = entry.file;
+            // Cache hit — apply immediately, no flash, no re-read from disk
+            Bitmap cached = mIconCache.get(path);
+            if (cached != null) {
+                icon.setImageBitmap(cached);
+            } else if (mIconCheckedNoResult.contains(path)) {
+                // Already determined this jar has no icon — use the fallback
+                // and don't bother re-extracting on every rebind.
+                icon.setImageResource(R.drawable.ic_add_modded);
+            } else {
+                // First time seeing this mod — show placeholder while we extract
+                icon.setImageResource(R.drawable.ic_add_modded);
 
-            PojavApplication.sExecutorService.execute(() -> {
-                Bitmap bmp = extractModIcon(jarFile);
-                if (bmp == null) return;
-                mMainHandler.post(() -> {
-                    ImageView iv = iconRef.get();
-                    if (iv != null && expectedTag.equals(iv.getTag())) {
-                        iv.setImageBitmap(bmp);
-                    }
+                final String expectedTag = path;
+                final WeakReference<ImageView> iconRef = new WeakReference<>(icon);
+                final File jarFile = entry.file;
+
+                PojavApplication.sExecutorService.execute(() -> {
+                    Bitmap bmp = extractModIcon(jarFile);
+                    mMainHandler.post(() -> {
+                        if (bmp != null) {
+                            mIconCache.put(path, bmp);
+                        } else {
+                            // Forge mods, very old mods, or jars with no embedded
+                            // icon at all — remember that so we stop retrying.
+                            mIconCheckedNoResult.add(path);
+                        }
+                        ImageView iv = iconRef.get();
+                        if (iv != null && expectedTag.equals(iv.getTag())) {
+                            if (bmp != null) iv.setImageBitmap(bmp);
+                            // else: already showing the placeholder, nothing to do
+                        }
+                    });
                 });
-            });
+            }
 
             toggle.setOnCheckedChangeListener(null);
             toggle.setChecked(entry.enabled);

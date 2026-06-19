@@ -36,6 +36,7 @@ public class ManageModsFragment extends Fragment {
     private static final String KEY_LOADER     = "loader_";
 
     private ImageButton mFilterButton;
+    private ImageButton mRefreshButton;
     private InstalledModAdapter mAdapter;
 
     public ManageModsFragment() {
@@ -46,6 +47,7 @@ public class ManageModsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ImageButton backButton = view.findViewById(R.id.manage_mods_back);
         mFilterButton          = view.findViewById(R.id.manage_mods_filter);
+        mRefreshButton         = view.findViewById(R.id.manage_mods_refresh);
         ImageButton addButton  = view.findViewById(R.id.manage_mods_add);
         TextView    title      = view.findViewById(R.id.manage_mods_title);
         RecyclerView recycler  = view.findViewById(R.id.manage_mods_recycler);
@@ -53,6 +55,7 @@ public class ManageModsFragment extends Fragment {
 
         backButton.setOnClickListener(v -> requireActivity().onBackPressed());
         mFilterButton.setOnClickListener(v -> showFilterDialog());
+        mRefreshButton.setOnClickListener(v -> runUpdateCheck(true));
         addButton.setOnClickListener(v -> openModSearch());
 
         String profileName = getCurrentProfileName();
@@ -79,13 +82,44 @@ public class ManageModsFragment extends Fragment {
         recycler.setAdapter(mAdapter);
 
         // Auto-check for updates as soon as the screen opens
-        // If no filter is set, silently skip (nothing to compare against)
-        if (!savedVersion.isEmpty() || !savedLoader.isEmpty()) {
-            mAdapter.checkForUpdates(() -> {
-                // no-op — individual items already refresh themselves
-            });
-        }
+        runUpdateCheck(false);
     }
+
+    /**
+     * Runs the Modrinth update check across all installed mods for this instance.
+     * @param manual true when triggered by the refresh button — shows toasts for
+     *               "no filter set" / "checking" / "all up to date" feedback.
+     *               false for the silent auto-check on screen open.
+     */
+    private void runUpdateCheck(boolean manual) {
+        if (mAdapter == null) return;
+
+        String profileKey = getCurrentProfileKey();
+        SharedPreferences prefs = requireContext()
+                .getSharedPreferences(PREF_FILE, android.content.Context.MODE_PRIVATE);
+        String version = prefs.getString(KEY_MC_VERSION + profileKey, "");
+        String loader  = prefs.getString(KEY_LOADER      + profileKey, "");
+
+        if (version.isEmpty() && loader.isEmpty()) {
+            if (manual) {
+                Toast.makeText(requireContext(),
+                        R.string.mod_update_no_filter, Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+
+        mAdapter.setFilter(version, loader);
+
+        if (manual) {
+            mRefreshButton.setEnabled(false);
+            Toast.makeText(requireContext(), R.string.mod_update_checking, Toast.LENGTH_SHORT).show();
+        }
+
+        mAdapter.checkForUpdates(() -> {
+            if (manual) {
+                mRefreshButton.setEnabled(true);
+            }
+        });
 
     // ── Filter dialog ────────────────────────────────────────────────────────
 
@@ -147,10 +181,8 @@ public class ManageModsFragment extends Fragment {
                 // Update the adapter's filter and re-run update check
                 if (mAdapter != null) {
                     mAdapter.setFilter(newVersion, newLoader);
-                    if (!newVersion.isEmpty() || !newLoader.isEmpty()) {
-                        mAdapter.checkForUpdates(() -> {});
-                    }
                 }
+                runUpdateCheck(false);
 
                 refreshFilterButtonTint();
                 di.dismiss();
