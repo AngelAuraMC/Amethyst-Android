@@ -229,6 +229,7 @@
     <string name="preference_java_description">Java Runtimes, JVM Arguments, RAM amount and sandbox</string>
     <string name="preference_misc_title">Miscellaneous settings</string>
     <string name="preference_misc_description">Version list and libraries check</string>
+    <string name="preference_appearance_description">Custom background, colour theme and landscape mode</string>
     <string name="preference_experimental_description">Use things there with consideration, no support</string>
     <string name="preference_sustained_performance_title">Enable sustained performance mode</string>
     <string name="preference_sustained_performance_description">Limit thermal throttling by limiting peak performance.</string>
