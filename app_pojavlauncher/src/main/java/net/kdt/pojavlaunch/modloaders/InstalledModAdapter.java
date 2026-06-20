@@ -82,6 +82,14 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     // derived from the file path so each mod's remote icon is cached independently.
     private final ModIconCache mRemoteIconCache = new ModIconCache();
 
+    // Friendly mod-name cache, keyed by absolute file path — avoids re-opening
+    // the jar on every rebind. An empty string means "looked, found nothing
+    // embedded," so we stop retrying and just keep using the filename fallback.
+    private final java.util.Map<String, String> mModNameCache = new java.util.HashMap<>();
+    // Jars currently being read for their embedded name, to avoid kicking off
+    // a duplicate extraction if a rebind lands mid-resolution.
+    private final java.util.Set<String> mModNameResolving = new java.util.HashSet<>();
+
     private final Context mContext;
     private final String  mCurseforgeApiKey;
 
@@ -300,6 +308,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     public void onViewRecycled(@NonNull ModViewHolder holder) {
         holder.icon.setTag(null);
         holder.icon.setImageResource(R.drawable.ic_mod_placeholder);
+        holder.name.setTag(null);
         super.onViewRecycled(holder);
     }
 
@@ -330,10 +339,25 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
         }
 
         void bind(ModEntry entry) {
-            name.setText(entry.displayName());
+            final String path = entry.file.getAbsolutePath();
+
+            // Mod name — show the embedded display name (e.g. "Sodium") once
+            // resolved, falling back to the cleaned-up file name until then.
+            name.setTag(path);
+            String cachedName = mModNameCache.get(path);
+            if (cachedName != null) {
+                entry.metaName = cachedName.isEmpty() ? null : cachedName;
+                name.setText(entry.displayName());
+            } else {
+                name.setText(entry.displayName());
+                if (!mModNameResolving.contains(path)) {
+                    mModNameResolving.add(path);
+                    resolveModName(entry, name, path);
+                }
+            }
+
             version.setText(entry.file.getName());
 
-            final String path = entry.file.getAbsolutePath();
             icon.setTag(path);
 
             // Cache hit — apply immediately, no flash, no re-read from disk
@@ -400,6 +424,12 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
         boolean enabled;
         @Nullable String updateUrl;
         @Nullable String updateFileName;
+        // Friendly name read out of the jar's own metadata (fabric.mod.json,
+        // mods.toml, etc.) once resolved. Null/empty until resolved or if
+        // the jar simply has no name field — displayName() falls back to
+        // the cleaned-up file name in either case. This NEVER renames the
+        // actual .jar on disk; it only changes what's shown in the list.
+        @Nullable String metaName;
 
         ModEntry(File f) {
             this.file    = f;
@@ -407,6 +437,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
         }
 
         String displayName() {
+            if (metaName != null && !metaName.isEmpty()) return metaName;
             String n = file.getName();
             if (n.endsWith(".jar.disabled")) n = n.substring(0, n.length() - 13);
             else if (n.endsWith(".jar"))     n = n.substring(0, n.length() - 4);
@@ -487,6 +518,34 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             if (iv != null && expectedTag.equals(iv.getTag())) {
                 iv.setImageBitmap(bmp);
             }
+        });
+    }
+
+    /**
+     * Resolves the mod's embedded display name (e.g. "Sodium" instead of
+     * "sodium-fabric-0.5.8+mc1.20.1.jar") by reading the jar's own metadata.
+     * Purely local — no network call needed, since virtually every mod
+     * ships its display name inside fabric.mod.json/quilt.mod.json/
+     * mods.toml/mcmod.info. Falls back permanently to the cleaned-up file
+     * name (handled by ModEntry#displayName) if nothing is found, without
+     * ever touching the actual .jar file on disk.
+     */
+    private void resolveModName(ModEntry entry, TextView nameView, String path) {
+        final String expectedTag = path;
+        final WeakReference<TextView> nameRef = new WeakReference<>(nameView);
+        final File jarFile = entry.file;
+
+        PojavApplication.sExecutorService.execute(() -> {
+            String resolved = extractModName(jarFile);
+            mMainHandler.post(() -> {
+                mModNameCache.put(path, resolved != null ? resolved : "");
+                mModNameResolving.remove(path);
+                entry.metaName = resolved;
+                TextView tv = nameRef.get();
+                if (tv != null && expectedTag.equals(tv.getTag())) {
+                    tv.setText(entry.displayName());
+                }
+            });
         });
     }
 
@@ -606,6 +665,66 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             }
         } catch (Exception e) {
             Log.w(TAG, "Failed to open JAR: " + jarFile.getName() + " — " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Reads the mod's own display name straight out of its metadata file,
+     * mirroring resolveIconPath's loader-by-loader fallback chain. Returns
+     * null if the jar has no parsable metadata or no name field at all
+     * (e.g. very old/bare Forge 1.7-era jars) — callers fall back to the
+     * cleaned-up file name in that case.
+     */
+    @Nullable
+    private static String extractModName(File jarFile) {
+        try (ZipFile zip = new ZipFile(jarFile)) {
+            String content = readEntry(zip, "fabric.mod.json");
+            if (content != null) {
+                try {
+                    JsonObject obj = JsonParser.parseString(content).getAsJsonObject();
+                    if (obj.has("name") && !obj.get("name").isJsonNull()) {
+                        String name = obj.get("name").getAsString().trim();
+                        if (!name.isEmpty()) return name;
+                    }
+                } catch (Exception ignored) {}
+            }
+            content = readEntry(zip, "quilt.mod.json");
+            if (content != null) {
+                try {
+                    JsonObject root = JsonParser.parseString(content).getAsJsonObject();
+                    JsonObject ql = root.has("quilt_loader") ? root.getAsJsonObject("quilt_loader") : null;
+                    if (ql != null && ql.has("metadata")) {
+                        JsonObject meta = ql.getAsJsonObject("metadata");
+                        if (meta.has("name") && !meta.get("name").isJsonNull()) {
+                            String name = meta.get("name").getAsString().trim();
+                            if (!name.isEmpty()) return name;
+                        }
+                    }
+                } catch (Exception ignored) {}
+            }
+            content = readEntry(zip, "mcmod.info");
+            if (content != null) {
+                try {
+                    JsonArray arr = JsonParser.parseString(content).getAsJsonArray();
+                    if (arr.size() > 0 && arr.get(0).isJsonObject()) {
+                        JsonObject mod = arr.get(0).getAsJsonObject();
+                        if (mod.has("name") && !mod.get("name").isJsonNull()) {
+                            String name = mod.get("name").getAsString().trim();
+                            if (!name.isEmpty()) return name;
+                        }
+                    }
+                } catch (Exception ignored) {}
+            }
+            for (String toml : new String[]{"META-INF/neoforge.mods.toml", "META-INF/mods.toml"}) {
+                content = readEntry(zip, toml);
+                if (content != null) {
+                    String displayName = tomlStringField(content, "displayName");
+                    if (displayName != null && !displayName.isEmpty()) return displayName.trim();
+                }
+            }
+        } catch (Exception e) {
+            Log.w(TAG, "Failed to read mod name from JAR: " + jarFile.getName() + " — " + e.getMessage());
         }
         return null;
     }
