@@ -6,7 +6,7 @@
 
         <!-- Force landscape orientation -->
         <SwitchPreferenceCompat
-            android:defaultValue="true"
+            android:defaultValue="false"
             android:key="force_landscape"
             android:title="@string/preference_force_landscape_title"
             android:summary="@string/preference_force_landscape_summary" />
