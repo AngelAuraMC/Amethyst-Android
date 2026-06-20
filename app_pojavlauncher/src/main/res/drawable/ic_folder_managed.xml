@@ -1,3 +1,3 @@
-<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="120dp" android:viewportHeight="21" android:viewportWidth="21" android:width="120dp">
+<vector xmlns:android="http://schemas.android.com/apk/res/android" android:height="120dp" android:viewportHeight="14" android:viewportWidth="14" android:width="120dp">
     <path android:fillColor="#FFFFFF" android:pathData="M0,0 h9 v1 h-9 z M0,1 h1 v1 h-1 z M8,1 h2 v1 h-2 z M0,2 h1 v1 h-1 z M8,2 h1 v1 h-1 z M10,2 h1 v1 h-1 z M0,3 h1 v1 h-1 z M8,3 h4 v1 h-4 z M0,4 h1 v1 h-1 z M11,4 h1 v1 h-1 z M0,5 h1 v1 h-1 z M11,5 h1 v1 h-1 z M2,6 h3 v1 h-3 z M11,6 h1 v1 h-1 z M1,7 h1 v1 h-1 z M5,7 h1 v1 h-1 z M11,7 h1 v1 h-1 z M0,8 h1 v1 h-1 z M3,8 h1 v1 h-1 z M6,8 h1 v1 h-1 z M11,8 h1 v1 h-1 z M1,9 h1 v1 h-1 z M5,9 h1 v1 h-1 z M11,9 h1 v1 h-1 z M2,10 h3 v1 h-3 z M11,10 h1 v1 h-1 z M6,11 h6 v1 h-6 z" />
 </vector>
