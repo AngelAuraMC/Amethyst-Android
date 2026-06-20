@@ -107,7 +107,7 @@
                 android:id="@+id/share_logs_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
-                android:drawableStart="@android:drawable/ic_menu_share"
+                android:drawableStart="@drawable/ic_menu_share"
                 android:text="@string/main_share_logs" />
 
             <!-- Hidden: kept for back-compat -->
