@@ -51,7 +51,7 @@
             android:title="@string/preference_category_launcher_appearance"
             android:summary="@string/preference_appearance_description"
             android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceAppearanceFragment"
-            android:icon="@drawable/notif_icon"
+            android:icon="@drawable/ic_set_theme"
             />
 
 
