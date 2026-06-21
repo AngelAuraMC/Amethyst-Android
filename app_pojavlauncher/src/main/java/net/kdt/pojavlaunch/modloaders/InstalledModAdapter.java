@@ -45,6 +45,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -96,6 +98,19 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
     // Per-instance filter — set by ManageModsFragment before triggering update check
     private String mFilterMcVersion = "";
     private String mFilterLoader    = "";
+
+    // Dedicated pool for update-check network calls (Modrinth version_file + project
+    // lookups, two sequential requests per mod). checkForUpdates() used to submit
+    // these straight onto PojavApplication.sExecutorService — an app-wide 4-thread
+    // pool that this very adapter also uses for icon extraction (resolveIcon) and
+    // that's shared by virtually every other background task in the app. With more
+    // than a handful of mods, the flood of slow, blocking update-check tasks could
+    // occupy all 4 threads for the whole duration of the check, so any icon
+    // extraction queued behind them (e.g. for rows bound/rebound while the check was
+    // running) just sat waiting — mod icons wouldn't appear until the check finished.
+    // Giving update checks their own small pool keeps them from blocking icon
+    // loading (or anything else routed through sExecutorService) while they run.
+    private static final ExecutorService sUpdateCheckExecutor = Executors.newFixedThreadPool(3);
 
     public InstalledModAdapter(Context context, File modsDir, EmptyStateListener listener) {
         mContext = context.getApplicationContext();
@@ -163,7 +178,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
             final int index = i;
             final ModEntry entry = mMods.get(i);
 
-            PojavApplication.sExecutorService.execute(() -> {
+            sUpdateCheckExecutor.execute(() -> {
                 boolean updateFound = false;
                 try {
                     checkUpdateForEntry(entry);
@@ -259,7 +274,7 @@ public class InstalledModAdapter extends RecyclerView.Adapter<InstalledModAdapte
                 context.getString(R.string.mod_updating, entry.displayName()),
                 Toast.LENGTH_SHORT).show();
 
-        PojavApplication.sExecutorService.execute(() -> {
+        sUpdateCheckExecutor.execute(() -> {
             try {
                 // Download to a temp file first so we never leave a half-written jar
                 File tmpFile = new File(entry.file.getParent(), targetName + ".tmp");
