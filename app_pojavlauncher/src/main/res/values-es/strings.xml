@@ -332,7 +332,6 @@
     <string name="log_view_button_output_on">Salida\nEncendido</string>
     <string name="log_view_label_log_output">Salida del registro:</string>
     <string name="execute_jar_failed_to_read_file">Falló al leer el archivo .jar</string>
-    <string name="execute_jar_incompatible_runtime">La característica para ejecutar .jar no es compatible con Java %d</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>

@@ -350,7 +350,6 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="log_view_button_output_on">Kimenet\nBE</string>
     <string name="log_view_label_log_output">Napló kimenet:</string>
     <string name="execute_jar_failed_to_read_file">A .jar beolvasása sikertelen</string>
-    <string name="execute_jar_incompatible_runtime">A \".jar futtatása\" nem kompatibilis a Java %d-val/vel</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>

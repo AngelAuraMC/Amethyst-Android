@@ -341,7 +341,6 @@
     <string name="log_view_button_output_on">Sortie\nDésactivée</string>
     <string name="log_view_label_log_output">Sortie des logs :</string>
     <string name="execute_jar_failed_to_read_file">Impossible de lire le fichier .jar</string>
-    <string name="execute_jar_incompatible_runtime">La fonction \"Exécuter le fichier .jar\" n\'est pas compatible avec Java%d</string>
     <string name="controller_button_select">Sélectionner</string>
     <string name="controller_button_trigger_left">Gâchette gauche</string>
     <string name="controller_button_trigger_right">Gâchette droite</string>

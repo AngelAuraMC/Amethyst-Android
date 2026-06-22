@@ -345,7 +345,6 @@
     <string name="log_view_button_output_on">출력\n켬</string>
     <string name="log_view_label_log_output">로그 출력:</string>
     <string name="execute_jar_failed_to_read_file">.jar 파일을 읽지 못했습니다</string>
-    <string name="execute_jar_incompatible_runtime">Java %d는 .jar 실행 기능과 호환되지 않습니다</string>
     <string name="controller_button_select">선택</string>
     <string name="controller_button_trigger_left">좌측 트리거</string>
     <string name="controller_button_trigger_right">우측 트리거</string>

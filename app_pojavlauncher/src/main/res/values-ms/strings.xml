@@ -348,7 +348,6 @@
     <string name="log_view_button_output_on">Output\nBUKA</string>
     <string name="log_view_label_log_output">Output log:</string>
     <string name="execute_jar_failed_to_read_file">Gagal membaca fail .jar</string>
-    <string name="execute_jar_incompatible_runtime">Ciri pelaksanaan .jar adalah tidak serasi dengan Java %d</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
