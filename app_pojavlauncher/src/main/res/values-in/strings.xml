@@ -348,7 +348,6 @@
     <string name="log_view_button_output_on">Keluaran\nHIDUP</string>
     <string name="log_view_label_log_output">Keluaran log:</string>
     <string name="execute_jar_failed_to_read_file">Gagal membaca dokumen .jar</string>
-    <string name="execute_jar_incompatible_runtime">Fitur eksekusi .jar tidak kompatibel dengan Java %d</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
