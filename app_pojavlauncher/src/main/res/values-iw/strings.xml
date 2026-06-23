@@ -336,7 +336,6 @@
     <string name="log_view_button_output_on">פלט\nפעיל</string>
     <string name="log_view_label_log_output">לוג פלט:</string>
     <string name="execute_jar_failed_to_read_file">נכשלה קריאת קובץ ה-.jar</string>
-    <string name="execute_jar_incompatible_runtime">הפעלת .jar אינה תואמת ל-Java %d</string>
     <string name="controller_button_trigger_left">טריגר ימני</string>
     <string name="controller_button_trigger_right">טריגר שמאלי</string>
     <string name="controller_button_shoulder_left">Shoulder ימני</string>

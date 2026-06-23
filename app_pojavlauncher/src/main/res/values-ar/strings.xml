@@ -318,7 +318,6 @@
     <string name="log_view_button_output_on">المخرجات\nمفعلة</string>
     <string name="log_view_label_log_output">سِجل الإخراج:</string>
     <string name="execute_jar_failed_to_read_file">فشل في قراءة ملف .jar</string>
-    <string name="execute_jar_incompatible_runtime">تنفيذ وظيفة .jar غير متوافق مع Java %d</string>
     <string name="controller_button_select">اختر</string>
     <string name="controller_button_trigger_left">الزناد الأيسر</string>
     <string name="controller_button_trigger_right">الزناد الأيمن</string>

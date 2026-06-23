@@ -321,7 +321,6 @@
     <string name="log_view_button_output_on">SAÍDA\nLIGADA</string>
     <string name="log_view_label_log_output">Registro de saída:</string>
     <string name="execute_jar_failed_to_read_file">Falha na leitura do arquivo .jar</string>
-    <string name="execute_jar_incompatible_runtime">O recurso Executar .jar não é compatível com Java %d</string>
     <string name="controller_button_select">Selecionar</string>
     <string name="controller_button_trigger_left">Botão esquerdo</string>
     <string name="controller_button_trigger_right">Botão direito</string>
