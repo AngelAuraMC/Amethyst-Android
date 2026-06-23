@@ -351,7 +351,6 @@
     <string name="log_view_button_output_on">輸出\n開</string>
     <string name="log_view_label_log_output">記錄檔輸出：</string>
     <string name="execute_jar_failed_to_read_file">.jar 檔案讀取失敗</string>
-    <string name="execute_jar_incompatible_runtime">執行 .jar 功能與 Java %d 不相容</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
