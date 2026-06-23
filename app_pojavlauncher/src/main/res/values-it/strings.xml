@@ -347,7 +347,6 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="log_view_button_output_on">Output\nON</string>
     <string name="log_view_label_log_output">Registro log:</string>
     <string name="execute_jar_failed_to_read_file">Impossibile leggere il file .jar</string>
-    <string name="execute_jar_incompatible_runtime">La funzione Esegui .jar non è compatibile con Java %d</string>
     <string name="controller_button_select">Seleziona</string>
     <string name="controller_button_trigger_left">Grilletto sinistro</string>
     <string name="controller_button_trigger_right">Grilletto destro</string>
