@@ -335,7 +335,6 @@
     <string name="log_view_button_output_on">แสดงผล\nเปิด</string>
     <string name="log_view_label_log_output">เอาต์พุต Log:</string>
     <string name="execute_jar_failed_to_read_file">ไม่สามารถอ่าน .jar ไฟล์ได้</string>
-    <string name="execute_jar_incompatible_runtime">การรัน .jar ไม่รองรับกับจาวา %d</string>
     <string name="controller_button_select">เลือก</string>
     <string name="preference_experimental_title">การตั้งค่าที่ทดสอบ</string>
     <!--  Make sure the people turning this on can read English.  -->
