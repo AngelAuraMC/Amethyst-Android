@@ -348,7 +348,6 @@
     <string name="log_view_button_output_on">Výstup\nZapnuto</string>
     <string name="log_view_label_log_output">Výstup záznamu:</string>
     <string name="execute_jar_failed_to_read_file">Selhalo čtení souboru .jar</string>
-    <string name="execute_jar_incompatible_runtime">Funkce spouštění .jar souboru není kompatibilní s Javou %d</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
