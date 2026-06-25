@@ -137,7 +137,6 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
 
         mKeyboardPanningSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             PREF_KEYBOARD_PANNING = isChecked;
-            onKeyboardPanningChanged();
             mEditor.putBoolean("keyboardPanning", isChecked);
         });
 
@@ -261,7 +260,6 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
 
             onGyroStateChanged();
             onResolutionChanged();
-            onKeyboardPanningChanged();
         }
 
         disappear(true);
@@ -269,9 +267,6 @@ public abstract class QuickSettingSideDialog extends com.kdt.SideDialogView {
 
     /** Called when the resolution is changed. Use {@link LauncherPreferences#PREF_SCALE_FACTOR} */
     public abstract void onResolutionChanged();
-
-    /** Called when the keyboard panning state is changed. Use {@link LauncherPreferences#PREF_KEYBOARD_PANNING} */
-    public abstract void onKeyboardPanningChanged();
 
     /** Called when the gyro state is changed.
      * Use {@link LauncherPreferences#PREF_ENABLE_GYRO}

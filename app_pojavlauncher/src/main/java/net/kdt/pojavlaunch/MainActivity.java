@@ -564,15 +564,6 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                 }
 
                 @Override
-                public void onKeyboardPanningChanged() {
-                    if (LauncherPreferences.PREF_KEYBOARD_PANNING) {
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-                    } else {
-                        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
-                    }
-                }
-
-                @Override
                 public void onGyroStateChanged() {
                     mGyroControl.updateOrientation();
                     if (PREF_ENABLE_GYRO) {
