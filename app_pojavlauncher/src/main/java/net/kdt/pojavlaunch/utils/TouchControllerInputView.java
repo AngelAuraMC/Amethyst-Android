@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -39,8 +40,8 @@ import static top.fifthlight.touchcontroller.proxy.message.input.TextInputStateK
 import net.kdt.pojavlaunch.EfficientAndroidLWJGLKeycode;
 import net.kdt.pojavlaunch.customcontrols.keyboard.CharacterSenderStrategy;
 
-public class TouchControllerInputView extends View {
-    public boolean disableFullScreenInput = false;
+public class TouchControllerInputView extends View implements LauncherProxyClient.InputHandler, LauncherProxyClient.KeyboardShowHandler {
+    public boolean disableFullScreenInput = true;
     private LauncherProxyClient client;
     private int width = -1;
     private int height = -1;
@@ -52,7 +53,11 @@ public class TouchControllerInputView extends View {
     private FloatRect cursorRect;
     private FloatRect inputAreaRect;
     private InputConnectionImpl inputConnection;
-    private final LauncherProxyClient.InputHandler inputHandler;
+
+    public interface InputAreaRectListener {
+        void updateInputAreaRect(@Nullable RectF rect);
+    }
+    private InputAreaRectListener inputAreaRectListener;
 
     public TouchControllerInputView(Context context) {
         this(context, null);
@@ -68,56 +73,71 @@ public class TouchControllerInputView extends View {
         if (inputMethodManager == null) {
             throw new IllegalStateException("No InputMethodManager service");
         }
-
-        inputHandler = new LauncherProxyClient.InputHandler() {
-            @Override
-            public void updateState(TextInputState textInputState) {
-                post(() -> {
-                    TextInputState prevState = inputState;
-                    inputState = textInputState;
-                    if (textInputState != null) {
-                        setVisibility(VISIBLE);
-                        setFocusable(true);
-                    }
-                    if (prevState == null && textInputState != null) {
-                        setFocusableInTouchMode(true);
-                        clearFocus();
-                        requestFocus();
-                        inputMethodManager.showSoftInput(
-                                TouchControllerInputView.this,
-                                InputMethodManager.SHOW_IMPLICIT
-                        );
-                    } else if (prevState != null && textInputState == null) {
-                        clearFocus();
-                        inputMethodManager.hideSoftInputFromWindow(
-                                getWindowToken(),
-                                InputMethodManager.HIDE_IMPLICIT_ONLY
-                        );
-                    }
-                    if (textInputState != null) {
-                        if (inputConnection != null) {
-                            inputConnection.updateState(textInputState);
-                        }
-                    } else {
-                        setVisibility(GONE);
-                        setFocusable(false);
-                    }
-                });
-            }
-
-            @Override
-            public void updateCursor(FloatRect cursorRect) {
-                TouchControllerInputView.this.cursorRect = cursorRect;
-                updateCursorAnchorInfo();
-            }
-
-            @Override
-            public void updateArea(FloatRect inputAreaRect) {
-                TouchControllerInputView.this.inputAreaRect = inputAreaRect;
-                updateCursorAnchorInfo();
-            }
-        };
     }
+
+
+    @Override
+    public void updateState(TextInputState textInputState) {
+        post(() -> {
+            TextInputState prevState = inputState;
+            inputState = textInputState;
+            if (textInputState != null) {
+                setVisibility(VISIBLE);
+                setFocusable(true);
+            }
+            if (prevState == null && textInputState != null) {
+                setFocusableInTouchMode(true);
+                clearFocus();
+                requestFocus();
+                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+            } else if (prevState != null && textInputState == null) {
+                clearFocus();
+                inputMethodManager.hideSoftInputFromWindow(
+                        getWindowToken(),
+                        InputMethodManager.HIDE_IMPLICIT_ONLY
+                );
+            }
+            if (textInputState != null) {
+                if (inputConnection != null) {
+                    inputConnection.updateState(textInputState);
+                }
+            } else {
+                setVisibility(GONE);
+                setFocusable(false);
+                if (inputAreaRectListener != null) {
+                    inputAreaRectListener.updateInputAreaRect(null);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void updateCursor(FloatRect cursorRect) {
+        post(() -> {
+            TouchControllerInputView.this.cursorRect = cursorRect;
+            updateCursorAnchorInfo();
+        });
+    }
+
+    @Override
+    public void updateArea(FloatRect inputAreaRect) {
+        post(() -> {
+            TouchControllerInputView.this.inputAreaRect = inputAreaRect;
+            updateCursorAnchorInfo();
+        });
+    }
+
+    @Override
+    public void showKeyboard() {
+        post(() -> {
+            if (inputState != null) {
+                inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
+            }
+        });
+    }
+
+    @Override
+    public void hideKeyboard() {}
 
     private static boolean isEmpty(TextRange range) {
         return range.getLength() == 0;
@@ -143,16 +163,22 @@ public class TouchControllerInputView extends View {
         LauncherProxyClient prev = this.client;
         if (prev != null) {
             prev.setInputHandler(null);
+            prev.setKeyboardShowHandler(null);
         }
         this.client = value;
         if (value != null) {
-            value.setInputHandler(inputHandler);
+            value.setInputHandler(this);
+            value.setKeyboardShowHandler(this);
         }
     }
 
     public void setSize(int width, int height) {
         this.width = width;
         this.height = height;
+    }
+
+    public void setInputAreaRectListener(InputAreaRectListener listener) {
+        inputAreaRectListener = listener;
     }
 
     @Override
@@ -198,16 +224,18 @@ public class TouchControllerInputView extends View {
             );
         }
         if (inputAreaRect != null) {
+            RectF rect = new RectF(
+                    inputAreaRect.getLeft() * width,
+                    inputAreaRect.getTop() * height,
+                    (inputAreaRect.getLeft() + inputAreaRect.getWidth()) * width,
+                    (inputAreaRect.getTop() + inputAreaRect.getHeight()) * height
+            );
+            if (inputAreaRectListener != null) {
+                inputAreaRectListener.updateInputAreaRect(rect);
+            }
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 EditorBoundsInfo editorBoundsInfo = new EditorBoundsInfo.Builder()
-                        .setEditorBounds(
-                                new RectF(
-                                        inputAreaRect.getLeft() * width,
-                                        inputAreaRect.getTop() * height,
-                                        (inputAreaRect.getLeft() + inputAreaRect.getWidth()) * width,
-                                        (inputAreaRect.getTop() + inputAreaRect.getHeight()) * height
-                                )
-                        )
+                        .setEditorBounds(rect)
                         .build();
                 builder.setEditorBoundsInfo(editorBoundsInfo);
             }
@@ -307,6 +335,9 @@ public class TouchControllerInputView extends View {
 
         @Override
         public void closeConnection() {
+            if (inputAreaRectListener != null) {
+                inputAreaRectListener.updateInputAreaRect(null);
+            }
         }
 
         @Override
@@ -489,7 +520,7 @@ public class TouchControllerInputView extends View {
 
         @Nullable
         @Override
-        public android.os.Handler getHandler() {
+        public Handler getHandler() {
             return null;
         }
 
@@ -562,12 +593,12 @@ public class TouchControllerInputView extends View {
 
         @Override
         public boolean performEditorAction(int editorAction) {
-            return false;
+            return true;
         }
 
         @Override
         public boolean performPrivateCommand(String action, Bundle data) {
-            return false;
+            return true;
         }
 
         @Override

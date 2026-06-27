@@ -176,6 +176,8 @@
     <string name="mcl_setting_subtitle_mousespeed">Changes the speed of the virtual mouse.</string>
     <string name="mcl_setting_title_grab_mouse">Use virtual cursor</string>
     <string name="mcl_setting_subtitle_grab_mouse">Ensures the cursor stays inside the game. Prevents mouse from clicking touch control layout.</string>
+    <string name="mcl_setting_title_keyboard_panning">Keyboard panning</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Shift the screen upwards when the keyboard is open.</string>
     <string name="customctrl_passthru">Mouse pass-thru</string>
     <string name="customctrl_swipeable">Swipeable</string>
     <string name="customctrl_forward_lock">Forward lock</string>

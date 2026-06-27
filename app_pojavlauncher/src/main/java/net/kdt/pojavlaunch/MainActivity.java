@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -32,15 +33,22 @@ import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.Keep;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsAnimationCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.kdt.LoggerView;
@@ -75,9 +83,10 @@ import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends BaseActivity implements ControlButtonMenuListener, EditorExitable, ServiceConnection {
+public class MainActivity extends BaseActivity implements ControlButtonMenuListener, EditorExitable, ServiceConnection, TouchControllerInputView.InputAreaRectListener {
     public static volatile ClipboardManager GLOBAL_CLIPBOARD;
     public static final String TAG = "MainActivity";
     public static final String INTENT_MINECRAFT_VERSION = "intent_version";
@@ -96,6 +105,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private GyroControl mGyroControl = null;
     private ControlLayout mControlLayout;
     private HotbarView mHotbarView;
+    private FrameLayout contentFrame;
+
+    @Nullable
+    private RectF inputAreaRect;
+    private int imeHeight;
+    private boolean hasOngoingImeAnimation;
 
     MinecraftProfile minecraftProfile;
 
@@ -110,6 +125,8 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
+
         if (LauncherPreferences.PREF_GAMEPAD_SDL_PASSTHRU) {
             // TODO: Use lower level HID capture that needs a dialogue box from the user for the
             // app to fully take focus of the input devices. Might cause issues with older android
@@ -185,6 +202,39 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         MCOptionUtils.addMCOptionListener(optionListener);
         mControlLayout.setModifiable(false);
 
+        // Listen to IME insets animation
+        ViewCompat.setWindowInsetsAnimationCallback(contentFrame, new WindowInsetsAnimationCompat.Callback(WindowInsetsAnimationCompat.Callback.DISPATCH_MODE_STOP) {
+            @Override
+            public void onPrepare(@NonNull WindowInsetsAnimationCompat animation) {
+                if ((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0) {
+                    hasOngoingImeAnimation = true;
+                }
+            }
+
+            @NonNull
+            @Override
+            public WindowInsetsCompat onProgress(@NonNull WindowInsetsCompat insets, @NonNull List<WindowInsetsAnimationCompat> runningAnimations) {
+                imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+                refreshImeTranslation();
+                return insets;
+            }
+
+            @Override
+            public void onEnd(@NonNull WindowInsetsAnimationCompat animation) {
+                if ((animation.getTypeMask() & WindowInsetsCompat.Type.ime()) != 0) {
+                    hasOngoingImeAnimation = false;
+                }
+            }
+        });
+        ViewCompat.setOnApplyWindowInsetsListener(contentFrame, (v, insets) -> {
+            // Only refresh translation if IME change insets itself, not the animation
+            if (!hasOngoingImeAnimation) {
+                imeHeight = insets.getInsets(WindowInsetsCompat.Type.ime()).bottom;
+                refreshImeTranslation();
+            }
+            return insets;
+        });
+
         // Set the activity for the executor. Must do this here, or else Tools.showErrorRemote() may not
         // execute the correct method
         ContextExecutor.setActivity(this);
@@ -209,7 +259,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
             GLOBAL_CLIPBOARD = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
             touchCharInput.setCharacterSender(new LwjglCharSender());
 
-            touchControllerInputView.setSize(minecraftGLView.getWidth(), minecraftGLView.getHeight());
+            touchControllerInputView.setInputAreaRectListener(this);
 
             if(minecraftProfile.pojavRendererName != null) {
                 Log.i("RdrDebug","__P_renderer="+minecraftProfile.pojavRendererName);
@@ -259,6 +309,9 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                     if (PREF_VIRTUAL_MOUSE_START) {
                         touchpad.post(() -> touchpad.switchState());
                     }
+
+                    // At this time, correct size is known
+                    touchControllerInputView.setSize(minecraftGLView.getWidth(), minecraftGLView.getHeight());
 
                     runCraft(finalVersion, mVersionInfo);
                 }catch (Throwable e){
@@ -314,6 +367,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         touchControllerInputView = findViewById(R.id.touch_controller_input);
         mDrawerPullButton = findViewById(R.id.drawer_button);
         mHotbarView = findViewById(R.id.hotbar_view);
+        contentFrame = findViewById(R.id.content_frame);
     }
 
     @Override
@@ -700,5 +754,34 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public void updateInputAreaRect(@Nullable RectF rect) {
+        inputAreaRect = rect;
+        refreshImeTranslation();
+    }
+
+    private void refreshImeTranslation() {
+        if (imeHeight == 0) {
+            // Early exit
+            contentFrame.setTranslationY(0);
+            return;
+        }
+
+        int inputAreaBottom;
+        if (inputAreaRect != null) {
+            inputAreaBottom = (int) inputAreaRect.bottom;
+        } else if (LauncherPreferences.PREF_KEYBOARD_PANNING) {
+            inputAreaBottom = contentFrame.getHeight();
+        } else {
+            contentFrame.setTranslationY(0);
+            return;
+        }
+
+        int bottomDistance = contentFrame.getHeight() - inputAreaBottom;
+        int bottomPadding = Math.max(imeHeight - bottomDistance, 0);
+
+        contentFrame.setTranslationY(-bottomPadding);
     }
 }

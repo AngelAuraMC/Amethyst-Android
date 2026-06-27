@@ -38,11 +38,24 @@
 				android:translationZ="1dp"
 				android:visibility="gone"/>
 
+		<!-- This is a horrible hack that forces android to properly redraw ControlLayout
+			 when keyboard causes MainActivity to pan offscreen, which can cause the top part
+			 of ControLayout to just be grpahically cut out. This stops that, somehow...      -->
+			<View
+				android:layout_height="match_parent"
+				android:layout_width="match_parent"
+				android:orientation="vertical"
+				android:focusable="false"
+				android:translationZ="1dp"
+				android:visibility="visible"
+				android:importantForAccessibility="no"
+				android:background="@android:color/transparent"/>
 
 			<net.kdt.pojavlaunch.customcontrols.keyboard.TouchCharInput
 				android:id="@+id/mainTouchCharInput"
 				android:layout_width="1dp"
 				android:layout_height="1dp"
+				android:layout_gravity="bottom"
 				android:background="@android:color/darker_gray"
 				android:ems="10"
 				android:imeOptions="flagNoFullscreen|flagNoExtractUi|flagNoPersonalizedLearning|actionDone"
@@ -52,7 +65,8 @@
 			<net.kdt.pojavlaunch.utils.TouchControllerInputView
 				android:id="@+id/touch_controller_input"
 				android:layout_width="1dp"
-				android:layout_height="1dp" />
+				android:layout_height="1dp"
+				android:layout_gravity="bottom" />
 
 			<net.kdt.pojavlaunch.customcontrols.handleview.DrawerPullButton
 				android:id="@+id/drawer_button"
