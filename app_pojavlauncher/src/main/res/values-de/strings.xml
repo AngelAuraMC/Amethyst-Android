@@ -150,6 +150,8 @@
     <string name="mcl_setting_subtitle_mousespeed">Ändert die Geschwindigkeit der virtuellen Maus.</string>
     <string name="mcl_setting_title_grab_mouse">Virtuellen Cursor verwenden</string>
     <string name="mcl_setting_subtitle_grab_mouse">Stellt sicher, dass der Cursor innerhalb des Spiels bleibt. Verhindert, dass die Maus auf das Touch-Steuerungslayout klickt.</string>
+    <string name="mcl_setting_title_keyboard_panning">Tastatur Navigation</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Schiebe den Bildschirm nach oben, wenn die Tastatur geöffnet ist.</string>
     <string name="customctrl_passthru">Maus ignoriert Schaltflächen</string>
     <string name="customctrl_swipeable">Wischbar</string>
     <string name="customctrl_forward_lock">Vorwärts-Sperre</string>
