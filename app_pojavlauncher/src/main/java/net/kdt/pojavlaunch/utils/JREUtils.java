@@ -170,7 +170,8 @@ public class JREUtils {
                 .append("/vendor/").append(libName).append("/hw:")
                 .append(NATIVE_LIB_DIR);
         // FIXME: Freetype is shipped inside lwjgl. We should ship it outside and use lwjgl native jars instead.
-        ldLibraryPath.append(String.format(":%s/lwjgl-3.3.3-natives/%s", Tools.DIR_DATA, archAsStringAndroid(getDeviceArchitecture())));
+        String lwjglVer = Tools.sLwjglVersion == null ? "3.3.3" : Tools.sLwjglVersion;
+        ldLibraryPath.append(String.format(":%s/lwjgl-%s-natives/%s", Tools.DIR_DATA, lwjglVer, archAsStringAndroid(getDeviceArchitecture())));
         LD_LIBRARY_PATH = ldLibraryPath.toString();
     }
 
