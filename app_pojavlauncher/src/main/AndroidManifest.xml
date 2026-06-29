@@ -112,6 +112,13 @@
             android:process=":game"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="sensorLandscape" />
+        <activity
+            android:name="org.angelauramc.amethyst.game.MinecraftActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
+            android:launchMode="singleTop"
+            android:process=":game"
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="sensorLandscape" />
 
         <provider
             android:name=".scoped.FolderProvider"

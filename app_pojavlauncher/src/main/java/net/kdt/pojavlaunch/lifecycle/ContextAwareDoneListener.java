@@ -15,6 +15,8 @@ import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
 import net.kdt.pojavlaunch.utils.NotificationUtils;
 
+import org.angelauramc.amethyst.game.MinecraftActivity;
+
 public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneListener, ContextExecutorTask {
     private final String mErrorString;
     private final String mNormalizedVersionid;
@@ -25,7 +27,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
     }
 
     private Intent createGameStartIntent(Context context) {
-        Intent mainIntent = new Intent(context, MainActivity.class);
+        Intent mainIntent = new Intent(context, MinecraftActivity.class);
         mainIntent.putExtra(INTENT_MINECRAFT_VERSION, mNormalizedVersionid);
         mainIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         return mainIntent;
@@ -49,7 +51,7 @@ public class ContextAwareDoneListener implements AsyncMinecraftDownloader.DoneLi
             activity.finish();
             android.os.Process.killProcess(android.os.Process.myPid()); //You should kill yourself, NOW!
         } catch (Throwable e) {
-            Tools.showError(activity.getBaseContext(), e);
+            Tools.showErrorRemote(e);
         }
     }
 
