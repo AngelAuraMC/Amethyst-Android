@@ -34,7 +34,7 @@
     <string name="mcl_options">Tùy chọn</string>
     <string name="mcl_option_customcontrol">Tùy chỉnh bố cục</string>
     <string name="mcl_setting_title_use_surface_view">Dùng cách kết xuất thay thế</string>
-    <string name="mcl_setting_subtitle_use_surface_view">Có thể giúp cải thiện hiệu năng nếu GPU bị nghẽn cổ chai.</string>
+    <string name="mcl_setting_subtitle_use_surface_view">Có thể giúp cải thiện hiệu năng nếu bị giới hạn bởi GPU.</string>
     <string name="mcl_setting_title_ignore_notch">Bỏ qua phần khuyết màn hình</string>
     <string name="mcl_setting_subtitle_ignore_notch">Hiển thị nội dung cả dưới phần màn hình bị khuyết.\nGiúp trải nâng cao trải nghiệm chơi.</string>
     <string name="mcl_setting_title_resolution_scaler">Tỷ lệ độ phân giải</string>
@@ -150,6 +150,8 @@
     <string name="mcl_setting_subtitle_mousespeed">Thay đổi tốc độ con trỏ chuột ảo.</string>
     <string name="mcl_setting_title_grab_mouse">Dùng chuột ảo</string>
     <string name="mcl_setting_subtitle_grab_mouse">Đảm bảo con trỏ chuột chỉ có tác dụng trong trò chơi. Ngăn con trỏ tương tác với bố cục điều khiển cảm ứng.</string>
+    <string name="mcl_setting_title_keyboard_panning">Đẩy màn hình khi mở bàn phím</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Di chuyển màn hình lên trên khi mở bàn phím.</string>
     <string name="customctrl_passthru">Di chuyển chuột</string>
     <string name="customctrl_swipeable">Có thể vuốt</string>
     <string name="customctrl_forward_lock">Khóa tiến về trước</string>
