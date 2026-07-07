@@ -113,7 +113,7 @@
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="org.angelauramc.amethyst.game.MinecraftActivity"
+            android:name="org.angelauramc.amethyst.game.minecraft.MinecraftActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|smallestScreenSize|screenLayout|keyboard|navigation|uiMode"
             android:launchMode="singleTop"
             android:process=":game"
