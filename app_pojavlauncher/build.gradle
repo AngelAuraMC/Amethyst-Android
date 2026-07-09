@@ -48,7 +48,12 @@ def getVersionName = {
 
     }
 
-    return TAG_STRING.trim().replace("-g", "-") + "-" + semVer
+    def isRelease = project.gradle.startParameter.taskNames.any { it.toLowerCase().contains('release') }
+    if(!isRelease){
+        return TAG_STRING.trim().replace("-g", "-") + "-" + semVer + "-debug"
+    }else {
+        return TAG_STRING.trim().replace("-g", "-") + "-" + semVer + "-release"
+    }
 }
 
 def getCFApiKey = {
