@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">스냅숏</string>
     <string name="mcl_setting_veroption_oldalpha">Old-alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Old-beta</string>
-    <string name="mcl_setting_java_sandbox">외부 .jar 실행</string>
-    <string name="mcl_setting_java_sandbox_subtitle">.jar 파일을 실행할 때 샌드박스 보안 관리자의 사용 가능 여부를 제어합니다.</string>
     <string name="mcl_version_clone">복제</string>
     <!-- Global strings -->
     <string name="global_edit">수정</string>

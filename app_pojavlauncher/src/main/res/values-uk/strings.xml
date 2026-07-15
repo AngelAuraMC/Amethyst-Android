@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Знімки</string>
     <string name="mcl_setting_veroption_oldalpha">Старі альфа</string>
     <string name="mcl_setting_veroption_oldbeta">Старі бета</string>
-    <string name="mcl_setting_java_sandbox">Виконання файлу .jar пісочниці</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Контролювати доступністю менеджера безпеки пісочниці під час виконання файлу .jar.</string>
     <string name="mcl_version_clone">Клонувати</string>
     <!-- Global strings -->
     <string name="global_edit">Редагувати</string>

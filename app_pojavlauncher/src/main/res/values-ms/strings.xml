@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Petikan</string>
     <string name="mcl_setting_veroption_oldalpha">Alfa-lama</string>
     <string name="mcl_setting_veroption_oldbeta">Beta-lama</string>
-    <string name="mcl_setting_java_sandbox">Pelaksanaan .jar kotak pasir</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Kawal ketersediaan pengurus keselamatan kotak pasir semasa melaksanakan fail .jar.</string>
     <string name="mcl_version_clone">Klon</string>
     <!-- Global strings -->
     <string name="global_edit">Sunting</string>

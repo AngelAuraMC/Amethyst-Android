@@ -62,8 +62,6 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Régi-alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Régi-béta</string>
-    <string name="mcl_setting_java_sandbox">Szabad .jar futtatása</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Irányítja az elérhetőségét a szabad biztonság kezelőnek, mikőzben végrehajtasz egy .jar fájlt.</string>
     <string name="mcl_version_clone">Másolás</string>
     <!-- Global strings -->
     <string name="global_edit">Szerkesztés</string>

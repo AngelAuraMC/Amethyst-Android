@@ -53,8 +53,6 @@
     <string name="mcl_setting_veroption_snapshot">Snapshots</string>
     <string name="mcl_setting_veroption_oldalpha">Alphas</string>
     <string name="mcl_setting_veroption_oldbeta">Betas</string>
-    <string name="mcl_setting_java_sandbox">Ejecutar .jar en un Sandbox</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Controla la disponibilidad del gestor de seguridad del sandbox al ejecutar un archivo jar.</string>
     <string name="mcl_version_clone">Clonar</string>
     <!-- Global strings -->
     <string name="global_edit">Editar</string>

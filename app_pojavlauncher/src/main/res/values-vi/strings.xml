@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha cũ</string>
     <string name="mcl_setting_veroption_oldbeta">Beta cũ</string>
-    <string name="mcl_setting_java_sandbox">Chạy tệp .jar trong môi trường tách biệt</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Bật hoặc tắt trình quản lý bảo mật môi trường tách biệt khi chạy tệp .jar.</string>
     <string name="mcl_version_clone">Tạo bản sao</string>
     <!-- Global strings -->
     <string name="global_edit">Sửa</string>

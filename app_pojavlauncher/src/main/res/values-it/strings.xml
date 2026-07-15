@@ -58,8 +58,6 @@
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Vecchie-alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Vecchie-beta</string>
-    <string name="mcl_setting_java_sandbox">Esecuzione di .bar in Sandbox</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Controlla la disponibilità del gestore di sicurezza di sandbox quando esegui un file .jar.</string>
     <string name="mcl_version_clone">Clona</string>
     <!-- Global strings -->
     <string name="global_edit">Modifica</string>

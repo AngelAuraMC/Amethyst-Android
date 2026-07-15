@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha-lama</string>
     <string name="mcl_setting_veroption_oldbeta">Beta-lama</string>
-    <string name="mcl_setting_java_sandbox">Sandbox eksekusi .jar</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Kendalikan ketersedian pengelola keamanan sandbox saat meluncurkan berkas .jar.</string>
     <string name="mcl_version_clone">Klon</string>
     <!-- Global strings -->
     <string name="global_edit">Ubah</string>

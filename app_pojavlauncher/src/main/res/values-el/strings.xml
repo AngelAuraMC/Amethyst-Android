@@ -50,8 +50,6 @@
     <string name="mcl_setting_veroption_snapshot">Στιγμιότυπο</string>
     <string name="mcl_setting_veroption_oldalpha">Παλιά-alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Παλιά-Beta</string>
-    <string name="mcl_setting_java_sandbox">Sandbox .jar εκτέλεση</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Ελέγξτε τη διαθεσιμότητα του διαχειριστή ασφαλείας sandbox όταν εκτελείτε ένα αρχείο .jar.</string>
     <string name="mcl_version_clone">Κλώνος</string>
     <!-- Global strings -->
     <string name="global_edit">Επεξεργασία</string>

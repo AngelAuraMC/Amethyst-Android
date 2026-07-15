@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Stara alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Stara beta</string>
-    <string name="mcl_setting_java_sandbox">Wykonanie pliku .jar w piaskownicy</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Kontroluj dostępność menedżera zabezpieczeń piaskownicy podczas wykonywania pliku .jar.</string>
     <string name="mcl_version_clone">Utwórz kopię</string>
     <!-- Global strings -->
     <string name="global_edit">Edytuj</string>

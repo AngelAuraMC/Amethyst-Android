@@ -47,8 +47,6 @@
     <string name="mcl_setting_veroption_snapshot">Naujinimai</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Beta</string>
-    <string name="mcl_setting_java_sandbox">.jar paleidimas</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Valdykite smėlio dėžės saugos tvarkyklės prieinamumą paleidžiant .jar failą.</string>
     <string name="mcl_version_clone">Klonuoti</string>
     <!-- Global strings -->
     <string name="global_edit">Redaguoti</string>

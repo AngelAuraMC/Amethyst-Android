@@ -49,8 +49,6 @@
     <string name="mcl_setting_veroption_release">ปล่อย</string>
     <string name="mcl_setting_veroption_snapshot">ภาพรวม</string>
     <string name="mcl_setting_veroption_oldbeta">เบตาเก่า</string>
-    <string name="mcl_setting_java_sandbox">การดำเนินการแซนด์บ็อกซ์ .jar</string>
-    <string name="mcl_setting_java_sandbox_subtitle">ควบคุมความพร้อมใช้งานของตัวจัดการความปลอดภัยของแซนด์บ็อกซ์เมื่อเรียกใช้ไฟล์ .jar</string>
     <string name="mcl_version_clone">คัดลอก</string>
     <!-- Global strings -->
     <string name="global_edit">แก้ไข</string>

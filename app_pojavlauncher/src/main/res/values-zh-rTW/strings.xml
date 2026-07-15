@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">快照版</string>
     <string name="mcl_setting_veroption_oldalpha">遠古 alpha 版</string>
     <string name="mcl_setting_veroption_oldbeta">遠古 beta 版</string>
-    <string name="mcl_setting_java_sandbox">沙盒內執行 .jar 檔案</string>
-    <string name="mcl_setting_java_sandbox_subtitle">在執行 .jar 檔案時，控制沙盒安全管理器是否可用。</string>
     <string name="mcl_version_clone">複製</string>
     <!-- Global strings -->
     <string name="global_edit">編輯</string>

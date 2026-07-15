@@ -58,8 +58,6 @@
     <string name="mcl_setting_veroption_snapshot">סנאפשוט</string>
     <string name="mcl_setting_veroption_oldalpha">אלפא: גרסה ישנה</string>
     <string name="mcl_setting_veroption_oldbeta">בטא: גרסה ישנה</string>
-    <string name="mcl_setting_java_sandbox">הפעלת .jar ב sandbox</string>
-    <string name="mcl_setting_java_sandbox_subtitle">\"שלוט בנגישות של מנהל האבטחה sandbox בעת הפעלת קובץ .jar.\".</string>
     <string name="mcl_version_clone">שכפול</string>
     <!-- Global strings -->
     <string name="global_edit">ערוך</string>

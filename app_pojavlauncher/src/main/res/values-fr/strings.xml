@@ -58,8 +58,6 @@
     <string name="mcl_setting_veroption_release">Version officielle</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Bêta</string>
-    <string name="mcl_setting_java_sandbox">Exécution de Sandbox .jar</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Contrôler la disponibilité du gestionnaire de sécurité sandbox lors du lancement de l\'installateur .jar.</string>
     <string name="mcl_version_clone">Dupliquer</string>
     <!-- Global strings -->
     <string name="global_edit">Modifier</string>

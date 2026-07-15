@@ -48,8 +48,6 @@
     <string name="mcl_setting_veroption_release">Vydanie</string>
     <string name="mcl_setting_veroption_oldalpha">Stará alfa</string>
     <string name="mcl_setting_veroption_oldbeta">Stará beta</string>
-    <string name="mcl_setting_java_sandbox">Sandbox spúšťania .jar súborov</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Možnosť zmeniť prítomnosť sandbox zabezpečenia pri spustení .jar súboru.</string>
     <string name="mcl_version_clone">Duplikovať</string>
     <!-- Global strings -->
     <string name="global_edit">Upraviť</string>
