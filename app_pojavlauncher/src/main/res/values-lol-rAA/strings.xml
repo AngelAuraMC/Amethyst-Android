@@ -48,7 +48,6 @@
     <string name="mcl_setting_veroption_release">RELEASD</string>
     <string name="mcl_setting_veroption_oldalpha">Old-alaf</string>
     <string name="mcl_setting_veroption_oldbeta">Old-beat</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Control da availability of da sandbox security manager when executin\' a .jar file.</string>
     <string name="mcl_version_clone">Cloen</string>
     <!-- Global strings -->
     <string name="global_error">Eror</string>
