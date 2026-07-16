@@ -44,8 +44,6 @@
     <string name="mcl_setting_subtitle_javaargs">Achtung! Das Verändern dieser Argumente ohne Fachwissen kann zu Abstürzen führen.</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle Versionen, mittel)</string>
     <string name="mcl_setting_veroption_release">Vollversionen</string>
-    <string name="mcl_setting_java_sandbox">.jar in einer Sandbox ausführen</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Verfügbarkeit des Sandbox-Security-Managers beim Ausführen einer .jar-Datei einstellen.</string>
     <string name="mcl_version_clone">Duplizieren</string>
     <!-- Global strings -->
     <string name="global_error">I want to login</string>
