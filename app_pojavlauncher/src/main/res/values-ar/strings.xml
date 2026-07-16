@@ -54,8 +54,6 @@
     <string name="mcl_setting_veroption_snapshot">اللمحات (سنابشوت)</string>
     <string name="mcl_setting_veroption_oldalpha">نسخ ألفا قديمة</string>
     <string name="mcl_setting_veroption_oldbeta">نسخ بيتا قديمة</string>
-    <string name="mcl_setting_java_sandbox">تنفيذ ملف \".jar\" داخل Sandbox</string>
-    <string name="mcl_setting_java_sandbox_subtitle">التحكم بقدرة وجود Sandbox Security Manger عند تشغيل مِلَفّ .jar.</string>
     <string name="mcl_version_clone">نسخ</string>
     <!-- Global strings -->
     <string name="global_edit">تعديل</string>
