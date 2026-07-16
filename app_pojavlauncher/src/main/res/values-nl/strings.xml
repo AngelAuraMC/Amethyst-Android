@@ -45,8 +45,6 @@
     <string name="mcl_setting_title_javaargs">JVM Launch argumenten</string>
     <string name="mcl_setting_subtitle_javaargs">Wees voorzichtig, dit kan een spelcrash maken als het is aangepast zonder kennis.</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle versies, middelmatig)</string>
-    <string name="mcl_setting_java_sandbox">Sandbox .jar uitvoeren</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Beheer de beschikbaarheid van de sandbox-beveiligingsmanager bij het uitvoeren van een .jar bestand.</string>
     <string name="mcl_version_clone">Dupliceren</string>
     <!-- Global strings -->
     <string name="global_edit">Bewerken</string>
