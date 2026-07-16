@@ -45,8 +45,6 @@
     <string name="mcl_setting_subtitle_javaargs">Ehtiyatlı olun, məlumat olmadan dəyişdirilərsə, bu, oyunun çökməsinə səbəb ola bilər.</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (bütün versiyalar, orta)</string>
     <string name="mcl_setting_veroption_release">Buraxın</string>
-    <string name="mcl_setting_java_sandbox">Sandbox .jar icrası</string>
-    <string name="mcl_setting_java_sandbox_subtitle">.jar faylını icra edərkən sandbox təhlükəsizlik menecerinin mövcudluğuna nəzarət edin.</string>
     <string name="mcl_version_clone">Klon</string>
     <!-- Global strings -->
     <string name="global_error">Xəta</string>
