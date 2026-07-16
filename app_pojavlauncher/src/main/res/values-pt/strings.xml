@@ -49,8 +49,6 @@
     <string name="mcl_setting_veroption_release">Oficial</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha antiga</string>
     <string name="mcl_setting_veroption_oldbeta">Beta antiga</string>
-    <string name="mcl_setting_java_sandbox">Execução de .jar em modo Sandbox</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Controla a disponibilidade do gerenciador de segurança do sandbox ao executares um ficheiro .jar.</string>
     <string name="mcl_version_clone">Clonar</string>
     <!-- Global strings -->
     <string name="global_edit">Editar</string>
