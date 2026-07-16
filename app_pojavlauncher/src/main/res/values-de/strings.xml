@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Entwicklungsversionen</string>
     <string name="mcl_setting_veroption_oldalpha">Old-Alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Old-Beta</string>
-    <string name="mcl_setting_java_sandbox">.jar in einer Sandbox ausführen</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Verfügbarkeit des Sandbox-Security-Managers beim Ausführen einer .jar-Datei einstellen.</string>
     <string name="mcl_version_clone">Duplizieren</string>
     <!-- Global strings -->
     <string name="global_edit">Bearbeiten</string>
