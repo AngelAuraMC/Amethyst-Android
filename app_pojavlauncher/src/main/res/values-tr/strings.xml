@@ -59,8 +59,6 @@
     <string name="mcl_setting_veroption_snapshot">Test sürümleri</string>
     <string name="mcl_setting_veroption_oldalpha">Eski-alfa</string>
     <string name="mcl_setting_veroption_oldbeta">Eski-beta</string>
-    <string name="mcl_setting_java_sandbox">Sandbox .jar yürütme</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Bir .jar dosyasını çalıştırırken sandbox güvenlik yöneticisinin kullanılabilirliğini kontrol edin.</string>
     <string name="mcl_version_clone">Klonla</string>
     <!-- Global strings -->
     <string name="global_edit">Düzenle</string>
