@@ -453,4 +453,6 @@
     <string name="global_download">Pobierz</string>
     <string name="multirt_no_internet">Pobieranie nie powiodło się. Sprawdź połączenie internetowe.</string>
     <string name="global_installing">Instalowanie…</string>
+    <string name="error_key_unsupported">Błąd! Klucz przypisany do tego przycisku jest nieprawidłowy. Spróbuj wykonać aktualizację.</string>
+    <string name="error_invalid_value">Błąd! Nieprawidłowa wartość!</string>
 </resources>
