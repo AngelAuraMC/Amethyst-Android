@@ -453,4 +453,7 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="global_download">Herunterladen</string>
     <string name="multirt_no_internet">Herunterladen fehlgeschlagen, überprüfe deine Internetverbindung.</string>
     <string name="global_installing">Installieren…</string>
+    <string name="error_key_unsupported">Fehler! Der dieser Schaltfläche zugewiesene Schlüssel ist ungültig. Hast du eine Aktualisierung versucht durchzuführen?</string>
+    <string name="error_invalid_value">Fehler! Ungültiger Wert!</string>
+    <string name="minecraft_no_username_set">Dein Minecraft-Benutzername ist noch nicht gesetzt! Du musst ihn auf der Minecraft-Website setzen, bevor du dich anmelden kannst!</string>
 </resources>
