@@ -230,7 +230,7 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     public void nativeResize(int w, int h){
         DisplayMetrics realMetrics = new DisplayMetrics();
         mDisplay.getRealMetrics( realMetrics );
-        SDLActivity.nativeSetScreenResolution(w, h, w, h, (float)realMetrics.densityDpi / 160.0f, mDisplay.getRefreshRate());
+        SDLActivity.nativeSetScreenResolution(w, h, Tools.currentDisplayMetrics.widthPixels, Tools.currentDisplayMetrics.heightPixels, (float)realMetrics.densityDpi / 160.0f, mDisplay.getRefreshRate());
         SDLActivity.onNativeResize();
     }
 
