@@ -266,6 +266,15 @@ public class JREUtils {
             if (Tools.useSFPEW) {
                 envMap.put("SFPEW_EGL", envMap.get("POJAVEXEC_EGL"));
             }
+            if (LOCAL_RENDERER.equals("opengles_mobilegl_gles")){
+                envMap.put("MOBILEGL_BACKEND_TYPE", "DirectGLES");
+            }
+            if (LOCAL_RENDERER.equals("opengles_mobilegl_vk")){
+                envMap.put("MOBILEGL_BACKEND_TYPE", "DirectVulkan");
+            }
+            if (LOCAL_RENDERER.startsWith("opengles_mobilegl_")){
+                envMap.put("POJAVEXEC_EGL","libMobileGL.so");
+            }
         }
 
         if(LauncherPreferences.PREF_BIG_CORE_AFFINITY) envMap.put("POJAV_BIG_CORE_AFFINITY", "1");
@@ -543,6 +552,8 @@ public class JREUtils {
                 renderLibrary = "libng_gl4es.so"; break;
             case "vulkan_zink": renderLibrary = "libOSMesa.so"; break;
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
+            case "opengles_mobilegl_vk":
+            case "opengles_mobilegl_gles": renderLibrary = "libMobileGL.so"; break;
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             case "opengles_system_gles" : return null; // Literally nothing, this is for system GLES.

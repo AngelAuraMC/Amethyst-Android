@@ -70,6 +70,8 @@
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (all versions, mid)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (all versions, slow)</string>
     <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) - (all versions, fast)</string>
+    <string name="mcl_setting_renderer_mobilegl_gles">SFPEW/MobileGL (OpenGL ES) - (all versions, fast, testing) </string>
+    <string name="mcl_setting_renderer_mobilegl_vk">SFPEW/MobileGL (Vulkan) - (all versions, fast, testing) </string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ only</string>
     <string name="mcl_setting_veroption_release">Release</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
