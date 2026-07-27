@@ -7,18 +7,18 @@
     <string name="login_online_username_hint">用戶名</string>
     <string name="login_online_login_label">登入</string>
     <!-- Hint -->
-    <string name="hint_control_mapping">"點按頂部中央齒輪以打開上下文菜單⚙\n點擊按鈕進行自訂：編輯、調整大小、刪除或更改其按鍵綁定。"</string>
+    <string name="hint_control_mapping">"請輕觸頂部中央的齒輪圖示 ⚙ 開啟選單。\n輕觸按鈕來進行自訂：編輯、調整大小、移除或變更其按鍵綁定。"</string>
     <!-- Warnings -->
-    <string name="warning_remove_account">此帳號將被移除！</string>
+    <string name="warning_remove_account">系統將移除這個帳號！</string>
     <!-- AlertDialog title -->
-    <string name="alerttitle_installmod">選擇模組安裝器</string>
+    <string name="alerttitle_installmod">選擇模組安裝程式</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst 意外崩潰</string>
-    <string name="error_no_version">無可用版本！</string>
-    <string name="error_show_more">顯示詳情</string>
-    <string name="error_show_less">隱藏詳情</string>
+    <string name="error_fatal">Amethyst 非預期的崩潰</string>
+    <string name="error_no_version">沒有版本！</string>
+    <string name="error_show_more">顯示更多</string>
+    <string name="error_show_less">顯示較少</string>
     <!-- Toast messages -->
-    <string name="toast_permission_denied">請授予存儲讀寫權限！</string>
+    <string name="toast_permission_denied">需要儲存空間的讀取/寫入權限！</string>
     <string name="toast_optifine_success">安裝成功</string>
     <!--
     <string name="toast_3">Exit</string>
@@ -29,7 +29,7 @@
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">正在清理快取</string>
     <string name="mcl_launch_downloading">正在下載 %s</string>
-    <string name="mcl_launch_downloading_progress">"正在下載 %s（%.2f MB/%.2f MB）"</string>
+    <string name="mcl_launch_downloading_progress">"正在下載 %s (%.2f MB/%.2f MB)"</string>
     <string name="mcl_launch_download_assets">正在準備下載資源</string>
     <string name="mcl_options">選項</string>
     <string name="mcl_option_customcontrol">自訂控制鍵</string>
@@ -40,7 +40,7 @@
     <string name="mcl_setting_title_resolution_scaler">解析度縮放</string>
     <string name="mcl_setting_subtitle_resolution_scaler">允許降低遊戲解析度。原始解析度為 100%。</string>
     <string name="mcl_setting_title_longpresstrigger">長按觸發延遲</string>
-    <string name="mcl_setting_subtitle_longpresstrigger">更改長按（摧毀方塊、丟棄物品）的觸發時長。</string>
+    <string name="mcl_setting_subtitle_longpresstrigger">變更長按（摧毀方塊、丟棄物品）的觸發時長。</string>
     <string name="mcl_setting_title_buttonscale">控制按鈕縮放</string>
     <string name="mcl_setting_subtitle_buttonscale">如果按鈕太小，可以將此設定調大。</string>
     <string name="mcl_setting_title_mousescale">滑鼠縮放</string>
@@ -50,10 +50,11 @@
     <string name="mcl_setting_title_renderer_settings">附加渲染器設定</string>
     <string name="mcl_setting_title_renderer_subtitle">渲染器特定設定</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES—（僅支援 1.21.4 以下版本，速度較快）</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink（Vulkan）—（可用於所有版本，速度中等）</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues（OpenGL ES）—（僅支援 1.17 以上版本，速度快）</string>
-    <string name="mcl_setting_renderer_ltw">LTW（OpenGL ES 3）—僅支援 1.17 以上版本</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES —（僅支援 1.21.4 以下版本，速度較快）</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wapper —（所有版本，快速）</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) —（可用於所有版本，速度中等）</string>
+    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) —（僅支援 1.17 以上版本，速度快）</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) —僅支援 1.17 以上版本</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照版</string>
     <string name="mcl_setting_veroption_oldalpha">遠古 Alpha 版</string>
@@ -68,13 +69,13 @@
     <string name="global_clone">複製</string>
     <string name="global_restart">重啟</string>
     <string name="global_save">儲存</string>
-    <string name="global_unpacking">正在解壓 %s</string>
-    <string name="global_error_field_empty">此處不能為空</string>
+    <string name="global_unpacking">正在解壓縮套件 %s</string>
+    <string name="global_error_field_empty">這是必填欄位</string>
     <string name="global_waiting">請稍等</string>
     <string name="global_select">選擇</string>
     <string name="global_retry">重試</string>
     <string name="global_default">預設</string>
-    <string name="global_off">關</string>
+    <string name="global_off">關閉</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">應用/遊戲以代碼 %d 退出，請查看記錄檔 lastestlog.txt 以瞭解詳情。</string>
     <string name="mcn_signal_title">應用/遊戲以致命信息 %d 中止，請查看記錄檔 latestlog.txt 以瞭解詳情。</string>
@@ -335,6 +336,7 @@
     <string name="preference_vsync_in_zink_description">允許啟動器使用內部系統 API 為 Zink 啟用垂直同步。如果系統更新後，您在使用 Zink 時崩潰，請關閉此項設定。</string>
     <string name="exception_failed_to_unpack_jre17">JRE 17 安裝失敗</string>
     <string name="newdl_starting">正在讀取遊戲後設資料…</string>
+    <string name="newdl_downloading_jre_runtime">正在下載 Java %s 執行環境 (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">正在下載遊戲後設資料（%s）</string>
     <string name="newdl_downloading_game_files">正在下載遊戲…（%d/%d，%.2f MB/s）</string>
     <string name="newdl_downloading_game_files_size">正在下載遊戲…（%.2f/%.2f MB，%.2f MB/s）</string>
@@ -437,7 +439,7 @@
     <string name="mg_renderer_summary_dsaExt">可能對 Iris 光影包有幫助，這是 AcceleratedRendering 模組所必需的</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 升頻</string>
     <string name="autorendererselectfailed">自動渲染器選擇失敗，預設改用 HolyGL4ES</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink（Vulkan）—（可用于所有版本，速度中等）</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink（Vulkan）—（可用於所有版本，速度中等）</string>
     <string name="sodium_warning_title">偵測到 Sodium！</string>
     <string name="sodium_warning_message">看來你正在使用 Sodium，這是不被支援的，可能會導致畫面顯示問題或遊戲崩潰。請移除 Sodium 以及所有它的前置模組。</string>
     <string name="delete_sodium">刪除 Sodium 並啟動</string>
@@ -446,4 +448,18 @@
     <string name="sodium_override_summaryOn">官方不支援 Sodium。如果你遇到任何問題，將不會獲得任何協助。</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">不是模組包檔案！</string>
+    <string name="global_not_installed">未安裝</string>
+    <string name="global_download">下載</string>
+    <string name="multirt_no_internet">無法安裝，請檢查你的網際網路連線。</string>
+    <string name="global_installing">安裝中…</string>
+    <string name="error_invalid_value">錯誤！無效的值！</string>
+    <string name="create_lwjgl3ify_profile">建立 LWJGL3ify 設定檔</string>
+    <string name="select_lwjgl3ify_version">選擇 LWJGL3ify 版本</string>
+    <string name="lwjgl3ify_installer_available_versions">支援 LWJGL3IFY 的版本</string>
+    <string name="lwjgl3ify_installer_broken_versions">損毀的 LWJGL3IFY 版本 (SDL)</string>
+    <string name="new_default_controls">已將新的預設控制鍵擷取至 new_default.json。快來試試看吧！</string>
+    <string name="import_modpack_start">正在匯入模組包…</string>
+    <string name="import_modpack_hash">正在計算模組包檔案的雜湊值… (%s MB/%s MB)</string>
+    <string name="import_modpack_json">正在讀取模組包資訊…</string>
+    <string name="import_modpack_copy">正在將模組包檔案複製至快取… (%s MB/ %s MB)</string>
 </resources>
