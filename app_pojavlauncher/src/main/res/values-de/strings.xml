@@ -458,4 +458,11 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="minecraft_no_username_set">Dein Minecraft-Benutzername ist noch nicht gesetzt! Du musst ihn auf der Minecraft-Website setzen, bevor du dich anmelden kannst!</string>
     <string name="create_lwjgl3ify_profile">LWJGL3ify-Profil erstellen</string>
     <string name="select_lwjgl3ify_version">LWJGL3ify-Version auswählen</string>
+    <string name="lwjgl3ify_installer_available_versions">Unterstützte LWJGL3IFY-Versionen</string>
+    <string name="lwjgl3ify_installer_broken_versions">Defekte LWJGL3ify-Versionen (SDL)</string>
+    <string name="new_default_controls">Die neuen Standardsteuerelemente wurden in die Datei new_default.json extrahiert. Probiere sie aus!</string>
+    <string name="import_modpack_start">Modpack wird importiert…</string>
+    <string name="import_modpack_hash">Modpack-Datei wird gehasht… (%s MB/ %s MB)</string>
+    <string name="import_modpack_json">Modpack-Info wird gelesen…</string>
+    <string name="import_modpack_copy">Modpack-Datei wird in den Cache kopiert… (%s MB/ %s MB)</string>
 </resources>
