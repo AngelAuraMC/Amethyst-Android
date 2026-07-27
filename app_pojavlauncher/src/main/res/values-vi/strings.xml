@@ -83,7 +83,7 @@
     <string name="mcn_check_fail_vulkan_support">Trình kết xuất Zink (Vulkan) không được hỗ trợ trên thiết bị này!</string>
     <!-- MainActivity: Control buttons -->
     <string name="control_chat">Chat</string>
-    <string name="control_debug">Debug</string>
+    <string name="control_debug">Gỡ lỗi</string>
     <string name="control_primary">Pri</string>
     <string name="control_secondary">Sec</string>
     <string name="control_shift">◇</string>
@@ -291,7 +291,7 @@
     <string name="preference_vulkan_driver_system_description">Buộc trình khởi chạy sử dụng trình điều khiển Vulkan của hệ thống thay vì Turnip trên GPU Adreno. Chỉ ảnh hưởng đến trình kết xuất Zink và các bản mod có sử dụng Vulkan.</string>
     <string name="generic_install">Cài đặt</string>
     <string name="generic_apply">Áp dụng</string>
-    <string name="generic_debug">Debug</string>
+    <string name="generic_debug">Gỡ lỗi</string>
     <string name="search_modpack_no_result">Không tìm thấy modpack</string>
     <string name="search_modpack_error">Không thể tìm kiếm modpack</string>
     <string name="search_modpack_download_error">Không thể tải dữ liệu thuộc tính modpack</string>
@@ -453,4 +453,16 @@
     <string name="global_download">Tải xuống</string>
     <string name="multirt_no_internet">Không thể tải xuống, hãy kiểm tra kết nối Internet.</string>
     <string name="global_installing">Đang cài đặt…</string>
+    <string name="error_key_unsupported">Lỗi! Phím được đề cập cho nút này không hợp lệ. Bạn đã thử cập nhật nó à?</string>
+    <string name="error_invalid_value">Lỗi! Giá trị không hợp lệ!</string>
+    <string name="minecraft_no_username_set">Tên đăng nhập Minecraft của bạn chưa được đặt! Bạn nên đặt nó trong trang web của Minecraft trước khi có thể đăng nhập!</string>
+    <string name="create_lwjgl3ify_profile">Tạo tài kjoản LWJGL3ify</string>
+    <string name="select_lwjgl3ify_version">Chọn phiên bản LWJGL3ify</string>
+    <string name="lwjgl3ify_installer_available_versions">Phiên bản LWJGL3ify được hỗ trợ</string>
+    <string name="lwjgl3ify_installer_broken_versions">Phiên bản LWJGL3ify bị hỏng (SDL)</string>
+    <string name="new_default_controls">Đã chiết xuất bố cục điều khiển mặc định mới vào new_default.json. Thử ngay!!</string>
+    <string name="import_modpack_start">Đang nhập modpack…</string>
+    <string name="import_modpack_hash">Đang băm tệp Modpack... (%s MB/%s MB)</string>
+    <string name="import_modpack_json">Đang lấy in tư của em modpack này…</string>
+    <string name="import_modpack_copy">Đang sao chép tệp modpack vào cache... (%s MB/%s MB)</string>
 </resources>
