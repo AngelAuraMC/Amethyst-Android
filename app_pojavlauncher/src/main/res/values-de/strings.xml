@@ -456,4 +456,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="error_key_unsupported">Fehler! Der dieser Schaltfläche zugewiesene Schlüssel ist ungültig. Hast du eine Aktualisierung versucht durchzuführen?</string>
     <string name="error_invalid_value">Fehler! Ungültiger Wert!</string>
     <string name="minecraft_no_username_set">Dein Minecraft-Benutzername ist noch nicht gesetzt! Du musst ihn auf der Minecraft-Website setzen, bevor du dich anmelden kannst!</string>
+    <string name="create_lwjgl3ify_profile">LWJGL3ify-Profil erstellen</string>
+    <string name="select_lwjgl3ify_version">LWJGL3ify-Version auswählen</string>
 </resources>
