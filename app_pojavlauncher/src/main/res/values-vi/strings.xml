@@ -456,7 +456,7 @@
     <string name="error_key_unsupported">Lỗi! Phím được đề cập cho nút này không hợp lệ. Bạn đã thử cập nhật nó à?</string>
     <string name="error_invalid_value">Lỗi! Giá trị không hợp lệ!</string>
     <string name="minecraft_no_username_set">Tên đăng nhập Minecraft của bạn chưa được đặt! Bạn nên đặt nó trong trang web của Minecraft trước khi có thể đăng nhập!</string>
-    <string name="create_lwjgl3ify_profile">Tạo tài kjoản LWJGL3ify</string>
+    <string name="create_lwjgl3ify_profile">Tạo hồ sơ LWJGL3ify</string>
     <string name="select_lwjgl3ify_version">Chọn phiên bản LWJGL3ify</string>
     <string name="lwjgl3ify_installer_available_versions">Phiên bản LWJGL3ify được hỗ trợ</string>
     <string name="lwjgl3ify_installer_broken_versions">Phiên bản LWJGL3ify bị hỏng (SDL)</string>
