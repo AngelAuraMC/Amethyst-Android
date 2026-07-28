@@ -29,7 +29,7 @@
     <!-- MCLauncherActivity: Strings -->
     <string name="mcl_launch_cleancache">Czyszczenie plików pamięci podręcznej</string>
     <string name="mcl_launch_downloading">Pobieranie %s</string>
-    <string name="mcl_launch_downloading_progress">"Pobieranie %s (%.2f MB / %.2f MB)"</string>
+    <string name="mcl_launch_downloading_progress">"Pobieranie %s (%.2f MB/%.2f MB)"</string>
     <string name="mcl_launch_download_assets">Przygotowywanie do pobrania zasobów</string>
     <string name="mcl_options">Opcje</string>
     <string name="mcl_option_customcontrol">Własne sterowanie</string>
@@ -295,8 +295,8 @@
     <string name="search_modpack_no_result">Nie znaleziono paczek modów</string>
     <string name="search_modpack_error">Nie udało się znaleźć paczek modów</string>
     <string name="search_modpack_download_error">Nie udało się pobrać metadanych paczki modów</string>
-    <string name="modpack_download_downloading_metadata">Pobieranie metadanych paczki modów (%.2f MB / %.2f MB)</string>
-    <string name="modpack_download_downloading_mods">Pobieranie modyfikacji (%.2f MB / %.2f MB)</string>
+    <string name="modpack_download_downloading_metadata">Pobieranie metadanych paczki modów (%.2f MB/%.2f MB)</string>
+    <string name="modpack_download_downloading_mods">Pobieranie modyfikacji (%.2f MB/%.2f MB)</string>
     <string name="modpack_download_downloading_mods_fc">Pobieranie modyfikacji (%d z %d)</string>
     <string name="modpack_download_applying_overrides">Zastosowywanie nadpisów (%d/%d)</string>
     <string name="modpack_install_notification_title">Instalator paczek modów Pojav</string>
@@ -456,4 +456,13 @@
     <string name="error_key_unsupported">Błąd! Klucz przypisany do tego przycisku jest nieprawidłowy. Spróbuj wykonać aktualizację.</string>
     <string name="error_invalid_value">Błąd! Nieprawidłowa wartość!</string>
     <string name="minecraft_no_username_set">Twój nick w Minecrafcie nie został jeszcze ustawiony! Musisz go ustawić na stronie internetowej Minecrafta, zanim będziesz móc się zalogować!</string>
+    <string name="create_lwjgl3ify_profile">Utwórz profil LWJGL3ify</string>
+    <string name="select_lwjgl3ify_version">Wybierz wersję LWJGL3ify</string>
+    <string name="lwjgl3ify_installer_available_versions">Obsługiwane wersje LWJGL3IFY</string>
+    <string name="lwjgl3ify_installer_broken_versions">Niedziałające wersje LWJGL3ify (SDL)</string>
+    <string name="new_default_controls">Wyodrębniono nowe domyślne sterowanie do pliku new_default.json. Wypróbuj je!</string>
+    <string name="import_modpack_start">Importowanie paczki modów…</string>
+    <string name="import_modpack_hash">Tworzenie sumy kontrolnej paczki modów… (%s MB/%s MB)</string>
+    <string name="import_modpack_json">Wczytywanie informacji o paczce modów…</string>
+    <string name="import_modpack_copy">Kopiowanie paczki modów do pamięci podręcznej… (%s MB/%s MB)</string>
 </resources>
