@@ -263,9 +263,6 @@ public class JREUtils {
                 // Don't use with Zink, it also does the same thing.
                 Tools.useSFPEW = false;
             }
-            if (Tools.useSFPEW) {
-                envMap.put("SFPEW_EGL", envMap.get("POJAVEXEC_EGL"));
-            }
             if (LOCAL_RENDERER.equals("opengles_mobilegl_gles")){
                 envMap.put("MOBILEGL_BACKEND_TYPE", "DirectGLES");
             }
@@ -275,6 +272,9 @@ public class JREUtils {
             if (LOCAL_RENDERER.startsWith("opengles_mobilegl_")){
                 envMap.put("POJAVEXEC_EGL","libMobileGL.so");
             }
+        }
+        if (Tools.useSFPEW) {
+            envMap.put("SFPEW_EGL", envMap.get("POJAVEXEC_EGL"));
         }
 
         if(LauncherPreferences.PREF_BIG_CORE_AFFINITY) envMap.put("POJAV_BIG_CORE_AFFINITY", "1");
