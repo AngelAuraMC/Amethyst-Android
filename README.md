@@ -1,172 +1,265 @@
-<h1 align="center">Chromite</h1>
+<!-- TODO: Add the Chromite logo/banner here when the final artwork is ready. -->
 
-<img src="no image" align="left" width="130" height="130" alt="Chromite logo">
+<div align="center">
 
-[![Android CI](https://github.com/Lukiblokck/Chromite/workflows/Android%20CI/badge.svg)](https://github.com/Lukiblokck/Chromite/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Lukiblokck/Chromite)](https://github.com/Lukiblokck/Chromite/actions)
-[![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/000000000000000000.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/YOUR_INVITE)
+# Chromite
 
-*Born as a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android), which itself descends from [Boardwalk](https://github.com/zhuowei/Boardwalk) and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher), here comes Chromite!*
+**Minecraft: Java Edition on Chromebooks — with a ChromeOS-first direction.**
 
-Chromite is a launcher that lets you play Minecraft: Java Edition on your **Chromebook**, taking advantage of ChromeOS's Android subsystem to bring Java Edition to devices that weren't originally designed for it.
+[![Android CI](https://github.com/Lukiblokck/Chromite/actions/workflows/android.yml/badge.svg)](https://github.com/Lukiblokck/Chromite/actions)
+[![License: LGPL v3](https://img.shields.io/badge/License-LGPLv3-blue.svg)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-ChromeOS%20%2F%20Android-brightgreen)](#compatibility)
+[![Status](https://img.shields.io/badge/status-early%20Chromebook%20adaptation-orange)](#project-status)
 
-For more details, check out our [wiki](https://wiki.example.dev) (pending migration from the Amethyst wiki).
+</div>
 
-## Table of Contents
+---
 
-* [Introduction](#introduction)
-* [Why a fork?](#why-a-fork)
-* [Getting Chromite](#getting-chromite)
-* [Building](#building)
-    * [Quick Build (Recommended)](#quick-build-recommended)
-    * [Detailed Build](#detailed-build)
-* [Current Status](#current-status)
-* [Known Issues](#known-issues)
-* [FAQ](#faq)
-* [Contributing](#contributing)
-* [Support](#support)
-* [License](#license)
-* [Credits & Dependencies](#credits--dependencies)
-* [Roadmap](#roadmap)
+## What is Chromite?
 
-## Introduction
+Chromite is an open-source launcher for **Minecraft: Java Edition** focused on
+**Chromebooks** and the ChromeOS Android environment.
 
-* Chromite is a Minecraft: Java Edition launcher built specifically for **Chromebooks**, based on the codebase of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android), which is in turn based on [Boardwalk](https://github.com/zhuowei/Boardwalk) and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher).
-* Since it runs on top of ChromeOS's Android subsystem, Chromite adapts the interface, controls, and performance for larger screens, keyboard, trackpad, and the particularities of Chromebook hardware (GPU, shared memory, ARC++/ARCVM containers).
-* It can launch almost every available Minecraft version, from rd-132211 to 1.21 snapshots (including Combat Test versions).
-* Modding via Forge and Fabric is also supported.
-* This repository contains the source code for ChromeOS/Android. This project is **not** officially affiliated with Google, Mojang, or Microsoft.
+The project starts from the proven Android launcher lineage of Amethyst,
+PojavLauncher, and Boardwalk, but its long-term goal is different: Chromite aims
+to become a launcher that feels natural on Chromebook hardware instead of a
+phone-first experience stretched onto a laptop screen.
 
-## Why a fork?
+Chromite is not affiliated with Mojang, Microsoft, Google, or the Minecraft
+brand.
 
-Amethyst (and PojavLauncher before it) were designed with phones and Android tablets in mind. Chromite exists to adapt that codebase to the specific needs of Chromebooks:
+## Why Chromite exists
 
-* Dedicated support and detection for physical keyboard and trackpad instead of just touch controls.
-* Performance and memory-management tweaks adapted to ChromeOS's ARC++/ARCVM containers.
-* A resized interface for larger screens and windowed mode.
-* Packaging and distribution designed for installation from the ChromeOS Play Store or via sideloading in developer mode.
+Minecraft: Java Edition was designed around a desktop setup: a physical
+keyboard, pointing device, large display, and windowed multitasking. Chromebooks
+can provide much of that environment, but running Java Edition through the
+ChromeOS Android subsystem introduces its own challenges.
 
-## Getting Chromite
+Chromite exists to focus on those challenges directly:
 
-You can get Chromite in two ways:
+| Chromebook need | Chromite direction |
+| --- | --- |
+| Physical keyboard-first play | Make keyboard input a primary experience, not an afterthought. |
+| Trackpad and mouse-style navigation | Improve the desktop-like feel of menus and gameplay controls. |
+| Larger screens and resizable windows | Move away from phone-oriented layouts over time. |
+| ChromeOS Android containers | Account for ARC++/ARCVM behavior, storage, graphics, and memory constraints. |
+| Practical performance | Prioritize sensible defaults and performance-oriented configuration for Chromebook hardware. |
 
-1. **Releases:** Download the latest build from [nightly.link](https://nightly.link/Lukiblokck/Chromite/workflows/android/main/app-debug.zip) or pick an older version from our [automatic builds](https://github.com/Lukiblokck/Chromite/actions).
-2. **Build from Source:** Follow the [building instructions](#building) below.
+## Core goals
 
-## Building
+Chromite is being shaped around the following principles:
 
-### Quick Build (Recommended)
+- **ChromeOS-first design** — decisions should make sense on Chromebooks before
+  generic Android phones.
+- **Desktop-like interaction** — keyboard, trackpad, mouse, and larger screens
+  should feel central to the launcher experience.
+- **Transparent project status** — unfinished Chromebook-specific work should be
+  labeled clearly instead of presented as complete.
+- **Respect for upstream work** — historical and license credits are preserved
+  without making Chromite's README a rebranded copy of another project.
+- **Open development** — issues, testing reports, and pull requests are welcome.
 
-The easiest way to build Chromite is to use the pre-built JREs provided by our CI.
+## Features
 
-1. Clone the repository: `git clone --recursive https://github.com/Lukiblokck/Chromite.git`
-2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (use `gradlew.bat` on Windows)
+The current codebase inherits a broad Minecraft launcher feature set from its
+upstream projects. Chromebook-specific polish is still in progress.
 
-The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
+| Area | Status | Notes |
+| --- | --- | --- |
+| Minecraft: Java Edition launching | Available | Provided by the existing launcher codebase. Compatibility can vary by version, device, runtime, and renderer. |
+| Android / ChromeOS APK build | Available | The app builds as an Android application that can run under ChromeOS Android support. |
+| OpenJDK runtime integration | Available | Runtime support is inherited from the upstream Android launcher stack. |
+| Modded Minecraft workflows | Available / inherited | Existing Forge/Fabric-related launcher paths may be present; behavior should be tested on Chromebooks. |
+| Physical keyboard focus | In Progress | Chromite is intended to prioritize Chromebook keyboard usage. |
+| Trackpad and large-screen UX | In Progress | The project direction is desktop-like interaction on Chromebook displays. |
+| Chromebook-specific performance profiles | Planned | Device/container-specific tuning is a roadmap item, not a finished feature. |
+| ChromeOS-oriented onboarding | Planned | Installation and first-run flows should become clearer for Chromebook users. |
 
-### Detailed Build
+## Compatibility
 
-If you need more control over the build process, follow these steps:
+Chromite targets devices that can run Android applications on ChromeOS.
 
-1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMC/openjdk-build-multiarch/actions). This package contains pre-built JREs for all supported architectures. If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMC/openjdk-build-multiarch) repository.
+| Requirement | Notes |
+| --- | --- |
+| Device | Chromebook with Android app support enabled. |
+| Operating environment | ChromeOS Android subsystem, including ARC++ or ARCVM depending on the device and ChromeOS version. |
+| Android API | The app currently declares Android minSdk 21 and targetSdk 34 in the Gradle configuration. |
+| CPU architecture | Compatibility depends on available native components and runtime artifacts. Chromebook hardware varies between ARM and x86_64 devices. |
+| Input | Physical keyboard and trackpad/mouse are project priorities; full Chromebook-native behavior is still being improved. |
 
-2. **LWJGL:** The build instructions for the custom LWJGL are available in the [LWJGL repository](https://github.com/AngelAuraMC/lwjgl3).
+> If you are testing Chromite, please include your Chromebook model, CPU
+> architecture, ChromeOS version, Android container type if known, selected
+> renderer, Minecraft version, and logs when opening an issue.
 
-3. **Language List:** Because languages are auto-added by Crowdin, you need to run the language list generator before building. In the project directory, run:
-   * Linux/macOS:
-     ```bash
-     chmod +x scripts/languagelist_updater.sh
-     bash scripts/languagelist_updater.sh
-     ```
-   * Windows:
-     ```batch
-     scripts\languagelist_updater.bat
-     ```
+## Installation
 
-4. **Build the GLFW stub:** `./gradlew :jre_lwjgl3glfw:build`
+Chromite is currently best treated as an early open-source project. Prefer test
+builds from the repository rather than expecting a polished end-user release
+channel.
 
-5. **Build the launcher:** `./gradlew :app_pojavlauncher:assembleDebug` (replace `gradlew` with `gradlew.bat` on Windows).
+### Option 1: Download a build
 
-## Current Status
+1. Open the repository's [Actions page](https://github.com/Lukiblokck/Chromite/actions).
+2. Select a successful Android build.
+3. Download the APK artifact if one is available.
+4. Install it on a Chromebook with Android app support.
 
-* [x] OpenJDK 8 Mobile port: ARM32, ARM64, x86, x86_64
-* [x] OpenJDK 17 Mobile port: ARM32, ARM64, x86, x86_64
-* [x] OpenJDK 21 Mobile port: ARM32, ARM64, x86, x86_64
-* [x] Headless mod installer
-* [x] Mod installer with GUI
-* [x] OpenGL in OpenJDK environment
-* [x] OpenAL (works on most devices)
-* [x] Support for Minecraft 1.12.2 and below
-* [x] Support for Minecraft 1.13 and above
-* [x] Support for Minecraft 1.17 (22w13a) and above
-* [x] Game surface zooming
-* [x] New input pipe rewritten to native code
-* [x] Rewritten entire controls system
-* [ ] Automatic Chromebook-specific keyboard/trackpad detection and mapping
-* [ ] Performance profiles tuned per Chromebook model (ARC++ vs ARCVM)
-* [ ] More to come!
+Depending on your ChromeOS configuration, sideloading APKs may require enabling
+Linux/ADB debugging or developer-related settings. Follow ChromeOS guidance for
+your device and be aware of the security tradeoffs before enabling sideloading.
 
-## Known Issues
+### Option 2: Build it yourself
 
-See our [issue tracker](https://github.com/Lukiblokck/Chromite/issues) for a list of known issues and their current status. Some issues inherited from Amethyst/PojavLauncher may behave differently on ChromeOS due to the particularities of ARC++/ARCVM containers.
+Use the source build steps below if you want a local debug APK or plan to
+contribute.
 
-## FAQ
+## Build from source
 
-See our [wiki](https://wiki.example.dev) for more information.
+### Prerequisites
 
-## Contributing
+- Git
+- JDK compatible with the Android Gradle Plugin used by this repository
+- Android SDK / Android Studio with the required SDK platform installed
+- Network access for Gradle dependency resolution
 
-Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the wiki, contribute to [translations on Crowdin](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
+### Clone
 
-Any code change should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
+```bash
+git clone --recursive https://github.com/Lukiblokck/Chromite.git
+cd Chromite
+```
 
-## Support
+If you already cloned without submodules, run:
 
-For support, please join our [Discord server](https://discord.gg/YOUR_INVITE).
+```bash
+git submodule update --init --recursive
+```
 
-## License
+### Generate language metadata
 
-Chromite is licensed under [GNU LGPLv3](https://github.com/Lukiblokck/Chromite/blob/main/LICENSE), the same license as Amethyst, of which this project is a fork.
+Some language metadata is generated before building:
 
-## Credits & Dependencies
+```bash
+chmod +x scripts/languagelist_updater.sh
+bash scripts/languagelist_updater.sh
+```
 
-Chromite is a fork of Amethyst and therefore inherits all of its original credits and dependencies:
+On Windows, use:
 
-* [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android): the project Chromite is directly forked from, licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE).
-* [Boardwalk](https://github.com/zhuowei/Boardwalk) (JVM Launcher): Unknown License/[Apache License 2.0](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) or GNU GPLv2.
-* [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher): [GLGPL](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE)
-* Android Support Libraries: [Apache License 2.0](https://android.googlesource.com/platform/prebuilts/maven_repo/android/+/master/NOTICE.txt).
-* [GL4ES](https://github.com/AngelAuraMC/gl4es): [MIT License](https://github.com/ptitSeb/gl4es/blob/master/LICENSE).
-* [MobileGlues](https://github.com/MobileGL-Dev/MobileGlues): [LGPL-2.1 License](https://github.com/MobileGL-Dev/MobileGlues/blob/dev-es/LICENSE).
-* [Krypton Wrapper](https://github.com/BZLZHH/NG-GL4ES): [MIT License](https://github.com/BZLZHH/NG-GL4ES/blob/main/LICENSE)
-* [ANGLE](https://chromium.googlesource.com/angle/angle): [All Rights Reserved](app_pojavlauncher/src/main/assets/licenses/ANGLE_LICENSE).
-* [OpenJDK](https://github.com/AngelAuraMC/openjdk-multiarch-jdk8u): [GNU GPLv2 License](https://openjdk.java.net/legal/gplv2+ce.html).
-* [LWJGL3](https://github.com/AngelAuraMC/lwjgl3): [BSD-3 License](https://github.com/LWJGL/lwjgl3/blob/master/LICENSE.md).
-* [LWJGLX](https://github.com/AngelAuraMC/lwjglx) (LWJGL2 API compatibility layer for LWJGL3): unknown license.
-* [Mesa 3D Graphics Library](https://gitlab.freedesktop.org/mesa/mesa): [MIT License](https://docs.mesa3d.org/license.html).
-* [bhook](https://github.com/bytedance/bhook) (used for exit code trapping): [MIT license](https://github.com/bytedance/bhook/blob/main/LICENSE).
-* [libepoxy](https://github.com/anholt/libepoxy): [MIT License](https://github.com/anholt/libepoxy/blob/master/COPYING).
-* [virglrenderer](https://github.com/AngelAuraMC/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
-* [OpenAL-Soft](https://github.com/kcat/openal-soft): [GNU GPLv2](app_pojavlauncher/src/main/assets/licenses/OPENAL-SOFT_GPL2)
-  * [oboe](https://github.com/google/oboe): [Apache License 2.0](app_pojavlauncher/src/main/assets/licenses/OBOE_APACHE2).
-  * [pfffft](https://bitbucket.org/jpommier/pffft/src/master/): [ARR](app_pojavlauncher/src/main/assets/licenses/PFFFT_LICENSE)
-* [SDL3](https://github.com/libsdl-org/SDL): [zlib License](https://github.com/libsdl-org/SDL/blob/main/LICENSE.txt)
-* [sdl2-compat](https://github.com/libsdl-org/sdl2-compat): [zlib License](https://github.com/libsdl-org/sdl2-compat/blob/main/LICENSE.txt)
-* Thanks to [MCHeads](https://mc-heads.net) for providing Minecraft avatars.
+```bat
+scripts\languagelist_updater.bat
+```
+
+### Build a debug APK
+
+```bash
+./gradlew :app_pojavlauncher:assembleDebug
+```
+
+The debug APK is generated under:
+
+```text
+app_pojavlauncher/build/outputs/apk/debug/
+```
+
+### Optional: build supporting modules
+
+```bash
+./gradlew :jre_lwjgl3glfw:build
+```
+
+## Project status
+
+Chromite is in an **early Chromebook-focused adaptation stage**.
+
+That means:
+
+- the repository still contains inherited Android launcher architecture;
+- some package names, module names, resources, and internal identifiers may
+  still reference upstream project history;
+- Chromebook-specific UX and performance improvements are ongoing;
+- documentation, branding, and release processes are still being established.
+
+The goal is not to hide that history, but to move the project toward a clear
+ChromeOS identity with honest tracking of what is done and what remains.
 
 ## Roadmap
 
-We are currently focusing on:
+| Priority | Item | Status |
+| --- | --- | --- |
+| High | Replace remaining inherited branding with Chromite branding where appropriate | In Progress |
+| High | Improve keyboard-first defaults and configuration | In Progress |
+| High | Improve trackpad/mouse behavior for Chromebook workflows | In Progress |
+| Medium | Review layouts for large Chromebook displays and resizable windows | Planned |
+| Medium | Document known-good Chromebook models and configurations | Planned |
+| Medium | Add ChromeOS-focused troubleshooting guides | Planned |
+| Medium | Explore Chromebook/container-aware performance presets | Planned |
+| Low | Prepare clearer release channels and installation documentation | Planned |
 
-* Optimizing performance and compatibility specifically for Chromebook hardware and containers (ARC++/ARCVM).
-* Improving keyboard and trackpad mapping so it feels native on ChromeOS.
+Roadmap items are intentionally conservative. Features listed as planned should
+not be considered available until implemented and tested.
 
-Future plans include:
+## Contributing
 
-* Exploring new rendering technologies.
-* Improving overall stability and performance.
-* Enhancing the mod installation experience.
-* Simpler packaging for direct installation from the ChromeOS Play Store.
+Contributions are welcome, especially from Chromebook users who can test real
+hardware configurations.
 
-We welcome community feedback and suggestions for our roadmap. Please feel free to open a feature request in our [issue tracker](https://github.com/Lukiblokck/Chromite/issues).
+Helpful contributions include:
+
+- bug reports with logs and device details;
+- Chromebook input testing for keyboard, trackpad, and mouse;
+- performance reports across ARM and x86_64 devices;
+- documentation improvements;
+- UI/UX work for larger screens;
+- code cleanup that separates Chromite identity from inherited assumptions;
+- pull requests for fixes and focused improvements.
+
+Before submitting a pull request:
+
+1. Keep changes focused and explain the motivation.
+2. Include steps to test the change.
+3. Avoid presenting planned Chromebook features as completed.
+4. Preserve license notices and required upstream attribution.
+
+## Support
+
+For help, use the repository's [Issues](https://github.com/Lukiblokck/Chromite/issues)
+page.
+
+When reporting a problem, include:
+
+- Chromebook model;
+- CPU architecture if known;
+- ChromeOS version;
+- Minecraft version;
+- selected Java runtime and renderer if applicable;
+- whether the issue happens with keyboard, trackpad, mouse, touch, or all input;
+- logs, screenshots, or screen recordings when useful.
+
+## License
+
+Chromite is distributed under the **GNU Lesser General Public License v3.0**.
+See [LICENSE](LICENSE) for the full license text.
+
+## Credits
+
+Chromite stands on significant open-source work. The references below are kept
+for project history, licensing, and attribution:
+
+- [Amethyst Launcher](https://github.com/AngelAuraMC/Amethyst-Android) — the
+  direct codebase Chromite is based on.
+- [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher) — an
+  upstream project in the launcher lineage.
+- [Boardwalk](https://github.com/zhuowei/Boardwalk) — an earlier project in the
+  Java-on-Android Minecraft launcher lineage.
+
+Additional third-party components and licenses may be documented in repository
+license files and bundled asset license notices.
+
+---
+
+<div align="center">
+
+**Chromite is for making Minecraft: Java Edition feel at home on Chromebooks.**
+
+</div>
