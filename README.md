@@ -99,8 +99,7 @@ channel.
 
 ### Option 1: Download a build
 
-1. Open the repository's [Actions page](https://github.com/Lukiblokck/Chromite/actions).
-2. Select a successful Android build.
+1. Open the repository's [releases]([https://github.com/Lukiblokck/Chromite/actions](https://github.com/Lukiblokck/Chromite/releases)).
 3. Download the APK artifact if one is available.
 4. Install it on a Chromebook with Android app support.
 
