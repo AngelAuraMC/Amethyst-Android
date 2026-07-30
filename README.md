@@ -10,7 +10,7 @@
 [![License: LGPL v3](https://img.shields.io/badge/License-LGPLv3-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-ChromeOS%20%2F%20Android-brightgreen)](#compatibility)
 [![Status](https://img.shields.io/badge/status-early%20Chromebook%20adaptation-orange)](#project-status)
-[![Discord](https://img.shields.io/discord/1532397881238098100.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/wrn7Sz2Z)
+[![Discord](https://img.shields.io/discord/1532397881238098100.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/F9NKHUxHnA)
 
 </div>
 
