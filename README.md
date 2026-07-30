@@ -1,22 +1,23 @@
-<h1 align="center">Angel Aura Amethyst</h1>
+<h1 align="center">Chromite</h1>
 
-<img src="https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Amethyst logo">
+<img src="no image" align="left" width="130" height="130" alt="Chromite logo">
 
-[![Android CI](https://github.com/AngelAuraMC/Amethyst-Android/workflows/Android%20CI/badge.svg)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
-[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/AngelAuraMC/Amethyst-Android)](https://github.com/AngelAuraMC/Amethyst-Android/actions)
+[![Android CI](https://github.com/Lukiblokck/Chromite/workflows/Android%20CI/badge.svg)](https://github.com/Lukiblokck/Chromite/actions)
+[![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Lukiblokck/Chromite)](https://github.com/Lukiblokck/Chromite/actions)
 [![Crowdin](https://badges.crowdin.net/pojavlauncher/localized.svg)](https://crowdin.com/project/pojavlauncher)
-[![Discord](https://img.shields.io/discord/724163890803638273.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/5ptqkyZxEy)
+[![Discord](https://img.shields.io/discord/000000000000000000.svg?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/YOUR_INVITE)
 
-*From [Boardwalk](https://github.com/zhuowei/Boardwalk)'s ashes and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)'s ruined reputation, here comes Amethyst!*
+*Born as a fork of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android), which itself descends from [Boardwalk](https://github.com/zhuowei/Boardwalk) and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher), here comes Chromite!*
 
-Amethyst is a launcher that allows you to play Minecraft: Java Edition on your Android and [iOS](https://github.com/AngelAuraMC/Amethyst-iOS) devices.
+Chromite is a launcher that lets you play Minecraft: Java Edition on your **Chromebook**, taking advantage of ChromeOS's Android subsystem to bring Java Edition to devices that weren't originally designed for it.
 
-For more details, check out our [wiki](https://wiki.angelauramc.dev)!
+For more details, check out our [wiki](https://wiki.example.dev) (pending migration from the Amethyst wiki).
 
 ## Table of Contents
 
 * [Introduction](#introduction)
-* [Getting Amethyst](#getting-amethyst)
+* [Why a fork?](#why-a-fork)
+* [Getting Chromite](#getting-chromite)
 * [Building](#building)
     * [Quick Build (Recommended)](#quick-build-recommended)
     * [Detailed Build](#detailed-build)
@@ -31,26 +32,36 @@ For more details, check out our [wiki](https://wiki.angelauramc.dev)!
 
 ## Introduction
 
-* Amethyst is a Minecraft: Java Edition launcher for Android and iOS based on [Boardwalk](https://github.com/zhuowei/Boardwalk) and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher)
-* This launcher can launch almost all available Minecraft versions ranging from rd-132211 to 1.21 snapshots (including Combat Test versions)
-* Modding via Forge and Fabric are also supported.
-* This repository contains source code for Android. For iOS/iPadOS, check out [Amethyst-iOS](https://github.com/AngelAuraMC/Amethyst-iOS).
+* Chromite is a Minecraft: Java Edition launcher built specifically for **Chromebooks**, based on the codebase of [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android), which is in turn based on [Boardwalk](https://github.com/zhuowei/Boardwalk) and [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher).
+* Since it runs on top of ChromeOS's Android subsystem, Chromite adapts the interface, controls, and performance for larger screens, keyboard, trackpad, and the particularities of Chromebook hardware (GPU, shared memory, ARC++/ARCVM containers).
+* It can launch almost every available Minecraft version, from rd-132211 to 1.21 snapshots (including Combat Test versions).
+* Modding via Forge and Fabric is also supported.
+* This repository contains the source code for ChromeOS/Android. This project is **not** officially affiliated with Google, Mojang, or Microsoft.
 
-## Getting Amethyst
+## Why a fork?
 
-You can get Amethyst via two methods:
+Amethyst (and PojavLauncher before it) were designed with phones and Android tablets in mind. Chromite exists to adapt that codebase to the specific needs of Chromebooks:
 
-1. **Releases:** Download the latest prebuilt app from [nightly.link](https://nightly.link/AngelAuraMC/Amethyst-Android/workflows/android/v3_openjdk/app-debug%20%28recommended%29.zip) or select an older version from our [automatic builds](https://github.com/AngelAuraMC/Amethyst-Android/actions).
+* Dedicated support and detection for physical keyboard and trackpad instead of just touch controls.
+* Performance and memory-management tweaks adapted to ChromeOS's ARC++/ARCVM containers.
+* A resized interface for larger screens and windowed mode.
+* Packaging and distribution designed for installation from the ChromeOS Play Store or via sideloading in developer mode.
+
+## Getting Chromite
+
+You can get Chromite in two ways:
+
+1. **Releases:** Download the latest build from [nightly.link](https://nightly.link/Lukiblokck/Chromite/workflows/android/main/app-debug.zip) or pick an older version from our [automatic builds](https://github.com/Lukiblokck/Chromite/actions).
 2. **Build from Source:** Follow the [building instructions](#building) below.
 
 ## Building
 
 ### Quick Build (Recommended)
 
-The easiest way to build Amethyst is to use the pre-built JREs provided by our CI.
+The easiest way to build Chromite is to use the pre-built JREs provided by our CI.
 
-1. Clone the repository: `git clone --recursive https://github.com/AngelAuraMC/Amethyst-Android.git`
-2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (Use `gradlew.bat` on Windows)
+1. Clone the repository: `git clone --recursive https://github.com/Lukiblokck/Chromite.git`
+2. Build the launcher: `./gradlew :app_pojavlauncher:assembleDebug` (use `gradlew.bat` on Windows)
 
 The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
 
@@ -58,9 +69,9 @@ The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
 
 If you need more control over the build process, follow these steps:
 
-1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMC/openjdk-build-multiarch/actions).  This package contains pre-built JREs for all supported architectures.  If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMC/openjdk-build-multiarch) repository.
+1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMC/openjdk-build-multiarch/actions). This package contains pre-built JREs for all supported architectures. If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMC/openjdk-build-multiarch) repository.
 
-2. **LWJGL:** The build instructions for the custom LWJGL are available over the [LWJGL repository](https://github.com/AngelAuraMC/lwjgl3).
+2. **LWJGL:** The build instructions for the custom LWJGL are available in the [LWJGL repository](https://github.com/AngelAuraMC/lwjgl3).
 
 3. **Language List:** Because languages are auto-added by Crowdin, you need to run the language list generator before building. In the project directory, run:
    * Linux/macOS:
@@ -73,9 +84,9 @@ If you need more control over the build process, follow these steps:
      scripts\languagelist_updater.bat
      ```
 
-4. **Build GLFW stub:** `./gradlew :jre_lwjgl3glfw:build`
+4. **Build the GLFW stub:** `./gradlew :jre_lwjgl3glfw:build`
 
-5. **Build the launcher:** `./gradlew :app_pojavlauncher:assembleDebug` (Replace `gradlew` with `gradlew.bat` on Windows).
+5. **Build the launcher:** `./gradlew :app_pojavlauncher:assembleDebug` (replace `gradlew` with `gradlew.bat` on Windows).
 
 ## Current Status
 
@@ -92,32 +103,37 @@ If you need more control over the build process, follow these steps:
 * [x] Game surface zooming
 * [x] New input pipe rewritten to native code
 * [x] Rewritten entire controls system
+* [ ] Automatic Chromebook-specific keyboard/trackpad detection and mapping
+* [ ] Performance profiles tuned per Chromebook model (ARC++ vs ARCVM)
 * [ ] More to come!
 
 ## Known Issues
 
-See our [issue tracker](https://github.com/AngelAuraMC/Amethyst-Android/issues) for a list of known issues and their current status.
+See our [issue tracker](https://github.com/Lukiblokck/Chromite/issues) for a list of known issues and their current status. Some issues inherited from Amethyst/PojavLauncher may behave differently on ChromeOS due to the particularities of ARC++/ARCVM containers.
 
 ## FAQ
 
-See our [wiki](https://wiki.angelauramc.dev/) for more information.
+See our [wiki](https://wiki.example.dev) for more information.
 
 ## Contributing
 
-Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the [wiki](https://github.com/AngelAuraMC/angelauramc.github.io/), contribute to the [translations](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
+Contributions are welcome! We welcome any type of contribution, not only code. For example, you can help improve the wiki, contribute to [translations on Crowdin](https://crowdin.com/project/pojavlauncher), or submit bug reports and feature requests.
 
 Any code change should be submitted as a pull request. The description should explain what the code does and give steps to execute it.
 
 ## Support
 
-For support, please join our [Discord server](https://discord.gg/5ptqkyZxEy).
+For support, please join our [Discord server](https://discord.gg/YOUR_INVITE).
 
 ## License
 
-Amethyst is licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE).
+Chromite is licensed under [GNU LGPLv3](https://github.com/Lukiblokck/Chromite/blob/main/LICENSE), the same license as Amethyst, of which this project is a fork.
 
 ## Credits & Dependencies
 
+Chromite is a fork of Amethyst and therefore inherits all of its original credits and dependencies:
+
+* [Amethyst](https://github.com/AngelAuraMC/Amethyst-Android): the project Chromite is directly forked from, licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/LICENSE).
 * [Boardwalk](https://github.com/zhuowei/Boardwalk) (JVM Launcher): Unknown License/[Apache License 2.0](https://github.com/zhuowei/Boardwalk/blob/master/LICENSE) or GNU GPLv2.
 * [PojavLauncher](https://github.com/PojavLauncherTeam/PojavLauncher): [GLGPL](https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/LICENSE)
 * Android Support Libraries: [Apache License 2.0](https://android.googlesource.com/platform/prebuilts/maven_repo/android/+/master/NOTICE.txt).
@@ -129,7 +145,7 @@ Amethyst is licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-
 * [LWJGL3](https://github.com/AngelAuraMC/lwjgl3): [BSD-3 License](https://github.com/LWJGL/lwjgl3/blob/master/LICENSE.md).
 * [LWJGLX](https://github.com/AngelAuraMC/lwjglx) (LWJGL2 API compatibility layer for LWJGL3): unknown license.
 * [Mesa 3D Graphics Library](https://gitlab.freedesktop.org/mesa/mesa): [MIT License](https://docs.mesa3d.org/license.html).
-* [bhook](https://github.com/bytedance/bhook) (Used for exit code trapping): [MIT license](https://github.com/bytedance/bhook/blob/main/LICENSE).
+* [bhook](https://github.com/bytedance/bhook) (used for exit code trapping): [MIT license](https://github.com/bytedance/bhook/blob/main/LICENSE).
 * [libepoxy](https://github.com/anholt/libepoxy): [MIT License](https://github.com/anholt/libepoxy/blob/master/COPYING).
 * [virglrenderer](https://github.com/AngelAuraMC/virglrenderer): [MIT License](https://gitlab.freedesktop.org/virgl/virglrenderer/-/blob/master/COPYING).
 * [OpenAL-Soft](https://github.com/kcat/openal-soft): [GNU GPLv2](app_pojavlauncher/src/main/assets/licenses/OPENAL-SOFT_GPL2)
@@ -143,11 +159,14 @@ Amethyst is licensed under [GNU LGPLv3](https://github.com/AngelAuraMC/Amethyst-
 
 We are currently focusing on:
 
-* Exploring new rendering technologies.
+* Optimizing performance and compatibility specifically for Chromebook hardware and containers (ARC++/ARCVM).
+* Improving keyboard and trackpad mapping so it feels native on ChromeOS.
 
 Future plans include:
 
-* Improving stability and performance.
+* Exploring new rendering technologies.
+* Improving overall stability and performance.
 * Enhancing the mod installation experience.
+* Simpler packaging for direct installation from the ChromeOS Play Store.
 
-We welcome community feedback and suggestions for our roadmap.  Please feel free to open a feature request in our [issue tracker](https://github.com/AngelAuraMC/Amethyst-Android/issues).
+We welcome community feedback and suggestions for our roadmap. Please feel free to open a feature request in our [issue tracker](https://github.com/Lukiblokck/Chromite/issues).
