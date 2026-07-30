@@ -294,23 +294,20 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     private void loadControls() {
         try {
-            // Load keys
             mControlLayout.loadLayout(
                     minecraftProfile.controlFile == null
                             ? LauncherPreferences.PREF_DEFAULTCTRL_PATH
                             : Tools.CTRLMAP_PATH + "/" + minecraftProfile.controlFile);
-        } catch(IOException e) {
-            try {
-                Log.w("MainActivity", "Unable to load the control file, loading the default now", e);
-                mControlLayout.loadLayout(Tools.CTRLDEF_FILE);
-            } catch (IOException ioException) {
-                Tools.showError(this, ioException);
-            }
-        } catch (Throwable th) {
-            Tools.showError(this, th);
+        } catch (IOException e) {
+            ...
         }
-        mDrawerPullButton.setVisibility(mControlLayout.hasMenuButton() ? View.GONE : View.VISIBLE);
-        mControlLayout.toggleControlVisible();
+    
+        mDrawerPullButton.setVisibility(
+                mControlLayout.hasMenuButton() ? View.GONE : View.VISIBLE);
+    
+        // Do not automatically display touch controls.
+        // The user can activate them manually from the menu.
+        // mControlLayout.toggleControlVisible();
     }
 
     @Override
