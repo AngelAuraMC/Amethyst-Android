@@ -253,5 +253,6 @@ dependencies {
 
     implementation project(":androidnsbypass")
 
+    implementation project(':MobileGL')
 }
 apply from: rootProject.file('gradle/prefab_bypass.gradle')

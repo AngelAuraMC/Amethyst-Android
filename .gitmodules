@@ -13,3 +13,6 @@
 [submodule "androidnsbypass"]
 	path = androidnsbypass
 	url = git@github.com:alexytomi/androidnsbypass.git
+[submodule "MobileGL"]
+	path = MobileGL
+	url = https://github.com/MobileGL-Dev/MobileGL.git

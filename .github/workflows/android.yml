@@ -22,6 +22,12 @@ jobs:
         with:
           submodules: "recursive"
 
+      - name: Update glslang sources
+        if: github.ref_name == 'feat/MobileGL' || github.head_ref == 'feat/MobileGL'
+        run: |
+          cd MobileGL/3rdparty/glslang
+          ./update_glslang_sources.py
+
       - name: Set up JDK 21
         uses: actions/setup-java@v3
         with:
