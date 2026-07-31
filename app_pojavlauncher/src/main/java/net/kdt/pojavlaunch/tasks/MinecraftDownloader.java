@@ -403,6 +403,9 @@ public class MinecraftDownloader {
         for(String asset : assetNames) {
             JAssetInfo assetInfo = assetObjects.get(asset);
             if(assetInfo == null) continue;
+            if(assetInfo.hash == null || assetInfo.hash.length() < 2) {
+                throw new IOException("Asset " + asset + " has an invalid hash");
+            }
             File targetFile;
             String hashedPath = assetInfo.hash.substring(0, 2) + File.separator + assetInfo.hash;
             String basePath = assets.mapToResources ? Tools.OBSOLETE_RESOURCES_PATH : Tools.ASSETS_PATH;
