@@ -425,7 +425,6 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="error_vanilla_json_corrupt">바닐라 JSON 파일이 손상된 것 같습니다. GitHub 또는 Discord로 버그 리포트를 보내주세요.</string>
     <string name="preference_ask_for_microphone_title">마이크 허용</string>
     <string name="preference_ask_for_microphone_description">클릭하여 권한 허용 요청을 다시 표시합니다. Simple Voice Chat과 같은 음성 채팅 모드를 사용하고자 할 때 필요합니다.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">이전 버전의 Legacy4J가 SDL 백엔드를 사용하도록 할 수 있습니다.</string>
     <string name="mcl_gamepad_forcedSDL">SDL 컨트롤러 핸들링 강제 시작</string>
     <string name="preference_category_SDL_settings">SDL 설정</string>
     <string name="oldL4JFound">Android용 패치가 적용되지 않은 Legacy4J 버전을 사용 중입니다! 최적의 플레이 경험을 위해 컨트롤러 설정에서 SDL을 활성화해주세요.</string>
