@@ -427,7 +427,6 @@
     <string name="error_vanilla_json_corrupt">Vanila json dosyaları görünüşe göre bozulmuş veya deforme halde. Lütfen Github veya discord\'a bir Hata raporu yollayınız.</string>
     <string name="preference_ask_for_microphone_title">Mikrofona izin ver</string>
     <string name="preference_ask_for_microphone_description">Yeniden notifikasyon izni isteği için tıklayınız, Simple Voice Chat gibi modlar için gereklidir.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Lagacy4J\'nin eski versiyonlarının SDL arkayüzünü kullanmasına izin verir</string>
     <string name="mcl_gamepad_forcedSDL">Zorlama ile SDL kontrolcü yönetimini başlat</string>
     <string name="preference_category_SDL_settings">SDL ayarları</string>
     <string name="oldL4JFound">Sen Legacy4J\'nin android hata düzeltmelernin olmadığı bir sürümü kullanıyorsun! En iyi deneyim için Kontrolcü ayarlarından manuel olarak SDL\'yi aktif etmelisin!</string>
