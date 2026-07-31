@@ -430,7 +430,6 @@
     <string name="error_vanilla_json_corrupt">Tệp json gốc có vẻ đã bị hỏng. Vui lòng báo lỗi qua GitHub hoặc Discord.</string>
     <string name="preference_ask_for_microphone_title">Cho phép sử dụng micrô</string>
     <string name="preference_ask_for_microphone_description">Nhấn để gửi lại yêu cầu cấp quyền thông báo, bắt buộc khi sử dụng một số bản mod, ví dụ: Simple Voice Chat.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Có thể cho phép các phiên bản Legacy4J cũ sử dụng hậu phần SDL</string>
     <string name="mcl_gamepad_forcedSDL">Buộc khởi động xử lý tay cầm SDL</string>
     <string name="preference_category_SDL_settings">Cài đặt SDL</string>
     <string name="oldL4JFound">Bạn hiện đang sử dụng bản Legacy4J cũ mà không dùng sửa lỗi cho Android! Bạn sẽ cần phải bật SDL thủ công trong phần cài đặt tay cầm để có trải nghiệm chơi tốt nhất!</string>
