@@ -9,11 +9,8 @@ import androidx.annotation.Nullable;
 import net.kdt.pojavlaunch.value.MinecraftAccount;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 public class PojavProfile {
 	private static final String PROFILE_PREF = "pojav_profile";
@@ -38,10 +35,11 @@ public class PojavProfile {
     }
 
 	public static List<MinecraftAccount> getAllProfiles(){
-		List<MinecraftAccount> mcAccountList = new ArrayList<>();;
+		List<MinecraftAccount> mcAccountList = new ArrayList<>();
 		for (String accountName : getAllProfilesList()){
-			if (MinecraftAccount.load(accountName) != null) {
-				mcAccountList.add(MinecraftAccount.load(accountName));
+			MinecraftAccount account = MinecraftAccount.load(accountName);
+			if (account != null) {
+				mcAccountList.add(account);
 			}
 		}
 		return mcAccountList;
@@ -50,8 +48,10 @@ public class PojavProfile {
 	public static List<String> getAllProfilesList(){
 		List<String> accountList = new ArrayList<>();
 		File accountFolder = new File(Tools.DIR_ACCOUNT_NEW);
-		if(accountFolder.exists() && accountFolder.list() != null){
-			for (String fileName : Objects.requireNonNull(accountFolder.list())) {
+		String[] accountFiles = accountFolder.list();
+		if(accountFiles != null){
+			for (String fileName : accountFiles) {
+				if (!fileName.endsWith(".json")) continue;
 				accountList.add(fileName.substring(0, fileName.length() - 5));
 			}
 		}
