@@ -430,7 +430,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="error_vanilla_json_corrupt">Vanilla JSON scheint beschädigt zu sein. Bitte sende einen Fehlerbericht auf GitHub oder Discord.</string>
     <string name="preference_ask_for_microphone_title">Mikrofon zulassen</string>
     <string name="preference_ask_for_microphone_description">Klicke hier, um die Berechtigung zu Benachrichtigungen, die für Voice-Chat-Mods wie Simple Voice Chat erforderlich ist, erneut anzufordern.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Kann alten Versionen von Legacy4J erlauben, das SDL Backend zu verwenden</string>
     <string name="mcl_gamepad_forcedSDL">SDL Controller-Behandlung erzwingen</string>
     <string name="preference_category_SDL_settings">SDL-Einstellungen</string>
     <string name="oldL4JFound">Du verwendest eine Version von Legacy4J ohne die Android-Korrekturen! Du musst SDL manuell in den Controller-Einstellungen aktivieren, um das beste Spielerlebnis zu erhalten!</string>
