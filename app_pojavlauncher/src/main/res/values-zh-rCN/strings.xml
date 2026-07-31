@@ -429,7 +429,6 @@
     <string name="error_vanilla_json_corrupt">原版 JSON 似乎已损坏。请在 GitHub 或 Discord 上提交错误报告。</string>
     <string name="preference_ask_for_microphone_title">允许麦克风</string>
     <string name="preference_ask_for_microphone_description">点击以重新请求通知权限，Simple Voice Chat 等语音聊天模组需要此权限。</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">可以允许旧版本的 Legacy4J 使用 SDL 后端</string>
     <string name="mcl_gamepad_forcedSDL">强制启动 SDL 手柄处理</string>
     <string name="preference_category_SDL_settings">SDL 设置</string>
     <string name="oldL4JFound">你正在使用的 Legacy4J 版本未包含 Android 修复！你需要在手柄设置中手动启用 SDL 才能获得最佳体验！</string>
