@@ -418,7 +418,6 @@
     <string name="error_vanilla_json_corrupt">JSON Vanilla parece estar corrompido. Por favor envie uma denúncia do bug no GitHub ou no Discord.</string>
     <string name="preference_ask_for_microphone_title">Permitir microfone</string>
     <string name="preference_ask_for_microphone_description">Clique para pedir novamente a permissão da notificação, requerida para mods de chat de voz como o Simple Voice Chat.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Permite que versões antigas do Legacy4J usem o backend SDL</string>
     <string name="mcl_gamepad_forcedSDL">Forçar inicialização do controle SDL</string>
     <string name="preference_category_SDL_settings">Configurações do SDL</string>
     <string name="controllableFound">Controllable atualmente possui uma chance aleatória de fechar ao iniciar o jogo. Você pode ou continuar novamente e esperar que o jogo inicie ou use um outro mod como o Controlify.</string>
