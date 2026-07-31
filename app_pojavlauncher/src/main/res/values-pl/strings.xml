@@ -430,7 +430,6 @@
     <string name="error_vanilla_json_corrupt">Wygląda na to, że plik JSON Vanilla jest uszkodzony. Zgłoś błąd na platformie GitHub lub Discord.</string>
     <string name="preference_ask_for_microphone_title">Zezwól na dostęp do mikrofonu</string>
     <string name="preference_ask_for_microphone_description">Kliknij, aby ponownie poprosić o uprawnienia do powiadomień, wymagane dla modów czatu głosowego, takich jak Simple Voice Chat.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Może zezwolić starszym wersjom Legacy4J na korzystanie z backendu SDL</string>
     <string name="mcl_gamepad_forcedSDL">Wymuś uruchomienie obsługi kontrolera SDL</string>
     <string name="preference_category_SDL_settings">Ustawienia SDL</string>
     <string name="oldL4JFound">Korzystasz z wersji Legacy4J bez poprawek dla systemu Android! Aby zapewnić sobie najlepsze wrażenia, należy ręcznie włączyć SDL w ustawieniach kontrolera!</string>
