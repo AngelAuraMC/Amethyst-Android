@@ -426,7 +426,6 @@
     <string name="error_vanilla_json_corrupt">Json vanila nampaknya rosak. Sila hantar laporan pepijat pada github atau discord.</string>
     <string name="preference_ask_for_microphone_title">Benarkan mikrofon</string>
     <string name="preference_ask_for_microphone_description">Klik untuk meminta semula kebenaran pemberitahuan, diperlukan untuk mod perbualan suara seperti Simple Voice Chat.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Boleh membenarkan versi lama Legacy4J menggunakan bahagian belakang SDL</string>
     <string name="mcl_gamepad_forcedSDL">Mulakan pengendalian pengawal SDL secara paksa</string>
     <string name="preference_category_SDL_settings">Tetapan SDL</string>
     <string name="oldL4JFound">Anda sedang menggunakan versi Legacy4J tanpa pembaikan untuk android! Anda perlu mendayakan SDL secara manual dalam tetapan pengawal untuk mendapatkan pengalaman terbaik!</string>
