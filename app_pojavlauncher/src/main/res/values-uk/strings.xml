@@ -428,7 +428,6 @@
     <string name="error_vanilla_json_corrupt">Усталений json, здається, пошкоджено. Будь ласка, надішліть звіт про помилку на github або discord.</string>
     <string name="preference_ask_for_microphone_title">Дозволити мікрофон</string>
     <string name="preference_ask_for_microphone_description">Натисніть, щоби повторно надіслати запит дозволу на повідомлення для голосових чатів, наприклад Simple Voice Chat.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Можна дозволити старим версіям Legacy4J використовувати серверну частину SDL</string>
     <string name="mcl_gamepad_forcedSDL">Примусово запустити обробку контролера SDL</string>
     <string name="preference_category_SDL_settings">Налаштування SDL</string>
     <string name="oldL4JFound">Ви використовуєте версію Legacy4J без виправлень Android! Вам потрібно буде вручну ввімкнути SDL у налаштуваннях контролера, щоб отримати найкращий досвід!</string>
