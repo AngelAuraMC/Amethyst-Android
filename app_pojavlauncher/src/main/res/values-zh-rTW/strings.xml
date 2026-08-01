@@ -148,6 +148,8 @@
     <string name="mcl_setting_subtitle_mousespeed">更改虛擬滑鼠的移動。</string>
     <string name="mcl_setting_title_grab_mouse">使用虛擬光標</string>
     <string name="mcl_setting_subtitle_grab_mouse">確保光標停留在遊戲內，放置滑鼠點到控制鍵佈局。</string>
+    <string name="mcl_setting_title_keyboard_panning">鍵盤平移</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">開啟鍵盤時將螢幕向上平移。</string>
     <string name="customctrl_passthru">穿透點擊</string>
     <string name="customctrl_swipeable">滑動點擊</string>
     <string name="customctrl_forward_lock">前進鎖定</string>
@@ -429,6 +431,7 @@
     <string name="error_vanilla_json_corrupt">原版 JSON 似乎已損壞。請在 GitHub 或 Discord 上提交錯誤報告。</string>
     <string name="preference_ask_for_microphone_title">允許麥克風</string>
     <string name="preference_ask_for_microphone_description">點擊以重新請求通知權限，Simple Voice Chat 等語音聊天模組需要此權限。</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">如果 26.3-snapshot-4 以上版本或控制器模組無法正常運作，這項選項可以解決該問題。</string>
     <string name="mcl_gamepad_forcedSDL">強制啟動 SDL 手柄處理</string>
     <string name="preference_category_SDL_settings">SDL 設定</string>
     <string name="oldL4JFound">你正在使用的 Legacy4J 版本未包含 Android 修補包！你需要在手柄設定中手動啟用 SDL 才能獲得最佳體驗！</string>
@@ -451,7 +454,9 @@
     <string name="global_download">下載</string>
     <string name="multirt_no_internet">無法安裝，請檢查你的網際網路連線。</string>
     <string name="global_installing">安裝中…</string>
+    <string name="error_key_unsupported">錯誤！指派至這個按鈕的按鍵無效。您嘗試過更新了嗎？</string>
     <string name="error_invalid_value">錯誤！無效的值！</string>
+    <string name="minecraft_no_username_set">未設定您的 Minecraft 使用者名稱！您必須在 Minecraft 網站上設定完成才能登入！</string>
     <string name="create_lwjgl3ify_profile">建立 LWJGL3ify 設定檔</string>
     <string name="select_lwjgl3ify_version">選擇 LWJGL3ify 版本</string>
     <string name="lwjgl3ify_installer_available_versions">支援 LWJGL3IFY 的版本</string>
