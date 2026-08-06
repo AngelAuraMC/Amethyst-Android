@@ -453,16 +453,16 @@
     <string name="global_download">Tải xuống</string>
     <string name="multirt_no_internet">Không thể tải xuống, hãy kiểm tra kết nối Internet.</string>
     <string name="global_installing">Đang cài đặt…</string>
-    <string name="error_key_unsupported">Lỗi! Phím được đề cập cho nút này không hợp lệ. Bạn đã thử cập nhật nó à?</string>
+    <string name="error_key_unsupported">Lỗi! Phím được gán cho nút này không hợp lệ. Bạn đã thử cập nhật chưa?</string>
     <string name="error_invalid_value">Lỗi! Giá trị không hợp lệ!</string>
-    <string name="minecraft_no_username_set">Tên đăng nhập Minecraft của bạn chưa được đặt! Bạn nên đặt nó trong trang web của Minecraft trước khi có thể đăng nhập!</string>
+    <string name="minecraft_no_username_set">Bạn chưa đặt tên đăng nhập Minecraft cho bản thân! Bạn phải đặt tên trên trang web của Minecraft trước khi có thể đăng nhập!</string>
     <string name="create_lwjgl3ify_profile">Tạo hồ sơ LWJGL3ify</string>
     <string name="select_lwjgl3ify_version">Chọn phiên bản LWJGL3ify</string>
     <string name="lwjgl3ify_installer_available_versions">Phiên bản LWJGL3ify được hỗ trợ</string>
     <string name="lwjgl3ify_installer_broken_versions">Phiên bản LWJGL3ify bị hỏng (SDL)</string>
-    <string name="new_default_controls">Đã chiết xuất bố cục điều khiển mặc định mới vào new_default.json. Thử ngay!!</string>
+    <string name="new_default_controls">Đã trích xuất bố cục điều khiển mặc định mới vào new_default.json. Thử ngay!</string>
     <string name="import_modpack_start">Đang nhập modpack…</string>
-    <string name="import_modpack_hash">Đang băm tệp Modpack... (%s MB/%s MB)</string>
-    <string name="import_modpack_json">Đang lấy in tư của em modpack này…</string>
-    <string name="import_modpack_copy">Đang sao chép tệp modpack vào cache... (%s MB/%s MB)</string>
+    <string name="import_modpack_hash">Đang kiểm tra hash tệp modpack... (%s MB/%s MB)</string>
+    <string name="import_modpack_json">Đang đọc thông tin modpack…</string>
+    <string name="import_modpack_copy">Đang sao chép tệp modpack vào bộ nhớ đệm... (%s MB/%s MB)</string>
 </resources>
