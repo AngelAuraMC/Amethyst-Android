@@ -28,3 +28,18 @@ static void writeVersionFile(File[] jarFileArray, File versionFile){
     }
     versionFile.write(sha1.digest().collect { String.format("%02x", it) }.join())
 }
+
+subprojects {subproject ->
+    if (subproject.name.contains("lwjgl")) return
+    tasks.withType(Jar).configureEach {jar ->
+        System.out.println("Subproject $subproject configuring jar task destination to app_pojavlauncher/src/main/assets/components/$subproject.name/")
+        destinationDirectory.set(
+                file("../app_pojavlauncher/src/main/assets/components/$subproject.name")
+        )
+        doLast {
+            def versionFile  = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/$subproject.name/version")
+            def jarFile = archiveFile.get().asFile
+            writeVersionFile(jarFile, versionFile)
+        }
+    }
+}

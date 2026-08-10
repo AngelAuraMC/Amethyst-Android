@@ -7,3 +7,6 @@
 [submodule "sdl2-compat"]
 	path = app_pojavlauncher/src/main/jni/sdl2-compat
 	url = https://github.com/libsdl-org/sdl2-compat.git
+[submodule "MioLibPatcher"]
+	path = MioLibPatcher
+	url = https://github.com/AngelAuraMC/MioLibPatcher.git

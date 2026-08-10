@@ -199,7 +199,7 @@ afterEvaluate {
     def componentJars = [
             ":forge_installer:jar",
             ":arc_dns_injector:jar",
-            ":methods_injector_agent:jar",
+            ":MioLibPatcher:jar",
             ":jre_lwjgl3glfw:jar"
     ]
 
