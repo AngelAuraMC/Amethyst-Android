@@ -85,8 +85,9 @@ public class Agent implements AWTEventListener {
                 return  abstractButton; // return the button, so we can press it after processing other stuff
             case "Install client":
                 abstractButton.doClick(); // It should be the default, but let's make sure
+            default:
+                return null;
         }
-        return null;
     }
 
     public AbstractButton handleOptiFineButton(AbstractButton abstractButton) {
