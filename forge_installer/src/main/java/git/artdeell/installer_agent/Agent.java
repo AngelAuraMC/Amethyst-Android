@@ -16,6 +16,7 @@ import java.util.Timer;
 import javax.swing.AbstractButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
 
 public class Agent implements AWTEventListener {
     private boolean forgeWindowHandled = false;
@@ -59,15 +60,35 @@ public class Agent implements AWTEventListener {
         List<Component> components = new ArrayList<>();
         insertAllComponents(components, window, new MainWindowFilter());
         AbstractButton okButton = null;
+
+        /*
+        I wanna add support for localized text because forge uses JOptionPane.OK_CANCEL_OPTION
+        without touching the jank that is below so I'll do just that.
+        This will fix the button detection failing for newer forge versions on non-english devices.
+        The older logic will take priority if it finds a button, just in case.
+
+        We can just completely not do this and use -Duser.language=en to forcibly use English which
+        would just work with the current jank but uh, screw that.
+         */
+
+        for(Component component : components) {
+            if (component instanceof JRootPane) {
+                AbstractButton abstractButton = ((JRootPane) component).getDefaultButton();
+                if(abstractButton != null) okButton = abstractButton;
+            }
+        }
+
         for(Component component : components) {
             if(component instanceof AbstractButton) {
                 AbstractButton abstractButton = (AbstractButton) component;
                 abstractButton = optiFineInstallation ?
                         handleOptiFineButton(abstractButton) :
+                        // This also sets install option to "Install client", which is not localized
                         handleForgeButton(abstractButton);
                 if(abstractButton != null) okButton = abstractButton;
             }
         }
+
         if(okButton == null) {
             System.out.println("Failed to set all the UI components, wil try again in the next window");
             return false;
