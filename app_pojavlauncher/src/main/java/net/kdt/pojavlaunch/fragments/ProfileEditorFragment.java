@@ -164,12 +164,15 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         if(mTempProfile == null){
             mTempProfile = getProfile(profile);
         }
+        // TODO: Remove this jank when it's not relevant anymore
+        // Shitty hack to make OSMZink smoothly transition into kopper
+        if ("vulkan_zink".equals(mTempProfile.pojavRendererName)) mTempProfile.pojavRendererName = "opengles3_desktopgl_zink_kopper";
         mProfileIcon.setImageDrawable(
                 ProfileIconCache.fetchIcon(getResources(), mProfileKey, mTempProfile.icon)
         );
 
         // Runtime spinner
-        List<Runtime> runtimes = MultiRTUtils.getRuntimes();
+        List<Runtime> runtimes = MultiRTUtils.getInstalledRuntimes();
         int jvmIndex = runtimes.indexOf(new Runtime("<Default>"));
         if (mTempProfile.javaDir != null) {
             String selectedRuntime = mTempProfile.javaDir.substring(Tools.LAUNCHERPROFILES_RTPREFIX.length());
@@ -242,7 +245,9 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mTempProfile.lastVersionId = mDefaultVersion.getText().toString();
         mTempProfile.controlFile = mDefaultControl.getText().toString();
         mTempProfile.name = mDefaultName.getText().toString();
-        mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString();
+        mTempProfile.javaArgs = mDefaultJvmArgument.getText().toString()
+                .replaceAll("[\r\n]+", " ")
+                .trim();
         mTempProfile.gameDir = mDefaultPath.getText().toString();
 
         if(mTempProfile.controlFile.isEmpty()) mTempProfile.controlFile = null;

@@ -1,5 +1,6 @@
 package net.kdt.pojavlaunch.multirt;
 
+import static net.kdt.pojavlaunch.Architecture.getDeviceArchitecture;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
 import static org.apache.commons.io.FileUtils.listFiles;
 
@@ -8,6 +9,8 @@ import android.util.Log;
 
 import com.kdt.mcgui.ProgressLayout;
 
+import net.kdt.pojavlaunch.Architecture;
+import net.kdt.pojavlaunch.NewJREUtil.ExternalRuntime;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.utils.MathUtils;
@@ -36,7 +39,7 @@ public class MultiRTUtils {
     private static final String JAVA_VERSION_STR = "JAVA_VERSION=\"";
     private static final String OS_ARCH_STR = "OS_ARCH=\"";
 
-    public static List<Runtime> getRuntimes() {
+    public static List<Runtime> getInstalledRuntimes() {
         if(!RUNTIME_FOLDER.exists() && !RUNTIME_FOLDER.mkdirs()) {
             throw new RuntimeException("Failed to create runtime directory");
         }
@@ -51,8 +54,25 @@ public class MultiRTUtils {
         return runtimes;
     }
 
+    /**
+     *
+     * @return Java versions which are not installed but are present in {@link ExternalRuntime}
+     */
+    public static List<ExternalRuntime> getRuntimesToDownload() {
+        List<ExternalRuntime> runtimesToDownload = new ArrayList<>();
+        ExternalRuntime[] downloadableRuntimes = ExternalRuntime.values();
+        for (ExternalRuntime downloadableruntime : downloadableRuntimes) {
+            if(getExactJreName(downloadableruntime.majorVersion) == null){
+                // x86 isn't supported anymore for JRE25
+                if (!(getDeviceArchitecture() == Architecture.ARCH_X86 && downloadableruntime.majorVersion >= 21))
+                    runtimesToDownload.add(downloadableruntime);
+            }
+        }
+        return runtimesToDownload;
+    }
+
     public static String getExactJreName(int majorVersion) {
-        List<Runtime> runtimes = getRuntimes();
+        List<Runtime> runtimes = getInstalledRuntimes();
         for(Runtime r : runtimes)
             if(r.javaVersion == majorVersion)return r.name;
 
@@ -60,7 +80,7 @@ public class MultiRTUtils {
     }
 
     public static String getNearestJreName(int majorVersion) {
-        List<Runtime> runtimes = getRuntimes();
+        List<Runtime> runtimes = getInstalledRuntimes();
         MathUtils.RankedValue<Runtime> nearestRankedRuntime = MathUtils.findNearestPositive(majorVersion, runtimes, (runtime)->runtime.javaVersion);
         if(nearestRankedRuntime == null) return null;
         Runtime nearestRuntime = nearestRankedRuntime.value;

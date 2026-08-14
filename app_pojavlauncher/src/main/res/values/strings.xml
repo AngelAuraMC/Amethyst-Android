@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
+    <string name="app_name" translatable="false">Amethyst</string>
 
     <!-- Action bar part -->
 
@@ -66,6 +66,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Renderer specific settings</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; only, fast)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (all versions, fast)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (all versions, mid)</string>
     <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ only, fast)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ only</string>
@@ -73,8 +74,6 @@
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Old-alpha</string>
     <string name="mcl_setting_veroption_oldbeta">Old-beta</string>
-    <string name="mcl_setting_java_sandbox">Sandbox .jar execution</string>
-    <string name="mcl_setting_java_sandbox_subtitle">Control the availability of the sandbox security manager when executing a .jar file.</string>
     <string name="mcl_version_clone">Clone</string>
 
     <!-- Global strings -->
@@ -175,6 +174,8 @@
     <string name="mcl_setting_subtitle_mousespeed">Changes the speed of the virtual mouse.</string>
     <string name="mcl_setting_title_grab_mouse">Use virtual cursor</string>
     <string name="mcl_setting_subtitle_grab_mouse">Ensures the cursor stays inside the game. Prevents mouse from clicking touch control layout.</string>
+    <string name="mcl_setting_title_keyboard_panning">Keyboard panning</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Shift the screen upwards when the keyboard is open.</string>
     <string name="customctrl_passthru">Mouse pass-thru</string>
     <string name="customctrl_swipeable">Swipeable</string>
     <string name="customctrl_forward_lock">Forward lock</string>
@@ -279,7 +280,7 @@
     <string name="create_profile">Create new profile</string>
     <string name="preference_shader_dump_title">Enable shader dumping</string>
     <string name="preference_shader_dump_description">Log converted shaders into the log file.</string>
-    <string name="percent_format">%d%%</string>
+    <string name="percent_format" translatable="false">%d%%</string>
     <string name="millisecond_format">%d ms</string>
     <string name="customctrl_editor_exit_title">Leaving?</string>
     <string name="customctrl_editor_exit_msg">Are you sure you want to exit?</string>
@@ -301,6 +302,7 @@
     <string name="version_select_hint">Select a version</string>
     <string name="forge_dl_progress">Downloading installer for %s</string>
     <string name="forge_dl_searching">Searching for Forge version number</string>
+    <string name="neoforge_dl_searching">Searching for NeoForge version number</string>
     <string name="modloader_dl_failed_to_load_list">Failed to load the version list!</string>
     <string name="forge_dl_no_installer">Sorry, but this version of Forge does not have an installer, which is not yet supported.</string>
     <string name="forge_dl_select_version">Select Forge version</string>
@@ -379,6 +381,7 @@
     <string name="preference_vsync_in_zink_description">Allows the launcher to use internal system APIs to enable V-Sync for Zink. Turn this off if your launcher suddenly crashes with Zink after a system update.</string>
     <string name="exception_failed_to_unpack_jre17">Failed to install JRE 17</string>
     <string name="newdl_starting">Reading game metadata…</string>
+    <string name="newdl_downloading_jre_runtime">Downloading Java %s runtime (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Downloading game metadata (%s)</string>
     <string name="newdl_downloading_game_files">Downloading game… (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">Downloading game… (%.2f/%.2f MB, %.2f MB/s)</string>
@@ -393,7 +396,6 @@
     <string name="log_view_button_output_on">Output\nON</string>
     <string name="log_view_label_log_output">Log output:</string>
     <string name="execute_jar_failed_to_read_file">Failed to read the .jar file</string>
-    <string name="execute_jar_incompatible_runtime">Execute .jar feature is not compatible with Java %d</string>
     <string name="controller_button_a">A</string>
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
@@ -455,7 +457,7 @@
     <string name="mg_renderer_summary_computeShaderext">May help with shaderpack glitches. Disable if not needed, can cause crashes.</string>
     <string name="mg_renderer_title_multidrawCompute">Use Compute Multidraw Emulation</string>
     <string name="mg_renderer_summary_multidrawCompute">Uses compute shaders for multidraw emulation</string>
-    <string name="app_short_name">Amethyst</string>
+    <string name="app_short_name" translatable="false">Amethyst</string>
     <string name="demo_versions_supported">Only Vanilla 1.3.1 and above are supported on demo accounts</string>
     <string name="demo_unsupported">Demo Profile not supported</string>
     <string name="change_account">Please change accounts to use this function</string>
@@ -476,10 +478,44 @@
     <string name="error_vanilla_json_corrupt">Vanilla json seems to be corrupt. Please send a bug report on github or discord.</string>
     <string name="preference_ask_for_microphone_title">Allow microphone</string>
     <string name="preference_ask_for_microphone_description">Click to re-request the notification permission, required for voice chat mods like Simple Voice Chat.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Can allow old versions of Legacy4J to use SDL backend</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">If 26.3-snapshot-4 and above or controller mods are not properly functioning, this can fix it.</string>
     <string name="mcl_gamepad_forcedSDL">Forcibly start SDL controller handling</string>
     <string name="preference_category_SDL_settings">SDL Settings</string>
     <string name="oldL4JFound">You are using a version of Legacy4J without the android fixes! You will need to manually enable SDL in the controller settings to get the best experience!</string>
     <string name="global_warning">Warning!</string>
     <string name="controllableFound">Controllable currently has a random chance of crashing on launch. Either keep trying again and hope it launches or use another mod like Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Advertise Experimental Direct State Access extension</string>
+    <string name="mg_renderer_summary_dsaExt">May help with Iris shaderpacks, required for AcceleratedRendering mod</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 Upscaling</string>
+    <string name="autorendererselectfailed">Auto-renderer select failed, defaulting to HolyGL4ES</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (all versions, mid)</string>
+    <string name="sodium_warning_title">Sodium detected!</string>
+    <string name="sodium_warning_message">It appears you are using sodium, this is unsupported and may lead to graphical issues or crashes. Please remove it and all dependent mods.</string>
+    <string name="delete_sodium">Delete Sodium and Launch</string>
+    <string name="sodium_override_title">Run sodium forcefully</string>
+    <string name="sodium_override_summaryOff">Using sodium may cause visual bugs and crashes. You have been warned.</string>
+    <string name="sodium_override_summaryOn">Sodium is not supported. No help will be given if you encounter any issues.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="sodium_math_warning_title" translatable="false">Solve the math question to enable</string>
+    <string name="sodium_math_warning_message" translatable="false">
+    Sodium is unsupported, you are on your own. No support will be given in the discord server.\nUsing sodium may result in bugs, glitches, and crashes. No help will be given even if you lose any of your worlds or saves.\n\nNow what\'s %1$s multiplied by %2$s plus %3$s minus %4$s?
+    </string>
+    <string name="not_modpack_file">Not a modpack file!</string>
+    <string name="global_not_installed">Not Installed</string>
+    <string name="global_download">Download</string>
+    <string name="multirt_no_internet">Failed to download, check your internet connection.</string>
+    <string name="global_installing">Installing…</string>
+    <string name="error_key_unsupported">Error! The key assigned to this button is invalid. Did you try updating?</string>
+    <string name="error_invalid_value">Error! Invalid value!</string>
+    <string name="minecraft_no_username_set">Your Minecraft username is not set! You must set it in the Minecraft website before being able to log in!</string>
+    <string name="create_lwjgl3ify_profile">Create LWJGL3ify profile</string>
+    <string name="select_lwjgl3ify_version">Select LWJGL3ify version</string>
+    <string name="lwjgl3ify_installer_available_versions">Supported LWJGL3IFY versions</string>
+    <string name="lwjgl3ify_installer_broken_versions">Broken LWJGL3ify versions (SDL)</string>
+    <string name="new_default_controls">Extracted new default controls into new_default.json. Try it out!</string>
+    <string name="import_modpack_start">Importing modpack…</string>
+    <string name="import_modpack_hash">Hashing modpack file… (%s MB/ %s MB)</string>
+    <string name="import_modpack_json">Reading modpack info…</string>
+    <string name="import_modpack_copy">Copying modpack file to cache… (%s MB/ %s MB)</string>
+
 </resources>

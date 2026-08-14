@@ -1,10 +1,14 @@
 package net.kdt.pojavlaunch.fragments;
 
+import static net.kdt.pojavlaunch.Tools.dialogOnUiThread;
+import static net.kdt.pojavlaunch.Tools.hasMods;
 import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
 import static net.kdt.pojavlaunch.Tools.hasOnlineProfile;
 import static net.kdt.pojavlaunch.Tools.openPath;
+import static net.kdt.pojavlaunch.Tools.runOnUiThread;
 import static net.kdt.pojavlaunch.Tools.shareLog;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.kdt.mcgui.mcVersionSpinner;
@@ -23,12 +28,14 @@ import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
+import net.kdt.pojavlaunch.modloaders.LWJGL3ifyUtils;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
 import java.io.File;
+import java.util.List;
 
 public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";
@@ -64,7 +71,19 @@ public class MainMenuFragment extends Fragment {
         } else mInstallJarButton.setOnClickListener(v -> hasNoOnlineProfileDialog(requireActivity()));
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
-        mPlayButton.setOnClickListener(v -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true));
+        mPlayButton.setOnClickListener(v -> {
+            if (Tools.hasMods("sodium") && !(LauncherPreferences.DEFAULT_PREF.getBoolean("sodium_override", false))) {
+                AlertDialog sodiumWarningDialog = new AlertDialog.Builder(requireContext())
+                        .setTitle(R.string.sodium_warning_title)
+                        .setMessage(R.string.sodium_warning_message)
+                        .setNeutralButton(R.string.delete_sodium, (d,w)-> {
+                            Tools.deleteSodiumMods();
+                            ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
+                        })
+                        .create();
+                sodiumWarningDialog.show();
+            } else ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
+        });
 
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
 

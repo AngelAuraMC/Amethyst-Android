@@ -7,58 +7,57 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListAdapter;
 import android.widget.TextView;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class NeoForgeVersionListAdapter extends BaseExpandableListAdapter implements ExpandableListAdapter {
+    private final List<String> mGameVersions;
+    private final List<List<String>> mNeoForgeVersions;
     private final LayoutInflater mLayoutInflater;
-    private final LinkedHashMap<String, LinkedHashSet<String>> minecraftToLoaderVersionsHashmap;
-    private LinkedHashSet<String> generatedHashSet = null;
 
 
-    public NeoForgeVersionListAdapter(List<String> forgeVersions, LayoutInflater layoutInflater) {
+    public NeoForgeVersionListAdapter(List<String> neoforgeVersions, LayoutInflater layoutInflater) {
         this.mLayoutInflater = layoutInflater;
-        minecraftToLoaderVersionsHashmap = new LinkedHashMap<>();
-        JsonArray versionsJsonArray = JsonParser.parseString(forgeVersions.get(0)).getAsJsonObject().getAsJsonArray("versions");
-
-        ArrayList<JsonElement> sortedVersionsList = new ArrayList<>();
-        for (JsonElement elem : versionsJsonArray) {
-            sortedVersionsList.add(elem);
-        }
-        Collections.sort(sortedVersionsList, (o1, o2) -> {
-            String versionString1 = ((JsonObject) o1).get("requires").getAsJsonArray().get(0).getAsJsonObject().get("equals").getAsString();
-            String versionString2 = ((JsonObject) o2).get("requires").getAsJsonArray().get(0).getAsJsonObject().get("equals").getAsString();
-            return versionString2.compareTo(versionString1); // Sorts by Minecraft version
-        });
-
-        for (JsonElement sortedVersionPick : sortedVersionsList) {
-            String loaderVersion = ((JsonObject) sortedVersionPick).get("version").getAsString();
-            String minecraftVersion = ((JsonObject) sortedVersionPick).get("requires").getAsJsonArray().get(0).getAsJsonObject().get("equals").getAsString();
-            if (minecraftToLoaderVersionsHashmap.containsKey(minecraftVersion)) {
-                minecraftToLoaderVersionsHashmap.get(minecraftVersion).add(loaderVersion);
-            } else {
-                generatedHashSet = new LinkedHashSet<>();
-                generatedHashSet.add(loaderVersion);
-                minecraftToLoaderVersionsHashmap.put(minecraftVersion, generatedHashSet);
+        mGameVersions = new ArrayList<>();
+        mNeoForgeVersions = new ArrayList<>();
+        for(String version : neoforgeVersions) {
+            String[] parts = version.split("\\.");
+            String gameVersion;
+            try {
+                if (Integer.parseInt(parts[1]) < 25) { // Actual logic for normal mcvers
+                    gameVersion = "1." + parts[0] + "." + parts[1];
+                } else gameVersion = parts[0] + "." + parts[1];
+            } catch (NumberFormatException ignored) {
+                // Handling for april fools version
+                gameVersion = parts[0] + "." + parts[1];
             }
+            List<String> versionList;
+            int gameVersionIndex = mGameVersions.indexOf(gameVersion);
+            if(gameVersionIndex != -1) versionList = mNeoForgeVersions.get(gameVersionIndex);
+            else {
+                versionList = new ArrayList<>();
+                mGameVersions.add(gameVersion);
+                mNeoForgeVersions.add(versionList);
+            }
+            versionList.add(version);
+        }
+        // Make it latest to oldest, top to down.
+        Collections.reverse(mGameVersions);
+        Collections.reverse(mNeoForgeVersions);
+        for (List<String> mNeoForgeVersion : mNeoForgeVersions){
+            Collections.reverse(mNeoForgeVersion);
         }
     }
     @Override
     public int getGroupCount() {
-        return minecraftToLoaderVersionsHashmap.size();
+        return mGameVersions.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return new ArrayList<>(minecraftToLoaderVersionsHashmap.values()).get(i).size();
+        return mNeoForgeVersions.get(i).size();
     }
 
     @Override
@@ -68,7 +67,7 @@ public class NeoForgeVersionListAdapter extends BaseExpandableListAdapter implem
 
     @Override
     public Object getChild(int i, int i1) {
-        return getForgeVersion(i, i1);
+        return getNeoForgeVersion(i, i1);
     }
 
     @Override
@@ -100,16 +99,16 @@ public class NeoForgeVersionListAdapter extends BaseExpandableListAdapter implem
     public View getChildView(int i, int i1, boolean b, View convertView, ViewGroup viewGroup) {
         if(convertView == null)
             convertView = mLayoutInflater.inflate(android.R.layout.simple_expandable_list_item_1, viewGroup, false);
-        ((TextView) convertView).setText(getForgeVersion(i, i1));
+        ((TextView) convertView).setText(getNeoForgeVersion(i, i1));
         return convertView;
     }
 
     private String getGameVersion(int i) {
-        return minecraftToLoaderVersionsHashmap.keySet().toArray()[i].toString();
+        return mGameVersions.get(i);
     }
 
-    private String getForgeVersion(int i, int i1){
-        return new ArrayList<>(minecraftToLoaderVersionsHashmap.values()).get(i).toArray()[i1].toString();
+    private String getNeoForgeVersion(int i, int i1){
+        return mNeoForgeVersions.get(i).get(i1);
     }
 
     @Override

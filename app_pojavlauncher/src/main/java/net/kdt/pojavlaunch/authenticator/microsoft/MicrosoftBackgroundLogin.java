@@ -3,6 +3,7 @@ package net.kdt.pojavlaunch.authenticator.microsoft;
 import static net.kdt.pojavlaunch.PojavApplication.sExecutorService;
 
 import android.util.ArrayMap;
+import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -59,7 +60,7 @@ public class MicrosoftBackgroundLogin {
     public String mcName;
     public String mcToken;
     public String mcUuid;
-    public boolean doesOwnGame;
+    public boolean doesOwnGame, hasProfile = false;
     public long expiresAt;
 
     public MicrosoftBackgroundLogin(boolean isRefresh, String authCode){
@@ -82,8 +83,16 @@ public class MicrosoftBackgroundLogin {
                 notifyProgress(progressListener, 4);
                 String mcToken = acquireMinecraftToken(xsts[0], xsts[1]);
                 notifyProgress(progressListener, 5);
-                fetchOwnedItems(mcToken);
                 checkMcProfile(mcToken);
+                fetchOwnedItems(mcToken);
+
+                if (!hasProfile && doesOwnGame) {
+                    throw new PresentedException(R.string.minecraft_no_username_set);
+                } else if (!doesOwnGame) {
+                    mcName = "Demo.Player";
+                    mcUuid = "00000000-0000-0000-0000-000000000000";
+                } else if (mcName == null || mcUuid == null)
+                    throw new IllegalStateException("This should never happen, please report this as a bug");
 
                 MinecraftAccount acc = MinecraftAccount.load(mcName);
                 if(acc == null) acc = new MinecraftAccount();
@@ -256,50 +265,108 @@ public class MicrosoftBackgroundLogin {
     }
 
     private void fetchOwnedItems(String mcAccessToken) throws IOException {
+        // We only need to do this if user does not have a profile/username yet
+        if (hasProfile) return;
         URL url = new URL(mcStoreUrl);
+        String s = "";
 
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestProperty("Authorization", "Bearer " + mcAccessToken);
-        conn.setUseCaches(false);
-        conn.connect();
-        if(conn.getResponseCode() < 200 || conn.getResponseCode() >= 300) {
-            throw getResponseThrowable(conn);
+        // For some reason, minecraftservices APIs are significantly more unreliable
+        // Automatically retry because the user gets annoyed when they have to log in again
+        for (int retryCount = 0; retryCount < 5; ++retryCount) {
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestProperty("Authorization", "Bearer " + mcAccessToken);
+            conn.setUseCaches(false);
+            conn.connect();
+            if (conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
+                s = Tools.read(conn.getInputStream());
+                conn.disconnect();
+                break;
+            } else if (retryCount == 4) {
+                throw getResponseThrowable(conn);
+            }
+            try { Thread.sleep(500L * (1L << retryCount)); // 0.5s, 1s, 2s, 4s, 8s
+            } catch (InterruptedException ignored) {}
         }
-        // We don't need any data from this request, it just needs to happen in order for
-        // the MS servers to work properly. The data from this is practically useless
-        // as it does not indicate whether the user owns the game through Game Pass.
+        try {
+            String jwtSignature = new JSONObject(s).getString("signature");
+            String jwtBody = jwtSignature.split("\\.")[1];
+
+            String signature = new String(
+                    Base64.decode(jwtBody, Base64.DEFAULT),
+                    StandardCharsets.UTF_8
+            );
+            JSONObject jsonSignature = new JSONObject(signature);
+            JSONArray entitlements = jsonSignature.getJSONArray("entitlements");
+            for (int i = 0; i < entitlements.length(); ++i) {
+                switch (entitlements.getString(i)) {
+                    // These four are guaranteed to always be present because Java & Bedrock are 1 pack
+                    case "product_minecraft":
+                    case "game_minecraft":
+                    case "product_minecraft_bedrock":
+                    case "game_minecraft_bedrock":
+                        doesOwnGame = true;
+                        break;
+                    case "product_game_pass_pc":
+                    case "product_game_pass_ultimate":
+                        // TODO: Implement gamepass detection
+                        break;
+                    // idk, pad the LoC or sm
+                    case "product_dungeons":
+                    case "game_dungeons":
+                    case "product_legends":
+                    case "game_legends":
+                    default:
+                        break;
+                }
+            }
+        }
+        catch (JSONException e){
+            Log.w("MicrosoftLogin", "Either the Auth API was changed or this account does not own Minecraft! Assuming the latter.");
+            doesOwnGame = false;
+        }
+
     }
 
     private void checkMcProfile(String mcAccessToken) throws IOException, JSONException {
         URL url = new URL(mcProfileUrl);
 
-        HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-        conn.setRequestProperty("Authorization", "Bearer " + mcAccessToken);
-        conn.setUseCaches(false);
-        conn.connect();
+        // For some reason, minecraftservices APIs are significantly more unreliable
+        // Automatically retry because the user gets annoyed when they have to log in again
+        for (int retryCount = 0; retryCount < 5; ++retryCount) {
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestProperty("Authorization", "Bearer " + mcAccessToken);
+            conn.setUseCaches(false);
+            conn.connect();
 
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
-            String s= Tools.read(conn.getInputStream());
-            conn.disconnect();
-            Log.i("MicrosoftLogin","profile:" + s);
-            JSONObject jsonObject = new JSONObject(s);
-            String name = (String) jsonObject.get("name");
-            String uuid = (String) jsonObject.get("id");
-            String uuidDashes = uuid.replaceFirst(
-                    "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
-            );
-            doesOwnGame = true;
-            Log.i("MicrosoftLogin","UserName = " + name);
-            Log.i("MicrosoftLogin","Uuid Minecraft = " + uuidDashes);
-            mcName=name;
-            mcUuid=uuidDashes;
-        }else{
-            Log.i("MicrosoftLogin","It seems that this Microsoft Account does not own the game.");
-            doesOwnGame = false;
-            mcName = "Demo.Player";
-            mcUuid = "00000000-0000-0000-0000-000000000000";
-            //throw new PresentedException(new RuntimeException(conn.getResponseMessage()), R.string.minecraft_not_owned);
-            //throwResponseError(conn);
+            if(conn.getResponseCode() >= 200 && conn.getResponseCode() < 300) {
+                String s= Tools.read(conn.getInputStream());
+                conn.disconnect();
+                Log.i("MicrosoftLogin","profile:" + s);
+                JSONObject jsonObject = new JSONObject(s);
+                String name = (String) jsonObject.get("name");
+                String uuid = (String) jsonObject.get("id");
+                String uuidDashes = uuid.replaceFirst(
+                        "(\\p{XDigit}{8})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}{4})(\\p{XDigit}+)", "$1-$2-$3-$4-$5"
+                );
+                doesOwnGame = true;
+                hasProfile = true;
+                Log.i("MicrosoftLogin","UserName = " + name);
+                Log.i("MicrosoftLogin","Uuid Minecraft = " + uuidDashes);
+                mcName = name;
+                mcUuid = uuidDashes;
+                break;
+            } else if (conn.getResponseCode() == 404){
+                Log.i("MicrosoftLogin","It seems that this Microsoft Account does not have a Minecraft profile, checking for ownership.");
+                hasProfile = false;
+                break;
+            } else if (conn.getResponseCode() == 401){
+                Log.e("MicrosoftLogin", "You screwed up the auth code somewhere");
+                throw getResponseThrowable(conn);
+            } else if (retryCount == 4) {
+                throw getResponseThrowable(conn);
+            }
+            try { Thread.sleep(500L * (1L << retryCount)); // 0.5s, 1s, 2s, 4s, 8s
+            } catch (InterruptedException ignored) {}
         }
     }
 

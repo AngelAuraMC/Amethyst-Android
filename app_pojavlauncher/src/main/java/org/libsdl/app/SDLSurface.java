@@ -6,6 +6,9 @@
 package org.libsdl.app;
 
 
+import static org.lwjgl.glfw.CallbackBridge.windowHeight;
+import static org.lwjgl.glfw.CallbackBridge.windowWidth;
+
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Insets;
@@ -17,8 +20,10 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
+import android.view.PointerIcon;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,6 +31,11 @@ import android.view.View;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 
+import android.view.ScaleGestureDetector;
+
+import net.kdt.pojavlaunch.MinecraftGLSurface;
+import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 /**
     SDLSurface. This is what we draw on, so we need to know when it's created
@@ -34,7 +44,8 @@ import android.view.WindowManager;
     Because of this, that's where we set up the SDL thread
 */
 public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
-    View.OnApplyWindowInsetsListener, View.OnKeyListener, View.OnTouchListener, SensorEventListener  {
+    View.OnApplyWindowInsetsListener, View.OnKeyListener, View.OnTouchListener,
+    SensorEventListener, ScaleGestureDetector.OnScaleGestureListener {
 
     // Sensors
     protected SensorManager mSensorManager;
@@ -44,12 +55,21 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     protected float mWidth, mHeight;
 
     // Is SurfaceView ready for rendering
-    public boolean mIsSurfaceReady;
+    protected boolean mIsSurfaceReady;
+
+    // Is on-screen keyboard visible
+    protected boolean mKeyboardVisible;
+
+    // Pinch events
+    private final ScaleGestureDetector scaleGestureDetector;
+    static Surface mNativeSurface;
 
     // Startup
     public SDLSurface(Context context) {
         super(context);
         getHolder().addCallback(this);
+
+        scaleGestureDetector = new ScaleGestureDetector(context, this);
 
         setFocusable(true);
         setFocusableInTouchMode(true);
@@ -63,18 +83,23 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
 
         setOnGenericMotionListener(SDLActivity.getMotionListener());
 
-        // Some arbitrary defaults to avoid a potential division by zero
-        mWidth = 1.0f;
-        mHeight = 1.0f;
+//        // Some arbitrary defaults to avoid a potential division by zero
+//        mWidth = 1.0f;
+//        mHeight = 1.0f;
+        // These values are used in calculating the position of inputs. SDL's scaling is independent
+        // of those, it only cares about the actual native surface resolution. Logical rendering
+        // resolution is set via SDL_SetRenderLogicalPresentation, not here.
+        mWidth = Tools.currentDisplayMetrics.widthPixels;
+        mHeight = Tools.currentDisplayMetrics.heightPixels;
 
         mIsSurfaceReady = false;
     }
 
-    public void handlePause() {
+    protected void handlePause() {
         enableSensor(Sensor.TYPE_ACCELEROMETER, false);
     }
 
-    public void handleResume() {
+    protected void handleResume() {
         setFocusable(true);
         setFocusableInTouchMode(true);
         requestFocus();
@@ -84,13 +109,19 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         enableSensor(Sensor.TYPE_ACCELEROMETER, true);
     }
 
-    public Surface getNativeSurface() {
-        return getHolder().getSurface();
+    public static Surface getNativeSurface() {
+        return mNativeSurface;
+    }
+
+    public static void setNativeSurface(Surface nativeSurface) {
+        mNativeSurface = nativeSurface;
+        SDLActivity.getSDLSurface().surfaceCreated(null);
     }
 
     // Called when we have a valid drawing surface
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        if (!MinecraftGLSurface.sdlEnabled) return;
         Log.v("SDL", "surfaceCreated()");
         SDLActivity.onNativeSurfaceCreated();
     }
@@ -98,6 +129,7 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
     // Called when we lose the surface
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        if (!MinecraftGLSurface.sdlEnabled) return;
         Log.v("SDL", "surfaceDestroyed()");
 
         // Transition to pause, if needed
@@ -108,10 +140,16 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         SDLActivity.onNativeSurfaceDestroyed();
     }
 
+    public void surfaceChanged(){
+        // The first two args are ignored
+        surfaceChanged(null, 0, Tools.currentDisplayMetrics.widthPixels, Tools.currentDisplayMetrics.heightPixels);
+    }
+
     // Called when the surface is resized
     @Override
     public void surfaceChanged(SurfaceHolder holder,
                                int format, int width, int height) {
+        if (!MinecraftGLSurface.sdlEnabled) return;
         Log.v("SDL", "surfaceChanged()");
 
         if (SDLActivity.mSingleton == null) {
@@ -125,14 +163,12 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         float density = 1.0f;
         try
         {
-            if (Build.VERSION.SDK_INT >= 17 /* Android 4.2 (JELLY_BEAN_MR1) */) {
-                DisplayMetrics realMetrics = new DisplayMetrics();
-                mDisplay.getRealMetrics( realMetrics );
-                nDeviceWidth = realMetrics.widthPixels;
-                nDeviceHeight = realMetrics.heightPixels;
-                // Use densityDpi instead of density to more closely match what the UI scale is
-                density = (float)realMetrics.densityDpi / 160.0f;
-            }
+            DisplayMetrics realMetrics = new DisplayMetrics();
+            mDisplay.getRealMetrics( realMetrics );
+            nDeviceWidth = realMetrics.widthPixels;
+            nDeviceHeight = realMetrics.heightPixels;
+            // Use densityDpi instead of density to more closely match what the UI scale is
+            density = (float)realMetrics.densityDpi / 160.0f;
         } catch(Exception ignored) {
         }
 
@@ -140,12 +176,8 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
             // In case we're waiting on a size change after going fullscreen, send a notification.
             SDLActivity.getContext().notifyAll();
         }
-
         Log.v("SDL", "Window size: " + width + "x" + height);
         Log.v("SDL", "Device size: " + nDeviceWidth + "x" + nDeviceHeight);
-        SDLActivity.nativeSetScreenResolution(width, height, nDeviceWidth, nDeviceHeight, density, mDisplay.getRefreshRate());
-        SDLActivity.onNativeResize();
-
         // Prevent a screen distortion glitch,
         // for instance when the device is in Landscape and a Portrait App is resumed.
         boolean skip = false;
@@ -195,6 +227,13 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         SDLActivity.handleNativeState();
     }
 
+    public void nativeResize(int w, int h){
+        DisplayMetrics realMetrics = new DisplayMetrics();
+        mDisplay.getRealMetrics( realMetrics );
+        SDLActivity.nativeSetScreenResolution(w, h, w, h, (float)realMetrics.densityDpi / 160.0f, mDisplay.getRefreshRate());
+        SDLActivity.onNativeResize();
+    }
+
     // Window inset
     @Override
     public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
@@ -206,6 +245,18 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                                                WindowInsets.Type.displayCutout());
 
             SDLActivity.onNativeInsetsChanged(combined.left, combined.right, combined.top, combined.bottom);
+
+            if (insets.isVisible(WindowInsets.Type.ime())) {
+                if (!mKeyboardVisible) {
+                    mKeyboardVisible = true;
+                    SDLActivity.onNativeScreenKeyboardShown();
+                }
+            } else {
+                if (mKeyboardVisible) {
+                    mKeyboardVisible = false;
+                    SDLActivity.onNativeScreenKeyboardHidden();
+                }
+            }
         }
 
         // Pass these to any child views in case they need them
@@ -236,81 +287,89 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         }
     }
 
-    // Touch events
+    /** We process touch events in MinecraftGLSurface. Not here.**/
+
+//    // Touch events
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        /* Ref: http://developer.android.com/training/gestures/multi.html */
-        int touchDevId = event.getDeviceId();
-        final int pointerCount = event.getPointerCount();
-        int action = event.getActionMasked();
-        int pointerId;
-        int i = 0;
-        float x,y,p;
-
-        if (action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_POINTER_DOWN)
-            i = event.getActionIndex();
-
-        do {
-            int toolType = event.getToolType(i);
-
-            if (toolType == MotionEvent.TOOL_TYPE_MOUSE) {
-                int buttonState = event.getButtonState();
-                boolean relative = false;
-
-                // We need to check if we're in relative mouse mode and get the axis offset rather than the x/y values
-                // if we are. We'll leverage our existing mouse motion listener
-                SDLGenericMotionListener_API14 motionListener = SDLActivity.getMotionListener();
-                x = motionListener.getEventX(event, i);
-                y = motionListener.getEventY(event, i);
-                relative = motionListener.inRelativeMode();
-
-                SDLActivity.onNativeMouse(buttonState, action, x, y, relative);
-            } else if (toolType == MotionEvent.TOOL_TYPE_STYLUS || toolType == MotionEvent.TOOL_TYPE_ERASER) {
-                pointerId = event.getPointerId(i);
-                x = event.getX(i);
-                y = event.getY(i);
-                p = event.getPressure(i);
-                if (p > 1.0f) {
-                    // may be larger than 1.0f on some devices
-                    // see the documentation of getPressure(i)
-                    p = 1.0f;
-                }
-
-                // BUTTON_STYLUS_PRIMARY is 2^5, so shift by 4, and apply SDL_PEN_INPUT_DOWN/SDL_PEN_INPUT_ERASER_TIP
-                int buttonState = (event.getButtonState() >> 4) | (1 << (toolType == MotionEvent.TOOL_TYPE_STYLUS ? 0 : 30));
-
-                SDLActivity.onNativePen(pointerId, buttonState, action, x, y, p);
-            } else { // MotionEvent.TOOL_TYPE_FINGER or MotionEvent.TOOL_TYPE_UNKNOWN
-                pointerId = event.getPointerId(i);
-                x = getNormalizedX(event.getX(i));
-                y = getNormalizedY(event.getY(i));
-                p = event.getPressure(i);
-                if (p > 1.0f) {
-                    // may be larger than 1.0f on some devices
-                    // see the documentation of getPressure(i)
-                    p = 1.0f;
-                }
-
-                SDLActivity.onNativeTouch(touchDevId, pointerId, action, x, y, p);
-            }
-
-            // Non-primary up/down
-            if (action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_POINTER_DOWN)
-                break;
-        } while (++i < pointerCount);
-
-        return true;
+//        /* Ref: http://developer.android.com/training/gestures/multi.html */
+//        int touchDevId = event.getDeviceId();
+//        final int pointerCount = event.getPointerCount();
+//        int action = event.getActionMasked();
+//        int pointerId;
+//        int i = 0;
+//        float x,y,p;
+//
+//        if (action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_POINTER_DOWN)
+//            i = event.getActionIndex();
+//
+//        do {
+//            int toolType = event.getToolType(i);
+//
+//            if (toolType == MotionEvent.TOOL_TYPE_MOUSE) {
+//                int buttonState = event.getButtonState();
+//                boolean relative = false;
+//
+//                // We need to check if we're in relative mouse mode and get the axis offset rather than the x/y values
+//                // if we are. We'll leverage our existing mouse motion listener
+//                SDLGenericMotionListener_API14 motionListener = SDLActivity.getMotionListener();
+//                x = motionListener.getEventX(event, i);
+//                y = motionListener.getEventY(event, i);
+//                relative = motionListener.inRelativeMode();
+//
+//                SDLActivity.onNativeMouse(buttonState, action, x, y, relative);
+//            } else if (toolType == MotionEvent.TOOL_TYPE_STYLUS || toolType == MotionEvent.TOOL_TYPE_ERASER) {
+//                pointerId = event.getPointerId(i);
+//                x = event.getX(i);
+//                y = event.getY(i);
+//                p = event.getPressure(i);
+//                if (p > 1.0f) {
+//                    // may be larger than 1.0f on some devices
+//                    // see the documentation of getPressure(i)
+//                    p = 1.0f;
+//                }
+//
+//                // BUTTON_STYLUS_PRIMARY is 2^5, so shift by 4, and apply SDL_PEN_INPUT_DOWN/SDL_PEN_INPUT_ERASER_TIP
+//                int buttonState = (event.getButtonState() >> 4) | (1 << (toolType == MotionEvent.TOOL_TYPE_STYLUS ? 0 : 30));
+//                if ((event.getButtonState() & MotionEvent.BUTTON_TERTIARY) != 0) {
+//                    buttonState |= 0x08;
+//                }
+//
+//                SDLActivity.onNativePen(pointerId, SDLActivity.getMotionListener().getPenDeviceType(event.getDevice()), buttonState, action, x, y, p);
+//            } else { // MotionEvent.TOOL_TYPE_FINGER or MotionEvent.TOOL_TYPE_UNKNOWN
+//                pointerId = event.getPointerId(i);
+//                x = getNormalizedX(event.getX(i));
+//                y = getNormalizedY(event.getY(i));
+//                p = event.getPressure(i);
+//                if (p > 1.0f) {
+//                    // may be larger than 1.0f on some devices
+//                    // see the documentation of getPressure(i)
+//                    p = 1.0f;
+//                }
+//
+//                SDLActivity.onNativeTouch(touchDevId, pointerId, action, x, y, p);
+//            }
+//
+//            // Non-primary up/down
+//            if (action == MotionEvent.ACTION_POINTER_UP || action == MotionEvent.ACTION_POINTER_DOWN)
+//                break;
+//        } while (++i < pointerCount);
+//
+//        scaleGestureDetector.onTouchEvent(event);
+//
+//        return true;
+        return false;
     }
 
     // Sensor events
-    public void enableSensor(int sensortype, boolean enabled) {
+    protected void enableSensor(int sensortype, boolean enabled) {
         // TODO: This uses getDefaultSensor - what if we have >1 accels?
         if (enabled) {
-            mSensorManager.registerListener(this,
+            SDLSensorManager.registerListener(mSensorManager, this,
                             mSensorManager.getDefaultSensor(sensortype),
-                            SensorManager.SENSOR_DELAY_GAME, null);
+                            SensorManager.SENSOR_DELAY_GAME);
         } else {
-            mSensorManager.unregisterListener(this,
+            SDLSensorManager.unregisterListener(mSensorManager, this,
                             mSensorManager.getDefaultSensor(sensortype));
         }
     }
@@ -366,7 +425,18 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
         }
     }
 
+    // Prevent android internal NullPointerException (https://github.com/libsdl-org/SDL/issues/13306)
+    @Override
+    public PointerIcon onResolvePointerIcon(MotionEvent event, int pointerIndex) {
+        try {
+            return super.onResolvePointerIcon(event, pointerIndex);
+        } catch (NullPointerException e) {
+            return null;
+        }
+    }
+
     // Captured pointer events for API 26.
+    @Override
     public boolean onCapturedPointerEvent(MotionEvent event)
     {
         int action = event.getActionMasked();
@@ -405,8 +475,27 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback,
                     SDLActivity.onNativeMouse(button, action, x, y, true);
                     return true;
             }
-        }      
+        }
 
         return false;
     }
+
+    @Override
+    public boolean onScale(ScaleGestureDetector detector) {
+        float scale = detector.getScaleFactor();
+        SDLActivity.onNativePinchUpdate(scale);
+        return true;
+    }
+
+    @Override
+    public boolean onScaleBegin(ScaleGestureDetector detector) {
+        SDLActivity.onNativePinchStart();
+        return true;
+    }
+
+    @Override
+    public void onScaleEnd(ScaleGestureDetector detector) {
+        SDLActivity.onNativePinchEnd();
+    }
+
 }

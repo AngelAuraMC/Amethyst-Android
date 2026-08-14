@@ -97,6 +97,10 @@ public class HotbarView extends View implements MCOptionUtils.MCOptionListener, 
         setLayoutParams(marginLayoutParams);
     }
 
+    public void setmLastIndex(int mLastIndex) {
+        this.mLastIndex = mLastIndex;
+    }
+
     @SuppressWarnings("ClickableViewAccessibility") // performClick does not report coordinates.
     @Override
     public boolean onTouchEvent(MotionEvent event) {

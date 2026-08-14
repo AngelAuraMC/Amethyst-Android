@@ -6,6 +6,7 @@
 package org.libsdl.app;
 
 import android.content.*;
+import android.text.InputType;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
@@ -18,14 +19,14 @@ public class SDLDummyEdit extends View implements View.OnKeyListener
     InputConnection ic;
     int input_type;
 
-    public SDLDummyEdit(Context context) {
+    SDLDummyEdit(Context context) {
         super(context);
         setFocusableInTouchMode(true);
         setFocusable(true);
         setOnKeyListener(this);
     }
 
-    public void setInputType(int input_type) {
+    void setInputType(int input_type) {
         this.input_type = input_type;
     }
 
@@ -50,7 +51,7 @@ public class SDLDummyEdit extends View implements View.OnKeyListener
         // FIXME: An even more effective way would be if Android provided this out of the box, but where would the fun be in that :)
         if (event.getAction()==KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
             if (SDLActivity.mTextEdit != null && SDLActivity.mTextEdit.getVisibility() == View.VISIBLE) {
-                SDLActivity.onNativeKeyboardFocusLost();
+                SDLActivity.onNativeScreenKeyboardHidden();
             }
         }
         return super.onKeyPreIme(keyCode, event);

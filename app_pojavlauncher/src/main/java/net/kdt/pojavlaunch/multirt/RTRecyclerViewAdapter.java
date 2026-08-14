@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import net.kdt.pojavlaunch.Architecture;
+import net.kdt.pojavlaunch.NewJREUtil;
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -28,6 +29,7 @@ import java.util.List;
 public class RTRecyclerViewAdapter extends RecyclerView.Adapter<RTRecyclerViewAdapter.RTViewHolder> {
 
     private boolean mIsDeleting = false;
+    private MultiRTConfigDialog dialog;
 
     @NonNull
     @Override
@@ -38,13 +40,18 @@ public class RTRecyclerViewAdapter extends RecyclerView.Adapter<RTRecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull RTViewHolder holder, int position) {
-        final List<Runtime> runtimes = MultiRTUtils.getRuntimes();
-        holder.bindRuntime(runtimes.get(position),position);
+        final List<Runtime> installedRuntimes = MultiRTUtils.getInstalledRuntimes();
+        final List<NewJREUtil.ExternalRuntime> downloadableRuntimes = MultiRTUtils.getRuntimesToDownload();
+        if (installedRuntimes.size() > position) {
+            holder.bindInstalledRuntime(installedRuntimes.get(position),position);
+        } else if (installedRuntimes.size() + downloadableRuntimes.size() > position) {
+            holder.bindDownloadableRuntime(downloadableRuntimes.get(position - installedRuntimes.size()), position);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return MultiRTUtils.getRuntimes().size();
+        return MultiRTUtils.getInstalledRuntimes().size() + MultiRTUtils.getRuntimesToDownload().size();
     }
 
     public boolean isDefaultRuntime(Runtime rt) {
@@ -66,6 +73,10 @@ public class RTRecyclerViewAdapter extends RecyclerView.Adapter<RTRecyclerViewAd
 
     public boolean getIsEditing(){
         return mIsDeleting;
+    }
+
+    public void setDialog(MultiRTConfigDialog multiRTConfigDialog) {
+        this.dialog = multiRTConfigDialog;
     }
 
 
@@ -104,7 +115,7 @@ public class RTRecyclerViewAdapter extends RecyclerView.Adapter<RTRecyclerViewAd
             mDeleteButton.setOnClickListener(v -> {
                 if (mCurrentRuntime == null) return;
 
-                if(MultiRTUtils.getRuntimes().size() < 2) {
+                if(MultiRTUtils.getInstalledRuntimes().size() < 2) {
                     new AlertDialog.Builder(mContext)
                             .setTitle(R.string.global_error)
                             .setMessage(R.string.multirt_config_removeerror_last)
@@ -129,7 +140,7 @@ public class RTRecyclerViewAdapter extends RecyclerView.Adapter<RTRecyclerViewAd
             });
         }
 
-        public void bindRuntime(Runtime runtime, int pos) {
+        public void bindInstalledRuntime(Runtime runtime, int pos) {
             mCurrentRuntime = runtime;
             mCurrentPosition = pos;
             if(runtime.versionString != null && Tools.DEVICE_ARCHITECTURE == Architecture.archAsInt(runtime.arch)) {
@@ -157,6 +168,48 @@ public class RTRecyclerViewAdapter extends RecyclerView.Adapter<RTRecyclerViewAd
             mJavaVersionTextView.setText(runtime.name);
             mFullJavaVersionTextView.setTextColor(Color.RED);
             mSetDefaultButton.setVisibility(View.GONE);
+        }
+
+        @SuppressLint("NotifyDataSetChanged")
+        public void bindDownloadableRuntime(NewJREUtil.ExternalRuntime runtime, int pos) {
+            mCurrentPosition = pos;
+            mJavaVersionTextView.setText(runtime.name
+                    .replace(".tar.xz", "")
+                    .replace("-", " "));
+            mFullJavaVersionTextView.setText(R.string.global_not_installed);
+            mFullJavaVersionTextView.setTextColor(mDefaultColors);
+            mSetDefaultButton.setVisibility(View.VISIBLE);
+            mDeleteButton.setVisibility(View.GONE);
+
+            if (runtime.isDownloading) {
+                mSetDefaultButton.setEnabled(false);
+                mSetDefaultButton.setText(R.string.global_installing);
+            } else {
+                mSetDefaultButton.setEnabled(true);
+                mSetDefaultButton.setText(R.string.global_download);
+            }
+
+            mSetDefaultButton.setOnClickListener(v -> {
+                runtime.isDownloading = true;
+                mSetDefaultButton.setEnabled(false);
+                mSetDefaultButton.setText(R.string.global_download);
+                sExecutorService.execute(() -> {
+                    mSetDefaultButton.setText(R.string.global_installing);
+                    try {
+                        runtime.downloadRuntime(v.getContext());
+                    } catch (RuntimeException e) {
+                        Tools.showErrorRemote(e);
+                    }
+                    v.post(() -> {
+                        // Reset the listener for this button so SET DEFAULT actually sets default
+                        setupOnClickListeners();
+                        // Update the UI so it knows it got installed
+                        notifyDataSetChanged();
+                        runtime.isDownloading = false;
+                    });
+                });
+            });
+
         }
 
         private void updateButtonsVisibility(){

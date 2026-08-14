@@ -14,11 +14,13 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import net.kdt.pojavlaunch.EfficientAndroidLWJGLKeycode;
 import net.kdt.pojavlaunch.LwjglGlfwKeycode;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.R;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.customcontrols.ControlData;
 import net.kdt.pojavlaunch.customcontrols.ControlLayout;
 import net.kdt.pojavlaunch.customcontrols.handleview.EditControlSideDialog;
@@ -228,14 +230,27 @@ public class ControlButton extends TextView implements ControlInterface {
                 break;
 
             case ControlData.SPECIALBTN_SCROLLDOWN:
-                if (!isDown) CallbackBridge.sendScroll(0, 1d);
+                if (!isDown) CallbackBridge.sendScroll(0, 1f);
                 break;
 
             case ControlData.SPECIALBTN_SCROLLUP:
-                if (!isDown) CallbackBridge.sendScroll(0, -1d);
+                if (!isDown) CallbackBridge.sendScroll(0, -1f);
                 break;
+
             case ControlData.SPECIALBTN_MENU:
                 mControlLayout.notifyAppMenu();
+                break;
+
+            case ControlData.SPECIALBTN_MOUSEBCK:
+                sendMouseButton(LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_4, isDown);
+                break;
+
+            case ControlData.SPECIALBTN_MOUSEFWD:
+                sendMouseButton(LwjglGlfwKeycode.GLFW_MOUSE_BUTTON_5, isDown);
+                break;
+
+            default:
+                Toast.makeText(getContext(), R.string.error_key_unsupported, Toast.LENGTH_LONG).show();
                 break;
         }
     }

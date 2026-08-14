@@ -25,6 +25,13 @@
             android:entryValues="@array/mg_renderer_values_multidraw"
             app2:useSimpleSummaryProvider="true"/>
         <androidx.preference.ListPreference
+            android:title="@string/mg_renderer_title_fsr"
+            android:key="mg_renderer_setting_fsr"
+            android:defaultValue="0"
+            android:entries="@array/mg_renderer_names_fsr"
+            android:entryValues="@array/mg_renderer_values_fsr"
+            app2:useSimpleSummaryProvider="true"/>
+        <androidx.preference.ListPreference
             android:title="@string/mg_renderer_title_errorSetting"
             android:key="mg_renderer_setting_errorSetting"
             android:defaultValue="0"
@@ -45,14 +52,14 @@
         </PreferenceCategory>
         <PreferenceCategory android:title="@string/preference_experimental_title">
             <SwitchPreference
-                android:title="@string/mg_renderer_title_gl43exts"
-                android:summary="@string/mg_renderer_summary_gl43exts"
-                android:key="mg_renderer_setting_gl43exts"
-                android:defaultValue="false" />
-            <SwitchPreference
                 android:title="@string/mg_renderer_title_computeShaderext"
                 android:summary="@string/mg_renderer_summary_computeShaderext"
                 android:key="mg_renderer_computeShaderext"
+                android:defaultValue="false" />
+            <SwitchPreference
+                android:title="@string/mg_renderer_title_dsaExt"
+                android:summary="@string/mg_renderer_summary_dsaExt"
+                android:key="mg_renderer_dsaExt"
                 android:defaultValue="false" />
             <SwitchPreference
                 android:title="@string/mg_renderer_title_multidrawCompute"

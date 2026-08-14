@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/background_app"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="@dimen/fragment_padding_medium">
+
+    <View
+        android:id="@+id/create_modpack_profile_menu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_200sdp"
+
+        android:background="@drawable/background_card"
+        android:translationZ="-1dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.kdt.mcgui.MineButton
+        android:id="@+id/button_browse_modpacks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Browse Modpacks"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        app:layout_constraintBottom_toTopOf="@+id/button_import_modpack"
+        app:layout_constraintEnd_toEndOf="@+id/create_modpack_profile_menu"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/create_modpack_profile_menu"
+        app:layout_constraintTop_toTopOf="@id/create_modpack_profile_menu"
+        app:layout_constraintVertical_chainStyle="packed"
+        />
+
+    <com.kdt.mcgui.MineButton
+        android:id="@+id/button_import_modpack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Import Zip or mrpack"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        app:layout_constraintBottom_toBottomOf="@id/create_modpack_profile_menu"
+        app:layout_constraintEnd_toEndOf="@+id/create_modpack_profile_menu"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/create_modpack_profile_menu"
+        app:layout_constraintTop_toBottomOf="@+id/button_browse_modpacks" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,7 +17,7 @@ body:
   attributes:
     label: The log file and images/videos
     description: |
-      The log file called `latestlog.txt` is located under `/storage/emulated/0/Android/data/net.kdt.pojavlaunch/files` (on Android 10 and higher) or `/storage/emulated/0/games/PojavLauncher/` (on Android 9 and lower). You may have to activate an option in your file explorer to see hidden files and folders. Recommended file managers are ZArchiver and MiXplorer. |
+      The log file called `latestlog.txt` is located under `/storage/emulated/0/Android/data/org.angelauramc.amethyst/files` (on Android 10 and higher) or `/storage/emulated/0/games/Amethyst/` (on Android 9 and lower). You may have to activate an option in your file explorer to see hidden files and folders. Recommended file managers are ZArchiver and MiXplorer. |
       You can also upload here screenshots or videos of the buggy behavior, if possible.
       
       Tip: You can attach files by clicking this area to highlight it and then dragging files in or select them on 🖼 option at the toolbar. Do not click anything before the file successfully uploads, otherwise the upload is going to stop and the file won't attach.
@@ -29,7 +29,7 @@ body:
     label: Steps To Reproduce
     description: Steps to reproduce the issue.
     placeholder: |
-      1. Start PojavLauncher
+      1. Start Amethyst
       ... *(your set of actions to reproduce the bug)*
     render: markdown
   validations:
@@ -51,12 +51,12 @@ body:
         - **Device model**: Huawei P30 Pro 8/512G
         - **CPU architecture**: arm64 (can be arm64, arm, x86_64 or x86 depending on the device)
         - **Android version**: 10
-        - **PojavLauncher version**: (can be found in Android Apps settings, for example `dahlia-20230813-5e8842b-v3_openjdk`)
+        - **Amethyst version**: (can be found in Android Apps settings, for example `dahlia-20230813-5e8842b-v3_openjdk`)
     value: |
         - Device model: 
         - CPU architecture: 
         - Android version: 
-        - PojavLauncher version: 
+        - Amethyst version: 
     render: markdown
   validations:
     required: true

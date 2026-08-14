@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="renderer">
-        <item name="1">@string/mcl_setting_renderer_gles2_4</item>
+        <item name="0">@string/mcl_setting_renderer_ng_gl4es</item>
+        <item name="1">@string/mcl_setting_renderer_vulkan_kopper_zink</item>
         <item name="2">@string/mcl_setting_renderer_vulkan_zink</item>
-        <item name="2">@string/mcl_setting_renderer_mobileglues</item>
+        <item name="3">@string/mcl_setting_renderer_mobileglues</item>
         <item name="4">@string/mcl_setting_renderer_ltw</item>
     </string-array>
 
@@ -36,8 +37,9 @@
     </string-array>
     
     <string-array name="renderer_values">
-        <item>opengles2</item> <!-- gl4es_extra 1.1.4 with OpenGL ES 2/"3" -->
-        <item>vulkan_zink</item> <!-- virglrenderer with OpenGL ES 3 -->
+        <item>opengles2</item> <!-- BZLZHH/NG-GL4ES (Krypton Wrapper) -->
+        <item>opengles3_desktopgl_zink_kopper</item> <!-- Swung's Kopper Zink backport to 23.0.4 -->
+        <item>vulkan_zink</item> <!-- osmesa 23.0.4 -->
         <item>opengles_mobileglues</item>
         <item>opengles3_ltw</item>
     </string-array>
@@ -89,5 +91,19 @@
         <item>2</item>
         <item>3</item>
         <item>4</item>
+    </string-array>
+    <string-array name="mg_renderer_names_fsr">
+        <item>Disabled</item>
+        <item>Performance</item>
+        <item>Balanced</item>
+        <item>Quality</item>
+        <item>Ultra Quality</item>
+    </string-array>
+    <string-array name="mg_renderer_values_fsr">
+        <item>0</item>
+        <item>4</item>
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
     </string-array>
 </resources>

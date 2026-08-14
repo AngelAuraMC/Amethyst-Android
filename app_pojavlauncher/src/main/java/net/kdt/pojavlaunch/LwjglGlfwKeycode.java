@@ -197,6 +197,7 @@ public class LwjglGlfwKeycode {
     GLFW_MOUSE_BUTTON_MIDDLE = GLFW_MOUSE_BUTTON_3;
 
     public static final int
+    GLFW_FOCUSED                 = 0x20001,
     GLFW_VISIBLE                 = 0x20004,
     GLFW_HOVERED                 = 0x2000B;
 }

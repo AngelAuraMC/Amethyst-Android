@@ -1,6 +1,8 @@
 package net.kdt.pojavlaunch.utils;
 
 import static net.kdt.pojavlaunch.Architecture.ARCH_X86;
+import static net.kdt.pojavlaunch.Architecture.archAsStringAndroid;
+import static net.kdt.pojavlaunch.Architecture.getDeviceArchitecture;
 import static net.kdt.pojavlaunch.Architecture.is64BitsDevice;
 import static net.kdt.pojavlaunch.Tools.LOCAL_RENDERER;
 import static net.kdt.pojavlaunch.Tools.NATIVE_LIB_DIR;
@@ -167,6 +169,9 @@ public class JREUtils {
                 .append("/vendor/").append(libName).append(":")
                 .append("/vendor/").append(libName).append("/hw:")
                 .append(NATIVE_LIB_DIR);
+        // FIXME: Freetype is shipped inside lwjgl. We should ship it outside and use lwjgl native jars instead.
+        String lwjglVer = Tools.sLwjglVersion == null ? "3.3.3" : Tools.sLwjglVersion;
+        ldLibraryPath.append(String.format(":%s/lwjgl-%s-natives/%s", Tools.DIR_DATA, lwjglVer, archAsStringAndroid(getDeviceArchitecture())));
         LD_LIBRARY_PATH = ldLibraryPath.toString();
     }
 
@@ -214,15 +219,29 @@ public class JREUtils {
         }
 
         if(LOCAL_RENDERER != null) {
-            envMap.put("POJAV_RENDERER", LOCAL_RENDERER);
+            envMap.put("AMETHYST_RENDERER", LOCAL_RENDERER);
             if(LOCAL_RENDERER.equals("opengles3_ltw")) {
                 envMap.put("LIBGL_ES", "3");
                 envMap.put("POJAVEXEC_EGL","libltw.so"); // Use ANGLE EGL
             }
             if(LOCAL_RENDERER.equals("opengles_mobileglues")){
                 envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
+                envMap.put("POJAVEXEC_EGL","libmobileglues.so");
+            }
+            if(LOCAL_RENDERER.equals("opengles2")){
+                envMap.put("LIBGL_ES", "2"); // Krypton Wrapper crashes with 1
+            }
+            if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper")){
+                envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL
+                if (Tools.shouldUseUBWC()) envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1"); // Turnip fix for OneUI rendering issues
+            }
+            if (LOCAL_RENDERER.toLowerCase().contains("zink")){
+                // This is sketch but it fixes a lot of things, if it causes problems we can just undo it.
+                envMap.put("MESA_GL_VERSION_OVERRIDE","4.6COMPAT");
+                envMap.put("MESA_GLSL_VERSION_OVERRIDE","460");
             }
         }
+
         if(LauncherPreferences.PREF_BIG_CORE_AFFINITY) envMap.put("POJAV_BIG_CORE_AFFINITY", "1");
         envMap.put("AWTSTUB_WIDTH", Integer.toString(CallbackBridge.windowWidth > 0 ? CallbackBridge.windowWidth : CallbackBridge.physicalWidth));
         envMap.put("AWTSTUB_HEIGHT", Integer.toString(CallbackBridge.windowHeight > 0 ? CallbackBridge.windowHeight : CallbackBridge.physicalHeight));
@@ -247,6 +266,9 @@ public class JREUtils {
         if(info.isAdreno() && !PREF_ZINK_PREFER_SYSTEM_DRIVER) {
             envMap.put("POJAV_LOAD_TURNIP", "1");
         }
+
+        envMap.put("DALVIK_APPLICATION", Tools.jObjectToString(activity.getApplication()));
+        envMap.put("DALVIK_JAVAVM", String.valueOf(Tools.getJavaVMPointer()));
 
         readCustomEnv(envMap); // Must be last so it overrides anything the user sets for obvious reasons.
 
@@ -287,8 +309,18 @@ public class JREUtils {
         JREUtils.relocateLibPath(runtime, runtimeHome);
 
         setJavaEnvironment(activity, runtimeHome);
-
         final String graphicsLib = loadGraphicsLibrary();
+
+        // Has to run after SDL env vars are set
+        try {
+            if (graphicsLib != null)
+                Os.setenv("SDL_OPENGL_LIBRARY", graphicsLib, true);
+            if (Os.getenv("POJAVEXEC_EGL") != null)
+                Os.setenv("SDL_EGL_LIBRARY", NATIVE_LIB_DIR+"/"+Os.getenv("POJAVEXEC_EGL"), true);
+        } catch (ErrnoException e) {
+            Log.wtf("RENDER_LIBRARY", "Failed to load set SDL env vars");
+        }
+
         List<String> userArgs = getJavaArgs(activity, runtimeHome, userArgsString);
 
         //Remove arguments that can interfere with the good working of the launcher
@@ -313,10 +345,17 @@ public class JREUtils {
 
         // Force LWJGL to use the Freetype library intended for it, instead of using the one
         // that we ship with Java (since it may be older than what's needed)
-        userArgs.add("-Dorg.lwjgl.freetype.libname="+ NATIVE_LIB_DIR+"/libfreetype.so");
+        userArgs.add("-Dorg.lwjgl.freetype.libname="+ Tools.lwjglNativesDir +"/libfreetype.so");
+        // Our spirv-cross is compiled shared, so it gets named shared.
+        userArgs.add("-Dorg.lwjgl.spvc.libname=spirv-cross-c-shared");
+
+        // We don't have jemalloc for our LWJGL so set the allocator to system to avoid error logs
+        userArgs.add("-Dorg.lwjgl.system.allocator=system");
 
         // Some phones are not using the right number of cores, fix that
         userArgs.add("-XX:ActiveProcessorCount=" + java.lang.Runtime.getRuntime().availableProcessors());
+        // Adds/changes methods for compatibility
+        userArgs.add("-javaagent:"+new File(Tools.DIR_DATA,"methods_injector_agent/methods_injector_agent.jar").getAbsolutePath());
 
         userArgs.addAll(JVMArgs);
         activity.runOnUiThread(() -> Toast.makeText(activity, activity.getString(R.string.autoram_info_msg,LauncherPreferences.PREF_RAM_ALLOCATION), Toast.LENGTH_SHORT).show());
@@ -471,21 +510,31 @@ public class JREUtils {
             case "opengles2":
             case "opengles2_5":
             case "opengles3":
-                renderLibrary = "libgl4es_114.so"; break;
+                renderLibrary = "libng_gl4es.so"; break;
             case "vulkan_zink": renderLibrary = "libOSMesa.so"; break;
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
+            case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
-                renderLibrary = "libgl4es_114.so";
+                renderLibrary = "libng_gl4es.so";
                 break;
+        }
+        // Has to run before dlopening mobileglues
+        if(LOCAL_RENDERER.equals("opengles_mobileglues")){
+            try {
+                Os.setenv("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues", true);
+                Os.setenv("POJAVEXEC_EGL",renderLibrary, true);
+            } catch (ErrnoException e) {
+                Log.wtf("RENDER_LIBRARY", "Failed to load MobileGlues settings");
+            }
         }
 
         if (!dlopen(renderLibrary) && !dlopen(findInLdLibPath(renderLibrary))) {
-            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to GL4ES 1.1.4");
+            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to Krypton Wrapper");
             LOCAL_RENDERER = "opengles2";
-            renderLibrary = "libgl4es_114.so";
-            dlopen(NATIVE_LIB_DIR + "/libgl4es_114.so");
+            renderLibrary = "libng_gl4es.so";
+            dlopen(NATIVE_LIB_DIR + "/libng_gl4es.so");
         }
         return renderLibrary;
     }

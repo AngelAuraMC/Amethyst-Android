@@ -73,7 +73,7 @@ public class ProgressLayout extends ConstraintLayout implements View.OnClickList
         }
     }
 
-    public boolean hasProcesses(){
+    public static boolean hasProcesses(){
         return ProgressKeeper.getTaskCount() > 0;
     }
 

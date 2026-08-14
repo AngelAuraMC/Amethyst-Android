@@ -39,7 +39,6 @@ public class LauncherPreferences {
     public static final String PREF_VERSION_REPOS = "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json";
     public static boolean PREF_CHECK_LIBRARY_SHA = true;
     public static boolean PREF_DISABLE_GESTURES = false;
-    public static boolean PREF_GAMEPAD_SDL_PASSTHRU = false;
     public static boolean PREF_GAMEPAD_FORCEDSDL_PASSTHRU = false;
     public static boolean PREF_DISABLE_SWAP_HAND = false;
     public static float PREF_MOUSESPEED = 1f;
@@ -49,7 +48,6 @@ public class LauncherPreferences {
     public static boolean PREF_VIRTUAL_MOUSE_START = false;
     public static boolean PREF_ARC_CAPES = false;
     public static boolean PREF_USE_ALTERNATE_SURFACE = true;
-    public static boolean PREF_JAVA_SANDBOX = true;
     public static float PREF_SCALE_FACTOR = 1f;
 
     public static boolean PREF_ENABLE_GYRO = false;
@@ -75,6 +73,7 @@ public class LauncherPreferences {
     public static int PREF_TOUCHCONTROLLER_VIBRATE_LENGTH = 100;
 
     public static boolean PREF_MOUSE_GRAB_FORCE = false;
+    public static boolean PREF_KEYBOARD_PANNING = true;
 
 
     public static void loadPreferences(Context ctx) {
@@ -87,11 +86,9 @@ public class LauncherPreferences {
         PREF_MOUSESPEED = ((float)DEFAULT_PREF.getInt("mousespeed",100))/100f;
         PREF_IGNORE_NOTCH = DEFAULT_PREF.getBoolean("ignoreNotch", false);
 		PREF_LONGPRESS_TRIGGER = DEFAULT_PREF.getInt("timeLongPressTrigger", 300);
-		PREF_DEFAULTCTRL_PATH = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLDEF_FILE);
         PREF_FORCE_ENGLISH = DEFAULT_PREF.getBoolean("force_english", false);
         PREF_CHECK_LIBRARY_SHA = DEFAULT_PREF.getBoolean("checkLibraries",true);
         PREF_DISABLE_GESTURES = DEFAULT_PREF.getBoolean("disableGestures",false);
-        PREF_GAMEPAD_SDL_PASSTHRU = DEFAULT_PREF.getBoolean("gamepadPassthru",false);
         PREF_GAMEPAD_FORCEDSDL_PASSTHRU = DEFAULT_PREF.getBoolean("gamepadPassthruForced",false);
         PREF_DISABLE_SWAP_HAND = DEFAULT_PREF.getBoolean("disableDoubleTap", false);
         PREF_RAM_ALLOCATION = DEFAULT_PREF.getInt("allocation", findBestRAMAllocation(ctx));
@@ -100,7 +97,6 @@ public class LauncherPreferences {
         PREF_VIRTUAL_MOUSE_START = DEFAULT_PREF.getBoolean("mouse_start", false);
         PREF_ARC_CAPES = DEFAULT_PREF.getBoolean("arc_capes",false);
         PREF_USE_ALTERNATE_SURFACE = DEFAULT_PREF.getBoolean("alternate_surface", isDevicePowerful);
-        PREF_JAVA_SANDBOX = DEFAULT_PREF.getBoolean("java_sandbox", true);
         PREF_SCALE_FACTOR = DEFAULT_PREF.getInt("resolutionRatio", findBestResolution(ctx, isDevicePowerful))/100f;
         PREF_ENABLE_GYRO = DEFAULT_PREF.getBoolean("enableGyro", false);
         PREF_GYRO_SENSITIVITY = ((float)DEFAULT_PREF.getInt("gyroSensitivity", 100))/100f;
@@ -121,6 +117,11 @@ public class LauncherPreferences {
         PREF_FORCE_ENABLE_TOUCHCONTROLLER = DEFAULT_PREF.getBoolean("forceEnableTouchController", false);
         PREF_TOUCHCONTROLLER_VIBRATE_LENGTH = DEFAULT_PREF.getInt("touchControllerVibrateLength", 100);
         PREF_MOUSE_GRAB_FORCE = DEFAULT_PREF.getBoolean("always_grab_mouse", false);
+        PREF_KEYBOARD_PANNING = DEFAULT_PREF.getBoolean("keyboardPanning", true);
+
+        // User may have deleted their default control
+        String userDefCtrl = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLDEF_FILE);
+        PREF_DEFAULTCTRL_PATH = FileUtils.exists(userDefCtrl) ? userDefCtrl : Tools.CTRLDEF_FILE;
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
         for (String arg : JREUtils.parseJavaArguments(PREF_CUSTOM_JAVA_ARGS)) {
@@ -133,11 +134,11 @@ public class LauncherPreferences {
         if(DEFAULT_PREF.contains("defaultRuntime")) {
             PREF_DEFAULT_RUNTIME = DEFAULT_PREF.getString("defaultRuntime","");
         }else{
-            if(MultiRTUtils.getRuntimes().isEmpty()) {
+            if(MultiRTUtils.getInstalledRuntimes().isEmpty()) {
                 PREF_DEFAULT_RUNTIME = "";
                 return;
             }
-            PREF_DEFAULT_RUNTIME = MultiRTUtils.getRuntimes().get(0).name;
+            PREF_DEFAULT_RUNTIME = MultiRTUtils.getInstalledRuntimes().get(0).name;
             LauncherPreferences.DEFAULT_PREF.edit().putString("defaultRuntime",LauncherPreferences.PREF_DEFAULT_RUNTIME).apply();
         }
     }
@@ -236,16 +237,17 @@ public class LauncherPreferences {
         // Using .getInt() leads to a class cast exception and using integer-arrays will just crash the layout/fragment.
         MGConfigJson.put("enableANGLE", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_angle", "0")));
         MGConfigJson.put("enableNoError", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_errorSetting", "0")));
+        MGConfigJson.put("fsr1Setting", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_fsr", "0")));
 
         // These guys are SwitchPreferences so they get special treatment, they need to be converted to ints
-        int gl43exts = DEFAULT_PREF.getBoolean("mg_renderer_setting_gl43ext", false) ? 1 : 0;
         int computeShaderext = DEFAULT_PREF.getBoolean("mg_renderer_computeShaderext", false) ? 1 : 0;
         int angleDepthClearFixMode = DEFAULT_PREF.getBoolean("mg_renderer_setting_angleDepthClearFixMode", false) ? 1 : 0;
         int timerQueryExt = DEFAULT_PREF.getBoolean("mg_renderer_setting_timerQueryExt", false) ? 1 : 0;
-        MGConfigJson.put("enableExtGL43", gl43exts);
+        int dsaExt = DEFAULT_PREF.getBoolean("mg_renderer_dsaExt", false) ? 1 : 0;
         MGConfigJson.put("enableExtComputeShader", computeShaderext);
         MGConfigJson.put("angleDepthClearFixMode", angleDepthClearFixMode);
         MGConfigJson.put("enableExtTimerQuery", timerQueryExt);
+        MGConfigJson.put("enableExtDirectStateAccess", dsaExt);
         if (DEFAULT_PREF.getBoolean("mg_renderer_multidrawCompute", false)) {
             MGConfigJson.put("multidrawMode", 5); // Special handling for the (special mayhaps) compute emulation
         } else MGConfigJson.put("multidrawMode", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_multidraw", "0")));

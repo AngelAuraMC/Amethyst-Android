@@ -48,11 +48,11 @@ public class LauncherPreferenceRendererSettingsFragment extends LauncherPreferen
                     if (editText.getText().toString().isEmpty()) {
                         editText.setText("0");
                     }
-                    if (Long.parseLong(editText.getText().toString()) > Integer.MAX_VALUE) {
-                        editText.setError("Too big! Setting to maximum value");
-                        editText.setText(String.valueOf(Integer.MAX_VALUE));
-                    }
-
+                    try {
+                        if (Long.parseLong(editText.getText().toString()) <= Integer.MAX_VALUE) return;
+                    } catch (NumberFormatException ignored) {}
+                    editText.setError(requireContext().getText(R.string.error_invalid_value));
+                    editText.setText(String.valueOf(Integer.MAX_VALUE));
                 }
             });
         });

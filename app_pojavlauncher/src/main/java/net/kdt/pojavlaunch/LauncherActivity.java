@@ -1,14 +1,20 @@
 package net.kdt.pojavlaunch;
 
 import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
+import static net.kdt.pojavlaunch.Tools.getMods;
+import static net.kdt.pojavlaunch.Tools.hasMods;
 import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
+import static net.kdt.pojavlaunch.Tools.isOnline;
 
 import android.Manifest;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -35,7 +41,12 @@ import net.kdt.pojavlaunch.fragments.MicrosoftLoginFragment;
 import net.kdt.pojavlaunch.fragments.SelectAuthFragment;
 import net.kdt.pojavlaunch.lifecycle.ContextAwareDoneListener;
 import net.kdt.pojavlaunch.lifecycle.ContextExecutor;
+import net.kdt.pojavlaunch.modloaders.LWJGL3ifyUtils;
 import net.kdt.pojavlaunch.modloaders.modpacks.ModloaderInstallTracker;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.CommonApi;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.ModLoader;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.ModpackInstaller;
+import net.kdt.pojavlaunch.modloaders.modpacks.api.NotificationDownloadListener;
 import net.kdt.pojavlaunch.modloaders.modpacks.imagecache.IconCacheJanitor;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
@@ -50,8 +61,15 @@ import net.kdt.pojavlaunch.utils.NotificationUtils;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
+import java.util.List;
+import java.util.Locale;
 
 public class LauncherActivity extends BaseActivity {
     public static final String SETTING_FRAGMENT_TAG = "SETTINGS_FRAGMENT";
@@ -59,6 +77,53 @@ public class LauncherActivity extends BaseActivity {
     public final ActivityResultLauncher<Object> modInstallerLauncher =
             registerForActivityResult(new OpenDocumentWithExtension("jar"), (data)->{
                 if(data != null) Tools.launchModInstaller(this, data);
+            });
+    public final ActivityResultLauncher<Object> modpackImportLauncher =
+            registerForActivityResult(new OpenDocumentWithExtension(new String[]{"zip", "mrpack"}), (data)->{
+                if(data != null) {
+                    PojavApplication.sExecutorService.execute(() -> {
+                        try {
+                            // Copy ZIP file to cache
+                            long fileSize = -1;
+                            try (Cursor returnCursor = getContentResolver().query(data, new String[]{OpenableColumns.SIZE}, null, null, null)) {
+                                if (returnCursor != null && returnCursor.moveToFirst()) {
+                                    fileSize = returnCursor.getLong(0);
+                                }
+                            }
+                            File modpackFile = new File(Tools.DIR_CACHE, "import_modpack_placeholdername.cf");
+                            try (InputStream inputStream = getContentResolver().openInputStream(data)){
+                                FileOutputStream output = new FileOutputStream(modpackFile);
+                                byte[] b = new byte[262144];
+                                int read;
+                                int readTotal = 0;
+                                while ((read = inputStream.read(b)) != -1) {
+                                    output.write(b, 0, read);
+                                    readTotal += read;
+                                    String readMB = fileSize > 0 ? String.format(Locale.US, "%.2f", readTotal / (1024.0 * 1024.0)) : "unknown";
+                                    String totalMB = fileSize > 0 ? String.format(Locale.US, "%.2f", fileSize / (1024.0 * 1024.0)) : "unknown";
+                                    int progress = fileSize > 0 ? (int) ((readTotal * 100L) / fileSize) : 0;
+                                    ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, progress, R.string.import_modpack_copy, readMB, totalMB);
+                                }
+                                output.flush();
+                                output.close();
+                            }
+                            ModLoader loaderInfo = new CommonApi(getString(R.string.curseforge_api_key)).importModpack(modpackFile);
+                            modpackFile.delete();
+                            if (loaderInfo == null) return;
+                            loaderInfo.getDownloadTask(new NotificationDownloadListener(this, loaderInfo)).run();
+                        } catch (IOException e) {
+                            Tools.showErrorRemote(this, R.string.modpack_install_download_failed, e);
+                            ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+                        } catch (IllegalArgumentException e) {
+                            Tools.showError(this, R.string.not_modpack_file, e);
+                            ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+                        } catch (NoSuchAlgorithmException e) {
+                            ProgressLayout.clearProgress(ProgressLayout.INSTALL_MODPACK);
+                            // Should literally never happen because SHA-1 is required Java spec
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
             });
 
     private mcAccountSpinner mAccountSpinner;
@@ -106,7 +171,7 @@ public class LauncherActivity extends BaseActivity {
     };
 
     private final ExtraListener<Boolean> mLaunchGameListener = (key, value) -> {
-        if(mProgressLayout.hasProcesses()){
+        if(ProgressLayout.hasProcesses()){
             Toast.makeText(this, R.string.tasks_ongoing, Toast.LENGTH_LONG).show();
             return false;
         }
@@ -127,6 +192,47 @@ public class LauncherActivity extends BaseActivity {
             ExtraCore.setValue(ExtraConstants.SELECT_AUTH_METHOD, true);
             return false;
         }
+
+        // Override whatever version is in use and replace it with lwjgl3ify if needed
+        List<File> lwjgl3ifyJars = getMods("lwjgl3ify-3");
+        if (!lwjgl3ifyJars.isEmpty()) {
+            if (lwjgl3ifyJars.size() > 1) {
+                // "Duplicate LWJGL3ify jars found, cannot launch."
+                Tools.dialogOnUiThread(this, R.string.global_error, R.string.mc_download_failed);
+                return false;
+            }
+
+            File lwjgl3ifyJar = lwjgl3ifyJars.get(0);
+
+            // If the version contains lwjgl3ify, its probably someone who knows what they're doing
+            // so lets leave that alone
+            if (!prof.lastVersionId.toLowerCase().contains("lwjgl3ify")) {
+                try {
+                    prof.lastVersionId = LWJGL3ifyUtils.installJson(lwjgl3ifyJar).id;
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                LauncherProfiles.mainProfileJson.profiles.put(selectedProfile, prof);
+                LauncherProfiles.write();
+
+
+            }
+            // We just installed a json, we need internet + online acc to download so we add super
+            // basic detection whether lwjgl3ify assets were downloaded
+            try {
+                String jsonPath = LWJGL3ifyUtils.getJsonPath(LWJGL3ifyUtils.getProfileID(lwjgl3ifyJar));
+                File lwjgl3ifyClientJar = new File(jsonPath.replace(".json", ".jar"));
+                if (!lwjgl3ifyClientJar.exists()){
+                    if (mAccountSpinner.getSelectedAccount().isLocal() || !isOnline(this)){
+                        Tools.dialogOnUiThread(this, R.string.global_error, R.string.mc_download_failed);
+                        return false;
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         String normalizedVersionId = AsyncMinecraftDownloader.normalizeVersionId(prof.lastVersionId);
         JMinecraftVersionList.Version mcVersion = AsyncMinecraftDownloader.getListedVersion(normalizedVersionId);
 

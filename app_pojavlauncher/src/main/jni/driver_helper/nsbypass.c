@@ -54,10 +54,11 @@ struct android_namespace_t* local_android_create_namespace(
 
 // Find the first "branch to label" function in the function provided in func_start
 static void* find_branch_label(void* func_start) {
+    long page_size = sysconf(_SC_PAGESIZE);
     // round down the pointer to get the start of the function's page
-    void* func_page_start = (void*)(((uintptr_t)func_start) & ~(PAGE_SIZE-1));
+    void* func_page_start = (void*)(((uintptr_t)func_start) & ~(page_size-1));
     // remap to r-x to bypass "execute only" protections on MIUI
-    mprotect(func_page_start, PAGE_SIZE, PROT_READ | PROT_EXEC);
+    mprotect(func_page_start, page_size, PROT_READ | PROT_EXEC);
     uint32_t* bl_addr = func_start;
     // search for the "branch to label" opcode
     while((*bl_addr & OP_MS) != BL_OP) {
@@ -69,12 +70,13 @@ static void* find_branch_label(void* func_start) {
 }
 
 bool linker_ns_load(const char* lib_search_path) {
+    long page_size = sysconf(_SC_PAGESIZE);
 #ifndef ADRENO_POSSIBLE
     return false;
 #else
     loader_dlopen_t loader_dlopen = find_branch_label(&dlopen);
     // reprotecting the functions removes protection from indirect jumps
-    mprotect(loader_dlopen, PAGE_SIZE, PROT_WRITE | PROT_READ | PROT_EXEC);
+    mprotect(loader_dlopen, page_size, PROT_WRITE | PROT_READ | PROT_EXEC);
     void* ld_android_handle = loader_dlopen("ld-android.so", RTLD_LAZY, &dlopen);
     if(ld_android_handle == NULL) {
         return false;

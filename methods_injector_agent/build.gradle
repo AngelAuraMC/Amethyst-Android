@@ -1,0 +1,33 @@
+plugins {
+    id 'java-library'
+    id("com.gradleup.shadow") version "9.2.2"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+jar {
+    destinationDirectory.set(file("../app_pojavlauncher/src/main/assets/components/methods_injector_agent/"))
+    archiveBaseName.set("methods_injector_agent")
+    manifest {
+        attributes("Manifest-Version": "1.0",
+                "PreMain-Class": "org.angelauramc.methodsInjectorAgent.startInjectors",
+                "Can-Redefine-Classes": "true")
+    }
+    // Makes the jar reproducible so the version file actually is a version file
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+    // Write version file
+    def versionFile  = new File(project(":app_pojavlauncher").projectDir, "src/main/assets/components/methods_injector_agent/version")
+    def jarFile = archiveFile.get().asFile
+    doLast {
+        writeVersionFile(jarFile, versionFile)
+    }
+    outputs.file(versionFile) // Adds the versionFile to outputs
+}
+
+dependencies {
+    compileOnly 'org.ow2.asm:asm:9.9'
+}

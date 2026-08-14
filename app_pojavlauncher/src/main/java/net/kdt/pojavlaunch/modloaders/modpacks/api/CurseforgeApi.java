@@ -1,5 +1,7 @@
 package net.kdt.pojavlaunch.modloaders.modpacks.api;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import net.kdt.pojavlaunch.utils.ZipUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -97,6 +100,7 @@ public class CurseforgeApi implements ModpackApi{
 
     @Override
     public ModDetail getModDetails(ModItem item) {
+        fillInMissingModItemData(item);
         ArrayList<JsonObject> allModDetails = new ArrayList<>();
         int index = 0;
         while(index != CURSEFORGE_PAGINATION_END_REACHED &&
@@ -106,17 +110,32 @@ public class CurseforgeApi implements ModpackApi{
         if(index == CURSEFORGE_PAGINATION_ERROR) return null;
         int length = allModDetails.size();
         String[] versionNames = new String[length];
+        String[] versionIds = new String[length];
         String[] mcVersionNames = new String[length];
         String[] versionUrls = new String[length];
         String[] hashes = new String[length];
+        ModDetail.Dependencies[][] dependencies = new ModDetail.Dependencies[length][];
         for(int i = 0; i < allModDetails.size(); i++) {
             JsonObject modDetail = allModDetails.get(i);
             versionNames[i] = modDetail.get("displayName").getAsString();
-
+            versionIds[i] = modDetail.get("id").getAsString();
             JsonElement downloadUrl = modDetail.get("downloadUrl");
             versionUrls[i] = downloadUrl.getAsString();
 
             JsonArray gameVersions = modDetail.getAsJsonArray("gameVersions");
+            try {
+                JsonArray dependenciesJsonArray = modDetail.getAsJsonArray("dependencies");
+                dependencies[i] = new ModDetail.Dependencies[dependenciesJsonArray.size()];
+                for (int i1 = 0; i1 < dependenciesJsonArray.size(); ++i1) {
+                    JsonObject obj = dependenciesJsonArray.get(i1).getAsJsonObject();
+                    dependencies[i][i1] = new ModDetail.Dependencies(
+                            GsonJsonUtils.getStringSafe(obj, "modId"),
+                            null,
+                            null, // These two are only present on modrinth
+                            GsonJsonUtils.getStringSafe(obj, "relationType")
+                    );
+                }
+            } catch (Exception ignored) {}
             for(JsonElement jsonElement : gameVersions) {
                 String gameVersion = jsonElement.getAsString();
                 if(!sMcVersionPattern.matcher(gameVersion).matches()) {
@@ -128,13 +147,37 @@ public class CurseforgeApi implements ModpackApi{
 
             hashes[i] = getSha1FromModData(modDetail);
         }
-        return new ModDetail(item, versionNames, mcVersionNames, versionUrls, hashes);
+        return new ModDetail(item, versionNames, versionIds, mcVersionNames, versionUrls, hashes, dependencies);
+    }
+
+    private void fillInMissingModItemData(ModItem item) {
+        if (!(item.title == null || item.description == null || item.imageUrl == null)) return;
+        JsonObject response = mApiHandler.get(String.format("mods/%s", item.id), JsonObject.class);
+        JsonObject data = GsonJsonUtils.getJsonObjectSafe(response, "data");
+        if (data == null) return;
+        if (item.title == null) {
+            JsonElement title = data.get("name");
+            item.title = title != null ? title.getAsString() : "";
+        }
+        if (item.description == null) {
+            JsonElement description = data.get("summary");
+            item.description = description != null ? description.getAsString() : "";
+        }
+        if (item.imageUrl == null) {
+            JsonElement imageUrl = data.getAsJsonObject("logo").get("thumbnailUrl");
+            item.imageUrl = imageUrl != null ? imageUrl.getAsString() : null;
+        }
     }
 
     @Override
     public ModLoader installMod(ModDetail modDetail, int selectedVersion) throws IOException{
         //TODO considering only modpacks for now
         return ModpackInstaller.installModpack(modDetail, selectedVersion, this::installCurseforgeZip);
+    }
+
+    @Override
+    public ModLoader importModpack(File modpackFile) throws IOException, NoSuchAlgorithmException {
+        return ModpackInstaller.importModpack(modpackFile, Constants.SOURCE_CURSEFORGE, this::installCurseforgeZip);
     }
 
 
@@ -210,6 +253,9 @@ public class CurseforgeApi implements ModpackApi{
                 break;
             case "fabric":
                 modLoaderTypeInt = ModLoader.MOD_LOADER_FABRIC;
+                break;
+            case "neoforge":
+                modLoaderTypeInt = ModLoader.MOD_LOADER_NEOFORGE;
                 break;
             default:
                 return null;

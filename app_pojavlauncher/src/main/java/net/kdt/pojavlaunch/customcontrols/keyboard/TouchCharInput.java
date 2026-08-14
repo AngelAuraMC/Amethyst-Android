@@ -13,7 +13,10 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import net.kdt.pojavlaunch.MinecraftGLSurface;
 import net.kdt.pojavlaunch.R;
+
+import org.libsdl.app.SDLActivity;
 
 /**
  * This class is intended for sending characters used in chat via the virtual keyboard
@@ -62,14 +65,11 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
      * Toggle on and off the soft keyboard, depending of the state
      */
     public void switchKeyboardState(){
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
-        // Allow, regardless of whether or not a hardware keyboard is declared
         if(hasFocus()){
             clear();
             disable();
         }else{
             enable();
-            imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
         }
     }
 
@@ -92,6 +92,13 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
 
     /** Regain ability to exist, take focus and have some text being input */
     public void enable(){
+        if (SDLActivity.isUsingSDLTextEdit()){
+            SDLActivity.enableSDLEditKeyboard();
+            return;
+        }
+        // Allow, regardless of whether or not a hardware keyboard is declared
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
         setEnabled(true);
         setFocusable(true);
         setVisibility(VISIBLE);
@@ -100,6 +107,7 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
 
     /** Lose ability to exist, take focus and have some text being input */
     public void disable(){
+        if (SDLActivity.isUsingSDLTextEdit()) SDLActivity.disableSDLEditKeyboard();
         clear();
         setVisibility(GONE);
         clearFocus();
