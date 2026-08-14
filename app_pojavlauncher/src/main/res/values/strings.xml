@@ -66,9 +66,10 @@
     <string name="mcl_setting_title_renderer_subtitle">Renderer specific settings</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; only, fast)</string>
+    <string name="mcl_setting_renderer_nothing">SFPEW/System GLES Driver - (1.16.5&lt; or Angelica 2.2.0+, fast)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (all versions, fast)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (all versions, mid)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ only, fast)</string>
+    <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) - (all versions, fast)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ only</string>
     <string name="mcl_setting_veroption_release">Release</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -517,5 +518,6 @@
     <string name="import_modpack_hash">Hashing modpack file… (%s MB/ %s MB)</string>
     <string name="import_modpack_json">Reading modpack info…</string>
     <string name="import_modpack_copy">Copying modpack file to cache… (%s MB/ %s MB)</string>
+    <string name="angelica_found_sfpew_notice">Angelica mod found, Simple FPE Wrapper not needed</string>
 
 </resources>

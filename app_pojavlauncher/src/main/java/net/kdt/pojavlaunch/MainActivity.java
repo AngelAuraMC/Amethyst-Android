@@ -127,6 +127,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         WindowCompat.setDecorFitsSystemWindows(getWindow(), false);
 
         minecraftProfile = LauncherProfiles.getCurrentProfile();
+        Tools.useANGLE = minecraftProfile.useANGLE;
 
         String gameDirPath = Tools.getGameDirPath(minecraftProfile).getAbsolutePath();
         MCOptionUtils.load(gameDirPath);
@@ -455,6 +456,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
         // FIXME: Automatic detection should be based on provided hint GLFW_CONTEXT_VERSION_MAJOR and GLFW_CONTEXT_VERSION_MINOR
         // Autoselect renderer
+        boolean hasAngelica = hasMods("angelica");
         if (Tools.LOCAL_RENDERER == null) {
             // Preferably we could detect when it is modded and swap to zink however that would also
             // cover optifine and vanilla+ configurations which are relatively common, degrading their
@@ -466,9 +468,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
                "1.17".equals(assetVersion) ||
                "1.18".equals(assetVersion) ||
                "1.19".equals(assetVersion) ||
-                // Angelica gives us GL3.3core on 1.7.10, it's a unique case.
-                hasMods("angelica")) Tools.LOCAL_RENDERER = "opengles_mobileglues";
+                // Angelica gives us GL3.3core on 1.7.10.
+                hasAngelica) Tools.LOCAL_RENDERER = "opengles_mobileglues";
         }
+        // Angelica IS the FPE emulator
+        if (hasAngelica) Tools.useSFPEW = false;
+
         if(!Tools.checkRendererCompatible(this, Tools.LOCAL_RENDERER)) {
             Tools.RenderersList renderersList = Tools.getCompatibleRenderers(this);
             String firstCompatibleRenderer = renderersList.rendererIds.get(0);

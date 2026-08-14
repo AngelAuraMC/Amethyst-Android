@@ -2,6 +2,7 @@
 <resources>
     <string-array name="renderer">
         <item name="0">@string/mcl_setting_renderer_ng_gl4es</item>
+        <item name="0">@string/mcl_setting_renderer_nothing</item>
         <item name="1">@string/mcl_setting_renderer_vulkan_kopper_zink</item>
         <item name="2">@string/mcl_setting_renderer_vulkan_zink</item>
         <item name="3">@string/mcl_setting_renderer_mobileglues</item>
@@ -38,6 +39,7 @@
     
     <string-array name="renderer_values">
         <item>opengles2</item> <!-- BZLZHH/NG-GL4ES (Krypton Wrapper) -->
+        <item>opengles_nothing</item> <!-- System GLES driver -->
         <item>opengles3_desktopgl_zink_kopper</item> <!-- Swung's Kopper Zink backport to 23.0.4 -->
         <item>vulkan_zink</item> <!-- osmesa 23.0.4 -->
         <item>opengles_mobileglues</item>

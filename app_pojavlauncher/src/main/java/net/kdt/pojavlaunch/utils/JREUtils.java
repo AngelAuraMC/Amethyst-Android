@@ -32,6 +32,7 @@ import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
 import net.kdt.pojavlaunch.prefs.*;
+import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 
 import org.lwjgl.glfw.*;
 
@@ -240,6 +241,9 @@ public class JREUtils {
                 envMap.put("MESA_GL_VERSION_OVERRIDE","4.6COMPAT");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE","460");
             }
+            if (Tools.useSFPEW) {
+                envMap.put("SFPEW_EGL", envMap.get("POJAVEXEC_EGL"));
+            }
         }
 
         if(LauncherPreferences.PREF_BIG_CORE_AFFINITY) envMap.put("POJAV_BIG_CORE_AFFINITY", "1");
@@ -313,9 +317,12 @@ public class JREUtils {
 
         // Has to run after SDL env vars are set
         try {
-            if (graphicsLib != null)
+            // If using nothing (aka sys driver) then don't set this so SDL can auto find the
+            // native gles driver, because providing it ourselves is useless effort.
+            // This only matters for Angelica because Mojunk is never using SDL on non-Core
+            if (graphicsLib != null && !LOCAL_RENDERER.equals("opengles_nothing"))
                 Os.setenv("SDL_OPENGL_LIBRARY", graphicsLib, true);
-            if (Os.getenv("POJAVEXEC_EGL") != null)
+            if (Os.getenv("POJAVEXEC_EGL") != null && !LOCAL_RENDERER.equals("opengles_nothing"))
                 Os.setenv("SDL_EGL_LIBRARY", NATIVE_LIB_DIR+"/"+Os.getenv("POJAVEXEC_EGL"), true);
         } catch (ErrnoException e) {
             Log.wtf("RENDER_LIBRARY", "Failed to load set SDL env vars");
@@ -516,6 +523,7 @@ public class JREUtils {
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
+            case "opengles_nothing" : renderLibrary = "libSimpleFPEWrapper.so"; break; // Literally nothing, so assume SFPEW
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
                 renderLibrary = "libng_gl4es.so";
@@ -536,6 +544,11 @@ public class JREUtils {
             LOCAL_RENDERER = "opengles2";
             renderLibrary = "libng_gl4es.so";
             dlopen(NATIVE_LIB_DIR + "/libng_gl4es.so");
+        }
+
+        // The final switch for using SFPEW. Don't use with gl4es, that's pretty dumb.
+        if (Tools.useSFPEW && !renderLibrary.contains("gl4es")) {
+            renderLibrary = "libSimpleFPEWrapper.so";
         }
         return renderLibrary;
     }
