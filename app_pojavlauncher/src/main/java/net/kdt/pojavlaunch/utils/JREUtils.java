@@ -541,8 +541,8 @@ public class JREUtils {
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             case "opengles_nothing" : renderLibrary = "libSimpleFPEWrapper.so"; break; // Literally nothing, so assume SFPEW
             default:
-                Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
-                renderLibrary = "libng_gl4es.so";
+                Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles_mobileglues");
+                renderLibrary = "libmobileglues.so";
                 break;
         }
         // Has to run before dlopening mobileglues
@@ -556,14 +556,17 @@ public class JREUtils {
         }
 
         if (!dlopen(renderLibrary) && !dlopen(findInLdLibPath(renderLibrary))) {
-            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to Krypton Wrapper");
-            LOCAL_RENDERER = "opengles2";
-            renderLibrary = "libng_gl4es.so";
-            dlopen(NATIVE_LIB_DIR + "/libng_gl4es.so");
+            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to SFPEW/MobileGlues");
+            LOCAL_RENDERER = "opengles_mobileglues";
+            renderLibrary = "libmobileglues.so";
+            dlopen(NATIVE_LIB_DIR + "/libmobileglues.so");
         }
 
-        // The final switch for using SFPEW. Don't use with gl4es, that's pretty dumb.
-        if (Tools.useSFPEW && !renderLibrary.contains("gl4es")) {
+        // The final switch for using SFPEW.
+        // Don't use with gl4es, they're both doing the same thing.
+        // Don't use with Zink, it also does the same thing.
+        boolean renderLibraryShouldUseSFPEW = !renderLibrary.contains("gl4es") || !LOCAL_RENDERER.contains("zink");
+        if (Tools.useSFPEW && renderLibraryShouldUseSFPEW) {
             renderLibrary = "libSimpleFPEWrapper.so";
         }
         return renderLibrary;
