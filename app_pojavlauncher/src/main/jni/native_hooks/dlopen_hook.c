@@ -45,6 +45,7 @@ static const char *redirect_dlopen_path(const char *filename) {
 }
 
 static void *sdl3_handle = NULL;
+
 static JNI_OnLoad_t orig_sdl3_JNI_OnLoad;
 
 static bool ifSdl(const char *filename) {
@@ -89,6 +90,7 @@ void *custom_dlsym(void *handle, const char *symbol) {
             handle,
             symbol);
     BYTEHOOK_POP_STACK();
+    if (sdl3_handle == NULL) sdl3_handle = dlopen("libSDL3.so", RTLD_LOCAL | RTLD_NOW);
 
     if (sdl3_handle && handle == sdl3_handle && strcmp(symbol, "JNI_OnLoad") == 0) {
         orig_sdl3_JNI_OnLoad = (JNI_OnLoad_t) result;
@@ -100,8 +102,9 @@ void *custom_dlsym(void *handle, const char *symbol) {
 }
 
 void create_dlopen_hooks(bytehook_hook_all_t bytehook_hook_all_p) {
-    bytehook_stub_t stub_dlopen =
-            bytehook_hook_all_p(NULL, "dlopen", &custom_dlopen, NULL, NULL);
+    // FIXME: Hooking dlopen causes a crash with Turnip loader, so let's stop doing that entirely
+    bytehook_stub_t stub_dlopen = (void *)(uintptr_t)0xD15AB1ED;
+//            bytehook_hook_all_p(NULL, "dlopen", &custom_dlopen, NULL, NULL);
     bytehook_stub_t stub_dlsym =
             bytehook_hook_all_p(NULL, "dlsym", &custom_dlsym, NULL, NULL);
     LOGI("Successfully initialized dlopen hooks, stub: %p %p", stub_dlopen, stub_dlsym);
