@@ -229,8 +229,24 @@ public class JREUtils {
                 envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
                 envMap.put("POJAVEXEC_EGL","libmobileglues.so");
             }
+            /*
+                Set these to enable ANGLE on GL4ES
+                LIBGL_GLES=libGLESv2_angle.so
+                LIBGL_EGL=libEGL_angle.so
+                LD_PRELOAD=libGLESv2_angle:libEGL_angle.so
+            */
             if(LOCAL_RENDERER.equals("opengles2")){
                 envMap.put("LIBGL_ES", "2"); // Krypton Wrapper crashes with 1
+                if (Tools.useANGLE) {
+                    envMap.put("LIBGL_GLES", "libGLESv2_angle.so");
+                    envMap.put("LIBGL_EGL", "libEGL_angle.so");
+                    envMap.put("POJAVEXEC_EGL", "libEGL_angle.so");
+                }
+            }
+            if (LOCAL_RENDERER.equals("opengles_nothing")) {
+                if (Tools.useANGLE) {
+                    envMap.put("POJAVEXEC_EGL", "libEGL_angle.so");
+                }
             }
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper")){
                 envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL

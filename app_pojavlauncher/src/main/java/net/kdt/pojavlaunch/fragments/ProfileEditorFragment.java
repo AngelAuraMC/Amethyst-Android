@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.fragment.app.Fragment;
 
 import net.kdt.pojavlaunch.R;
@@ -52,6 +55,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
     private String mValueToConsume = "";
     private Button mSaveButton, mDeleteButton, mControlSelectButton, mGameDirButton, mVersionSelectButton;
     private Spinner mDefaultRuntime, mDefaultRenderer;
+    private CheckBox mUseANGLE;
     private EditText mDefaultName, mDefaultJvmArgument;
     private TextView mDefaultPath, mDefaultVersion, mDefaultControl;
     private ImageView mProfileIcon;
@@ -121,6 +125,8 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mVersionSelectButton.setOnClickListener(versionSelectListener);
         mDefaultVersion.setOnClickListener(versionSelectListener);
 
+        mUseANGLE.setOnClickListener(v -> mTempProfile.useANGLE = ((CheckBox) v).isChecked());
+
         // Set up the icon change click listener
         mProfileIcon.setOnClickListener(v -> CropperUtils.startCropper(mCropperLauncher));
 
@@ -159,7 +165,6 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         });
     }
 
-
     private void loadValues(@NonNull String profile, @NonNull Context context){
         if(mTempProfile == null){
             mTempProfile = getProfile(profile);
@@ -196,6 +201,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultName.setText(mTempProfile.name);
         mDefaultPath.setText(mTempProfile.gameDir == null ? "" : mTempProfile.gameDir);
         mDefaultControl.setText(mTempProfile.controlFile == null ? "" : mTempProfile.controlFile);
+        mUseANGLE.setChecked(mTempProfile.useANGLE);
     }
 
     private MinecraftProfile getProfile(@NonNull String profile){
@@ -226,6 +232,7 @@ public class ProfileEditorFragment extends Fragment implements CropperUtils.Crop
         mDefaultControl = view.findViewById(R.id.vprof_editor_ctrl_spinner);
         mDefaultRuntime = view.findViewById(R.id.vprof_editor_spinner_runtime);
         mDefaultRenderer = view.findViewById(R.id.vprof_editor_profile_renderer);
+        mUseANGLE = view.findViewById(R.id.vprof_editor_profile_angle);
         mDefaultVersion = view.findViewById(R.id.vprof_editor_version_spinner);
 
         mDefaultPath = view.findViewById(R.id.vprof_editor_path);

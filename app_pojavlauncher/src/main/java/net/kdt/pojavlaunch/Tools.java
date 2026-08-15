@@ -148,6 +148,7 @@ public final class Tools {
     public static String CTRLDEF_FILE;
     private static RenderersList sCompatibleRenderers;
     public static boolean useSFPEW = true;
+    public static boolean useANGLE = false;
     public static int iLwjglVersion = 0;
     public static String sLwjglVersion = null;
     public static String lwjglNativesDir = null;

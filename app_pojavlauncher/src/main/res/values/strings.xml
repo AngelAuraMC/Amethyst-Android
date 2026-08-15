@@ -519,5 +519,6 @@
     <string name="import_modpack_json">Reading modpack info…</string>
     <string name="import_modpack_copy">Copying modpack file to cache… (%s MB/ %s MB)</string>
     <string name="angelica_found_sfpew_notice">Angelica mod found, Simple FPE Wrapper not needed</string>
+    <string name="use_angle_checkbox">Use ANGLE (might help FPS)</string>
 
 </resources>

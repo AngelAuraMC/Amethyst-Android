@@ -233,9 +233,15 @@ public class LauncherPreferences {
         LinkedHashMap<String, Object> MGConfigJson = new LinkedHashMap<>();
         // Copying the defaultValues from pref_renderer.xml to use as defaults here too
 
-        // We need to get the string and convert it to int because the android:defaultValues only takes in string-arrays.
-        // Using .getInt() leads to a class cast exception and using integer-arrays will just crash the layout/fragment.
-        MGConfigJson.put("enableANGLE", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_angle", "0")));
+        /*
+        enum class AngleConfig : int {
+            DisableIfPossible = 0,
+            EnableIfPossible = 1,
+            ForceDisable = 2,
+            ForceEnable = 3
+        };
+         */
+        MGConfigJson.put("enableANGLE", Tools.useANGLE ? 3 : 2);
         MGConfigJson.put("enableNoError", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_errorSetting", "0")));
         MGConfigJson.put("fsr1Setting", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_fsr", "0")));
 
