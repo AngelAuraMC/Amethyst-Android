@@ -461,6 +461,9 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         // Angelica IS the FPE emulator
         if (hasAngelica) Tools.useSFPEW = false;
 
+        // TODO: Detection for if a mod is present that can use system GLES as driver, set
+        // Tools.LOCAL_RENDERER = "opengles_system_gles";
+
         // This only happens if an old renderer that was selected is removed. Uses renderer_values
         // as the list of priority to use, highest to lowest.
         if(!Tools.checkRendererCompatible(this, Tools.LOCAL_RENDERER)) {

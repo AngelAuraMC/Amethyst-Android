@@ -242,11 +242,16 @@ public class JREUtils {
                     envMap.put("LIBGL_EGL", "libEGL_angle.so");
                     envMap.put("POJAVEXEC_EGL", "libEGL_angle.so");
                 }
+                // Don't use with gl4es, they're both doing the same thing.
+                Tools.useSFPEW = false;
             }
-            if (LOCAL_RENDERER.equals("opengles_nothing")) {
+            if (LOCAL_RENDERER.equals("opengles_system_gles")) {
                 if (Tools.useANGLE) {
                     envMap.put("POJAVEXEC_EGL", "libEGL_angle.so");
                 }
+                // Not advised to be used with android GLES drivers for now.
+                // MobileGL(ues) adds GPU specific fixes which SFPEW needs.
+                Tools.useSFPEW = false;
             }
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper")){
                 envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL
@@ -256,6 +261,8 @@ public class JREUtils {
                 // This is sketch but it fixes a lot of things, if it causes problems we can just undo it.
                 envMap.put("MESA_GL_VERSION_OVERRIDE","4.6COMPAT");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE","460");
+                // Don't use with Zink, it also does the same thing.
+                Tools.useSFPEW = false;
             }
             if (Tools.useSFPEW) {
                 envMap.put("SFPEW_EGL", envMap.get("POJAVEXEC_EGL"));
@@ -336,9 +343,9 @@ public class JREUtils {
             // If using nothing (aka sys driver) then don't set this so SDL can auto find the
             // native gles driver, because providing it ourselves is useless effort.
             // This only matters for Angelica because Mojunk is never using SDL on non-Core
-            if (graphicsLib != null && !LOCAL_RENDERER.equals("opengles_nothing"))
+            if (graphicsLib != null && !LOCAL_RENDERER.equals("opengles_system_gles"))
                 Os.setenv("SDL_OPENGL_LIBRARY", graphicsLib, true);
-            if (Os.getenv("POJAVEXEC_EGL") != null && !LOCAL_RENDERER.equals("opengles_nothing"))
+            if (Os.getenv("POJAVEXEC_EGL") != null && !LOCAL_RENDERER.equals("opengles_system_gles"))
                 Os.setenv("SDL_EGL_LIBRARY", NATIVE_LIB_DIR+"/"+Os.getenv("POJAVEXEC_EGL"), true);
         } catch (ErrnoException e) {
             Log.wtf("RENDER_LIBRARY", "Failed to load set SDL env vars");
@@ -539,7 +546,7 @@ public class JREUtils {
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
-            case "opengles_nothing" : renderLibrary = "libSimpleFPEWrapper.so"; break; // Literally nothing, so assume SFPEW
+            case "opengles_system_gles" : return null; // Literally nothing, this is for system GLES.
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles_mobileglues");
                 renderLibrary = "libmobileglues.so";
@@ -563,10 +570,7 @@ public class JREUtils {
         }
 
         // The final switch for using SFPEW.
-        // Don't use with gl4es, they're both doing the same thing.
-        // Don't use with Zink, it also does the same thing.
-        boolean renderLibraryShouldUseSFPEW = !renderLibrary.contains("gl4es") || !LOCAL_RENDERER.contains("zink");
-        if (Tools.useSFPEW && renderLibraryShouldUseSFPEW) {
+        if (Tools.useSFPEW) {
             renderLibrary = "libSimpleFPEWrapper.so";
         }
         return renderLibrary;

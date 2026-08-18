@@ -66,7 +66,6 @@
     <string name="mcl_setting_title_renderer_subtitle">Renderer specific settings</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; only, fast)</string>
-    <string name="mcl_setting_renderer_nothing">SFPEW/System GLES Driver - (1.16.5&lt; or Angelica 2.2.0+, fast)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (all versions, fast)</string>
     <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (all versions, mid)</string>
     <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) - (all versions, fast)</string>
