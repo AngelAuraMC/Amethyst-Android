@@ -148,6 +148,8 @@
     <string name="mcl_setting_subtitle_mousespeed">Змінює чутливість віртуальної миші.</string>
     <string name="mcl_setting_title_grab_mouse">Використовувати віртуальний курсор</string>
     <string name="mcl_setting_subtitle_grab_mouse">Гарантує, що курсор залишається в грі. Запобігає натисканню мишею макета сенсорного керування.</string>
+    <string name="mcl_setting_title_keyboard_panning">Панорамування клавіатури</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Зсовую екран угору, коли відкрито клавіатуру.</string>
     <string name="customctrl_passthru">Курсор миші</string>
     <string name="customctrl_swipeable">Можна перегорнути</string>
     <string name="customctrl_forward_lock">Передній замок</string>
@@ -428,6 +430,7 @@
     <string name="error_vanilla_json_corrupt">Усталений json, здається, пошкоджено. Будь ласка, надішліть звіт про помилку на github або discord.</string>
     <string name="preference_ask_for_microphone_title">Дозволити мікрофон</string>
     <string name="preference_ask_for_microphone_description">Натисніть, щоби повторно надіслати запит дозволу на повідомлення для голосових чатів, наприклад Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Якщо версія 26.3-snapshot-4 або новіша чи моди контролера працюють неналежним чином, це може виправити проблему.</string>
     <string name="mcl_gamepad_forcedSDL">Примусово запустити обробку контролера SDL</string>
     <string name="preference_category_SDL_settings">Налаштування SDL</string>
     <string name="oldL4JFound">Ви використовуєте версію Legacy4J без виправлень Android! Вам потрібно буде вручну ввімкнути SDL у налаштуваннях контролера, щоб отримати найкращий досвід!</string>
@@ -450,4 +453,15 @@
     <string name="global_download">Завантажити</string>
     <string name="multirt_no_internet">Не вдалося завантажити, перевірте з\'єднання з інтернетом.</string>
     <string name="global_installing">Установлення…</string>
+    <string name="error_key_unsupported">Помилка! Клавіша, призначена для цієї кнопки, неприпустима. Спробувати оновити?</string>
+    <string name="error_invalid_value">Помилка! Хибне значення!</string>
+    <string name="minecraft_no_username_set">Ваше ім\'я користувача Minecraft не встановлено! Ви повинні встановити його на сайті Minecraft, перш ніж мати можливість увійти!</string>
+    <string name="create_lwjgl3ify_profile">Створити профіль LWJGL3ify</string>
+    <string name="select_lwjgl3ify_version">Вибір версії LWJGL3ify</string>
+    <string name="lwjgl3ify_installer_available_versions">Підтримувані версії LWJGL3IFY</string>
+    <string name="lwjgl3ify_installer_broken_versions">Пошкоджені версії LWJGL3ify (SDL)</string>
+    <string name="new_default_controls">Вийнято нові усталені керування в new_default.json. Спробуйте!</string>
+    <string name="import_modpack_start">Імпортування пакета модів…</string>
+    <string name="import_modpack_hash">Хешування файлу пакета модів… (%s МБ/ %s МБ)</string>
+    <string name="import_modpack_json">Читання інформації пакета модів…</string>
 </resources>
