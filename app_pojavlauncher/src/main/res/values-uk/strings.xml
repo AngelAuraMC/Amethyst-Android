@@ -464,4 +464,5 @@
     <string name="import_modpack_start">Імпортування пакета модів…</string>
     <string name="import_modpack_hash">Хешування файлу пакета модів… (%s МБ/ %s МБ)</string>
     <string name="import_modpack_json">Читання інформації пакета модів…</string>
+    <string name="import_modpack_copy">Копіювання файла пакета модів до кешу… (%s МБ/ %s МБ)</string>
 </resources>
