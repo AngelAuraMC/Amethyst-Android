@@ -29,6 +29,7 @@
 #define ELF_HALF Elf64_Half
 #define ELF_XWORD Elf64_Xword
 #define ELF_DYN Elf64_Dyn
+#define ELF_SYM Elf64_Sym
 
 //#define ADRENO_POSSIBLE
 
@@ -74,6 +75,9 @@ bool linker_ns_load(const char* lib_search_path) {
 #ifndef ADRENO_POSSIBLE
     return false;
 #else
+    // Makes bytehook stop being all crashy about hooky
+    if(driver_namespace != NULL) return true;
+
     loader_dlopen_t loader_dlopen = find_branch_label(&dlopen);
     // reprotecting the functions removes protection from indirect jumps
     mprotect(loader_dlopen, page_size, PROT_WRITE | PROT_READ | PROT_EXEC);
@@ -127,6 +131,14 @@ void* linker_ns_dlopen(const char* name, int flag) {
 #endif
 }
 
+
+/**
+ * @brief  Overwrites the first three characters of a soname
+ * @note   IMPORTANT: The supplied soname patch will overwrite the first strlen(sonamePatch) chars of the soname
+ * @param  elfPath Full path to the elf to patch
+ * @param  targetFd FD to use for storing the patched library
+ * @return True on success
+ */
 bool patch_elf_soname(int patchfd, int realfd, uint16_t patchid) {
     struct stat realstat;
     if(fstat(realfd, &realstat)) return false;
@@ -139,20 +151,22 @@ bool patch_elf_soname(int patchfd, int realfd, uint16_t patchid) {
     }
     close(realfd);
 
-
     ELF_EHDR *ehdr = (ELF_EHDR*)target;
     ELF_SHDR *shdr = (ELF_SHDR*)(target + ehdr->e_shoff);
+    // Iterate over section headers to find the .dynamic section
     for(ELF_HALF i = 0; i < ehdr->e_shnum; i++) {
         ELF_SHDR *hdr = &shdr[i];
         if(hdr->sh_type == SHT_DYNAMIC) {
             char* strtab = target + shdr[hdr->sh_link].sh_offset;
-            // If there's a warning below, it's bogus, ignore it
             ELF_DYN *dynEntries = (ELF_DYN*)(target + hdr->sh_offset);
+
+            // Iterate over .dynamic entries to find DT_SONAME
             for(ELF_XWORD k = 0; k < (hdr->sh_size / hdr->sh_entsize);k++) {
                 ELF_DYN* dynEntry = &dynEntries[k];
                 if(dynEntry->d_tag == DT_SONAME) {
                     char* soname = strtab + dynEntry->d_un.d_val;
                     char sprb[4];
+                    // Partially replace the old soname with the soname patch
                     snprintf(sprb, 4, "%03x", patchid);
                     memcpy(soname, sprb, 3);
                     munmap(target, realstat.st_size);

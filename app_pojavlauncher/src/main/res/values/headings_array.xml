@@ -6,6 +6,7 @@
         <item name="2">@string/mcl_setting_renderer_vulkan_kopper_zink</item>
         <item name="3">@string/mcl_setting_renderer_vulkan_zink</item>
         <item name="4">@string/mcl_setting_renderer_ltw</item>
+        <item name="5">@string/mcl_setting_renderer_freedreno</item>
     </string-array>
 
     <string-array name="menu_customcontrol">
@@ -39,6 +40,7 @@
     <string-array name="renderer_values">
         <item>opengles2</item> <!-- BZLZHH/NG-GL4ES (Krypton Wrapper) -->
         <item>opengles_mobileglues</item>
+        <item>opengles3_desktopgl_freedreno</item>
         <item>opengles3_desktopgl_zink_kopper</item> <!-- Swung's Kopper Zink backport to 23.0.4 -->
         <item>vulkan_zink</item> <!-- osmesa 23.0.4 -->
         <item>opengles3_ltw</item>
@@ -106,4 +108,5 @@
         <item>2</item>
         <item>1</item>
     </string-array>
+    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno only, OpenGL 4.6) - (all versions, mid)</string>
 </resources>
