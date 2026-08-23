@@ -21,7 +21,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
-
+    <meta-data android:name="android.game_mode_config"
+        android:resource="@xml/game_mode_config" />
     <application
         android:name=".PojavApplication"
         android:allowBackup="true"
