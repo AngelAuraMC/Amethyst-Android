@@ -3,10 +3,9 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <platform.h>
+#include "platform.h"
 #include <errno.h>
 #include <fcntl.h>
-#include <platform.h>
 // Used the following as reference
 // https://github.com/bylaws/liblinkernsbypass/blob/master/elf_soname_patcher.cpp
 // https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/jni/driver_helper/nsbypass.c

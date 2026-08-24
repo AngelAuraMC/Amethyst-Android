@@ -33,10 +33,11 @@
 #include <sys/mman.h>
 #include <elf.h>
 #include <android/log.h>
-#include <platform.h>
-#include <nsbypass_dlfcn.h>
+#include "../platform.h"
+#include "nsbypass_dlfcn.h"
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 struct ctx {
 	void *load_addr;

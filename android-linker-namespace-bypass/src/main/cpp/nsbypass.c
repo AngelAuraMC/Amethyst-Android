@@ -13,40 +13,41 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <elf.h>
-#include "nsbypass_dlfcn.h"
+#include "fasthook/nsbypass_dlfcn.h"
 #include "platform.h"
 #include <stdlib.h>
 #include "nsbypass.h"
+#include <jni.h>
 
 loader_dl_funcs get_dl_functions(){
-    loader_dl_funcs ldDlFuncs = {0};
+    loader_dl_funcs dlFuncs = {0};
+    dlFuncs.handle = nsbypass_dlopen(LINKER_PATH, 0);
     // First attempt the normal libadrenotools method
 #if (defined __aarch64__)
-    ldDlFuncs.l_dlopen = find_branch_label(&dlopen);
-    ldDlFuncs.l_dlclose = find_branch_label(&dlclose);
-    ldDlFuncs.l_dlsym = find_branch_label(&dlsym);
-    return ldDlFuncs;
+    dlFuncs.dlopen = find_branch_label(&dlopen);
+    dlFuncs.dlclose = find_branch_label(&dlclose);
+    dlFuncs.dlsym = find_branch_label(&dlsym);
+    return dlFuncs;
 #endif
     // If that fails, try looking for it in memory, inside the linker
-    ldDlFuncs.handle = nsbypass_dlopen(LINKER_PATH, 0);
-    ldDlFuncs.l_dlopen = nsbypass_dlsym(ldDlFuncs.handle, "__loader_dlopen");
-    ldDlFuncs.l_dlclose = nsbypass_dlsym(ldDlFuncs.handle, "__loader_dlclose");
-    ldDlFuncs.l_dlsym = nsbypass_dlsym(ldDlFuncs.handle, "__loader_dlsym");
+    dlFuncs.dlopen = nsbypass_dlsym(dlFuncs.handle, "__loader_dlopen");
+    dlFuncs.dlclose = nsbypass_dlsym(dlFuncs.handle, "__loader_dlclose");
+    dlFuncs.dlsym = nsbypass_dlsym(dlFuncs.handle, "__loader_dlsym");
     // Don't dlclose that, it's not our property.
-    return ldDlFuncs;
+    return dlFuncs;
 }
 
 linker_funcs get_namespace_functions(){
     linker_funcs linkerFuncs = {0};
     loader_dl_funcs dlFunctions = get_dl_functions();
-    if (dlFunctions.l_dlopen != 0) {
-        linkerFuncs.handle = dlFunctions.l_dlopen("ld-android.so", RTLD_LAZY, &dlopen);
-        linkerFuncs.create_namespace = dlFunctions.l_dlsym(linkerFuncs.handle, "__loader_android_create_namespace", &dlsym);
-        linkerFuncs.link_namespaces = dlFunctions.l_dlsym(linkerFuncs.handle, "__loader_android_link_namespaces", &dlsym);
-        linkerFuncs.link_namespace_all_libs = dlFunctions.l_dlsym(linkerFuncs.handle, "__loader_android_link_namespaces_all_libs", &dlsym);
-        linkerFuncs.get_exported_namespace = dlFunctions.l_dlsym(linkerFuncs.handle, "__loader_android_get_exported_namespace", &dlsym);
+    if (dlFunctions.dlopen != 0) {
+        linkerFuncs.handle = dlFunctions.dlopen("ld-android.so", RTLD_LAZY, &dlopen);
+        linkerFuncs.create_namespace = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_create_namespace", &dlsym);
+        linkerFuncs.link_namespaces = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_link_namespaces", &dlsym);
+        linkerFuncs.link_namespace_all_libs = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_link_namespaces_all_libs", &dlsym);
+        linkerFuncs.get_exported_namespace = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_get_exported_namespace", &dlsym);
     } else {
-        LOGE("Attempting hail mary fetch of namespace functions. What the hell are you using?!");
+        LOGE("Attempting hail mary fetch of namespace functions. What the hell are you using?! This is definitely not gonna work..");
         // If we couldn't find a handle to the private api, try looking through memory anyway.
         // It's almost definitely not there.
         linkerFuncs.handle = nsbypass_dlopen("ld-android.so", 0);
@@ -68,13 +69,16 @@ linker_funcs get_namespace_functions(){
 
 static struct android_namespace_t* driver_namespace;
 
+linker_funcs g_linkerFuncs = {0};
 __attribute__((constructor)) void resolve_linker_symbols() {
-//    // Makes bytehook stop being all crashy about hooky
-//    if(driver_namespace != NULL) return true;
-    linker_funcs linkerFuncs = get_namespace_functions();
-    if (!linkerFuncs.handle ||
-            !linkerFuncs.create_namespace ||
-            !linkerFuncs.link_namespaces) {
+    // Makes bytehook stop being all crashy about hooky
+    if(g_linkerFuncs.handle != NULL) return;
+    g_linkerFuncs = get_namespace_functions();
+    if (!g_linkerFuncs.handle ||
+            !g_linkerFuncs.create_namespace ||
+            !g_linkerFuncs.link_namespaces ||
+            !g_linkerFuncs.link_namespace_all_libs ||
+            !g_linkerFuncs.get_exported_namespace) {
         LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
         return;
     }
@@ -84,11 +88,14 @@ __attribute__((constructor)) void resolve_linker_symbols() {
     const char* cache_dir = getenv("TMPDIR");
     char full_path[strlen(SEARCH_PATH) + strlen(native_dir) + 2 + 1];
     sprintf(full_path, "%s:%s", SEARCH_PATH, native_dir);
-    driver_namespace = linkerFuncs.create_namespace("mesa-driver-namespace",
+    driver_namespace = g_linkerFuncs.create_namespace("mesa-driver-namespace",
             getenv("LD_LIBRARY_PATH_DRIVER_NAMESPACE"),
             full_path,
             ANDROID_NAMESPACE_TYPE_SHARED_ISOLATED,
             "/system/:/data/:/vendor/:/apex/", NULL);
+    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "ld-android.so");
+    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader.so");
+    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader_lazy.so");
     // https://android.googlesource.com/platform/bionic/%2B/1ffec1cc4d0e283bb1ff6f49843769a3493b8d73/linker/dlfcn.cpp#294
     // Later android code has more confusing code where it inherits from ld-android.
     // Basically setting parent to &dlopen lets us access g_default_namespace.
@@ -149,6 +156,11 @@ __attribute__((constructor)) void resolve_linker_symbols() {
     //   - The custom driver can be loaded anywhere so long as libvulkan.so access it via
     //     android_load_sphal_library and android_dlopen_ext. Turnip needs an escape
     //     namespace because it depends on private apis. libcutil and libhardware afaik
+    //   - libvulkan DT_SONAME should be modified or else it may use an already loaded instance.
+    //     its a safety/prevention measure. This goes the same with any other libraries. Only issue
+    //     is it breaks the .dynamic needed SONAMEs. So instead we should just create namespace,
+    //     load the libs we need, and only after do we link to escape/global namespace in case the
+    //     libs decide to call dlopen or dlsym on other stuff.
 
     /*
      * Can we imitate libadrenotools structure on OpenGL? Maybe.
@@ -174,9 +186,6 @@ __attribute__((constructor)) void resolve_linker_symbols() {
     // Setting the 2nd namespace to NULL defaults it to g_default_namespace.
     // This is just the manual version of link_namespace_all_libs to a new namespace with parent
     // &dlopen (which is just g_default_namespace)
-    linkerFuncs.link_namespaces(driver_namespace, NULL, "ld-android.so");
-    linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader.so");
-    linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader_lazy.so");
 }
 
 

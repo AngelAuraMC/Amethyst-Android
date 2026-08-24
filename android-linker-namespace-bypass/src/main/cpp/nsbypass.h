@@ -100,9 +100,9 @@ typedef struct {
 } linker_funcs;
 
 typedef struct {
-    ld_dlopen_function l_dlopen;
-    ld_dlclose_function l_dlclose;
-    ld_dlsym_function l_dlsym;
+    ld_dlopen_function dlopen;
+    ld_dlclose_function dlclose;
+    ld_dlsym_function dlsym;
     void* handle
 } loader_dl_funcs;
 
@@ -113,5 +113,5 @@ typedef struct {
     void* handle
 } dl_funcs;
 
-
+extern linker_funcs g_linkerFuncs;
 #endif //AMETHYST_NSBYPASS_H
