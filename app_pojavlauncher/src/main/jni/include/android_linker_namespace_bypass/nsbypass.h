@@ -51,14 +51,15 @@ static void* find_branch_label(void* func_start) {
     return t;
 }
 #endif
-// https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:bionic/libc/platform/bionic/dlext_namespaces.h;l=120-134
+// https://cs.android.com/android/platform/superproject/+/android-9.0.0_r1:bionic/linker/dlfcn.cpp;l=48-68
 typedef struct android_namespace_t* (*private_create_namespace_t)(
         const char* name,
         const char* ld_library_path,
         const char* default_library_path,
         uint64_t type,
         const char* permitted_when_isolated_path,
-        struct android_namespace_t* parent);
+        struct android_namespace_t* parent_namespace,
+        const void* caller_addr);
 
 typedef bool (*private_link_namespaces_t)(
         struct android_namespace_t* from,
@@ -114,12 +115,15 @@ enum {
     ANDROID_NAMESPACE_TYPE_SHARED_ISOLATED = ANDROID_NAMESPACE_TYPE_SHARED | ANDROID_NAMESPACE_TYPE_ISOLATED,
 };
 
+// This does not include __loader_android_init_anonymous_namespace
+// because its useless and about to be deleted.
+// https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:bionic/linker/linker.cpp;l=2448-2449
 typedef struct {
     private_create_namespace_t create_namespace;
     private_link_namespaces_t link_namespaces;
-    private_link_namespaces_all_libs_t link_namespace_all_libs;
+    private_link_namespaces_all_libs_t link_namespaces_all_libs;
     private_get_exported_namespace_t get_exported_namespace;
-} private_linker_funcs;
+} private_namespace_funcs;
 
 typedef struct {
     private_dlopen_function_t dlopen;
@@ -134,8 +138,9 @@ typedef struct {
 } clns_funcs;
 
 extern clns_funcs g_clnsFuncs;
-extern private_linker_funcs g_linkerFuncs;
+extern private_namespace_funcs g_linkerFuncs;
 extern private_dl_funcs g_privateDlFuncs;
+extern struct android_namespace_t* escapeNs;
 
 void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* ns);
 void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char* libName, int flag, struct android_namespace_t* ns);

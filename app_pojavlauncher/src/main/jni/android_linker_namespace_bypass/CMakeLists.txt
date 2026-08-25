@@ -27,7 +27,6 @@ project("android_linker_namespace_bypass")
 add_library(${CMAKE_PROJECT_NAME} SHARED
         # List C/C++ source files with relative paths to this CMakeLists.txt.
         fasthook/nsbypass_dlfcn.c
-        android_linker_namespace_bypass.cpp
         elf_soname_patcher.c
         nsbypass.c
 )

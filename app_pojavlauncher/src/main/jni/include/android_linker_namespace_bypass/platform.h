@@ -7,7 +7,7 @@
 #define SEARCH_PATH "/system/lib64"
 // Do not use the full path, let it dynamically find the path
 // The /system/bin/linker64 file is NOT what we want.
-#define LINKER_PATH "linker64"
+#define LINKER "linker64"
 
 #define ELF_EHDR  Elf64_Ehdr
 #define ELF_SHDR  Elf64_Shdr
@@ -18,7 +18,7 @@
 #elif defined(__arm__) || defined(__i386__)
 #define BITNESS 32
 #define SEARCH_PATH "/system/lib"
-#define LINKER_PATH "linker"
+#define LINKER "linker"
 
 #define ELF_EHDR  Elf32_Ehdr
 #define ELF_SHDR  Elf32_Shdr
