@@ -15,87 +15,92 @@
 #include <elf.h>
 #include "fasthook/nsbypass_dlfcn.h"
 #include "platform.h"
+#include "elf_soname_patcher.c"
 #include <stdlib.h>
 #include "nsbypass.h"
 #include <jni.h>
 
-loader_dl_funcs get_dl_functions(){
-    loader_dl_funcs dlFuncs = {0};
-    dlFuncs.handle = nsbypass_dlopen(LINKER_PATH, 0);
-    // First attempt the normal libadrenotools method
+// libdl_android.so and ld-android.so are aliases to linker64 impl
+// libdl_android.so provides WEAK symbols and missing dlFuncs. Don't use it.
+// ld-android.so is more complete, so fallback to that if dl functions can be acquired.
+
+// This means a configuration of libdl + ld-android is possible
+// The preferred configuration on arm64 will be libdl + linker64
+
+// We have two sources for this, linker64/linker or libdl.so via ARM64 shenanigans
+private_dl_funcs get_dl_functions(){
+    private_dl_funcs dlFuncs;
+    void* linkerHandle = nsbypass_dlopen(LINKER_PATH, 0);
+    // First attempt the normal libadrenotools method (ARM64 shenanigans)
 #if (defined __aarch64__)
+    // This searches libdl which has WEAK funcs.
     dlFuncs.dlopen = find_branch_label(&dlopen);
+    dlFuncs.dlopen_ext = find_branch_label(&android_dlopen_ext);
     dlFuncs.dlclose = find_branch_label(&dlclose);
     dlFuncs.dlsym = find_branch_label(&dlsym);
-    return dlFuncs;
 #endif
-    // If that fails, try looking for it in memory, inside the linker
-    dlFuncs.dlopen = nsbypass_dlsym(dlFuncs.handle, "__loader_dlopen");
-    dlFuncs.dlclose = nsbypass_dlsym(dlFuncs.handle, "__loader_dlclose");
-    dlFuncs.dlsym = nsbypass_dlsym(dlFuncs.handle, "__loader_dlsym");
+    // If that fails, try looking for it in memory
+    if (!dlFuncs.dlopen) dlFuncs.dlopen = nsbypass_dlsym(linkerHandle, "__loader_dlopen");
+    if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = nsbypass_dlsym(linkerHandle, "__loader_android_dlopen_ext");
+    if (!dlFuncs.dlclose) dlFuncs.dlclose = nsbypass_dlsym(linkerHandle, "__loader_dlclose");
+    if (!dlFuncs.dlsym) dlFuncs.dlsym = nsbypass_dlsym(linkerHandle, "__loader_dlsym");
     // Don't dlclose that, it's not our property.
     return dlFuncs;
 }
 
-linker_funcs get_namespace_functions(){
-    linker_funcs linkerFuncs = {0};
-    loader_dl_funcs dlFunctions = get_dl_functions();
-    if (dlFunctions.dlopen != 0) {
-        linkerFuncs.handle = dlFunctions.dlopen("ld-android.so", RTLD_LAZY, &dlopen);
-        linkerFuncs.create_namespace = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_create_namespace", &dlsym);
-        linkerFuncs.link_namespaces = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_link_namespaces", &dlsym);
-        linkerFuncs.link_namespace_all_libs = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_link_namespaces_all_libs", &dlsym);
-        linkerFuncs.get_exported_namespace = dlFunctions.dlsym(linkerFuncs.handle, "__loader_android_get_exported_namespace", &dlsym);
+private_linker_funcs get_namespace_functions(){
+    private_linker_funcs linkerFuncs = {0};
+    void* linkerHandle = nsbypass_dlopen(LINKER_PATH, 0);
+    if (!linkerHandle && g_privateDlFuncs.dlopen) {
+        // This fallback is only possible with the private API, or else namespace restrictions
+        // stops us. &dlopen leads to g_default_namespace so this bypasses that.
+        linkerHandle = g_privateDlFuncs.dlopen("ld-android.so", RTLD_LAZY, &dlopen);
+    }
+    if (linkerHandle && g_privateDlFuncs.dlsym != 0) { // Check if it found a handle
+        // Note: liblinkernsbypass uses ld-android.so for link* and libdl_android.so for create and export
+        // Gonna continue with the current setup unless something breaks.
+        linkerFuncs.create_namespace = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_create_namespace", &dlsym);
+        linkerFuncs.link_namespaces = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_link_namespaces", &dlsym);
+        linkerFuncs.link_namespace_all_libs = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_link_namespaces_all_libs", &dlsym);
+        linkerFuncs.get_exported_namespace = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_get_exported_namespace", &dlsym);
     } else {
-        LOGE("Attempting hail mary fetch of namespace functions. What the hell are you using?! This is definitely not gonna work..");
-        // If we couldn't find a handle to the private api, try looking through memory anyway.
-        // It's almost definitely not there.
-        linkerFuncs.handle = nsbypass_dlopen("ld-android.so", 0);
-        // If it's not found in memory dlopen it maybe?? Probably fails
-        if (linkerFuncs.handle == 0) {
-            if (dlopen("ld-android.so", RTLD_LAZY) == NULL) return linkerFuncs;
-            linkerFuncs.handle = nsbypass_dlopen("ld-android.so", 0);
-            if (linkerFuncs.handle == 0) return linkerFuncs;
-        }
-
-        linkerFuncs.create_namespace = nsbypass_dlsym(linkerFuncs.handle, "__loader_android_create_namespace");
-        linkerFuncs.link_namespaces = nsbypass_dlsym(linkerFuncs.handle, "__loader_android_link_namespaces");
-        linkerFuncs.link_namespace_all_libs = nsbypass_dlsym(linkerFuncs.handle, "__loader_android_link_namespaces_all_libs");
-        linkerFuncs.get_exported_namespace = nsbypass_dlsym(linkerFuncs.handle, "__loader_android_get_exported_namespace");
+        LOGE("Unable to load namespace functions! dlFunction loading probably failed?");
     }
 
     return linkerFuncs;
 }
 
 static struct android_namespace_t* driver_namespace;
+private_dl_funcs g_privateDlFuncs = {0};
+private_linker_funcs g_linkerFuncs = {0};
+clns_funcs g_clnsFuncs = {0};
 
-linker_funcs g_linkerFuncs = {0};
-__attribute__((constructor)) void resolve_linker_symbols() {
-    // Makes bytehook stop being all crashy about hooky
-    if(g_linkerFuncs.handle != NULL) return;
+__attribute__((constructor)) void resolve_global_symbols() {
+    g_privateDlFuncs = get_dl_functions();
     g_linkerFuncs = get_namespace_functions();
-    if (!g_linkerFuncs.handle ||
-            !g_linkerFuncs.create_namespace ||
+    g_clnsFuncs.clns_android_dlopen_ext = android_dlopen_ext;
+
+    if (!g_linkerFuncs.create_namespace ||
             !g_linkerFuncs.link_namespaces ||
             !g_linkerFuncs.link_namespace_all_libs ||
             !g_linkerFuncs.get_exported_namespace) {
         LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
         return;
     }
-    // assemble the full path search path
-    // FIXME: Use JNI to fetch this. We will need to unconstructor to get JNIEnv from JNI_OnLoad.
-    const char* native_dir = getenv("POJAV_NATIVEDIR");
-    const char* cache_dir = getenv("TMPDIR");
-    char full_path[strlen(SEARCH_PATH) + strlen(native_dir) + 2 + 1];
-    sprintf(full_path, "%s:%s", SEARCH_PATH, native_dir);
-    driver_namespace = g_linkerFuncs.create_namespace("mesa-driver-namespace",
-            getenv("LD_LIBRARY_PATH_DRIVER_NAMESPACE"),
-            full_path,
-            ANDROID_NAMESPACE_TYPE_SHARED_ISOLATED,
-            "/system/:/data/:/vendor/:/apex/", NULL);
-    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "ld-android.so");
-    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader.so");
-    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader_lazy.so");
+//    // assemble the full path search path
+//    // FIXME: Use JNI to fetch this. We will need to unconstructor to get JNIEnv from JNI_OnLoad.
+//    const char* native_dir = getenv("POJAV_NATIVEDIR");
+//    const char* cache_dir = getenv("TMPDIR");
+//    char full_path[strlen(SEARCH_PATH) + strlen(native_dir) + 2 + 1];
+//    sprintf(full_path, "%s:%s", SEARCH_PATH, native_dir);
+//    driver_namespace = g_linkerFuncs.create_namespace("mesa-driver-namespace",
+//            getenv("LD_LIBRARY_PATH_DRIVER_NAMESPACE"),
+//            full_path,
+//            ANDROID_NAMESPACE_TYPE_SHARED_ISOLATED,
+//            "/system/:/data/:/vendor/:/apex/", NULL);
+//    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "ld-android.so");
+//    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader.so");
+//    g_linkerFuncs.link_namespaces(driver_namespace, NULL, "libnativeloader_lazy.so");
     // https://android.googlesource.com/platform/bionic/%2B/1ffec1cc4d0e283bb1ff6f49843769a3493b8d73/linker/dlfcn.cpp#294
     // Later android code has more confusing code where it inherits from ld-android.
     // Basically setting parent to &dlopen lets us access g_default_namespace.
@@ -186,6 +191,45 @@ __attribute__((constructor)) void resolve_linker_symbols() {
     // Setting the 2nd namespace to NULL defaults it to g_default_namespace.
     // This is just the manual version of link_namespace_all_libs to a new namespace with parent
     // &dlopen (which is just g_default_namespace)
+}
+
+// dlopen in a specific namespace
+void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* ns) {
+    if (!ns) return NULL;
+    android_dlextinfo dlextinfo;
+    dlextinfo.flags = ANDROID_DLEXT_USE_NAMESPACE;
+    dlextinfo.library_namespace = ns;
+    return android_dlopen_ext(name, flag, &dlextinfo);
+}
+
+// dlopen in a specific namespace in a custom dir and a modified DT_SONAME
+void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char* libName, int flags, struct android_namespace_t* ns) {
+    char pathbuf[PATH_MAX];
+    static uint16_t patch_id;
+    int patch_fd, real_fd;
+
+    snprintf(pathbuf, PATH_MAX ,"%s/%d%s_patched.so", tmpDir, patch_id, libName);
+    patch_fd = open(pathbuf, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+    if(patch_fd == -1) return NULL;
+
+    snprintf(pathbuf,PATH_MAX,"%s/%s", libDir, libName);
+    real_fd = open(pathbuf, O_RDONLY);
+    if(real_fd == -1) {
+        close(patch_fd);
+        return NULL;
+    }
+
+    if(!patch_elf_soname(real_fd, patch_id, patch_id)) {
+        close(patch_fd);
+        close(real_fd);
+        return NULL;
+    }
+    android_dlextinfo extinfo;
+    extinfo.flags = ANDROID_DLEXT_USE_NAMESPACE | ANDROID_DLEXT_USE_LIBRARY_FD;
+    extinfo.library_fd = patch_fd;
+    extinfo.library_namespace = ns;
+    snprintf(pathbuf, PATH_MAX, "/proc/self/fd/%d", patch_fd);
+    return android_dlopen_ext(pathbuf, flags, &extinfo);
 }
 
 

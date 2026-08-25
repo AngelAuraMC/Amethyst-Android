@@ -13,8 +13,8 @@
 /**
  * @brief  Overwrites the first three characters of a soname
  * @note   IMPORTANT: The supplied soname patch will overwrite the first strlen(sonamePatch) chars of the soname
- * @param  patchfd File descriptor to location of patched library
  * @param  realfd File descriptor to source library
+ * @param  patchfd File descriptor to location of patched library
  * @param  patchid Numeric patch ID, prefixes with 0
  * @return True on success
  */
@@ -31,6 +31,7 @@ bool patch_elf_soname(int realfd, int patchfd, uint16_t patchid) {
 
     ELF_EHDR *ehdr = (ELF_EHDR*)target;
     ELF_SHDR *shdr = (ELF_SHDR*)(target + ehdr->e_shoff);
+
     // Iterate over section headers to find the .dynamic section
     for(ELF_HALF i = 0; i < ehdr->e_shnum; i++) {
         ELF_SHDR *hdr = &shdr[i];
