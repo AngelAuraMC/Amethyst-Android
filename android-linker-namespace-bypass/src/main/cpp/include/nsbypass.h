@@ -5,7 +5,6 @@
 #include <android/dlext.h>
 #include <sys/unistd.h>
 #include <sys/mman.h>
-#include "platform.h"
 
 #ifndef AMETHYST_NSBYPASS_H
 #define AMETHYST_NSBYPASS_H
