@@ -13,7 +13,7 @@
 #include <GL/osmesa.h>
 #include "ctxbridges/osmesa_loader.h"
 #include "driver_helper/nsbypass.h"
-
+#include "android_linker_namespace_bypass/nsbypass.h"
 #ifdef GLES_TEST
 #include <GLES2/gl2.h>
 #endif
@@ -96,23 +96,21 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_releaseBridgeWindow(ABI_COMPAT JNIEnv *e
 EXTERNAL_API void* pojavGetCurrentContext() {
     return br_get_current();
 }
-
-//#define ADRENO_POSSIBLE
-#ifdef ADRENO_POSSIBLE
+static struct android_namespace_t* driver_namespace;
 void* load_turnip_vulkan() {
     if(getenv("POJAV_LOAD_TURNIP") == NULL) return NULL;
     const char* native_dir = getenv("POJAV_NATIVEDIR");
     const char* cache_dir = getenv("TMPDIR");
-    if(!linker_ns_load(native_dir)) return NULL;
-    void* linkerhook = linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW);
+    if(driver_namespace == NULL && !linker_ns_load(native_dir, &driver_namespace)) return NULL;
+    void* linkerhook = linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW, driver_namespace);
     if(linkerhook == NULL) return NULL;
-    void* turnip_driver_handle = linker_ns_dlopen("libvulkan_freedreno.so", RTLD_LOCAL | RTLD_NOW);
+    void* turnip_driver_handle = linker_ns_dlopen("libvulkan_freedreno.so", RTLD_LOCAL | RTLD_NOW, driver_namespace);
     if(turnip_driver_handle == NULL) {
         printf("AdrenoSupp: Failed to load Turnip!\n%s\n", dlerror());
         dlclose(linkerhook);
         return NULL;
     }
-    void* dl_android = linker_ns_dlopen("libdl_android.so", RTLD_LOCAL | RTLD_LAZY);
+    void* dl_android = linker_ns_dlopen("libdl_android.so", RTLD_LOCAL | RTLD_LAZY, driver_namespace);
     if(dl_android == NULL) {
         dlclose(linkerhook);
         dlclose(turnip_driver_handle);
@@ -127,10 +125,9 @@ void* load_turnip_vulkan() {
         return NULL;
     }
     linkerhook_pass_handles(turnip_driver_handle, android_dlopen_ext, android_get_exported_namespace);
-    void* libvulkan = linker_ns_dlopen_unique(cache_dir, "libvulkan.so", RTLD_LOCAL | RTLD_NOW);
+    void* libvulkan = linker_ns_dlopen_unique(cache_dir, SEARCH_PATH, "libvulkan.so", RTLD_LOCAL | RTLD_NOW, driver_namespace);
     return libvulkan;
 }
-#endif
 
 static void set_vulkan_ptr(void* ptr) {
     char envval[64];

@@ -1,4 +1,4 @@
-#include "platform.h"
+#include "android_linker_namespace_bypass/platform.h"
 #include "android_linker_namespace_bypass/elf_soname_patcher.h"
 
 // Used the following as reference

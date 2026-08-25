@@ -16,21 +16,25 @@
 #include <stdlib.h>
 #include <jni.h>
 #include "fasthook/nsbypass_dlfcn.h"
-#include "platform.h"
+#include "android_linker_namespace_bypass/platform.h"
 #include "android_linker_namespace_bypass/elf_soname_patcher.h"
 #include "android_linker_namespace_bypass/nsbypass.h"
 
 // libdl_android.so and ld-android.so are aliases to linker64 impl
-// libdl_android.so provides WEAK symbols and missing dlFuncs. Don't use it.
+// libdl_android.so provides only the namespace funcs except __loader_android_link_namespaces_all_libs
 // ld-android.so is more complete, so fallback to that if dl functions can be acquired.
 
 // This means a configuration of libdl + ld-android is possible
 // The preferred configuration on arm64 will be libdl + linker64
+// The preferred configuration on other arches will be linker64
 
 // We have two sources for this, linker64/linker or libdl.so via ARM64 shenanigans
 private_dl_funcs get_dl_functions(){
     private_dl_funcs dlFuncs;
-    void* linkerHandle = nsbypass_dlopen(LINKER_PATH, 0);
+    // Expecting /apex/com.android.runtime/bin/linker64 but not 100% sure on that so just linker64
+    void* linkerHandle = nsbypass_dlopen("linker64", 0);
+    // If that fails, do try this funny (this works, don't ask why idk either)
+    if (!linkerHandle) linkerHandle = dlopen("libdl.so", RTLD_LAZY);
     // First attempt the normal libadrenotools method (ARM64 shenanigans)
 #if (defined __aarch64__)
     // This searches libdl which has WEAK funcs.
@@ -39,11 +43,11 @@ private_dl_funcs get_dl_functions(){
     dlFuncs.dlclose = find_branch_label(&dlclose);
     dlFuncs.dlsym = find_branch_label(&dlsym);
 #endif
-    // If that fails, try looking for it in memory
-    if (!dlFuncs.dlopen) dlFuncs.dlopen = nsbypass_dlsym(linkerHandle, "__loader_dlopen");
-    if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = nsbypass_dlsym(linkerHandle, "__loader_android_dlopen_ext");
-    if (!dlFuncs.dlclose) dlFuncs.dlclose = nsbypass_dlsym(linkerHandle, "__loader_dlclose");
-    if (!dlFuncs.dlsym) dlFuncs.dlsym = nsbypass_dlsym(linkerHandle, "__loader_dlsym");
+
+    if (!dlFuncs.dlopen) dlFuncs.dlopen = dlsym(linkerHandle, "__loader_dlopen");
+    if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = dlsym(linkerHandle, "__loader_android_dlopen_ext");
+    if (!dlFuncs.dlclose) dlFuncs.dlclose = dlsym(linkerHandle, "__loader_dlclose");
+    if (!dlFuncs.dlsym) dlFuncs.dlsym = dlsym(linkerHandle, "__loader_dlsym");
     // Don't dlclose that, it's not our property.
     return dlFuncs;
 }

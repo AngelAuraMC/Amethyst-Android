@@ -19,7 +19,9 @@
 // SOFTWARE.
 
 // Copyright (c) 2026 alexytomi
-// Modified to remove redundancies within nsbypass library
+// Modified to remove redundancies within nsbypass library and renaming things
+// Added relative file support to nsbypass_dlopen
+// Redirect these functions to the real implementations on Android 6 and below
 
 // This is not actually dlfunc. It doesn't load anything.
 // It bypasses normal linker restrictions by searching the memory for already loaded symbols.
@@ -33,10 +35,11 @@
 #include <sys/mman.h>
 #include <elf.h>
 #include <android/log.h>
-#include "platform.h"
+#include "android_linker_namespace_bypass/platform.h"
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <dlfcn.h>
 #include "fasthook/nsbypass_dlfcn.h"
 
 struct ctx {
@@ -50,7 +53,24 @@ struct ctx {
 	off_t bias;
 };
 
+typedef int (*get_device_api_level_fn)(void);
+
+// Namespace restrictions were added in android 7, stub to the normal funcs if below that
+static int is_android_6_or_lower(void)
+{
+	void *symbol;
+	get_device_api_level_fn get_api_level;
+	symbol = dlsym(dlopen("libc.so", RTLD_LAZY), "android_get_device_api_level");
+	if (symbol == NULL) {
+		// android_get_device_api_level() was added in API 24. If it's not here then we are lower.
+		return 1;
+	}
+	get_api_level = (get_device_api_level_fn)symbol;
+	return get_api_level() < 24 ? 1 : 0;
+}
+
 int nsbypass_dlclose(void *handle) {
+	if (is_android_6_or_lower()) return dlclose(handle);
 	if (handle) {
 		struct ctx *ctx = (struct ctx *) handle;
 		if (ctx->dynsym) free(ctx->dynsym);    /* we're saving dynsym and dynstr */
@@ -62,9 +82,12 @@ int nsbypass_dlclose(void *handle) {
 	return 0;
 }
 
-void *nsbypass_dlopen(const char *libpath, int flags) {
+void *nsbypass_dlopen(const char *libPath, int flags) {
+	if (is_android_6_or_lower()) return dlopen(libPath, flags);
 	FILE *maps;
-	char buff[256];
+	// Increase the buffer because we added searching for absolute file.
+	// 256 might not be enough buffer to get the whole path in.
+	char mapsSearchBuff[2048];
 	struct ctx *ctx = 0;
 	off_t load_addr, size;
 	int k, fd = -1, found = 0;
@@ -76,34 +99,63 @@ void *nsbypass_dlopen(const char *libpath, int flags) {
 	maps = fopen("/proc/self/maps", "r");
 	if (!maps) fatal("failed to open maps");
 
-	while (!found && fgets(buff, sizeof(buff), maps))
-		if (strstr(buff, "r-xp") && strstr(buff, libpath)) found = 1;
+	while (!found && fgets(mapsSearchBuff, sizeof(mapsSearchBuff), maps))
+		if (strstr(mapsSearchBuff, "r-xp") && strstr(mapsSearchBuff, libPath)) found = 1;
 
 	fclose(maps);
 
-	if (!found) fatal("%s not found in my userspace", libpath);
+	// If user didn't prove an absolute path we have to find the actual full path ourselves
+	// This is NOT the file path where the file lives in, so scan memory again.
+	if (libPath[0] != '/') {
+		// Looks through the current buffer which contains the libPath and the path
+		// mapsSearchBuff probably looks like
+		// 7a8d366000-7a8d453000 r-xp 00039000 07:60 16                             /apex/com.android.runtime/bin/linker64
+		char *libPathStart = strstr(mapsSearchBuff, libPath); // at ..bin/[l]inker64
+		if (libPathStart != NULL) {
+			char *pathStart = libPathStart;
+			// Move backward until we find the spaces area.
+			while (pathStart > mapsSearchBuff &&
+					pathStart[-1] != ' ' &&
+					pathStart[-1] != '\t') {
+				--pathStart;
+			}
+			// Hopefully this is the start of the path
+			if (*pathStart == '/') {
+				libPath = pathStart;
+			} else {
+				fatal(
+						"An error happened while resolving the full path of %s; "
+						"searching stopped at %s",
+						libPath,
+						pathStart
+				);
+			}
+		}
+	}
 
-	if (sscanf(buff, "%lx", &load_addr) != 1)
-		fatal("failed to read load address for %s", libpath);
+	if (!found) fatal("%s not found in my userspace", libPath);
 
-	LOGI("%s loaded in Android at 0x%08lx", libpath, load_addr);
+	if (sscanf(mapsSearchBuff, "%lx", &load_addr) != 1)
+		fatal("failed to read load address for %s", libPath);
+
+	LOGI("%s loaded in Android at 0x%08lx", libPath, load_addr);
 
 	/* Now, mmap the same library once again */
 
-	fd = open(libpath, O_RDONLY);
-	if (fd < 0) fatal("failed to open %s", libpath);
+	fd = open(libPath, O_RDONLY);
+	if (fd < 0) fatal("failed to open %s", libPath);
 
 	size = lseek(fd, 0, SEEK_END);
-	if (size <= 0) fatal("lseek() failed for %s", libpath);
+	if (size <= 0) fatal("lseek() failed for %s", libPath);
 
 	elf = (ELF_EHDR *) mmap(0, size, PROT_READ, MAP_SHARED, fd, 0);
 	close(fd);
 	fd = -1;
 
-	if (elf == MAP_FAILED) fatal("mmap() failed for %s", libpath);
+	if (elf == MAP_FAILED) fatal("mmap() failed for %s", libPath);
 
 	ctx = (struct ctx *) calloc(1, sizeof(struct ctx));
-	if (!ctx) fatal("no memory for %s", libpath);
+	if (!ctx) fatal("no memory for %s", libPath);
 
 	ctx->load_addr = (void *) load_addr;
 	shoff = ((void *) elf) + elf->e_shoff;
@@ -120,17 +172,17 @@ void *nsbypass_dlopen(const char *libpath, int flags) {
 		switch (sh->sh_type) {
 
 			case SHT_DYNSYM:
-				if (ctx->dynsym) fatal("%s: duplicate DYNSYM sections", libpath); /* .dynsym */
+				if (ctx->dynsym) fatal("%s: duplicate DYNSYM sections", libPath); /* .dynsym */
 				ctx->dynsym = malloc(sh->sh_size);
-				if (!ctx->dynsym) fatal("%s: no memory for .dynsym", libpath);
+				if (!ctx->dynsym) fatal("%s: no memory for .dynsym", libPath);
 				memcpy(ctx->dynsym, ((void *) elf) + sh->sh_offset, sh->sh_size);
 				ctx->dynsym_num = (sh->sh_size / sizeof(ELF_SYM));
 				break;
 
 			case SHT_SYMTAB:
-				if (ctx->symtab) fatal("%s: duplicate SYMTAB sections", libpath); /* .symtab */
+				if (ctx->symtab) fatal("%s: duplicate SYMTAB sections", libPath); /* .symtab */
 				ctx->symtab = malloc(sh->sh_size);
-				if (!ctx->symtab) fatal("%s: no memory for .symtab", libpath);
+				if (!ctx->symtab) fatal("%s: no memory for .symtab", libPath);
 				memcpy(ctx->symtab, ((void *) elf) + sh->sh_offset, sh->sh_size);
 				ctx->symtab_num = (sh->sh_size / sizeof(ELF_SYM));
 				break;
@@ -139,12 +191,12 @@ void *nsbypass_dlopen(const char *libpath, int flags) {
 				if(!strcmp(shstr+sh->sh_name,".dynstr")) {
 					if (ctx->dynstr) break;    /* .dynstr is guaranteed to be the first STRTAB */
 					ctx->dynstr = malloc(sh->sh_size);
-					if (!ctx->dynstr) fatal("%s: no memory for .dynstr", libpath);
+					if (!ctx->dynstr) fatal("%s: no memory for .dynstr", libPath);
 					memcpy(ctx->dynstr, ((void *) elf) + sh->sh_offset, sh->sh_size);
 				}else if(!strcmp(shstr+sh->sh_name,".strtab")) {
 					if (ctx->strtab) break;
 					ctx->strtab = malloc(sh->sh_size);
-					if (!ctx->strtab) fatal("%s: no memory for .strtab", libpath);
+					if (!ctx->strtab) fatal("%s: no memory for .strtab", libPath);
 					memcpy(ctx->strtab, ((void *) elf) + sh->sh_offset, sh->sh_size);
 				}
 				break;
@@ -161,11 +213,11 @@ void *nsbypass_dlopen(const char *libpath, int flags) {
 	munmap(elf, size);
 	elf = 0;
 
-	if (!ctx->dynstr || !ctx->dynsym) fatal("dynamic sections not found in %s", libpath);
+	if (!ctx->dynstr || !ctx->dynsym) fatal("dynamic sections not found in %s", libPath);
 
 #undef fatal
 
-	LOGD("%s: ok, dynsym = %p, dynstr = %p symtab = %p strtab = %p", libpath, ctx->dynsym, ctx->dynstr, ctx->symtab, ctx->strtab);
+	LOGD("%s: ok, dynsym = %p, dynstr = %p symtab = %p strtab = %p", libPath, ctx->dynsym, ctx->dynstr, ctx->symtab, ctx->strtab);
 
 	return ctx;
 
@@ -177,6 +229,7 @@ void *nsbypass_dlopen(const char *libpath, int flags) {
 }
 
 void *nsbypass_dlsym(void *handle, const char *name) {
+	if (is_android_6_or_lower()) return dlsym(handle, name);
 	int k;
 	struct ctx *ctx = (struct ctx *) handle;
     ELF_SYM *dynsym = (ELF_SYM *) ctx->dynsym;

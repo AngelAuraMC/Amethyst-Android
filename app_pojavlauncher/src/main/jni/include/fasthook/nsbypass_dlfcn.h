@@ -3,7 +3,7 @@
 //
 
 int nsbypass_dlclose(void *handle);
-void *nsbypass_dlopen(const char *libpath, int flags);
+void *nsbypass_dlopen(const char *libPath, int flags);
 void *nsbypass_dlsym(void *handle, const char *name);
 
 typedef int (*dlclose_function)(

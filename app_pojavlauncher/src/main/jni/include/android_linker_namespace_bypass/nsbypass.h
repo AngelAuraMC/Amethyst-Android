@@ -5,6 +5,7 @@
 #include <android/dlext.h>
 #include <sys/unistd.h>
 #include <sys/mman.h>
+#include "android_linker_namespace_bypass/platform.h"
 
 #ifndef AMETHYST_NSBYPASS_H
 #define AMETHYST_NSBYPASS_H
@@ -44,7 +45,7 @@ static void* find_branch_label(void* func_start) {
     // Reprotecting the functions removes (BTI) protection from indirect jumps
     // while technically out of scope of "find_branch_label", this is just
     // cleaner overall.
-    if (mprotect(t, page_size, PROT_WRITE | PROT_READ | PROT_EXEC) != 0) {
+    if (mprotect(align_ptr_to_pagesize(t), page_size, PROT_WRITE | PROT_READ | PROT_EXEC) != 0) {
         LOGW("Failed to remove BTI protection from private API page. This might fail..  %p", t);
     }
     return t;
