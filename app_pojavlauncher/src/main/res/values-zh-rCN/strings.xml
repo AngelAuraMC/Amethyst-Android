@@ -13,7 +13,7 @@
     <!-- AlertDialog title -->
     <string name="alerttitle_installmod">选择模组安装器</string>
     <!-- Error messages -->
-    <string name="error_fatal">Amethyst 意外崩溃</string>
+    <string name="error_fatal">Amethyst 意外崩溃了</string>
     <string name="error_no_version">无可用版本！</string>
     <string name="error_show_more">显示详情</string>
     <string name="error_show_less">隐藏详情</string>
@@ -34,9 +34,9 @@
     <string name="mcl_options">选项</string>
     <string name="mcl_option_customcontrol">自定义控制键</string>
     <string name="mcl_setting_title_use_surface_view">启用备用表层渲染</string>
-    <string name="mcl_setting_subtitle_use_surface_view">可能有助于提升 GPU 绑定场景中的性能。</string>
+    <string name="mcl_setting_subtitle_use_surface_view">此项设置可能有助于提升受 GPU 限制的性能。</string>
     <string name="mcl_setting_title_ignore_notch">忽略刘海屏</string>
-    <string name="mcl_setting_subtitle_ignore_notch">忽略刘海屏并将画面内容扩展至其下方，\n给您更完整的沉浸感。</string>
+    <string name="mcl_setting_subtitle_ignore_notch">忽略刘海屏并将画面内容扩展至其下方，\n以给您以更完整的沉浸感。</string>
     <string name="mcl_setting_title_resolution_scaler">分辨率缩放</string>
     <string name="mcl_setting_subtitle_resolution_scaler">允许降低游戏画面分辨率，原始分辨率为 100%。</string>
     <string name="mcl_setting_title_longpresstrigger">触发长按延迟</string>
@@ -46,7 +46,7 @@
     <string name="mcl_setting_title_mousescale">鼠标缩放</string>
     <string name="mcl_setting_subtitle_mousescale">调整虚拟鼠标大小。</string>
     <string name="mcl_setting_title_javaargs">JVM 启动参数</string>
-    <string name="mcl_setting_subtitle_javaargs">请注意：无相关知识更改此值，可能导致游戏崩溃。</string>
+    <string name="mcl_setting_subtitle_javaargs">请注意，如果您不知晓相关知识，修改此值可能会导致游戏崩溃。</string>
     <string name="mcl_setting_title_renderer_settings">附加渲染器设置</string>
     <string name="mcl_setting_title_renderer_subtitle">渲染器特定设置</string>
     <string name="mcl_setting_category_renderer">渲染器</string>
@@ -148,6 +148,8 @@
     <string name="mcl_setting_subtitle_mousespeed">修改虚拟鼠标的移动速度。</string>
     <string name="mcl_setting_title_grab_mouse">使用虚拟光标</string>
     <string name="mcl_setting_subtitle_grab_mouse">确保光标停留在游戏内，防止鼠标点到触摸控制键布局。</string>
+    <string name="mcl_setting_title_keyboard_panning">打开键盘时画面上移</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">当打开键盘时，游戏画面上移。</string>
     <string name="customctrl_passthru">穿透点击</string>
     <string name="customctrl_swipeable">滑动点击</string>
     <string name="customctrl_forward_lock">前进锁定</string>
@@ -429,6 +431,7 @@
     <string name="error_vanilla_json_corrupt">原版 JSON 似乎已损坏。请在 GitHub 或 Discord 上提交错误报告。</string>
     <string name="preference_ask_for_microphone_title">允许麦克风</string>
     <string name="preference_ask_for_microphone_description">点击以重新请求通知权限，Simple Voice Chat 等语音聊天模组需要此权限。</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">如果游戏版本为 26.3-Snapshot4 及以上或手柄模组无法正常工作，这可以修复它。</string>
     <string name="mcl_gamepad_forcedSDL">强制启动 SDL 手柄处理</string>
     <string name="preference_category_SDL_settings">SDL 设置</string>
     <string name="oldL4JFound">你正在使用的 Legacy4J 版本未包含 Android 修复！你需要在手柄设置中手动启用 SDL 才能获得最佳体验！</string>
@@ -451,4 +454,16 @@
     <string name="global_download">下载</string>
     <string name="multirt_no_internet">下载失败，请检查互联网连接。</string>
     <string name="global_installing">安装中…</string>
+    <string name="error_key_unsupported">错误！分配给此按钮的按键无效。是否尝试更新？</string>
+    <string name="error_invalid_value">错误！无效的值！</string>
+    <string name="minecraft_no_username_set">您的 Minecraft 用户名未设置！您必须先在 Minecraft 网站中设置它，然后才能登录！</string>
+    <string name="create_lwjgl3ify_profile">创建 LWJGL3ify 配置文件</string>
+    <string name="select_lwjgl3ify_version">选择 LWJGL3ify 版本</string>
+    <string name="lwjgl3ify_installer_available_versions">支持的 LWJGL3ify 版本</string>
+    <string name="lwjgl3ify_installer_broken_versions">损坏的 LWJGL3ify 版本 (SDL)</string>
+    <string name="new_default_controls">提取新的默认控件到 new_default.json。快去试试吧！</string>
+    <string name="import_modpack_start">正在导入整合包...</string>
+    <string name="import_modpack_hash">正在解压整合包文件… (%s MB/ %s MB)</string>
+    <string name="import_modpack_json">正在读取整合包信息…</string>
+    <string name="import_modpack_copy">正在将整合包文件复制到缓存… (%s MB/ %s MB)</string>
 </resources>
