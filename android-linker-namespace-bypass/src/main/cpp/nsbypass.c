@@ -15,7 +15,7 @@
 #include <elf.h>
 #include "fasthook/nsbypass_dlfcn.h"
 #include "platform.h"
-#include "elf_soname_patcher.c"
+#include "elf_soname_patcher.h"
 #include <stdlib.h>
 #include "nsbypass.h"
 #include <jni.h>

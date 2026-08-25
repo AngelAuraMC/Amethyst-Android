@@ -2,6 +2,11 @@
 // Created by tom on 8/22/26.
 //
 
+#include <android/dlext.h>
+#include <sys/unistd.h>
+#include <sys/mman.h>
+#include "platform.h"
+
 #ifndef AMETHYST_NSBYPASS_H
 #define AMETHYST_NSBYPASS_H
 

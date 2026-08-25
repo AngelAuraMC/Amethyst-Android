@@ -1,23 +1,10 @@
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
-#include "platform.h"
-#include <errno.h>
-#include <fcntl.h>
+
+#include "elf_soname_patcher.h"
+
 // Used the following as reference
 // https://github.com/bylaws/liblinkernsbypass/blob/master/elf_soname_patcher.cpp
 // https://github.com/PojavLauncherTeam/PojavLauncher/blob/v3_openjdk/app_pojavlauncher/src/main/jni/driver_helper/nsbypass.c
 
-/**
- * @brief  Overwrites the first three characters of a soname
- * @note   IMPORTANT: The supplied soname patch will overwrite the first strlen(sonamePatch) chars of the soname
- * @param  realfd File descriptor to source library
- * @param  patchfd File descriptor to location of patched library
- * @param  patchid Numeric patch ID, prefixes with 0
- * @return True on success
- */
 bool patch_elf_soname(int realfd, int patchfd, uint16_t patchid) {
     struct stat realstat;
     if(fstat(realfd, &realstat)) return false;
@@ -57,15 +44,6 @@ bool patch_elf_soname(int realfd, int patchfd, uint16_t patchid) {
     return false;
 }
 
-
-/**
- * @brief  Overwrites the first three characters of a soname
- * @note   IMPORTANT: The supplied soname patch will overwrite the first strlen(sonamePatch) chars of the soname
- * @param  elfPath Full path to the elf to patch
- * @param  patchfd File descriptor to location of patched library
- * @param  patchid Numeric patch ID, prefixes with 0
- * @return True on success
- */
 bool patch_elf_soname_path(const char *elfPath, int patchfd, uint16_t patchid)
 {
     if (elfPath == NULL) {
