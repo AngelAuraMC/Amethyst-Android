@@ -42,8 +42,8 @@ static void* find_branch_label(void* func_start) {
     // Offset the address to find where the "branch to label" instrunction
     // points to.
     void* t = ((char*)bl_addr) + (*bl_addr & BL_IM) * 4;
-    // Reprotecting the functions removes (BTI) protection from indirect jumps
-    // while technically out of scope of "find_branch_label", this is just
+    // Reprotecting the functions removes (BTI) protection from indirect jumps.
+    // While technically out of scope of "find_branch_label", this is just
     // cleaner overall.
     if (mprotect(align_ptr_to_pagesize(t), page_size, PROT_WRITE | PROT_READ | PROT_EXEC) != 0) {
         LOGW("Failed to remove BTI protection from private API page. This might fail..  %p", t);

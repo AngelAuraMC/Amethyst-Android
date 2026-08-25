@@ -30,9 +30,9 @@
 
 // We have two sources for this, linker64/linker or libdl.so via ARM64 shenanigans
 private_dl_funcs get_dl_functions(){
-    private_dl_funcs dlFuncs;
+    private_dl_funcs dlFuncs = {0};
     // Expecting /apex/com.android.runtime/bin/linker64 but not 100% sure on that so just linker64
-    void* linkerHandle = nsbypass_dlopen("linker64", 0);
+    void* linkerHandle = nsbypass_dlopen(LINKER_PATH, 0);
     // If that fails, do try this funny (this works, don't ask why idk either)
     if (!linkerHandle) linkerHandle = dlopen("libdl.so", RTLD_LAZY);
     // First attempt the normal libadrenotools method (ARM64 shenanigans)
@@ -43,32 +43,34 @@ private_dl_funcs get_dl_functions(){
     dlFuncs.dlclose = find_branch_label(&dlclose);
     dlFuncs.dlsym = find_branch_label(&dlsym);
 #endif
-
-    if (!dlFuncs.dlopen) dlFuncs.dlopen = dlsym(linkerHandle, "__loader_dlopen");
-    if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = dlsym(linkerHandle, "__loader_android_dlopen_ext");
-    if (!dlFuncs.dlclose) dlFuncs.dlclose = dlsym(linkerHandle, "__loader_dlclose");
-    if (!dlFuncs.dlsym) dlFuncs.dlsym = dlsym(linkerHandle, "__loader_dlsym");
+    if (!linkerHandle) {
+        if (!dlFuncs.dlopen) dlFuncs.dlopen = dlsym(linkerHandle, "__loader_dlopen");
+        if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = dlsym(linkerHandle, "__loader_android_dlopen_ext");
+        if (!dlFuncs.dlclose) dlFuncs.dlclose = dlsym(linkerHandle, "__loader_dlclose");
+        if (!dlFuncs.dlsym) dlFuncs.dlsym = dlsym(linkerHandle, "__loader_dlsym");
+    }
     // Don't dlclose that, it's not our property.
     return dlFuncs;
 }
 
 private_linker_funcs get_namespace_functions(){
     private_linker_funcs linkerFuncs = {0};
-    void* linkerHandle = nsbypass_dlopen(LINKER_PATH, 0);
-    if (!linkerHandle && g_privateDlFuncs.dlopen) {
-        // This fallback is only possible with the private API, or else namespace restrictions
-        // stops us. &dlopen leads to g_default_namespace so this bypasses that.
-        linkerHandle = g_privateDlFuncs.dlopen("ld-android.so", RTLD_LAZY, &dlopen);
-    }
-    if (linkerHandle && g_privateDlFuncs.dlsym != 0) { // Check if it found a handle
+    // Can't use linker64 for the real dlsym, it'll sigsegv
+    void* linkerHandle = g_privateDlFuncs.dlopen("ld-android.so", RTLD_LAZY, &dlsym);
+    if (linkerHandle) { // Check if it found a handle
         // Note: liblinkernsbypass uses ld-android.so for link* and libdl_android.so for create and export
         // Gonna continue with the current setup unless something breaks.
         linkerFuncs.create_namespace = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_create_namespace", &dlsym);
         linkerFuncs.link_namespaces = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_link_namespaces", &dlsym);
         linkerFuncs.link_namespace_all_libs = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_link_namespaces_all_libs", &dlsym);
         linkerFuncs.get_exported_namespace = g_privateDlFuncs.dlsym(linkerHandle, "__loader_android_get_exported_namespace", &dlsym);
-    } else {
-        LOGE("Unable to load namespace functions! dlFunction loading probably failed?");
+    } else { // If that somehow failed, fallback to scanning memory/linker64
+        LOGE("Unable to load namespace functions! dlFunction loading probably failed? Falling back to memory scanning.");
+        linkerHandle = nsbypass_dlopen(LINKER_PATH, 0);
+        linkerFuncs.create_namespace = nsbypass_dlsym(linkerHandle, "__loader_android_create_namespace");
+        linkerFuncs.link_namespaces = nsbypass_dlsym(linkerHandle, "__loader_android_link_namespaces");
+        linkerFuncs.link_namespace_all_libs = nsbypass_dlsym(linkerHandle, "__loader_android_link_namespaces_all_libs");
+        linkerFuncs.get_exported_namespace = nsbypass_dlsym(linkerHandle, "__loader_android_get_exported_namespace");
     }
 
     return linkerFuncs;
@@ -208,6 +210,7 @@ void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* n
 
 // dlopen in a specific namespace in a custom dir and a modified DT_SONAME
 void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char* libName, int flags, struct android_namespace_t* ns) {
+    if (!ns) return NULL;
     char pathbuf[PATH_MAX];
     static uint16_t patch_id;
     int patch_fd, real_fd;
@@ -223,7 +226,7 @@ void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char
         return NULL;
     }
 
-    if(!patch_elf_soname(real_fd, patch_id, patch_id)) {
+    if(!patch_elf_soname(real_fd, patch_fd, patch_id)) {
         close(patch_fd);
         close(real_fd);
         return NULL;

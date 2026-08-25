@@ -77,7 +77,6 @@ include $(BUILD_SHARED_LIBRARY)
 #ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 include $(CLEAR_VARS)
 LOCAL_MODULE := linkerhook
-LOCAL_SHARED_LIBRARIES := android_linker_namespace_bypass
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_SRC_FILES := driver_helper/hook.c
 LOCAL_LDFLAGS := -z global

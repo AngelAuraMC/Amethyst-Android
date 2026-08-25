@@ -122,6 +122,12 @@ void *nsbypass_dlopen(const char *libPath, int flags) {
 			// Hopefully this is the start of the path
 			if (*pathStart == '/') {
 				libPath = pathStart;
+                // Remove \n or else it tries to open() a path with a newline which it sadly
+                // isn't too happy about doing.
+                char *pathEnd = strchr(libPath, '\n');
+                if (pathEnd != NULL) {
+                    *pathEnd = '\0';
+                }
 			} else {
 				fatal(
 						"An error happened while resolving the full path of %s; "
