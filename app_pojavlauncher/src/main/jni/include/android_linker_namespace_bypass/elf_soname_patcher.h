@@ -2,17 +2,18 @@
 // Created by tom on 8/25/26.
 //
 
-#ifndef AMETHYST_ELF_SONAME_PATCHER_H
-#define AMETHYST_ELF_SONAME_PATCHER_H
 
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "platform.h"
 #include <errno.h>
 #include <fcntl.h>
+#include <stdbool.h>
+
+#ifndef AMETHYST_ELF_SONAME_PATCHER_H
+#define AMETHYST_ELF_SONAME_PATCHER_H
 
 /**
  * @brief  Overwrites the first three characters of a soname

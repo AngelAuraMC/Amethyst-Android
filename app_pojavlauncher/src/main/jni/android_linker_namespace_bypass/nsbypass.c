@@ -13,12 +13,12 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <elf.h>
+#include <stdlib.h>
+#include <jni.h>
 #include "fasthook/nsbypass_dlfcn.h"
 #include "platform.h"
-#include "elf_soname_patcher.h"
-#include <stdlib.h>
-#include "nsbypass.h"
-#include <jni.h>
+#include "android_linker_namespace_bypass/elf_soname_patcher.h"
+#include "android_linker_namespace_bypass/nsbypass.h"
 
 // libdl_android.so and ld-android.so are aliases to linker64 impl
 // libdl_android.so provides WEAK symbols and missing dlFuncs. Don't use it.

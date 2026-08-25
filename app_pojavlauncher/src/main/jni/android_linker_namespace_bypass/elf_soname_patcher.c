@@ -1,5 +1,5 @@
-
-#include "elf_soname_patcher.h"
+#include "platform.h"
+#include "android_linker_namespace_bypass/elf_soname_patcher.h"
 
 // Used the following as reference
 // https://github.com/bylaws/liblinkernsbypass/blob/master/elf_soname_patcher.cpp

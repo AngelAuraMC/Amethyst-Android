@@ -11,6 +11,25 @@ $(call import-module,prefab/bytehook)
 LOCAL_PATH := $(HERE_PATH)
 
 include $(CLEAR_VARS)
+
+LOCAL_MODULE := android_linker_namespace_bypass
+
+LOCAL_SRC_FILES := \
+    android_linker_namespace_bypass/elf_soname_patcher.c \
+    android_linker_namespace_bypass/nsbypass.c \
+    android_linker_namespace_bypass/nsbypass_dlfcn.c
+
+LOCAL_C_INCLUDES := \
+    $(LOCAL_PATH)/include \
+    $(LOCAL_PATH)/fasthook
+
+LOCAL_LDLIBS := -llog
+
+LOCAL_CPPFLAGS := -std=c++17
+
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 # Link GLESv2 for test
 LOCAL_LDLIBS := -ldl -llog -landroid
 # -lGLESv2
@@ -90,5 +109,5 @@ LOCAL_SRC_FILES := xawt_fake.c
 include $(BUILD_SHARED_LIBRARY)
 
 # delete fake libs after linked
-$(info $(shell (rm $(HERE_PATH)/../jniLibs/*/libawt_headless.so)))
+#$(info $(shell (rm $(HERE_PATH)/../jniLibs/*/libawt_headless.so)))
 
