@@ -43,7 +43,7 @@ __attribute__((visibility("default"), used)) void *android_load_sphal_library(co
         androidNamespace = android_get_exported_namespace_p(sphal_namespaces[i]);
         if(androidNamespace != NULL) break;
     }
-    android_dlextinfo info;
+    android_dlextinfo info = {0};
     info.flags = ANDROID_DLEXT_USE_NAMESPACE;
     info.library_namespace = androidNamespace;
     return android_dlopen_ext_p(filename, flags, &info, &android_dlopen_ext);

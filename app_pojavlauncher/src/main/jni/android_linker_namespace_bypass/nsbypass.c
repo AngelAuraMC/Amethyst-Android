@@ -39,6 +39,93 @@
 // libdl somehow exports the __loader variants of its dlFuncs?? idk either
 
 
+// Creating this needed to base off of pojav and liblinkernsbypass. These are my conclusions
+// after studying those implementations
+
+// The pojav implementation
+//   - Places turnip in the driver_namespace (SHARED_ISOLATED orphan, with custom path load override imitating link_all_libs)
+//   - Places liblinkerhook in the driver_namespace
+//   - Loads renamed libvulkan.so -> 000vulkan.so into driver_namespace as vulkan loader
+//   - 000vulkan.so acts as vulkan loader, handle is used by program
+//
+//  LWJGL is modified to use VULKAN_PTR so we don't need as extensive hooking faculties as
+//  libadrenotools.
+//
+//  Code flows like this. On startup, turnip, libvulkan, and liblinkerhook are all put inside
+//  a SHARED_ISOLATED orphan namespace with permission to load from /system/:/data/:/vendor/:/apex/
+//  and libvulkan's handle from then on is passed to LWJGL every time it wants it.
+//  No mod in their sane mind would ever dlopen vulkan themselves. If they did though, they'd
+//  likely get the android implementation and fail miserably.
+
+
+// The libadrenotools implementation
+//   - Places libhook_impl in an escape namespace (hookNS)
+//   - Loads renamed libvulkan.so into hookNS (not sure what its renamed to)
+//   - On trigger of hook, we copy what bionic does (create new driverNS) but also load
+//     libandroid.so and the hook into there.
+//   - Set a bunch of adreno features settings
+//   - Place turnip in driverNS
+//
+//  The patched/hooked libvulkan needs to be in its own namespace because that's how the hook
+//  works. The driver exists in its own namespace because of the adreno feature toggles that
+//  are themselves, their own natives that need to be loaded. This separation just keeps things
+//  tidy.
+//
+//  Code flows like this. adrenotools_open_libvulkan is called, create hookNS which is the
+//  place where patched/hooked libvulkan stays in. hookNS cause libvulkan to load turnip as
+//  how android would load a vk driver, only that there are modifications to the namespace
+//  creation parameters and extra libraries are loaded inside, this is named driverNS.
+//
+//  Now the confusing bit, it also loads the hook library inside the namespace. This is only
+//  because they have extra hooks on kgsl and fopen. I have no idea why they do this instead of
+//  making those entirely seperate hooks or putting both libvulkan and the driver in one namespace.
+//
+//  So what ends up happening is you get hookNS which has libvulkan and every single hook
+//  and driverNS which has all the turnip driver stuff and also every single hook.
+//  So much for keeping everything tidy.
+
+// The TLDR;
+//   - libvulkan is patched and loaded loaded alongside a hook for android_load_sphal_library
+//     and android_dlopen_ext which redirects all loads to vulkan related libs to turnip handle.
+//     This must be in a custom namespace and modified name or else we conflict with android sysvk.
+//     Does not need escape namespace.
+//   - The libadrenotools hook creates the driverNS on demand as android_dlopen_ext is called by
+//     libvulkan.
+//   - The pojav hook puts hook, driver, and libvulkan in a single NS, loaded in that order.
+//   - The libadrenotools hook uses escape namespaces.
+//   - The pojav hook uses permitted_when_isolated_path.
+//   - The patched libvulkan is used as the handle for programs that use the custom driver.
+//   - The custom driver can be loaded anywhere so long as libvulkan.so access it via
+//     android_load_sphal_library and android_dlopen_ext. Turnip needs an escape
+//     namespace because it depends on private apis. libcutil and libhardware afaik
+//  https://cs.android.com/android/platform/superproject/+/android-latest-release:bionic/libc/include/android/dlext.h;drc=414dd2d6b5fbbaf23423abe5cdee7f40f9d95ec1;l=77-80
+//  https://cs.android.com/android/platform/superprojehttps://cs.android.com/android/platform/superproject/+/android-latest-release:bionic/libc/include/android/dlext.h;drc=414dd2d6b5fbbaf23423abe5cdee7f40f9d95ec1;l=97-99
+//   - libvulkan.so filename and soname should be modified or else it might use systemvk for symbol
+//     resolution. This goes the same with any other libraries. Only issue is it might break the
+//     .dynamic needed SONAMEs. So instead we should just create namespace, load the libs we need,
+//     and only after do we link to escape/global namespace in case the libs decide to call dlopen
+//     or dlsym on other stuff. And preload all DT_NEEDED.
+
+
+/*
+ * Can we imitate libadrenotools structure on OpenGL? Maybe.
+ * libEGL_mesa.so and libgallium_dri.so after all. The issue would be we need to hook dlopen
+ * for both of those to redirect to the handle inside the already setup namespace.
+ *
+ * Problem is both of those could technically be considered the driver since they're pretty
+ * much one and the same. Both even need escape namespace since libEGL_mesa needs the gallium
+ * driver and they almost definitely wont like being in seperate namespaces.
+ *
+ * We don't really have a hookNS here, just a driverNS. The two expect to be loaded in the
+ * same namespace after all.
+ *
+ *
+ * So for GL we can likely get away with just creating an escape namespace for the EGL and GL
+ * libs to live inside and just refer to their handles from then on.
+ *
+ * So we end up needing two seperate frontends for GL and vk. how annoying
+ */
+
 /**
  * Tests the provided dl functions to see if they work.
  * This way, any SIGSEGV or other stuff hard crashes early.
@@ -67,7 +154,7 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs);
  */
 private_dl_funcs get_private_dl_functions(){
     // TODO: Verify if this works on Android 8 or lower, they have a weird thing
-    // that doesn't exactly just just __loader_* laying around.
+    // that doesn't exactly just have __loader_* laying around so am not sure about it.
 
     // First attempt the normal libadrenotools method (ARM64 shenanigans)
 #if (defined __aarch64__)
@@ -97,8 +184,7 @@ private_dl_funcs get_private_dl_functions(){
     char *error = dlerror();
     if (error) LOGI("Stale dlerror: %s", error);
 
-    // The funcs here are mixedwith the arm64 ones if those fail, this is on purpose.
-    // That this even works is stupiid.
+    // The funcs here are mixed with the arm64 ones if those fail, this is on purpose.
     if (!dlFuncs.dlopen) dlFuncs.dlopen = dlsym(linkerHandle, "__loader_dlopen");
     if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = dlsym(linkerHandle, "__loader_android_dlopen_ext");
     if (!dlFuncs.dlclose) dlFuncs.dlclose = dlsym(linkerHandle, "__loader_dlclose");
@@ -378,101 +464,12 @@ __attribute__((constructor)) void resolve_global_symbols() {
         LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
         return;
     }
-    // TODO: Add testing for each func
-
-
-
-
-    // This means we can create a namespace that inherits from g_default_namespace. This is called
-    // an escape namespace by bylaws/libadrenotools.
-
-    // The pojav implementation
-    //   - Places turnip in the driver_namespace (SHARED_ISOLATED orphan, with custom path load override imitating link_all_libs)
-    //   - Places liblinkerhook in the driver_namespace
-    //   - Loads renamed libvulkan.so -> 000vulkan.so into driver_namespace as vulkan loader
-    //   - 000vulkan.so acts as vulkan loader, handle is used by program
-    //
-    //  LWJGL is modified to use VULKAN_PTR so we don't need as extensive hooking faculties as
-    //  libadrenotools.
-    //
-    //  Code flows like this. On startup, turnip, libvulkan, and liblinkerhook are all put inside
-    //  a SHARED_ISOLATED orphan namespace with permission to load from /system/:/data/:/vendor/:/apex/
-    //  and libvulkan's handle from then on is passed to LWJGL every time it wants it.
-    //  No mod in their sane mind would ever dlopen vulkan themselves. If they did though, they'd
-    //  likely get the android implementation and fail miserably.
-
-
-    // The libadrenotools implementation
-    //   - Places libhook_impl in an escape namespace (hookNS)
-    //   - Loads renamed libvulkan.so into hookNS (not sure what its renamed to)
-    //   - On trigger of hook, we copy what bionic does (create new driverNS) but also load
-    //     libandroid.so and the hook into there.
-    //   - Set a bunch of adreno features settings
-    //   - Place turnip in driverNS
-    //
-    //  The patched/hooked libvulkan needs to be in its own namespace because that's how the hook
-    //  works. The driver exists in its own namespace because of the adreno feature toggles that
-    //  are themselves, their own natives that need to be loaded. This separation just keeps things
-    //  tidy.
-    //
-    //  Code flows like this. adrenotools_open_libvulkan is called, create hookNS which is the
-    //  place where patched/hooked libvulkan stays in. hookNS cause libvulkan to load turnip as
-    //  how android would load a vk driver, only that there are modifications to the namespace
-    //  creation parameters and extra libraries are loaded inside, this is named driverNS.
-    //
-    //  Now the confusing bit, it also loads the hook library inside the namespace. This is only
-    //  because they have extra hooks on kgsl and fopen. I have no idea why they do this instead of
-    //  making those entirely seperate hooks.
-    //
-    //  So what ends up happening is you get hookNS which has libvulkan and every single hook
-    //  and driverNS which has all the turnip driver stuff and also every single hook.
-    //  So much for keeping everything tidy.
-
-    // The TLDR;
-    //   - libvulkan is patched and loaded loaded alongside a hook for android_load_sphal_library
-    //     and android_dlopen_ext which redirects all loads to vulkan related libs to turnip handle.
-    //     This must be in a custom namespace or else we conflict with android sysvk. Does not need
-    //     escape namespace.
-    //   - The patched libvulkan is used as the handle for programs that use the custom driver.
-    //   - The custom driver can be loaded anywhere so long as libvulkan.so access it via
-    //     android_load_sphal_library and android_dlopen_ext. Turnip needs an escape
-    //     namespace because it depends on private apis. libcutil and libhardware afaik
-    //   - libvulkan DT_SONAME should be modified or else it may use an already loaded instance.
-    //     its a safety/prevention measure. This goes the same with any other libraries. Only issue
-    //     is it breaks the .dynamic needed SONAMEs. So instead we should just create namespace,
-    //     load the libs we need, and only after do we link to escape/global namespace in case the
-    //     libs decide to call dlopen or dlsym on other stuff.
-
-    /*
-     * Can we imitate libadrenotools structure on OpenGL? Maybe.
-     * libEGL_mesa.so and libgallium_dri.so after all. The issue would be we need to hook dlopen
-     * for both of those to redirect to the handle inside the already setup namespace.
-     *
-     * Problem is both of those could technically be considered the driver since they're pretty
-     * much one and the same. Both even need escape namespace since libEGL_mesa needs the gallium
-     * driver and they almost definitely wont like being in seperate namespaces.
-     *
-     * We don't really have a hookNS here, just a driverNS. The two expect to be loaded in the
-     * same namespace after all.
-     *
-     *
-     * So for GL we can likely get away with just creating an escape namespace for the EGL and GL
-     * libs to live inside and just refer to their handles from then on.
-     *
-     * So we end up needing two seperate frontends for GL and vk. how annoying
-     */
-
-    // TODO: Swap to link_namespace_all_libs and an escape namespace.
-
-    // Setting the 2nd namespace to NULL defaults it to g_default_namespace.
-    // This is just the manual version of link_namespace_all_libs to a new namespace with parent
-    // &dlopen (which is just g_default_namespace)
 }
 
 // dlopen in a specific namespace
 void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* ns) {
     if (!ns) return NULL;
-    android_dlextinfo dlextinfo;
+    android_dlextinfo dlextinfo = {0};
     dlextinfo.flags = ANDROID_DLEXT_USE_NAMESPACE;
     dlextinfo.library_namespace = ns;
     return android_dlopen_ext(name, flag, &dlextinfo);
@@ -501,7 +498,7 @@ void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char
         close(real_fd);
         return NULL;
     }
-    android_dlextinfo extinfo;
+    android_dlextinfo extinfo = {0};
     extinfo.flags = ANDROID_DLEXT_USE_NAMESPACE | ANDROID_DLEXT_USE_LIBRARY_FD;
     extinfo.library_fd = patch_fd;
     extinfo.library_namespace = ns;

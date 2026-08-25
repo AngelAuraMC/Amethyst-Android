@@ -77,6 +77,9 @@ include $(BUILD_SHARED_LIBRARY)
 #ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 include $(CLEAR_VARS)
 LOCAL_MODULE := linkerhook
+# If you add LOCAL_SHARED_LIBRARIES here, it will load those NEEDED as duplicates
+# in wherever namespace this is put inside of. Please just do not.
+# Use dlopen if at all possible.
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
 LOCAL_SRC_FILES := driver_helper/hook.c
 LOCAL_LDFLAGS := -z global
