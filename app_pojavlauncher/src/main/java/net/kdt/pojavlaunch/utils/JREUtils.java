@@ -230,9 +230,10 @@ public class JREUtils {
             if(LOCAL_RENDERER.equals("opengles2")){
                 envMap.put("LIBGL_ES", "2"); // Krypton Wrapper crashes with 1
             }
-            if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper")){
+            if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper") || LOCAL_RENDERER.equals("opengles3_desktopgl_freedreno_kgsl")){
                 envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL
                 if (Tools.shouldUseUBWC()) envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1"); // Turnip fix for OneUI rendering issues
+                envMap.put("POJAV_BYPASS_NAMESPACE", "1"); // Cringy sloppy, but I'm lazy deduplicating this
             }
             if (LOCAL_RENDERER.toLowerCase().contains("zink")){
                 // This is sketch but it fixes a lot of things, if it causes problems we can just undo it.
@@ -491,6 +492,7 @@ public class JREUtils {
     public static String loadGraphicsLibrary(){
         if(LOCAL_RENDERER == null) return null;
         String renderLibrary;
+        boolean bypassNamespace = false;
         switch (LOCAL_RENDERER){
             case "opengles2":
             case "opengles2_5":
@@ -498,12 +500,19 @@ public class JREUtils {
                 renderLibrary = "libng_gl4es.so"; break;
             case "vulkan_zink": renderLibrary = "libOSMesa.so"; break;
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
-            case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
+            case "opengles3_desktopgl_zink_kopper":
+            case "opengles3_desktopgl_freedreno_kgsl" :
+                renderLibrary = "libEGL_mesa.so"; bypassNamespace = true; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             default:
                 Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
                 renderLibrary = "libng_gl4es.so";
                 break;
+        }
+
+        if(bypassNamespace) {
+            if(dlopenns(renderLibrary) || dlopenns(findInLdLibPath(renderLibrary)))
+                return renderLibrary;
         }
 
         if (!dlopen(renderLibrary) && !dlopen(findInLdLibPath(renderLibrary))) {
@@ -550,6 +559,7 @@ public class JREUtils {
     }
     public static native int chdir(String path);
     public static native boolean dlopen(String libPath);
+    public static native boolean dlopenns(String libPath);
     public static native void setLdLibraryPath(String ldLibraryPath);
     public static native void setupBridgeWindow(Object surface);
     public static native void releaseBridgeWindow();

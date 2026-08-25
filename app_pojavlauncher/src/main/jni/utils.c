@@ -7,6 +7,7 @@
 #include "log.h"
 
 #include "utils.h"
+#include "driver_helper/nsbypass.h"
 
 typedef int (*Main_Function_t)(int, char**);
 typedef void (*android_update_LD_LIBRARY_PATH_t)(char*);
@@ -104,6 +105,8 @@ JNIEXPORT void JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_setLdLibraryPath(
 	(*env)->ReleaseStringUTFChars(env, ldLibraryPath, ldLibPathUtf);
 }
 
+typedef void* (*dlopen_func)(const char* name, int flags);
+
 JNIEXPORT jboolean JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_dlopen(JNIEnv *env, jclass clazz, jstring name) {
 	const char *nameUtf = (*env)->GetStringUTFChars(env, name, 0);
 	void* handle = dlopen(nameUtf, RTLD_GLOBAL | RTLD_LAZY);
@@ -114,6 +117,22 @@ JNIEXPORT jboolean JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_dlopen(JNIEnv
 	}
 	(*env)->ReleaseStringUTFChars(env, name, nameUtf);
 	return handle != NULL;
+}
+
+JNIEXPORT jboolean JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_dlopenns(JNIEnv *env, jclass clazz, jstring name) {
+    const char *nameUtf = (*env)->GetStringUTFChars(env, name, 0);
+    const char* nativedir = getenv("POJAV_NATIVEDIR");
+    if(!nativedir) {
+        LOGE("NSBYPASS UNSUPPORTED, provide native dir pls");
+    } else linker_ns_load(nativedir);
+    void* handle = linker_ns_dlopen(nameUtf, RTLD_GLOBAL | RTLD_LAZY);
+    if (!handle) {
+        LOGE("dlopen %s failed: %s", nameUtf, dlerror());
+    } else {
+        LOGD("dlopen %s success", nameUtf);
+    }
+    (*env)->ReleaseStringUTFChars(env, name, nameUtf);
+    return handle != NULL;
 }
 
 JNIEXPORT jint JNICALL Java_net_kdt_pojavlaunch_utils_JREUtils_chdir(JNIEnv *env, jclass clazz, jstring nameStr) {

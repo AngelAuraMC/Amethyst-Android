@@ -14,6 +14,7 @@
 
 #define TAG __FILE_NAME__
 #include <log.h>
+#include "ctxbridges/loader_dlopen.h"
 
 extern void* maybe_load_vulkan();
 
@@ -32,6 +33,11 @@ static jlong ndlopen_bugfix(__attribute__((unused)) JNIEnv *env,
     if(strstr(filename, "libvulkan.so") == filename) {
         printf("LWJGL linkerhook: replacing load for libvulkan.so with custom driver\n");
         return (jlong) maybe_load_vulkan();
+    }
+    // This is cringe, but yes - we need to nsbypass dlopen libEGL even here or it will load in classpaht namespace
+    if(strstr(filename, "libEGL_mesa.so") == filename) {
+        printf("LWJGL linkerhook: replacing Mesa EGL load\n");
+        return (jlong) loader_dlopen("libEGL_mesa.so", NULL, RTLD_NOLOAD | RTLD_NOW, true);
     }
 
     // This hook also serves the task of mitigating a bug: the idea is that since, on Android 10 and

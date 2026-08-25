@@ -69,11 +69,14 @@ static void* find_branch_label(void* func_start) {
     return ((char*)bl_addr) + (*bl_addr & BL_IM) * 4;
 }
 
+static bool exists = false;
+
 bool linker_ns_load(const char* lib_search_path) {
     long page_size = sysconf(_SC_PAGESIZE);
 #ifndef ADRENO_POSSIBLE
     return false;
 #else
+    if(exists) return true;
     loader_dlopen_t loader_dlopen = find_branch_label(&dlopen);
     // reprotecting the functions removes protection from indirect jumps
     mprotect(loader_dlopen, page_size, PROT_WRITE | PROT_READ | PROT_EXEC);
@@ -112,6 +115,7 @@ bool linker_ns_load(const char* lib_search_path) {
     android_link_namespaces(driver_namespace, NULL, "libnativeloader.so");
     android_link_namespaces(driver_namespace, NULL, "libnativeloader_lazy.so");
     dlclose(ld_android_handle);
+    exists = true;
     return true;
 #endif
 }

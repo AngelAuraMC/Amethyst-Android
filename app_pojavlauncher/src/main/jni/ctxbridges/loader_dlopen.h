@@ -5,6 +5,8 @@
 #ifndef POJAVLAUNCHER_LOADER_DLOPEN_H
 #define POJAVLAUNCHER_LOADER_DLOPEN_H
 
-void* loader_dlopen(char* primaryName, char* secondaryName, int flags);
+#include <stdbool.h>
+
+void* loader_dlopen(char* primaryName, char* secondaryName, int flags, bool bypassNamespace);
 
 #endif //POJAVLAUNCHER_LOADER_DLOPEN_H
