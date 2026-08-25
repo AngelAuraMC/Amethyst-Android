@@ -3,14 +3,14 @@
 //
 
 
-#include <sys/stat.h>
-#include <sys/mman.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <string.h>
 #include <errno.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #ifndef AMETHYST_ELF_SONAME_PATCHER_H
 #define AMETHYST_ELF_SONAME_PATCHER_H

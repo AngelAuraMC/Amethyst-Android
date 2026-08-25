@@ -1,24 +1,24 @@
-
-#include <dlfcn.h>
 #include <android/dlext.h>
 #include <android/log.h>
-#include <sys/mman.h>
-#include <sys/user.h>
-#include <string.h>
-#include <stdio.h>
-#include <linux/limits.h>
-#include <errno.h>
-#include <unistd.h>
 #include <asm/unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
+#include <dlfcn.h>
 #include <elf.h>
-#include <stdlib.h>
+#include <errno.h>
+#include <fcntl.h>
 #include <jni.h>
-#include "fasthook/nsbypass_dlfcn.h"
-#include "android_linker_namespace_bypass/platform.h"
+#include <linux/limits.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/user.h>
+#include <unistd.h>
+
 #include "android_linker_namespace_bypass/elf_soname_patcher.h"
 #include "android_linker_namespace_bypass/nsbypass.h"
+#include "android_linker_namespace_bypass/platform.h"
+#include "fasthook/nsbypass_dlfcn.h"
 
 // https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:art/libnativeloader/library_namespaces.cpp
 // clns is the namespace we are in by default.

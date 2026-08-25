@@ -3,8 +3,9 @@
 //
 
 #include <android/dlext.h>
-#include <sys/unistd.h>
 #include <sys/mman.h>
+#include <sys/unistd.h>
+
 #include "android_linker_namespace_bypass/platform.h"
 
 #ifndef AMETHYST_NSBYPASS_H

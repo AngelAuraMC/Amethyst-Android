@@ -2,20 +2,21 @@
 // Created by maks on 05.06.2023.
 //
 
-#include <dlfcn.h>
 #include <android/dlext.h>
 #include <android/log.h>
-#include <sys/mman.h>
-#include <sys/user.h>
-#include <string.h>
-#include <stdio.h>
-#include <linux/limits.h>
-#include <errno.h>
-#include <unistd.h>
 #include <asm/unistd.h>
-#include <fcntl.h>
-#include <sys/stat.h>
+#include <dlfcn.h>
 #include <elf.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <linux/limits.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/user.h>
+#include <unistd.h>
+
 #include "android_linker_namespace_bypass/nsbypass.h"
 
 /* upper 6 bits of an ARM64 instruction are the instruction name */

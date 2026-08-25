@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
+// Taken from https://github.com/turing-technician/FastHook/blob/8fa01b7baec06034ee9c7f51f0345f1142b0f602/fasthook/src/main/cpp/enhanced_dlfcn.c
+
 // Copyright (c) 2026 alexytomi
 // Modified to remove redundancies within nsbypass library and renaming things
 // Added relative file support to nsbypass_dlopen
@@ -31,15 +33,16 @@
 // Not needed on Android 6 and below (namespace restrictions don't exist there).
 // See https://source.android.com/docs/core/permissions/namespaces_libraries
 
-#include <fcntl.h>
-#include <sys/mman.h>
-#include <elf.h>
 #include <android/log.h>
-#include "android_linker_namespace_bypass/platform.h"
-#include <string.h>
-#include <stdlib.h>
-#include <unistd.h>
 #include <dlfcn.h>
+#include <elf.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/mman.h>
+#include <unistd.h>
+
+#include "android_linker_namespace_bypass/platform.h"
 #include "fasthook/nsbypass_dlfcn.h"
 
 struct ctx {
