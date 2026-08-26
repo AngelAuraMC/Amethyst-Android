@@ -5,9 +5,6 @@
 #include "android_linker_namespace_bypass/platform.h"
 
 static void* turnipHandle;
-static const char *sphal_namespaces[3] = {
-        "sphal", "vendor", "default"
-};
 
 static private_namespace_funcs *privateNamespaceFuncs;
 static private_dl_funcs *privateDlFuncs;
@@ -38,14 +35,19 @@ __attribute__((visibility("default"), used)) void *android_dlopen_ext(const char
         return privateDlFuncs->dlopen_ext(filename, flags, extinfo, &android_dlopen_ext);
     if (!turnipHandle){
         // We aren't checking for flags haha.
+        // This namespace must be isolated to keep shenanigans at bay
         turnipNs = privateNamespaceFuncs->create_namespace(
                 "turnip-driver-NS",
                 NULL,
+                getenv("POJAV_NATIVEDIR"),
+                // Inherit list of open libraries of the caller namespace
+                // After creation, only ever look in provided paths given at ns creation for linking
+                ANDROID_NAMESPACE_TYPE_SHARED_ISOLATED,
                 NULL,
-                ANDROID_NAMESPACE_TYPE_ISOLATED,
-                NULL,
-                NULL,
-                extinfo->library_namespace // libvulkan should feed itself here
+                // libvulkan should feed itself here so we inherit all its loaded NEEDED sonames
+                // which are all of turnips NEEDED too.
+                extinfo->library_namespace,
+                privateDlFuncs->dlopen_ext
                 );
         void* turnip_driver_handle = linker_ns_dlopen("libvulkan_freedreno.so", RTLD_LOCAL | RTLD_NOW, turnipNs);
         if(turnip_driver_handle == NULL) {
@@ -57,11 +59,10 @@ __attribute__((visibility("default"), used)) void *android_dlopen_ext(const char
 }
 
 __attribute__((visibility("default"), used)) void *android_load_sphal_library(const char *filename, int flags) {
-    if(strstr(filename, "vulkan.")) {
-        return turnipHandle;
-    }
-    //printf("__loader_android_get_exported_namespace = %p\n__loader_android_dlopen_ext = %p\n", __loader_android_get_exported_namespace,
-    //       __loader_android_dlopen_ext);
+    const char *sphal_namespaces[3] = {
+            "sphal", "vendor", "default"
+    };
+
     struct android_namespace_t* androidNamespace;
     for(int i = 0; i < 3; i++) {
         androidNamespace = privateNamespaceFuncs->get_exported_namespace(sphal_namespaces[i]);
@@ -70,7 +71,7 @@ __attribute__((visibility("default"), used)) void *android_load_sphal_library(co
     android_dlextinfo info = {0};
     info.flags = ANDROID_DLEXT_USE_NAMESPACE;
     info.library_namespace = androidNamespace;
-    return privateDlFuncs->dlopen_ext(filename, flags, &info, &android_dlopen_ext);
+    return android_dlopen_ext(filename, flags, &info);
 }
 
 __attribute__((visibility("default"), used)) uint64_t atrace_get_enabled_tags() {
