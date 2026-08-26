@@ -82,7 +82,7 @@ LOCAL_SRC_FILES := driver_helper/internal_android_dlopen_hook/hook.c
 # If you add LOCAL_SHARED_LIBRARIES here, it might load those NEEDED as duplicates
 # in wherever namespace this is put inside of. Please just do not.
 # Use dlopen if at all possible, the plt/got is a lie!!
-LOCAL_LDFLAGS := -z global # No clue why this is here, doesn't seem important so...
+LOCAL_LDFLAGS := -z global # No clue why this is here, gotta test if this is actually needed [TEST ME]
 include $(BUILD_SHARED_LIBRARY)
 #endif
 
