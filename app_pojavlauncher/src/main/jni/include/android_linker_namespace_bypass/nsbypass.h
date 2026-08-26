@@ -13,6 +13,8 @@ static void *align_ptr_to_pagesize(void *ptr) {
     return (void *)(((uintptr_t)ptr) & ~(getpagesize() - 1));
 }
 #if (defined __aarch64__)
+#include <sys/mman.h>
+
 // The logic of doing this stems from
 // https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:bionic/libdl/libdl.cpp;drc=a493fe415304efd19f089cbfc7d78c9db7d7263c;l=86-114
 // Where the dl* functions all just call __loader variants

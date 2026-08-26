@@ -109,6 +109,8 @@ void* load_turnip_vulkan() {
             NULL,
             __builtin_return_address(0)
             );
+    // Load the hook so it's first to the symbol table and thus hooks
+    linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW, vulkanLoaderNs);
     // Grants the namespace access to system libs.
     g_linkerFuncs.link_namespaces_all_libs(vulkanLoaderNs, escapeNs);
 
