@@ -97,7 +97,8 @@ EXTERNAL_API void* pojavGetCurrentContext() {
 }
 static struct android_namespace_t* vulkanLoaderNs;
 void* load_turnip_vulkan() {
-//    if(getenv("POJAV_LOAD_TURNIP") == NULL) return NULL;
+    if(getenv("POJAV_LOAD_TURNIP") == NULL) return NULL;
+    if(getenv("VULKAN_PTR")) return getenv("VULKAN_PTR");
     const char* native_dir = getenv("POJAV_NATIVEDIR");
     const char* cache_dir = getenv("TMPDIR");
     vulkanLoaderNs = g_linkerFuncs.create_namespace(
@@ -119,7 +120,7 @@ void* load_turnip_vulkan() {
             SEARCH_PATH,
             "libvulkan.so",
             RTLD_LOCAL | RTLD_NOW,
-            vulkanLoaderNs);;
+            vulkanLoaderNs);
 }
 
 static void set_vulkan_ptr(void* ptr) {

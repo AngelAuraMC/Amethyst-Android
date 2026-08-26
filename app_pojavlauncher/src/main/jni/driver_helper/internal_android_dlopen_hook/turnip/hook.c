@@ -26,7 +26,7 @@ __attribute__((constructor)) void init_handles() {
     privateDlFuncs = dlsym(libandroidnsbypassHandle, "g_privateDlFuncs");
     atrace_get_enabled_tags_p = privateDlFuncs->dlsym(
             privateDlFuncs->dlopen("libcutils.so", RTLD_LOCAL | RTLD_LAZY, &dlopen),
-            "atrace_get_enabled_tags_p",
+            "atrace_get_enabled_tags",
             &dlopen
             );
     linker_ns_dlopen = dlsym(libandroidnsbypassHandle, "linker_ns_dlopen");
@@ -73,9 +73,6 @@ __attribute__((visibility("default"), used)) void *android_load_sphal_library(co
     return privateDlFuncs->dlopen_ext(filename, flags, &info, &android_dlopen_ext);
 }
 
-// This is done for older android versions which don't
-// export this function. Technically this is wrong
-// but for our usage it's fine enough
 __attribute__((visibility("default"), used)) uint64_t atrace_get_enabled_tags() {
     return atrace_get_enabled_tags_p();
 }
