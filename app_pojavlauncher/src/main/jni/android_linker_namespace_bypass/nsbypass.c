@@ -399,7 +399,7 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs) {
             ANDROID_NAMESPACE_TYPE_SHARED,
             NULL,
             NULL,
-            __builtin_return_address(0));
+            &dlopen);
     if (escapeNs) {
         LOGI("android_create_namespace successfully made escapeNs");
     } else {
@@ -446,7 +446,7 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs) {
 
 private_dl_funcs g_privateDlFuncs = {0};
 private_namespace_funcs g_linkerFuncs = {0};
-clns_funcs g_clnsFuncs = {0};
+clns_funcs g_clnsFuncs = {0}; //TODO: DELETE
 struct android_namespace_t* escapeNs;
 
 /**
@@ -454,7 +454,7 @@ struct android_namespace_t* escapeNs;
  * Fails hard if any of them are not.
  */
 __attribute__((constructor)) void resolve_global_symbols() {
-    // NOTE: This might be too slow, this might be blocking dlopen, didn't check.
+    // NOTE: Tests are fast enough. Probably still disable tho.
     g_privateDlFuncs = get_private_dl_functions();
     test_dlfuncs(g_privateDlFuncs);
     g_linkerFuncs = get_private_namespace_functions(g_privateDlFuncs);
@@ -467,6 +467,21 @@ __attribute__((constructor)) void resolve_global_symbols() {
             !g_linkerFuncs.get_exported_namespace) {
         LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
         return;
+    }
+
+    if (!escapeNs){
+        escapeNs = g_linkerFuncs.create_namespace(
+                "g_default_namespace_copy",
+                NULL,
+                NULL,
+                ANDROID_NAMESPACE_TYPE_SHARED,
+                NULL,
+                NULL,
+                &dlopen);
+        if (!escapeNs) {
+            LOGD("Failed to create escapeNs!");
+            exit(120); // idk it felt like a 120
+        }
     }
 }
 

@@ -78,7 +78,7 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 LOCAL_MODULE := linkerhook
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-LOCAL_SRC_FILES := driver_helper/internal_android_dlopen_hook/hook.c
+LOCAL_SRC_FILES := driver_helper/internal_android_dlopen_hook/turnip/hook.c
 # If you add LOCAL_SHARED_LIBRARIES here, it might load those NEEDED as duplicates
 # in wherever namespace this is put inside of. Please just do not.
 # Use dlopen if at all possible, the plt/got is a lie!!
