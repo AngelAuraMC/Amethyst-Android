@@ -5,7 +5,8 @@
 #include <string.h>
 #include <stdio.h>
 #include <dlfcn.h>
-
+#include "log.h"
+#include <android/log.h>
 // Silence the warnings about using reserved identifiers (we need to link to these to not pollute the global symtab)
 //NOLINTBEGIN
 static void* (*android_dlopen_ext_p)(const char* filename,
@@ -31,6 +32,7 @@ __attribute__((visibility("default"), used)) void app__pojav_linkerhook_pass_han
 }
 
 __attribute__((visibility("default"), used)) void *android_dlopen_ext(const char *filename, int flags, const android_dlextinfo *extinfo) {
+    __android_log_print(ANDROID_LOG_DEBUG, "DLHOOK", "dlopen ext activated");
     if(!strstr(filename, "vulkan."))
         return android_dlopen_ext_p(filename, flags, extinfo, &android_dlopen_ext);
     return ready_handle;
