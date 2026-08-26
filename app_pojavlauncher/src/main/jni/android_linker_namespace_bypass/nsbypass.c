@@ -164,7 +164,6 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs);
  *
  *  - (aarch64 only) Using &dlopen, scan the assembly instructions until it finds the private API
  *  call and uses the pointers from there. This is likely to be libdl.so being scanned.\n
- *  - Scan /proc/self/maps for an r-xp instance of linker64 then dlsym that instance for pointers\n
  *  - Public API dlopen & dlsym on libdl.so for the private API pointers\n
  *  - Scan /proc/self/maps for an r-xp instance of linker64 then scan that instance for pointers\n
  * @return Private API versions of dlFunc*
@@ -175,6 +174,7 @@ private_dl_funcs get_private_dl_functions(){
     private_dl_funcs dlFuncs = {0};
     // First attempt the normal libadrenotools method (ARM64 shenanigans)
 #if (defined __aarch64__)
+    LOGI("Obtaining private API dlFuncs via BTI instruction from libdl.so");
     dlFuncs.dlopen = find_branch_label(&dlopen);
     dlFuncs.dlopen_ext = find_branch_label(&android_dlopen_ext);
     dlFuncs.dlclose = find_branch_label(&dlclose);
@@ -185,33 +185,21 @@ private_dl_funcs get_private_dl_functions(){
             dlFuncs.dlsym != NULL) {
         return dlFuncs;
     }
+    LOGW("Obtaining dlFuncs via branch label instruction search failed, this is not supposed to happen on aarch64. Falling back.");
 #endif
 
-    bool using_libdl = false;
-    // Now attempt to scan memory.
-    // Probably /apex/com.android.runtime/bin/linker64 but not 100% sure on that so just linker64
-    void* linkerHandle = nsbypass_dlopen(LINKER, 0);
-    // If scanning memory fails, do try this funny (this works, don't ask why idk either) [TEST ME]
-    if (!linkerHandle) {
-        LOGW("Memory scanning for linker/linker64 failed, falling back to libdl.so");
-        linkerHandle = dlopen("libdl.so", RTLD_LAZY);
-        using_libdl = true;
-    }
+    void* linkerHandle = dlopen("libdl.so", RTLD_LAZY);
     // eat any stale ones
     char *error = dlerror();
     if (error) LOGI("Stale dlerror: %s", error);
-
-    // The funcs here are mixed with the arm64 ones if those fail, this is on purpose.
+    LOGI("Obtaining private API dlFuncs via dlopen/dlsym, haha funny, this resolves to linker64 symbol ptrs btw");
     if (!dlFuncs.dlopen) dlFuncs.dlopen = dlsym(linkerHandle, "__loader_dlopen");
     if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = dlsym(linkerHandle, "__loader_android_dlopen_ext");
     if (!dlFuncs.dlclose) dlFuncs.dlclose = dlsym(linkerHandle, "__loader_dlclose");
     if (!dlFuncs.dlsym) dlFuncs.dlsym = dlsym(linkerHandle, "__loader_dlsym");
-
     if (error) {
         LOGW("dlerror in using public API to acquire private API ptrs:  %s", error);
-        linkerHandle = nsbypass_dlopen(LINKER, 0);
     }
-
     if (dlFuncs.dlopen != NULL &&
             dlFuncs.dlopen_ext != NULL &&
             dlFuncs.dlclose != NULL &&
@@ -219,14 +207,10 @@ private_dl_funcs get_private_dl_functions(){
         return dlFuncs;
     }
 
-    if (using_libdl) dlclose(linkerHandle);
-
     // Now fallback to full memory scans
     // This is unreliable so, more reason for mixing.
-
-    // Possibly libdl.so handle, make sure that's not the case.
-    linkerHandle = nsbypass_dlopen(LINKER, 0);
-    // Not using using_libdl here cause maybe 2nd time's the charm? Eh probably insanity.
+    LOGW("Obtaining private API dlFuncs via memory scanning, this isn't very reliable.");
+    linkerHandle = nsbypass_dlopen(LINKER, 0); // NEVER dlsym this handle, SIGSEGV will murder you.zzzzz
     if (!linkerHandle) return dlFuncs;
     if (!dlFuncs.dlopen) dlFuncs.dlopen = nsbypass_dlsym(linkerHandle, "__loader_dlopen");
     if (!dlFuncs.dlopen_ext) dlFuncs.dlopen_ext = nsbypass_dlsym(linkerHandle, "__loader_android_dlopen_ext");
@@ -244,33 +228,26 @@ bool test_dlfuncs(private_dl_funcs dlFuncs) {
     LOGI("===TESTING OBTAINED PRIVATE API DLFUNCTIONS===");
     LOGI("If we crash here, now you know why.");
 
-    LOGI("TESTING DLOPEN");
-    void* libcHandle = dlFuncs.dlopen("libc.so", RTLD_NOLOAD, &dlopen);
-    if (libcHandle) {
-        LOGW("dlopen failed to find libc.so using RTLD_NOLOAD...");
-        libcHandle = dlFuncs.dlopen("libc.so", RTLD_LAZY, &dlopen);
-        if (libcHandle) {
-            LOGE("dlopen failed to obtain libc.so! FAIL");
-            passed = false;
-        }
-        LOGW("dlopen successfully loaded a new libc.so at %p.. wait what? Are you even on android?", libcHandle);
-    } else {
-        LOGI("dlopen successfully found libc.so at %p", libcHandle);
+    LOGI("TESTING DLOPEN ON LIBDL.SO");
+    void* libdlHandle = dlFuncs.dlopen("libdl.so", RTLD_NOLOAD, &dlopen);
+    if (!libdlHandle) {
+        LOGE("dlopen failed to obtain libdl.so! FAIL");
+        passed = false;
     }
 
-    if (libcHandle) {
-        LOGI("TESTING DLSYM");
-        void *mallocAddress = dlFuncs.dlsym(libcHandle, "malloc", &test_dlfuncs);
+    if (libdlHandle) {
+        LOGI("TESTING DLSYM ON LIBDL.SO TO FIND dlopen");
+        void *dlopenAddress = dlFuncs.dlsym(libdlHandle, "dlopen", &dlopen);
 
-        if (mallocAddress) {
-            LOGE("dlsym failed to find malloc from libc.so! FAIL");
+        if (!dlopenAddress) {
+            LOGE("dlsym failed to find dlopen from libdl.so! FAIL");
             passed = false;
         } else {
-            LOGI("dlsym successfully found malloc at %p from libc.so", mallocAddress);
+            LOGI("dlsym successfully found dlopen at %p from libdl.so", dlopenAddress);
         }
 
-        LOGI("TESTING DLCLOSE");
-        int closeResult = dlFuncs.dlclose(libcHandle);
+        LOGI("TESTING DLCLOSE ON LIBDL");
+        int closeResult = dlFuncs.dlclose(libdlHandle);
 
         if (closeResult != 0) {
             LOGE("dlclose on libc.so failed with result %d! FAIL", closeResult);
@@ -280,33 +257,41 @@ bool test_dlfuncs(private_dl_funcs dlFuncs) {
         }
     }
 
-    LOGI("TESTING DLOPEN_EXT");
+    LOGI("TESTING DLOPEN_EXT ON LD-ANDROID.SO AKA PRIVATE API");
     void *ldAndroidHandle = dlFuncs.dlopen_ext(
                     "ld-android.so",
                     RTLD_LAZY,
                     NULL,
                     &dlopen);
 
-    if (ldAndroidHandle) {
+    if (!ldAndroidHandle) {
         LOGE("android_dlopen_ext failed to open ld-android.so aka private API library! FAIL");
         passed = false;
+        LOGI("TESTING DLOPEN ON LD-ANDROID.SO");
+        ldAndroidHandle = dlFuncs.dlopen(
+                "ld-android.so",
+                RTLD_LAZY,
+                &dlopen);
+        if (ldAndroidHandle) {
+            LOGW("dlopen opened ld-android.so aka private API library..android_dlopen_ext is likely invalid.");
+        } else LOGE("dlopen failed to open ld-android.so. FAIL");
     } else {
         LOGI("android_dlopen_ext successfully: %p", ldAndroidHandle);
     }
 
     if (ldAndroidHandle) {
-        LOGI("TESTING DLSYM");
-        void *mallocAddress = dlFuncs.dlsym(libcHandle, "malloc", &test_dlfuncs);
+        LOGI("TESTING DLSYM ON LD-ANDROID.SO TO FIND __loader_android_dlopen_ext");
+        void *dlopen_ext = dlFuncs.dlsym(ldAndroidHandle, "__loader_android_dlopen_ext", &dlsym);
 
-        if (mallocAddress) {
-            LOGE("dlsym failed to find malloc from libc.so! FAIL");
+        if (!dlopen_ext) {
+            LOGE("dlsym failed to find __loader_android_dlopen_ext from ld-android.so! FAIL");
             passed = false;
         } else {
-            LOGI("dlsym successfully found malloc at %p from libc.so", mallocAddress);
+            LOGI("dlsym successfully found __loader_android_dlopen_ext at %p from ld-android.so", dlopen_ext);
         }
 
-        LOGI("TESTING DLCLOSE");
-        int closeResult = dlFuncs.dlclose(libcHandle);
+        LOGI("TESTING DLCLOSE ON LD-ANDROID.SO");
+        int closeResult = dlFuncs.dlclose(ldAndroidHandle);
 
         if (closeResult != 0) {
             LOGE("dlclose on ld-android.so from dlopen_ext failed with result %d! FAIL", closeResult);
@@ -316,16 +301,17 @@ bool test_dlfuncs(private_dl_funcs dlFuncs) {
         }
     }
 
-    libcHandle = dlFuncs.dlopen_ext(
+    LOGI("TESTING DLOPEN_EXT ON LIBC.SO");
+    void* libcHandle = dlFuncs.dlopen_ext(
             "libc.so",
-            RTLD_NOLOAD | RTLD_LAZY,
+            RTLD_NOLOAD,
             NULL,
             &dlopen);
 
-    if (libcHandle) {
+    if (!libcHandle) {
         LOGW("android_dlopen_ext failed to find libc.so using RTLD_NOLOAD...");
         libcHandle = dlFuncs.dlopen_ext("libc.so", RTLD_LAZY, NULL, &dlopen);
-        if (libcHandle) {
+        if (!libcHandle) {
             LOGE("android_dlopen_ext failed to obtain libc.so! FAIL");
             passed = false;
         }
@@ -336,9 +322,9 @@ bool test_dlfuncs(private_dl_funcs dlFuncs) {
 
     if (libcHandle) {
         LOGI("TESTING DLSYM");
-        void *mallocAddress = dlFuncs.dlsym(libcHandle, "malloc", &test_dlfuncs);
+        void *mallocAddress = dlFuncs.dlsym(libcHandle, "malloc", &dlsym);
 
-        if (mallocAddress) {
+        if (!mallocAddress) {
             LOGE("dlsym failed to find malloc from libc.so! FAIL");
             passed = false;
         } else {
@@ -369,7 +355,7 @@ bool test_dlfuncs(private_dl_funcs dlFuncs) {
 private_namespace_funcs get_private_namespace_functions(private_dl_funcs privateDlFuncs){
     private_namespace_funcs linkerFuncs = {0};
     // Can't use linker64 for the real dlsym, it'll sigsegv
-    void* linkerHandle = privateDlFuncs.dlopen("ld-android.so", RTLD_LAZY, &dlsym);
+    void* linkerHandle = privateDlFuncs.dlopen_ext("ld-android.so", RTLD_LAZY, NULL, &dlsym);
     if (linkerHandle) { // Check if it found a handle
         // Note: liblinkernsbypass uses ld-android.so for link* and libdl_android.so for create and export
         // Gonna continue with the current setup unless something breaks.
