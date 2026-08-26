@@ -4,6 +4,8 @@
 #include <android/dlext.h>
 #include <string.h>
 #include <stdio.h>
+#include <dlfcn.h>
+
 // Silence the warnings about using reserved identifiers (we need to link to these to not pollute the global symtab)
 //NOLINTBEGIN
 static void* (*android_dlopen_ext_p)(const char* filename,
@@ -19,10 +21,12 @@ static const char *sphal_namespaces[3] = {
 };
 
 
-__attribute__((visibility("default"), used)) void app__pojav_linkerhook_pass_handles(void* data, void* android_dlopen_ext,
+__attribute__((visibility("default"), used)) void app__pojav_linkerhook_pass_handles(void* data, void* android_dlopen_ext_pp,
                                                                                     void* android_get_exported_namespace) {
+    // Calling android_dlopen_ext here locates the hook, not the real func.
+    // dlsym will give you the real func, will need libdl handle
     ready_handle = data;
-    android_dlopen_ext_p = android_dlopen_ext;
+    android_dlopen_ext_p = android_dlopen_ext_pp;
     android_get_exported_namespace_p = android_get_exported_namespace;
 }
 

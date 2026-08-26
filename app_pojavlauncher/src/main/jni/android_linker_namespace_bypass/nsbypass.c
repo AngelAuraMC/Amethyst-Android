@@ -107,6 +107,23 @@
 //     or dlsym on other stuff. And preload all DT_NEEDED.
 
 
+// Hook Impl
+
+/*
+ *
+ * Pojav:
+ *  Hook is implemented via pointer passing. Pass the pointer to the hook by dlsyming the
+ *  handle given after it is dlopened in the namespace and passing clns function ptrs.
+ * libadrenotools:
+ *  Hook is implemented by being first in the symbol table. There is an implementation portion,
+ *  and then the actual definition of android_dlopen_ext/android_load_sphal_library.
+ *  They load a duplicate of android_dlopen_ext inside the hook_impl. This is why it needs to
+ *  be split in two portions, because otherwise the hook will refer to the android_dlopen_ext
+ *  inside itself rather than android.
+ *
+ *  Pointer passing is cleaner and more configurable, we'll take that.
+ */
+
 /*
  * Can we imitate libadrenotools structure on OpenGL? Maybe.
  * libEGL_mesa.so and libgallium_dri.so after all. The issue would be we need to hook dlopen
@@ -155,7 +172,7 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs);
 private_dl_funcs get_private_dl_functions(){
     // TODO: Verify if this works on Android 8 or lower, they have a weird thing
     // that doesn't exactly just have __loader_* laying around so am not sure about it.
-
+    private_dl_funcs dlFuncs = {0};
     // First attempt the normal libadrenotools method (ARM64 shenanigans)
 #if (defined __aarch64__)
     dlFuncs.dlopen = find_branch_label(&dlopen);
@@ -169,7 +186,7 @@ private_dl_funcs get_private_dl_functions(){
         return dlFuncs;
     }
 #endif
-    private_dl_funcs dlFuncs = {0};
+
     bool using_libdl = false;
     // Now attempt to scan memory.
     // Probably /apex/com.android.runtime/bin/linker64 but not 100% sure on that so just linker64
@@ -444,6 +461,7 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs) {
 private_dl_funcs g_privateDlFuncs = {0};
 private_namespace_funcs g_linkerFuncs = {0};
 clns_funcs g_clnsFuncs = {0};
+struct android_namespace_t* escapeNs;
 
 /**
  * Resolves all the global externs at load time, so they should always be available.
@@ -506,6 +524,14 @@ void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char
     return android_dlopen_ext(pathbuf, flags, &extinfo);
 }
 
+/*
+ * todo:
+ *   completely delete driver_helper
+ *   add three folders, hook, turnip, and freedreno
+ *   do magic to make it work
+ *
+ *   maybe statically link the nsbypass
+ */
 
 
 

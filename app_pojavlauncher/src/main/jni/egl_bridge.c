@@ -98,11 +98,13 @@ EXTERNAL_API void* pojavGetCurrentContext() {
 }
 static struct android_namespace_t* driver_namespace;
 void* load_turnip_vulkan() {
-    if(getenv("POJAV_LOAD_TURNIP") == NULL) return NULL;
+//    if(getenv("POJAV_LOAD_TURNIP") == NULL) return NULL;
     const char* native_dir = getenv("POJAV_NATIVEDIR");
     const char* cache_dir = getenv("TMPDIR");
     if(driver_namespace == NULL && !linker_ns_load(native_dir, &driver_namespace)) return NULL;
     void* linkerhook = linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW, driver_namespace);
+    // lldb debugger console will return android_dlopen_ext from the new new after this
+    // but its a lie, android_dlopen_ext still resolves properly here.
     if(linkerhook == NULL) return NULL;
     void* turnip_driver_handle = linker_ns_dlopen("libvulkan_freedreno.so", RTLD_LOCAL | RTLD_NOW, driver_namespace);
     if(turnip_driver_handle == NULL) {

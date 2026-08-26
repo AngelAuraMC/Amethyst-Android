@@ -77,12 +77,12 @@ include $(BUILD_SHARED_LIBRARY)
 #ifeq ($(TARGET_ARCH_ABI),arm64-v8a)
 include $(CLEAR_VARS)
 LOCAL_MODULE := linkerhook
-# If you add LOCAL_SHARED_LIBRARIES here, it will load those NEEDED as duplicates
-# in wherever namespace this is put inside of. Please just do not.
-# Use dlopen if at all possible.
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
-LOCAL_SRC_FILES := driver_helper/hook.c
-LOCAL_LDFLAGS := -z global
+LOCAL_SRC_FILES := driver_helper/internal_android_dlopen_hook/hook.c
+# If you add LOCAL_SHARED_LIBRARIES here, it might load those NEEDED as duplicates
+# in wherever namespace this is put inside of. Please just do not.
+# Use dlopen if at all possible, the plt/got is a lie!!
+LOCAL_LDFLAGS := -z global # No clue why this is here, doesn't seem important so...
 include $(BUILD_SHARED_LIBRARY)
 #endif
 
