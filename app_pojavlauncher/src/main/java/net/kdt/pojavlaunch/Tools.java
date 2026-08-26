@@ -1751,6 +1751,7 @@ public final class Tools {
         boolean deviceHasVulkan = checkVulkanSupport(context.getPackageManager());
         // Zink is now also optional because it sucks
         boolean deviceHasOSMesaZinkBinary = new File(Tools.NATIVE_LIB_DIR, "libOSMesa.so").exists();
+        boolean deviceHasGalliumBinary = new File(Tools.NATIVE_LIB_DIR, "libgallium_dri.so").exists();
         boolean deviceHasOpenGLES3 = JREUtils.getDetectedVersion() >= 3;
         // LTW is an optional proprietary dependency
         boolean appHasLtw = new File(Tools.NATIVE_LIB_DIR, "libltw.so").exists();
@@ -1763,6 +1764,7 @@ public final class Tools {
             if(rendererId.contains("vulkan_zink") && !deviceHasOSMesaZinkBinary) continue;
             if(rendererId.contains("ltw") && (!deviceHasOpenGLES3 || !appHasLtw)) continue;
             if(rendererId.contains("opengles2") && (!deviceHasOpenGLES3 || !appHasKw)) continue;
+            if(rendererId.contains("freedreno") && !deviceHasGalliumBinary) continue;
             rendererIds.add(rendererId);
             rendererNames.add(defaultRendererNames[i]);
         }
