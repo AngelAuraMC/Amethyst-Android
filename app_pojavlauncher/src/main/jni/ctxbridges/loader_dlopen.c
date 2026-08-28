@@ -19,9 +19,9 @@ void* loader_dlopen(char* primaryName, char* secondaryName, int flags, bool bypa
         bypassNamespace = false;
     } else linker_ns_load(nativedir);
     // Some EGL libraries (e.g. MESA) link to android_stub which is just libraries in /system/lib
-    // Android is cringe and disallows loading these libraries in an anonymous namespace
+    // Android is cringe and disallows loading these libraries in an classloader namespace
     // That's why we load it through nsbypass
-    // This actually will break on some legacy Androids, but I don't care at this point
+    // This actually will break on some legacy Androids, but I don't care at this point? Mesa shouldn't work on them anyway
     dlopen_func _dlopen = bypassNamespace ? linker_ns_dlopen : dlopen;
     void* dl_handle;
     if(primaryName == NULL) goto secondary;

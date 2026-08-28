@@ -172,7 +172,8 @@ int pojavInitOpenGL() {
         }
         // Set required env for freedreno
         if(!strcmp(renderer, "opengles3_desktopgl_freedreno_kgsl")) {
-            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", true); // Yes, because we use kgsl as loader. Better load freedreno this way
+            // freedreno is usually loaded through KGSL loader, not by overriding the gallium driver
+            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", true);
         }
         set_gl_bridge_tbl();
     } else if (strcmp(renderer, "vulkan_zink") == 0) {
