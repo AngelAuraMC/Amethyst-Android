@@ -233,7 +233,7 @@ public class JREUtils {
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper") || LOCAL_RENDERER.equals("opengles3_desktopgl_freedreno_kgsl")){
                 envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL
                 if (Tools.shouldUseUBWC()) envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1"); // Turnip fix for OneUI rendering issues
-                envMap.put("POJAV_BYPASS_NAMESPACE", "1"); // Cringy sloppy, but I'm lazy deduplicating this
+                envMap.put("POJAV_BYPASS_NAMESPACE", "1"); // Read pojavexec (loader_dlopen) side for explanation
             }
             if (LOCAL_RENDERER.toLowerCase().contains("zink")){
                 // This is sketch but it fixes a lot of things, if it causes problems we can just undo it.
