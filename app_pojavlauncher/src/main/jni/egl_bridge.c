@@ -160,10 +160,11 @@ int pojavInitOpenGL() {
             load_vulkan();
             setenv("GALLIUM_DRIVER", "zink", 1);
             setenv("MESA_ANDROID_NO_KMS_SWRAST", "1", 1);
-            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", true);
+            setenv("MESA_DEBUG", "1", 1);
+            setenv("MESA_LOG_LEVEL", "DEBUG", 1);
         } else if (!strcmp(renderer, "opengles3_desktopgl_freedreno")) {
             setenv("GALLIUM_DRIVER", "freedreno", 1);
-            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", 1);
+            setenv("MESA_LOADER_DRIVER_OVERRIDE", "kgsl", true);
         }
         set_gl_bridge_tbl();
     } else if (strcmp(renderer, "vulkan_zink") == 0) {

@@ -108,5 +108,4 @@
         <item>2</item>
         <item>1</item>
     </string-array>
-    <string name="mcl_setting_renderer_freedreno">Freedreno (Adreno only, OpenGL 4.6) - (all versions, mid)</string>
 </resources>

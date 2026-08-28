@@ -395,19 +395,20 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs) {
     escapeNs = nsFuncs.create_namespace(
             "g_default_namespace_copy",
             NULL,
-            NULL,
+            SYSTEM_LIBS_PATH,
             ANDROID_NAMESPACE_TYPE_SHARED,
+            SYSTEM_LIBS_PATH,
             NULL,
-            NULL,
-            &dlopen);
+            &dlopen); // This address is libdl.so, which should resolve to g_default_namespace
     if (escapeNs) {
         LOGI("android_create_namespace successfully made escapeNs");
     } else {
         LOGE("android_create_namespace failed to create namespace escapeNs, testing cannot continue. FAIL");
         return false;
     }
-    // This is a memory leak, but its only once and for the process lifetime.
-    // AFAIK there is no way to get rid of a namespace sadly.
+    // This is a memory leak, but its only once and for the process lifetime. So might as well make
+    // it useful if it's gonna be leaking.
+    // AFAIK there is no way to get rid of a namespace sadly. If you know how, make an issue.
     struct android_namespace_t *testNs = nsFuncs.create_namespace(
             "g_default_namespace_copy",
             NULL,
@@ -453,7 +454,7 @@ struct android_namespace_t* escapeNs;
  * Resolves all the global externs at load time, so they should always be available.
  * Fails hard if any of them are not.
  */
-__attribute__((constructor)) void resolve_global_symbols() {
+__attribute__((constructor)) static void resolve_global_symbols() {
     // NOTE: Tests are fast enough. Probably still disable tho.
     g_privateDlFuncs = get_private_dl_functions();
     test_dlfuncs(g_privateDlFuncs);
@@ -468,14 +469,14 @@ __attribute__((constructor)) void resolve_global_symbols() {
         LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
         return;
     }
-
+    // Create if not yet, which is the case if tests are disabled
     if (!escapeNs){
         escapeNs = g_linkerFuncs.create_namespace(
                 "g_default_namespace_copy",
                 NULL,
-                NULL,
+                SYSTEM_LIBS_PATH,
                 ANDROID_NAMESPACE_TYPE_SHARED,
-                NULL,
+                SYSTEM_LIBS_PATH,
                 NULL,
                 &dlopen);
         if (!escapeNs) {
@@ -484,6 +485,16 @@ __attribute__((constructor)) void resolve_global_symbols() {
         }
     }
 }
+
+/*
+  Note:
+    You may have found that escapeNs does not have search paths within your app native dir and thus
+    cannot properly resolve any NEEDED's from there. Make your own namespace. I suggest creating
+    a SHARED ns with parent escapeNs. Simply add your nativeLibraryDir to default_library_path and
+    it will be appended to the list that it will search for NEEDEDs!
+
+    or yknow, preload them. dlopen them before the lib that needs them.
+ */
 
 // dlopen in a specific namespace
 void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* ns) {

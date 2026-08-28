@@ -15,7 +15,7 @@ static struct android_namespace_t* turnipNs;
 
 static uint64_t (*atrace_get_enabled_tags_p)();
 
-__attribute__((constructor)) void init_handles() {
+__attribute__((constructor)) static void init_handles() {
     // dlopen manually so the linker dependency is more explicit.
     // don't want it to do anything funny.
     void* libandroidnsbypassHandle = dlopen("libandroid_linker_namespace_bypass.so", RTLD_LOCAL | RTLD_LAZY);

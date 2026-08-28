@@ -2,6 +2,7 @@
 // Created by tom on 8/22/26.
 //
 
+#include <unistd.h>
 #include "platform.h"
 #include "nsbypass_t.h"
 
@@ -60,5 +61,7 @@ extern struct android_namespace_t* escapeNs;
 void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* ns);
 void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char* libName, int flag, struct android_namespace_t* ns);
 
+// Dirs where system libs are stored.
+#define SYSTEM_LIBS_PATH "/system/:/system_ext/:/data/:/vendor/:/apex/"
 
 #endif //AMETHYST_NSBYPASS_H

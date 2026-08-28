@@ -210,7 +210,6 @@ public class JREUtils {
         envMap.put("force_glsl_extensions_warn", "true");
         envMap.put("allow_higher_compat_version", "true");
         envMap.put("allow_glsl_extension_directive_midshader", "true");
-        envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "zink");
         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
@@ -254,7 +253,12 @@ public class JREUtils {
                 Tools.useSFPEW = false;
             }
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper")){
-                envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL
+                envMap.put("POJAVEXEC_EGL", "libEGL_mesa.so"); // Use Mesa EGL
+                if (Tools.shouldUseUBWC()) envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1"); // Turnip fix for OneUI rendering issues
+            }
+            if (LOCAL_RENDERER.equals("opengles3_desktopgl_freedreno")){
+                envMap.put("POJAVEXEC_EGL", "libEGL_mesa.so"); // Use Mesa EGL
+                Tools.useSFPEW = false;
                 if (Tools.shouldUseUBWC()) envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1"); // Turnip fix for OneUI rendering issues
             }
             if (LOCAL_RENDERER.toLowerCase().contains("zink")){
@@ -544,6 +548,7 @@ public class JREUtils {
                 renderLibrary = "libng_gl4es.so"; break;
             case "vulkan_zink": renderLibrary = "libOSMesa.so"; break;
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
+            case "opengles3_desktopgl_freedreno":
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libEGL_mesa.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             case "opengles_system_gles" : return null; // Literally nothing, this is for system GLES.

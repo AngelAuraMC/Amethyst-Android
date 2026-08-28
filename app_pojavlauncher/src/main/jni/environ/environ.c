@@ -7,11 +7,14 @@
 #include <assert.h>
 #include <string.h>
 #include "environ.h"
+#include "android_linker_namespace_bypass/nsbypass.h"
+
 #define TAG __FILE_NAME__
 #include <log.h>
 
 struct pojav_environ_s *pojav_environ;
-__attribute__((constructor)) void env_init() {
+
+__attribute__((constructor)) static void env_init() {
     char* strptr_env = getenv("POJAV_ENVIRON");
     if(strptr_env == NULL) {
         LOGI("No environ found, creating...");
