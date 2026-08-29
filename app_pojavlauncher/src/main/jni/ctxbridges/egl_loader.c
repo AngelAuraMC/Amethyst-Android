@@ -44,7 +44,7 @@ bool dlsym_EGL() {
     if (eglName != NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
         // Not sure where to put this because pojavexec is shit
         if (!app_escapeNs) {
-            app_escapeNs = g_linkerFuncs.create_namespace(
+            app_escapeNs = private_create_namespace(
                     "app-escapeNs",
                     NULL,
                     getenv("POJAV_NATIVEDIR"), // append to search path!

@@ -1,42 +1,22 @@
 #include <string.h>
 #include <dlfcn.h>
 #include <stdlib.h>
-#include "android_linker_namespace_bypass/nsbypass_t.h"
 #include "android_linker_namespace_bypass/platform.h"
+#include "android_linker_namespace_bypass/nsbypass.h"
 
 static void* turnipHandle;
-
-static private_namespace_funcs *privateNamespaceFuncs;
-static private_dl_funcs *privateDlFuncs;
-static void* (*linker_ns_dlopen)(const char* name, int flag, struct android_namespace_t* ns);
-static void* (*linker_ns_dlopen_unique)(const char* tmpDir, const char* libDir, const char* libName, int flag, struct android_namespace_t* ns);
 
 static struct android_namespace_t* turnipNs;
 
 static uint64_t (*atrace_get_enabled_tags_p)();
 
-__attribute__((constructor)) static void init_handles() {
-    // dlopen manually so the linker dependency is more explicit.
-    // don't want it to do anything funny.
-    void* libandroidnsbypassHandle = dlopen("libandroid_linker_namespace_bypass.so", RTLD_LOCAL | RTLD_LAZY);
-    privateNamespaceFuncs = dlsym(libandroidnsbypassHandle, "g_linkerFuncs");
-    privateDlFuncs = dlsym(libandroidnsbypassHandle, "g_privateDlFuncs");
-    atrace_get_enabled_tags_p = privateDlFuncs->dlsym(
-            privateDlFuncs->dlopen("libcutils.so", RTLD_LOCAL | RTLD_LAZY, &dlopen),
-            "atrace_get_enabled_tags",
-            &dlopen
-            );
-    linker_ns_dlopen = dlsym(libandroidnsbypassHandle, "linker_ns_dlopen");
-    linker_ns_dlopen_unique = dlsym(libandroidnsbypassHandle, "linker_ns_dlopen_unique");
-}
-
 __attribute__((visibility("default"), used)) void *android_dlopen_ext(const char *filename, int flags, const android_dlextinfo *extinfo) {
     if(!strstr(filename, "vulkan."))
-        return privateDlFuncs->dlopen_ext(filename, flags, extinfo, &android_dlopen_ext);
+        return private_dlopen_ext(filename, flags, extinfo, &android_dlopen_ext);
     if (!turnipHandle){
         // We aren't checking for flags haha.
         // This namespace must be isolated to keep shenanigans at bay
-        turnipNs = privateNamespaceFuncs->create_namespace(
+        turnipNs = private_create_namespace(
                 "turnip-driver-NS",
                 NULL,
                 getenv("POJAV_NATIVEDIR"),
@@ -59,13 +39,14 @@ __attribute__((visibility("default"), used)) void *android_dlopen_ext(const char
 }
 
 __attribute__((visibility("default"), used)) void *android_load_sphal_library(const char *filename, int flags) {
+    https://cs.android.com/android/platform/superproject/+/android-latest-release:system/core/libvndksupport/linker.cpp;drc=5248c5d72ad2a14f3426b7872b8867f97818650f;l=42
     const char *sphal_namespaces[3] = {
             "sphal", "vendor", "default"
     };
 
     struct android_namespace_t* androidNamespace;
     for(int i = 0; i < 3; i++) {
-        androidNamespace = privateNamespaceFuncs->get_exported_namespace(sphal_namespaces[i]);
+        androidNamespace = private_get_exported_namespace(sphal_namespaces[i]);
         if(androidNamespace != NULL) break;
     }
     android_dlextinfo info = {0};

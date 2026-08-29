@@ -124,40 +124,9 @@
  *  Pointer passing is cleaner and more configurable, we'll take that.
  */
 
-/*
- * Can we imitate libadrenotools structure on OpenGL? Maybe.
- * libEGL_mesa.so and libgallium_dri.so after all. The issue would be we need to hook dlopen
- * for both of those to redirect to the handle inside the already setup namespace.
- *
- * Problem is both of those could technically be considered the driver since they're pretty
- * much one and the same. Both even need escape namespace since libEGL_mesa needs the gallium
- * driver and they almost definitely wont like being in seperate namespaces.
- *
- * We don't really have a hookNS here, just a driverNS. The two expect to be loaded in the
- * same namespace after all.
- *
- *
- * So for GL we can likely get away with just creating an escape namespace for the EGL and GL
- * libs to live inside and just refer to their handles from then on.
- *
- * So we end up needing two seperate frontends for GL and vk. how annoying
- */
-
-/**
- * Tests the provided dl functions to see if they work.
- * This way, any SIGSEGV or other stuff hard crashes early.
- * @param dlFuncs
- * @returns False if even 1 test fails, otherwise true.
- */
-bool test_dlfuncs(private_dl_funcs dlFuncs);
-
-/**
- * Tests the provided namespace functions to see if they work
- * This way, any SIGSEGV or other stuff hard crashes early.
- * Leaks memory.
- * @returns False if even 1 test fails, otherwise true.
- */
-bool test_namespace_funcs(private_namespace_funcs nsFuncs);
+static private_dl_funcs g_privateDlFuncs = {0};
+static private_namespace_funcs g_linkerFuncs = {0};
+struct android_namespace_t* escapeNs;
 
 /**
  * Fetches the function pointers in three ways, in descending order of priority.\n
@@ -168,7 +137,8 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs);
  *  - Scan /proc/self/maps for an r-xp instance of linker64 then scan that instance for pointers\n
  * @return Private API versions of dlFunc*
  */
-private_dl_funcs get_private_dl_functions(){
+private_dl_funcs get_private_dl_functions()
+{
     // TODO: Verify if this works on Android 8 or lower, they have a weird thing
     // that doesn't exactly just have __loader_* laying around so am not sure about it.
     private_dl_funcs dlFuncs = {0};
@@ -220,7 +190,15 @@ private_dl_funcs get_private_dl_functions(){
     return dlFuncs;
 }
 
-bool test_dlfuncs(private_dl_funcs dlFuncs) {
+/**
+ * Tests the provided dl functions to see if they work.
+ * This way, any SIGSEGV or other stuff hard crashes early.
+ * @param dlFuncs
+ * @returns False if even 1 test fails, otherwise true.
+ */
+bool test_dlfuncs(
+        private_dl_funcs dlFuncs)
+{
 #ifdef DISABLE_TESTING
     return true;
 #else
@@ -352,7 +330,9 @@ bool test_dlfuncs(private_dl_funcs dlFuncs) {
  * @param privateDlFuncs Struct containing the dlFuncs* to use for dlsym
  * @return Namespace creation and linking functions.
  */
-private_namespace_funcs get_private_namespace_functions(private_dl_funcs privateDlFuncs){
+private_namespace_funcs get_private_namespace_functions(
+        private_dl_funcs privateDlFuncs)
+{
     private_namespace_funcs linkerFuncs = {0};
     // Can't use linker64 for the real dlsym, it'll sigsegv
     void* linkerHandle = privateDlFuncs.dlopen_ext("ld-android.so", RTLD_LAZY, NULL, &dlsym);
@@ -375,7 +355,14 @@ private_namespace_funcs get_private_namespace_functions(private_dl_funcs private
     return linkerFuncs;
 }
 
-bool test_namespace_funcs(private_namespace_funcs nsFuncs) {
+/**
+ * Tests the provided namespace functions to see if they work
+ * This way, any SIGSEGV or other stuff hard crashes early.
+ * Leaks memory.
+ * @returns False if even 1 test fails, otherwise true.
+ */
+bool test_namespace_funcs(private_namespace_funcs nsFuncs)
+{
 #ifdef DISABLE_TESTING
     return true;
 #else
@@ -445,22 +432,17 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs) {
 #endif
 }
 
-private_dl_funcs g_privateDlFuncs = {0};
-private_namespace_funcs g_linkerFuncs = {0};
-clns_funcs g_clnsFuncs = {0}; //TODO: DELETE
-struct android_namespace_t* escapeNs;
-
 /**
  * Resolves all the global externs at load time, so they should always be available.
  * Fails hard if any of them are not.
  */
-__attribute__((constructor)) static void resolve_global_symbols() {
+__attribute__((constructor)) static void resolve_global_symbols()
+{
     // NOTE: Tests are fast enough. Probably still disable tho.
     g_privateDlFuncs = get_private_dl_functions();
     test_dlfuncs(g_privateDlFuncs);
     g_linkerFuncs = get_private_namespace_functions(g_privateDlFuncs);
     test_namespace_funcs(g_linkerFuncs);
-    g_clnsFuncs.clns_android_dlopen_ext = android_dlopen_ext;
 
     if (!g_linkerFuncs.create_namespace ||
             !g_linkerFuncs.link_namespaces ||
@@ -493,11 +475,15 @@ __attribute__((constructor)) static void resolve_global_symbols() {
     a SHARED ns with parent escapeNs. Simply add your nativeLibraryDir to default_library_path and
     it will be appended to the list that it will search for NEEDEDs!
 
-    or yknow, preload them. dlopen them before the lib that needs them.
+    or yknow, preload them. dlopen them before the lib that needs them, assuming its not isolated.
  */
 
 // dlopen in a specific namespace
-void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* ns) {
+void* linker_ns_dlopen(
+        const char* name,
+        int flag,
+        struct android_namespace_t* ns)
+{
     if (!ns) return NULL;
     android_dlextinfo dlextinfo = {0};
     dlextinfo.flags = ANDROID_DLEXT_USE_NAMESPACE;
@@ -505,11 +491,19 @@ void* linker_ns_dlopen(const char* name, int flag, struct android_namespace_t* n
     return android_dlopen_ext(name, flag, &dlextinfo);
 }
 
-// dlopen in a specific namespace in a custom dir and a modified DT_SONAME
-void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char* libName, int flags, struct android_namespace_t* ns) {
+// This technically has a chance of collision but that only happens after 4096 and even then would
+// be rare. So this is probably fiiiine. If you wanna fix it, fix patch_elf_soname being limited
+// to overwriting instead of prepending.
+static uint16_t patch_id;
+void* linker_ns_dlopen_unique(
+        const char* tmpDir,
+        const char* libDir,
+        const char* libName,
+        int flags,
+        struct android_namespace_t* ns)
+{
     if (!ns) return NULL;
     char pathbuf[PATH_MAX];
-    static uint16_t patch_id;
     int patch_fd, real_fd;
 
     snprintf(pathbuf, PATH_MAX ,"%s/%d%s_patched.so", tmpDir, patch_id, libName);
@@ -528,6 +522,7 @@ void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char
         close(real_fd);
         return NULL;
     }
+    patch_id++;
     android_dlextinfo extinfo = {0};
     extinfo.flags = ANDROID_DLEXT_USE_NAMESPACE | ANDROID_DLEXT_USE_LIBRARY_FD;
     extinfo.library_fd = patch_fd;
@@ -536,16 +531,93 @@ void* linker_ns_dlopen_unique(const char* tmpDir, const char* libDir, const char
     return android_dlopen_ext(pathbuf, flags, &extinfo);
 }
 
-/*
- * todo:
- *   completely delete driver_helper
- *   add three folders, hook, turnip, and freedreno
- *   do magic to make it work
- *
- *   maybe statically link the nsbypass
- */
+// Here in case we want to add any other behaviour. Pointers alone are janky.
 
+struct android_namespace_t* private_create_namespace(
+        const char* name,
+        const char* ld_library_path,
+        const char* default_library_path,
+        uint64_t type,
+        const char* permitted_when_isolated_path,
+        struct android_namespace_t* parent_namespace,
+        const void* caller_addr)
+{
+    return g_linkerFuncs.create_namespace(
+            name,
+            ld_library_path,
+            default_library_path,
+            type,
+            permitted_when_isolated_path,
+            parent_namespace,
+            caller_addr);
+}
 
+bool private_link_namespaces(
+        struct android_namespace_t* from,
+        struct android_namespace_t* to,
+        const char* shared_libs_sonames)
+{
+    return g_linkerFuncs.link_namespaces(
+            from,
+            to,
+            shared_libs_sonames);
+}
+
+bool private_link_namespaces_all_libs(
+        struct android_namespace_t* from,
+        struct android_namespace_t* to)
+{
+    return g_linkerFuncs.link_namespaces_all_libs(
+            from,
+            to);
+}
+
+struct android_namespace_t* private_get_exported_namespace(
+        const char* name)
+{
+    return g_linkerFuncs.get_exported_namespace(
+            name);
+}
+
+int private_dlclose(void* handle)
+{
+    return g_privateDlFuncs.dlclose(handle);
+}
+
+void* private_dlopen(
+        const char* filename,
+        int flags,
+        const void* caller_addr)
+{
+    return g_privateDlFuncs.dlopen(
+            filename,
+            flags,
+            caller_addr);
+}
+
+void* private_dlopen_ext(
+        const char* filename,
+        int flags,
+        const android_dlextinfo* extinfo,
+        const void* caller_addr)
+{
+    return g_privateDlFuncs.dlopen_ext(
+            filename,
+            flags,
+            extinfo,
+            caller_addr);
+}
+
+void* private_dlsym(
+        void* handle,
+        const char* symbol,
+        const void* caller_addr)
+{
+    return g_privateDlFuncs.dlsym(
+            handle,
+            symbol,
+            caller_addr);
+}
 
 
 

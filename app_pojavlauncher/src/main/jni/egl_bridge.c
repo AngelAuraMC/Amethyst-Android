@@ -101,7 +101,7 @@ void* load_turnip_vulkan() {
     if(getenv("VULKAN_PTR")) return getenv("VULKAN_PTR");
     const char* native_dir = getenv("POJAV_NATIVEDIR");
     const char* cache_dir = getenv("TMPDIR");
-    vulkanLoaderNs = g_linkerFuncs.create_namespace(
+    vulkanLoaderNs = private_create_namespace(
             "vulkan-loader-NS",
             NULL,
             NULL,
@@ -113,7 +113,7 @@ void* load_turnip_vulkan() {
     // Load the hook so it's first to the symbol table and thus hooks
     linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW, vulkanLoaderNs);
     // Grants the namespace access to system libs.
-    g_linkerFuncs.link_namespaces_all_libs(vulkanLoaderNs, escapeNs);
+    private_link_namespaces_all_libs(vulkanLoaderNs, escapeNs);
 
     return linker_ns_dlopen_unique(
             cache_dir,

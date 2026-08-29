@@ -85,7 +85,6 @@ enum {
     ANDROID_NAMESPACE_TYPE_SHARED = 2,
 
     /* This flag instructs linker to enable exempt-list workaround for the namespace.
-     * See http://b/26394120 for details.
      */
     ANDROID_NAMESPACE_TYPE_EXEMPT_LIST_ENABLED = 0x08000000,
 
@@ -118,10 +117,5 @@ typedef struct {
     private_dlclose_function_t dlclose;
     private_dlsym_function_t dlsym;
 } private_dl_funcs;
-
-// These are pointers which are likely to be hooked by whoever is using this library.
-typedef struct {
-    android_dlopen_ext_t clns_android_dlopen_ext;
-} clns_funcs;
 
 #endif //AMETHYST_NSBYPASS_T_H
