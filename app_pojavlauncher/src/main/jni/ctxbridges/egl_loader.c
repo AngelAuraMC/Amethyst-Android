@@ -43,16 +43,16 @@ bool dlsym_EGL() {
     // Mesa renderers that are also GPU drivers need this
     if (eglName != NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
         // Not sure where to put this because pojavexec is shit
-        if (!app_escapeNs)
+        if (!app_escapeNs) {
             app_escapeNs = g_linkerFuncs.create_namespace(
-                "app-escapeNs",
-                NULL,
-                getenv("POJAV_NATIVEDIR"), // append to search path!
-                ANDROID_NAMESPACE_TYPE_SHARED, // Inherit from escapeNs paths
-                getenv("POJAV_NATIVEDIR"), // not needed, useless for non-isolate
-                escapeNs, // Inherit from escapeNs so we get the system lib paths too
-                __builtin_return_address(0)
-        );
+                    "app-escapeNs",
+                    NULL,
+                    getenv("POJAV_NATIVEDIR"), // append to search path!
+                    ANDROID_NAMESPACE_TYPE_SHARED, // Inherit from escapeNs paths
+                    getenv("POJAV_NATIVEDIR"), // not needed, useless for non-isolate
+                    escapeNs, // Inherit from escapeNs so we get the system lib paths too
+                    __builtin_return_address(0));
+        }
         dl_handle = linker_ns_dlopen(eglName, RTLD_LOCAL | RTLD_LAZY, app_escapeNs);
     }
     if(dl_handle == NULL) return false;
@@ -81,4 +81,9 @@ bool dlsym_EGL() {
     eglGetCurrentSurface_p = (void*) eglGetProcAddress_p("eglGetCurrentSurface");
     eglQuerySurface_p = (void*) eglGetProcAddress_p("eglQuerySurface");
     return true;
+}
+
+__attribute__((visibility("default")))
+void *getProcAddress(const char* procname){
+    return eglGetProcAddress_p(procname);
 }

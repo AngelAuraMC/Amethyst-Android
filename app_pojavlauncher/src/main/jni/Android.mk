@@ -87,6 +87,14 @@ include $(BUILD_SHARED_LIBRARY)
 #endif
 
 include $(CLEAR_VARS)
+LOCAL_MODULE := glxshim
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/include
+LOCAL_SHARED_LIBRARIES := pojavexec
+LOCAL_SRC_FILES := \
+	driver_helper/glxshim/glxshim.c
+include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
 LOCAL_MODULE := pojavexec_awt
 LOCAL_SRC_FILES := \
     awt_bridge.c

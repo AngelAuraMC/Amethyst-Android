@@ -549,7 +549,7 @@ public class JREUtils {
             case "vulkan_zink": renderLibrary = "libOSMesa.so"; break;
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
             case "opengles3_desktopgl_freedreno":
-            case "opengles3_desktopgl_zink_kopper": renderLibrary = "libEGL_mesa.so"; break;
+            case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
             case "opengles_system_gles" : return null; // Literally nothing, this is for system GLES.
             default:
