@@ -4,6 +4,11 @@
 
 #include <android/dlext.h>
 
+/*
+ * This file contains various definitions of private API things.
+ * It's kept separate in case you need only this.
+ */
+
 #ifndef AMETHYST_NSBYPASS_T_H
 #define AMETHYST_NSBYPASS_T_H
 // https://cs.android.com/android/platform/superproject/+/android-9.0.0_r1:bionic/linker/dlfcn.cpp;l=48-68
@@ -101,21 +106,5 @@ enum {
     ANDROID_NAMESPACE_TYPE_SHARED_ISOLATED =
     ANDROID_NAMESPACE_TYPE_SHARED | ANDROID_NAMESPACE_TYPE_ISOLATED,
 };
-// This does not include __loader_android_init_anonymous_namespace
-// because its useless and about to be deleted.
-// https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:bionic/linker/linker.cpp;l=2448-2449
-typedef struct {
-    private_create_namespace_t create_namespace;
-    private_link_namespaces_t link_namespaces;
-    private_link_namespaces_all_libs_t link_namespaces_all_libs;
-    private_get_exported_namespace_t get_exported_namespace;
-} private_namespace_funcs;
-
-typedef struct {
-    private_dlopen_function_t dlopen;
-    private_dlopen_ext_function_t dlopen_ext;
-    private_dlclose_function_t dlclose;
-    private_dlsym_function_t dlsym;
-} private_dl_funcs;
 
 #endif //AMETHYST_NSBYPASS_T_H

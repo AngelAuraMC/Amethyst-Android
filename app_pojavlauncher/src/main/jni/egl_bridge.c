@@ -114,7 +114,11 @@ void* load_turnip_vulkan() {
     linker_ns_dlopen("liblinkerhook.so", RTLD_LOCAL | RTLD_NOW, vulkanLoaderNs);
     // Grants the namespace access to system libs.
     private_link_namespaces_all_libs(vulkanLoaderNs, escapeNs);
-
+    #if defined(__aarch64__) || defined(__x86_64__)
+    #define SEARCH_PATH "/system/lib64"
+    #elif defined(__arm__) || defined(__i386__)
+    #define SEARCH_PATH "/system/lib"
+    #endif
     return linker_ns_dlopen_unique(
             cache_dir,
             SEARCH_PATH,

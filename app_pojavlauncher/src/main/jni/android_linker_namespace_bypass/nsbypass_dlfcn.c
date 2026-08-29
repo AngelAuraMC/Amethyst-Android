@@ -42,8 +42,8 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include "android_linker_namespace_bypass/platform.h"
 #include "fasthook/nsbypass_dlfcn.h"
+#include "platform.h"
 
 struct ctx {
 	void *load_addr;
@@ -55,22 +55,6 @@ struct ctx {
     size_t symtab_num;
 	off_t bias;
 };
-
-typedef int (*get_device_api_level_fn)(void);
-
-// Namespace restrictions were added in android 7, stub to the normal funcs if below that
-static int is_android_6_or_lower(void)
-{
-	void *symbol;
-	get_device_api_level_fn get_api_level;
-	symbol = dlsym(dlopen("libc.so", RTLD_LAZY), "android_get_device_api_level");
-	if (symbol == NULL) {
-		// android_get_device_api_level() was added in API 24. If it's not here then we are lower.
-		return 1;
-	}
-	get_api_level = (get_device_api_level_fn)symbol;
-	return get_api_level() < 24 ? 1 : 0;
-}
 
 int nsbypass_dlclose(void *handle) {
 	if (is_android_6_or_lower()) return dlclose(handle);

@@ -1,4 +1,3 @@
-#include <android/dlext.h>
 #include <android/log.h>
 #include <asm/unistd.h>
 #include <dlfcn.h>
@@ -17,14 +16,10 @@
 
 #include "android_linker_namespace_bypass/elf_soname_patcher.h"
 #include "android_linker_namespace_bypass/nsbypass.h"
-#include "android_linker_namespace_bypass/platform.h"
+
 #include "fasthook/nsbypass_dlfcn.h"
 
-// libdl somehow exports the __loader variants of its dlFuncs?? idk either
-
-// ld-android.so and linker64 provide the same SONAME in readelf.
-// ld-android.so is not present in /proc/self/maps so it cannot be found
-// by the memory scanning from fasthook.
+#include "platform.h"
 
 // Creating this needed to base off of pojav and liblinkernsbypass. These are my conclusions
 // after studying those implementations
@@ -71,9 +66,53 @@
  * plt/got to resolve android_dlopen_ext but they do.
  */
 
-static private_dl_funcs g_privateDlFuncs = {0};
-static private_namespace_funcs g_linkerFuncs = {0};
+static private_dl_funcs s_privateDlFuncs = {0};
+static private_namespace_funcs s_linkerFuncs = {0};
 struct android_namespace_t* escapeNs;
+
+// Aligns pointer to page size so mprotect properly gets the whole page
+static void *align_ptr_to_pagesize(void *ptr) {
+    return (void *)(((uintptr_t)ptr) & ~(getpagesize() - 1));
+}
+#if (defined __aarch64__)
+#include <sys/mman.h>
+
+// The logic of doing this stems from
+// https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:bionic/libdl/libdl.cpp;drc=a493fe415304efd19f089cbfc7d78c9db7d7263c;l=86-114
+// Where the dl* functions all just call __loader variants
+
+// This is just coincidentally convenient for ARM64 opcodes.
+// The other arches don't find this approach very simple.
+
+/* upper 6 bits of an ARM64 instruction are the instruction name */
+#define OP_MS 0b11111100000000000000000000000000
+/* Branch Label instruction opcode and immediate mask */
+#define BL_OP 0b10010100000000000000000000000000
+#define BL_IM 0b00000011111111111111111111111111
+
+static void* find_branch_label(void* func_start) {
+    long page_size = sysconf(_SC_PAGESIZE);
+    // Some devices (MIUI) ship with --X mapping for executables so work around that
+    if (mprotect(align_ptr_to_pagesize(func_start), page_size, PROT_READ | PROT_EXEC)){
+        LOGW("Failed to set readable bit on provided func! This might fail..  %p", func_start);
+    }
+    uint32_t* bl_addr = func_start;
+    // Search for the "branch to label" opcode
+    while((*bl_addr & OP_MS) != BL_OP) {
+        bl_addr++; // walk through memory until we find it or die
+    }
+    // Offset the address to find where the "branch to label" instrunction
+    // points to.
+    void* t = ((char*)bl_addr) + (*bl_addr & BL_IM) * 4;
+    // Reprotecting the functions removes (BTI) protection from indirect jumps.
+    // While technically out of scope of "find_branch_label", this is just
+    // cleaner overall.
+    if (mprotect(align_ptr_to_pagesize(t), page_size, PROT_WRITE | PROT_READ | PROT_EXEC) != 0) {
+        LOGW("Failed to remove BTI protection from private API page. This might fail..  %p", t);
+    }
+    return t;
+}
+#endif
 
 /**
  * Fetches the function pointers in three ways, in descending order of priority.\n
@@ -146,7 +185,7 @@ private_dl_funcs get_private_dl_functions()
 bool test_dlfuncs(
         private_dl_funcs dlFuncs)
 {
-#ifdef DISABLE_TESTING
+#ifndef ENABLE_TESTS
     return true;
 #else
     bool passed = true;
@@ -281,9 +320,12 @@ private_namespace_funcs get_private_namespace_functions(
         private_dl_funcs privateDlFuncs)
 {
     private_namespace_funcs linkerFuncs = {0};
-    // Can't use linker64 for the real dlsym, it'll sigsegv
+    // ld-android.so and linker64 provide the same SONAME in readelf.
+    // ld-android.so is not present in /proc/self/maps so it cannot be found by the memory scanning
+    // Can't use linker64 for dlsym, it'll sigsegv
     void* linkerHandle = privateDlFuncs.dlopen_ext("ld-android.so", RTLD_LAZY, NULL, &dlsym);
     if (linkerHandle) { // Check if it found a handle
+        LOGI("Obtaining linker namespace funcs via obtained dlFuncs");
         // Note: liblinkernsbypass uses ld-android.so for link* and libdl_android.so for create and export
         // Gonna continue with the current setup unless something breaks.
         linkerFuncs.create_namespace = privateDlFuncs.dlsym(linkerHandle, "__loader_android_create_namespace", &dlsym);
@@ -291,6 +333,7 @@ private_namespace_funcs get_private_namespace_functions(
         linkerFuncs.link_namespaces_all_libs = privateDlFuncs.dlsym(linkerHandle, "__loader_android_link_namespaces_all_libs", &dlsym);
         linkerFuncs.get_exported_namespace = privateDlFuncs.dlsym(linkerHandle, "__loader_android_get_exported_namespace", &dlsym);
     } else { // If that somehow failed, fallback to scanning memory/linker64
+        // Note that "dlsym" is not actually dlsym here, it is purely memory scanning.
         LOGE("Unable to load namespace functions! dlFunction loading probably failed? Falling back to memory scanning.");
         linkerHandle = nsbypass_dlopen(LINKER, 0);
         linkerFuncs.create_namespace = nsbypass_dlsym(linkerHandle, "__loader_android_create_namespace");
@@ -310,7 +353,7 @@ private_namespace_funcs get_private_namespace_functions(
  */
 bool test_namespace_funcs(private_namespace_funcs nsFuncs)
 {
-#ifdef DISABLE_TESTING
+#ifndef ENABLE_TESTS
     return true;
 #else
     bool passed = true;
@@ -385,22 +428,31 @@ bool test_namespace_funcs(private_namespace_funcs nsFuncs)
  */
 __attribute__((constructor)) static void resolve_global_symbols()
 {
-    // NOTE: Tests are fast enough for release actually, but I'll disable them anyway.
-    g_privateDlFuncs = get_private_dl_functions();
-//    test_dlfuncs(g_privateDlFuncs);
-    g_linkerFuncs = get_private_namespace_functions(g_privateDlFuncs);
-//    test_namespace_funcs(g_linkerFuncs);
+#ifndef FORCE_LOAD_PREANDROID_7
+    if (is_android_6_or_lower()){
+        // Do not allow being loaded there, I don't know what we would do but it's definitely not
+        // gonna be safe down there.
 
-    if (!g_linkerFuncs.create_namespace ||
-            !g_linkerFuncs.link_namespaces ||
-            !g_linkerFuncs.link_namespaces_all_libs ||
-            !g_linkerFuncs.get_exported_namespace) {
-        LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
-        return;
+        LOGI("Running on unsupported android version, killing process. Recompile with -DFORCE_LOAD_PREANDROID_7 to continue.");
+        _exit(120);
     }
-    // Create if not yet, which is the case if tests are disabled
+#endif
+    // NOTE: Tests are fast enough for release actually, but I'll disable them anyway.
+    s_privateDlFuncs = get_private_dl_functions();
+    test_dlfuncs(s_privateDlFuncs);
+    s_linkerFuncs = get_private_namespace_functions(s_privateDlFuncs);
+    test_namespace_funcs(s_linkerFuncs);
+
+    if (!s_linkerFuncs.create_namespace ||
+            !s_linkerFuncs.link_namespaces ||
+            !s_linkerFuncs.link_namespaces_all_libs ||
+            !s_linkerFuncs.get_exported_namespace) {
+        LOGE("Failed to resolve Android linker namespace functions! Cannot run nsbypass.");
+        exit(121);
+    }
+    // Create if not yet made, which is the case if tests are disabled
     if (!escapeNs){
-        escapeNs = g_linkerFuncs.create_namespace(
+        escapeNs = s_linkerFuncs.create_namespace(
                 "g_default_namespace_copy",
                 NULL,
                 SYSTEM_LIBS_PATH,
@@ -410,7 +462,7 @@ __attribute__((constructor)) static void resolve_global_symbols()
                 &dlopen);
         if (!escapeNs) {
             LOGD("Failed to create escapeNs!");
-            exit(120); // idk it felt like a 120
+            exit(122); // idk it felt like a 120
         }
     }
 }
@@ -489,7 +541,7 @@ struct android_namespace_t* private_create_namespace(
         struct android_namespace_t* parent_namespace,
         const void* caller_addr)
 {
-    return g_linkerFuncs.create_namespace(
+    return s_linkerFuncs.create_namespace(
             name,
             ld_library_path,
             default_library_path,
@@ -504,7 +556,7 @@ bool private_link_namespaces(
         struct android_namespace_t* to,
         const char* shared_libs_sonames)
 {
-    return g_linkerFuncs.link_namespaces(
+    return s_linkerFuncs.link_namespaces(
             from,
             to,
             shared_libs_sonames);
@@ -514,7 +566,7 @@ bool private_link_namespaces_all_libs(
         struct android_namespace_t* from,
         struct android_namespace_t* to)
 {
-    return g_linkerFuncs.link_namespaces_all_libs(
+    return s_linkerFuncs.link_namespaces_all_libs(
             from,
             to);
 }
@@ -522,13 +574,13 @@ bool private_link_namespaces_all_libs(
 struct android_namespace_t* private_get_exported_namespace(
         const char* name)
 {
-    return g_linkerFuncs.get_exported_namespace(
+    return s_linkerFuncs.get_exported_namespace(
             name);
 }
 
 int private_dlclose(void* handle)
 {
-    return g_privateDlFuncs.dlclose(handle);
+    return s_privateDlFuncs.dlclose(handle);
 }
 
 void* private_dlopen(
@@ -536,7 +588,7 @@ void* private_dlopen(
         int flags,
         const void* caller_addr)
 {
-    return g_privateDlFuncs.dlopen(
+    return s_privateDlFuncs.dlopen(
             filename,
             flags,
             caller_addr);
@@ -548,7 +600,7 @@ void* private_dlopen_ext(
         const android_dlextinfo* extinfo,
         const void* caller_addr)
 {
-    return g_privateDlFuncs.dlopen_ext(
+    return s_privateDlFuncs.dlopen_ext(
             filename,
             flags,
             extinfo,
@@ -560,7 +612,7 @@ void* private_dlsym(
         const char* symbol,
         const void* caller_addr)
 {
-    return g_privateDlFuncs.dlsym(
+    return s_privateDlFuncs.dlsym(
             handle,
             symbol,
             caller_addr);

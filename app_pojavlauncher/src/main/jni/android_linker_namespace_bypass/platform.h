@@ -41,10 +41,30 @@
 extern "C" {
 #endif
 
-#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
-#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, TAG, __VA_ARGS__)
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, TAG, __VA_ARGS__)
 #define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, TAG, __VA_ARGS__)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, TAG, __VA_ARGS__)
+#define LOGF(...) __android_log_print(ANDROID_LOG_FATAL, TAG, __VA_ARGS__)
+
+
+// We need a way to determine what we are running on
+#include <dlfcn.h>
+typedef int (*get_device_api_level_fn)(void);
+
+// Namespace restrictions were added in android 7, stub to the normal funcs if below that
+static int is_android_6_or_lower(void)
+{
+    void *symbol;
+    get_device_api_level_fn get_api_level;
+    symbol = dlsym(dlopen("libc.so", RTLD_LAZY), "android_get_device_api_level");
+    if (symbol == NULL) {
+        // android_get_device_api_level() was added in API 24. If it's not here then we are lower.
+        return 1;
+    }
+    get_api_level = (get_device_api_level_fn)symbol;
+    return get_api_level() < 24 ? 1 : 0;
+}
 
 #ifdef __cplusplus
 }
