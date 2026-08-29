@@ -63,13 +63,15 @@ static void* find_branch_label(void* func_start) {
  * https://cs.android.com/android/platform/superproject/+/329d792f6d5e33e8a6fc5a02809c795ce17774ab:art/libnativeloader/library_namespaces.cpp
  * Classloader namespace is names like clns-XX with XX being integers. This is provided to every
  * application on startup automatically and looks through your nativeLibraryDir and specified
- * libraries defined as "public API" by android.
+ * libraries defined as "public API" by android. This is what you have been running in the entire
+ * time.
+ *
  *
  * g_default_namespace is the private API namespace where you can access the private API libs.
  * It's also the default if it wasn't obvious.
- *
- * By using &dlopen as the caller_addr, we trick the linker into thinking we are calling from
- * libdl.so thereby letting us dlopen as if we were in the default namespace.
+ * https://android.googlesource.com/platform/bionic/%2B/1ffec1cc4d0e283bb1ff6f49843769a3493b8d73/linker/dlfcn.cpp#294
+ * It is typically accessed by passing &dlopen as the caller_addr, to trick the linker into
+ * thinking we are calling from the default namespace.
  *
  */
 
@@ -78,6 +80,7 @@ static void* find_branch_label(void* func_start) {
 
 /**
  * A namespace that has access to SYSTEM_LIBS_PATH.
+ * Fun fact: bylaws/liblinkernsbypass coined this term
  */
 extern struct android_namespace_t* escapeNs;
 
