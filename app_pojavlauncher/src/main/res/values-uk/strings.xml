@@ -53,6 +53,8 @@
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES — лише 1.21.4&lt;, швидкий</string>
     <string name="mcl_setting_renderer_ng_gl4es">Crypton Wrapper — усі версії, швидкий</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) — усі версії, посередній</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) — усі версії, повільно</string>
+    <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) — усі версії, швидко</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) — лише 1.17+</string>
     <string name="mcl_setting_veroption_release">Випуски</string>
     <string name="mcl_setting_veroption_snapshot">Знімки</string>
@@ -460,4 +462,6 @@
     <string name="import_modpack_hash">Хешування файлу пакета модів… (%s МБ/ %s МБ)</string>
     <string name="import_modpack_json">Читання інформації пакета модів…</string>
     <string name="import_modpack_copy">Копіювання файла пакета модів до кешу… (%s МБ/ %s МБ)</string>
+    <string name="angelica_found_sfpew_notice">Знайдено мод Angelica, Simple FPE Wrapper більше не потрібен</string>
+    <string name="use_angle_checkbox">Використовуйте ANGLE (може покращити FPS)</string>
 </resources>
