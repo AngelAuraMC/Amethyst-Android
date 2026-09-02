@@ -48,7 +48,6 @@
     <string name="mcl_setting_title_javaargs">حجج إطلاق JVM</string>
     <string name="mcl_setting_subtitle_javaargs">كن حذرا، تعديلها بغير علم قد يتسبب بتعطيل اللعبة.</string>
     <string name="mcl_setting_category_renderer">العارض</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (جميع الإصدارات، متوسط)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ فقط</string>
     <string name="mcl_setting_veroption_release">إصدار نهائي</string>
     <string name="mcl_setting_veroption_snapshot">اللمحات (سنابشوت)</string>
