@@ -50,10 +50,12 @@
     <string name="mcl_setting_title_renderer_settings">Dodatkowe ustawienia silnika renderującego</string>
     <string name="mcl_setting_title_renderer_subtitle">Ustawienia specyficzne dla silnika renderującego</string>
     <string name="mcl_setting_category_renderer">Silnik renderujący</string>
-    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (tylko &lt;1.21.4, szybki)</string>
-    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (wszystkie wersje, szybki)</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (wszystkie wersje, średni)</string>
-    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - tylko 1.17+</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES – (tylko &lt;1.21.4, szybki)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper – (wszystkie wersje, szybki)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (wszystkie wersje, średni)</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) – (wszystkie wersje, wolny)</string>
+    <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) – (wszystkie wersje, szybki)</string>
+    <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) – tylko 1.17+</string>
     <string name="mcl_setting_veroption_release">Oficjalne wydanie</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
     <string name="mcl_setting_veroption_oldalpha">Stara alpha</string>
@@ -460,4 +462,6 @@
     <string name="import_modpack_hash">Tworzenie sumy kontrolnej paczki modów… (%s MB/%s MB)</string>
     <string name="import_modpack_json">Wczytywanie informacji o paczce modów…</string>
     <string name="import_modpack_copy">Kopiowanie paczki modów do pamięci podręcznej… (%s MB/%s MB)</string>
+    <string name="angelica_found_sfpew_notice">Znaleziono modyfikację Angelica – nie jest potrzebny Simple FPE Wrapper</string>
+    <string name="use_angle_checkbox">Użyj ANGLE (może poprawić liczbę klatek na sekundę)</string>
 </resources>
