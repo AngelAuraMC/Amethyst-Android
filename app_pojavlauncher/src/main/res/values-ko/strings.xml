@@ -51,8 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">렌더러와 관련된 세부 설정</string>
     <string name="mcl_setting_category_renderer">렌더러</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4 이전 전용, 빠름)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (모든 버전 호환, 중간)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17 이상 전용, 빠름)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (모든 버전 호환, 중간)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17 이상 전용</string>
     <string name="mcl_setting_veroption_release">릴리즈</string>
     <string name="mcl_setting_veroption_snapshot">스냅샷</string>
@@ -392,7 +391,6 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="preference_renderer_mobileglues_settings">MobileGlues 렌더러 설정</string>
     <string name="mg_renderer_glsl_cache">최대 GLSL 캐시 크기</string>
     <string name="mg_renderer_angle">ANGLE을 드라이버로 사용</string>
-    <string name="mg_renderer_multidraw">멀티드로우 에뮬레이션 모드</string>
     <string name="mg_renderer_title_errorSetting">오류 필터링</string>
     <string name="mg_renderer_title_timerQueryExt">F3 메뉴에서 GPU 사용률 비활성화</string>
     <string name="mg_renderer_summary_timerQueryExt">Mali GPU를 사용하는 기기에서 F3 메뉴를 열 경우 무작위로 발생하는 충돌을 해결합니다</string>
@@ -404,8 +402,6 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="mg_renderer_summary_gl43exts">모드 충돌 현상에 도움이 될 수 있습니다. 충돌을 유발할 수 있으므로 필요하지 않다면 비활성화하세요.</string>
     <string name="mg_renderer_title_computeShaderext">실험적인 컴퓨트 쉐이더 확장 사용</string>
     <string name="mg_renderer_summary_computeShaderext">쉐이더팩 글리치 현상에 도움이 될 수 있습니다. 충돌을 유발할 수 있으므로 필요하지 않다면 비활성화하세요.</string>
-    <string name="mg_renderer_title_multidrawCompute">컴퓨트 기반 멀티드로우 에뮬레이션 사용</string>
-    <string name="mg_renderer_summary_multidrawCompute">멀티드로우 에뮬레이션에 컴퓨트 쉐이더를 사용합니다.</string>
     <string name="demo_versions_supported">데모 계정에서는 바닐라 1.3.1 이상만 지원합니다</string>
     <string name="demo_unsupported">데모 프로필 지원 안함</string>
     <string name="change_account">이 기능을 사용하려면 계정을 변경하세요</string>
@@ -434,7 +430,6 @@ OptiFine이 설치되어 있어야 합니다.</string>
     <string name="mg_renderer_summary_dsaExt">Iris 쉐이더팩 사용에 도움이 될 수 있습니다. AcceleratedRendering 모드 사용 시 필요합니다.</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 업스케일링</string>
     <string name="autorendererselectfailed">렌더러 자동 선택에 실패하여 HolyGL4ES가 대신 선택됩니다</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (모든 버전 호환, 중간)</string>
     <string name="sodium_warning_title">Sodium이 감지되었습니다!</string>
     <string name="sodium_warning_message">현재 클라이언트에 Sodium이 설치된 것으로 보입니다. 이는 지원되지 않으며, 그래픽 문제나 충돌이 발생할 수 있습니다. Sodium 및 관련 모드를 제거해주세요.</string>
     <string name="delete_sodium">Sodium 제거 및 실행</string>
