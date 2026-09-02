@@ -52,8 +52,7 @@
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; nur, schnell)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper – (alle Versionen, schnell)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle Versionen, mittel)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (nur 1.17+, schnell)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (alle Versionen, Mitte)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - nur 1.17+</string>
     <string name="mcl_setting_veroption_release">Vollversionen</string>
     <string name="mcl_setting_veroption_snapshot">Entwicklungsversionen</string>
@@ -397,7 +396,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="preference_renderer_mobileglues_settings">MobileGlues Renderer-Einstellungen</string>
     <string name="mg_renderer_glsl_cache">Maximale GLSL-Cache-Größe</string>
     <string name="mg_renderer_angle">Nutze ANGLE als Treiber</string>
-    <string name="mg_renderer_multidraw">Multidraw-Emulationsmodus</string>
     <string name="mg_renderer_title_errorSetting">Filterung von Fehlern</string>
     <string name="mg_renderer_title_timerQueryExt">GPU-Nutzung im F3-Menü deaktivieren</string>
     <string name="mg_renderer_summary_timerQueryExt">Behebt zufällige Abstürze, wenn F3 auf einigen Mali Geräten geöffnet ist</string>
@@ -409,8 +407,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="mg_renderer_summary_gl43exts">Kann bei Abstürzen von Mods helfen. Deaktivieren, wenn nicht nötig, kann Abstürze verursachen.</string>
     <string name="mg_renderer_title_computeShaderext">Experimentelle Rechen-Shader-Erweiterung anzeigen</string>
     <string name="mg_renderer_summary_computeShaderext">Kann bei Shaderpack-Problemen helfen. Deaktivieren, wenn nicht benötigt, kann Abstürze verursachen.</string>
-    <string name="mg_renderer_title_multidrawCompute">Nutze die Compute Multidraw-Emulation</string>
-    <string name="mg_renderer_summary_multidrawCompute">Verwendet den Compute-Shader Shader für die Multidraw-Emulation</string>
     <string name="demo_versions_supported">Auf Demo-Konten wird nur Vanilla 1.3.1 unterstützt</string>
     <string name="demo_unsupported">Demo-Profil wird nicht unterstützt</string>
     <string name="change_account">Bitte wechsle das Konto, um diese Funktion zu nutzen</string>
@@ -440,7 +436,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="mg_renderer_summary_dsaExt">Kann bei Iris-Shaderpacks helfen, die für den AcceleratedRendering-Mod erforderlich sind</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 Hochskalierung</string>
     <string name="autorendererselectfailed">Auswahl des Auto-Renderers fehlgeschlagen, Standard ist HolyGL4ES</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (alle Versionen, Mitte)</string>
     <string name="sodium_warning_title">Sodium erkannt!</string>
     <string name="sodium_warning_message">Es scheint, dass du Sodium verwendest. Dieses wird nicht unterstützt und kann zu Grafikfehlern oder Abstürzen führen. Bitte entferne es und alle davon abhängigen Mods.</string>
     <string name="delete_sodium">Sodium löschen und starten</string>
