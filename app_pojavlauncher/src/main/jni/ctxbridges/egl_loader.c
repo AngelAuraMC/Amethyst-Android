@@ -42,7 +42,7 @@ bool dlsym_EGL() {
     char* eglName = (strncmp(gles ? gles : "", "libGLESv2_angle.so", 18) == 0) ? "libEGL_angle.so" : getenv("POJAVEXEC_EGL");
     void* dl_handle = loader_dlopen(eglName,"libEGL.so", RTLD_LOCAL|RTLD_LAZY);
     // Mesa renderers that are also GPU drivers need this
-    if (eglName != NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
+    if (eglName != NULL && dl_handle == NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
         // Not sure where to put this because pojavexec is shit
         if (!app_escapeNs) {
             app_escapeNs = private_create_namespace(
