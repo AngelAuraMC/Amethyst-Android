@@ -51,8 +51,6 @@
     <string name="mcl_setting_title_renderer_subtitle">Setări specifice programului de randare</string>
     <string name="mcl_setting_category_renderer">Randator</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (doar: 1.21.4&lt; rapid)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (toate versiunile, viteză medie)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (doar vers. 1.17+, rapid)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - doar vers. 1.17+</string>
     <string name="mcl_setting_veroption_release">Lansat oficial</string>
     <string name="mcl_setting_veroption_snapshot">Lansat pentru testare</string>
