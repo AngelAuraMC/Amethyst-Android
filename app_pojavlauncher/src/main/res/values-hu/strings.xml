@@ -54,8 +54,6 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="mcl_setting_title_renderer_subtitle">Renderelő-specifikus beállítások</string>
     <string name="mcl_setting_category_renderer">Renderelő</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL3ES - (csak 1.21.4&lt;, gyors)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (összes verzió, közepes)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - 1.17+ vagy újabb, gyors</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ vagy újabb</string>
     <string name="mcl_setting_veroption_release">Kiadás</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -392,7 +390,6 @@ mcl_indítás_letöltés_folyamatban"</string>
     <string name="preference_renderer_mobileglues_settings">MobileGlues renderelő beállítások</string>
     <string name="mg_renderer_glsl_cache">Maximum GLSL cache méret</string>
     <string name="mg_renderer_angle">ANGLE használata driverként</string>
-    <string name="mg_renderer_multidraw">Multidraw emulációs mód</string>
     <string name="mg_renderer_title_errorSetting">Szűrési hiba</string>
     <string name="preference_experimental_title">Kíserleti kellékek</string>
     <string name="mg_renderer_title_gl43exts">Kísérleti OpenGL 4.3-bővítmények reklámozása</string>
