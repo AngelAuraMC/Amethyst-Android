@@ -41,7 +41,6 @@
     <string name="mcl_setting_title_javaargs">JVM Paleidimo argumentai</string>
     <string name="mcl_setting_subtitle_javaargs">Būkite atsargūs, tai gali paveikti žaidimą jei modifikuota be išmonės.</string>
     <string name="mcl_setting_category_renderer">Vaizdo generatorius</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (visos versijos, vidutinis)</string>
     <string name="mcl_setting_veroption_release">Leidimai</string>
     <string name="mcl_setting_veroption_snapshot">Naujinimai</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha</string>
