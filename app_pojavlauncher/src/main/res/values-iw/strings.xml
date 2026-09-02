@@ -50,8 +50,6 @@
     <string name="mcl_setting_title_renderer_settings">הגדרות רינדור נוספות</string>
     <string name="mcl_setting_title_renderer_subtitle">הגדרות ספציפיות לרינדור</string>
     <string name="mcl_setting_category_renderer">רינדור</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (כל הגרסאות, בינוני)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (גרסה 1.17+ בלבד, מהיר)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - גרסה 1.17+ בלבד</string>
     <string name="mcl_setting_veroption_release">מהדורה</string>
     <string name="mcl_setting_veroption_snapshot">סנאפשוט</string>
@@ -371,7 +369,6 @@
     <string name="preference_renderer_mobileglues_settings">הגדרות רינדור MobileGlues</string>
     <string name="mg_renderer_glsl_cache">גודל מטמון GLSL מקסימלי</string>
     <string name="mg_renderer_angle">השתמש ב-ANGLE כדריבר</string>
-    <string name="mg_renderer_multidraw">מצב אמולציה multidraw</string>
     <string name="mg_renderer_title_errorSetting">סינון שגיאות</string>
     <string name="preference_experimental_title">דברים ניסיוניים</string>
     <string name="mg_renderer_title_gl43exts">פרסום הרחבות ניסיוניות של OpenGL 4.3</string>
