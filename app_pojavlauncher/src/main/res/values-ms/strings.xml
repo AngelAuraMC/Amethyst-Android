@@ -51,8 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Tetapan khusus pemapar</string>
     <string name="mcl_setting_category_renderer">Pemapar</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; sahaja, pantas)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (semua versi, sederhana)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ sahaja, pantas)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (semua versi, sederhana)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ sahaja</string>
     <string name="mcl_setting_veroption_release">Terbitan</string>
     <string name="mcl_setting_veroption_snapshot">Petikan</string>
@@ -393,7 +392,6 @@
     <string name="preference_renderer_mobileglues_settings">Tetapan Pemapar MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Saiz cache GLSL maksimum</string>
     <string name="mg_renderer_angle">Gunakan ANGLE sebagai pemacu</string>
-    <string name="mg_renderer_multidraw">Mod emulasi multidraw</string>
     <string name="mg_renderer_title_errorSetting">Penapisan Ralat</string>
     <string name="mg_renderer_title_timerQueryExt">Lumpuhkan Penggunaan GPU dalam menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Memperbaiki ranap rawak apabila F3 dibuka pada beberapa peranti Mali</string>
@@ -405,8 +403,6 @@
     <string name="mg_renderer_summary_gl43exts">Boleh membantu dengan ranap mod. Nyahdayakan jika tidak diperlukan, boleh menyebabkan ranap.</string>
     <string name="mg_renderer_title_computeShaderext">Gunakan Sambungan Compute Shader Uji Kaji</string>
     <string name="mg_renderer_summary_computeShaderext">Boleh membantu dengan gangguan dengan pek pembayang. Nyahdayakan jika tidak diperlukan, boleh menyebabkan ranap.</string>
-    <string name="mg_renderer_title_multidrawCompute">Gunakan Emulasi Compute Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Menggunakan pembayang compute untuk emulasi multidraw</string>
     <string name="demo_versions_supported">Hanya versi 1.3.1 Vanila dan ke atas disokong pada akaun demo</string>
     <string name="demo_unsupported">Profil Demo tidak disokong</string>
     <string name="change_account">Sila tukar akaun untuk menggunakan fungsi ini</string>
@@ -435,7 +431,6 @@
     <string name="mg_renderer_summary_dsaExt">Boleh membantu dengan pek pembayang Iris, diperlukan untuk mod AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 Upscaling</string>
     <string name="autorendererselectfailed">Pilihan pemapar automatik gagal, akan lalai kepada HolyGL4ES</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (semua versi, sederhana)</string>
     <string name="sodium_warning_title">Sodium dikesan!</string>
     <string name="sodium_warning_message">Amaran ini muncul apabila anda menggunakan Sodium, ini tidak disokong dan mungkin menyebabkan masalah grafik ataupun ranap. Sila alih keluar mod tersebut beserta semua mod yang bergantung padanya.</string>
     <string name="delete_sodium">Hapus Sodium dan Lancarkan</string>
