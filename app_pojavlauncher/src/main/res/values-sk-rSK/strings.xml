@@ -44,7 +44,6 @@
     <string name="mcl_setting_subtitle_mousescale">Možnosť zmeniť veľkosť virtuálnej myši.</string>
     <string name="mcl_setting_title_javaargs">Spúštacie argumenty pre JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Pozor! Zmena JVM argumentov môže spôsobiť pád hry ak neviete, čo robíte.</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink - (všetky verzie, priemerný)</string>
     <string name="mcl_setting_veroption_release">Vydanie</string>
     <string name="mcl_setting_veroption_oldalpha">Stará alfa</string>
     <string name="mcl_setting_veroption_oldbeta">Stará beta</string>
