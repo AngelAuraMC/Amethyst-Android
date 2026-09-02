@@ -45,7 +45,6 @@
     <string name="mcl_setting_title_javaargs">Argumentos JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Tem cuidado, isto pode fazer o jogo falhar se modificado sem conhecimento.</string>
     <string name="mcl_setting_category_renderer">Renderizador</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas as versões, médio)</string>
     <string name="mcl_setting_veroption_release">Oficial</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha antiga</string>
     <string name="mcl_setting_veroption_oldbeta">Beta antiga</string>
