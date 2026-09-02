@@ -64,21 +64,6 @@
         <item>2</item>
         <item>3</item>
     </string-array>
-    <!--TODO: Make this translatable-->
-    <string-array name="mg_renderer_names_multidraw">
-        <item>Auto</item>
-        <item>Prefer Indirect</item>
-        <item>Prefer BaseVertex</item>
-        <item>Prefer MultiDraw Indirect</item>
-        <item>Force DrawElements</item>
-    </string-array>
-    <string-array name="mg_renderer_values_multidraw">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-    </string-array>
     <string-array name="mg_renderer_names_errorSetting">
         <item>Auto</item>
         <item>Don\'t ignore</item>
