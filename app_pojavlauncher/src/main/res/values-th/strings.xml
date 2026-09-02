@@ -49,8 +49,6 @@
     <string name="mcl_setting_title_renderer_subtitle">การตั้งค่าการแสดงผลเฉพาะ</string>
     <string name="mcl_setting_category_renderer">การแสดงผล</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; เท่านั้น, เร็ว)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (รองรับทุกเวอร์ชั่น, กลาง)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ เท่านั้น, เร็ว)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ เท่านั้น</string>
     <string name="mcl_setting_veroption_release">ปล่อย</string>
     <string name="mcl_setting_veroption_snapshot">ภาพรวม</string>
