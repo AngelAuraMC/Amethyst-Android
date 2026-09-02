@@ -51,8 +51,6 @@
     <string name="mcl_setting_title_renderer_subtitle">Nastavení ohledně vykreslování</string>
     <string name="mcl_setting_category_renderer">Vykreslovač</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (pouze 1.21.4&lt;, rychlé)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (všechny verze, střední)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (pouze 1.17+, rychlé)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - jen 1.17+</string>
     <string name="mcl_setting_veroption_release">Vydání</string>
     <string name="mcl_setting_veroption_snapshot">Vývojová verze</string>
@@ -391,7 +389,6 @@
     <string name="preference_renderer_mobileglues_settings">Nastavení vykreslování MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Maximální mezipamět GLSL</string>
     <string name="mg_renderer_angle">Použít ANGLE jako ovladač</string>
-    <string name="mg_renderer_multidraw">Režim vícenásobné emulace</string>
     <string name="mg_renderer_title_errorSetting">Chyba filtrování</string>
     <string name="mg_renderer_title_timerQueryExt">Zakázat využití GPU v nabídce F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Opraví náhodné pády při otevření F3 na některých zařízeních Mali</string>
@@ -403,8 +400,6 @@
     <string name="mg_renderer_summary_gl43exts">Může pomoci s pády módu. Zakažte, pokud to není třeba, může samo způsobovat pády.</string>
     <string name="mg_renderer_title_computeShaderext">Inzerovat experimentální rozšíření výpočtů stínů</string>
     <string name="mg_renderer_summary_computeShaderext">Může pomoci s chybami shaderpacků. Zakažte, pokud to není třeba, může samo způsobovat pády.</string>
-    <string name="mg_renderer_title_multidrawCompute">Použít výpočty mnohonásobnou emulace</string>
-    <string name="mg_renderer_summary_multidrawCompute">Používá výpočty stínů pro mnohonásobnou emulaci</string>
     <string name="demo_versions_supported">Na demo účtech jsou podporovány pouze Vanilla verze 1.3.1 a výše</string>
     <string name="demo_unsupported">Demo profil není podporován</string>
     <string name="change_account">Pro použití této funkce prosím změňte účty</string>
