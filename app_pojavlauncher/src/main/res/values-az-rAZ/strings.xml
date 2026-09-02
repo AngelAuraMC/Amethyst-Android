@@ -43,7 +43,6 @@
     <string name="mcl_setting_title_mousescale">Siçan miqyası</string>
     <string name="mcl_setting_subtitle_mousescale">Virtual siçanın ölçüsünü dəyişdirin.</string>
     <string name="mcl_setting_subtitle_javaargs">Ehtiyatlı olun, məlumat olmadan dəyişdirilərsə, bu, oyunun çökməsinə səbəb ola bilər.</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (bütün versiyalar, orta)</string>
     <string name="mcl_setting_veroption_release">Buraxın</string>
     <string name="mcl_version_clone">Klon</string>
     <!-- Global strings -->
