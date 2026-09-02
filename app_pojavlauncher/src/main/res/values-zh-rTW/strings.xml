@@ -52,8 +52,7 @@
     <string name="mcl_setting_category_renderer">渲染器</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES —（僅支援 1.21.4 以下版本，速度較快）</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wapper —（所有版本，快速）</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) —（可用於所有版本，速度中等）</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) —（僅支援 1.17 以上版本，速度快）</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) —（可用於所有版本，速度中等）</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) —僅支援 1.17 以上版本</string>
     <string name="mcl_setting_veroption_release">正式版</string>
     <string name="mcl_setting_veroption_snapshot">快照版</string>
@@ -398,7 +397,6 @@
     <string name="preference_renderer_mobileglues_settings">MobileGlues 渲染器設定</string>
     <string name="mg_renderer_glsl_cache">最大 GLSL 緩存大小</string>
     <string name="mg_renderer_angle">使用 ANGLE 作為驅動</string>
-    <string name="mg_renderer_multidraw">多重繪制模擬模式</string>
     <string name="mg_renderer_title_errorSetting">錯誤過濾</string>
     <string name="mg_renderer_title_timerQueryExt">禁用 F3 選單中的 GPU 利用率</string>
     <string name="mg_renderer_summary_timerQueryExt">修復了在某些 Mali 裝置上打開 F3 時隨機崩潰的問題</string>
@@ -410,8 +408,6 @@
     <string name="mg_renderer_summary_gl43exts">可能有助於解決模組導致的崩潰。不需要時請禁用，否則可能會導致崩潰。</string>
     <string name="mg_renderer_title_computeShaderext">啟用實驗性的 Compute Shader 擴展</string>
     <string name="mg_renderer_summary_computeShaderext">可能有助於解決光影包渲染問題。不需要時請禁用，否則可能會導致崩潰。</string>
-    <string name="mg_renderer_title_multidrawCompute">使用計算多重繪制模擬</string>
-    <string name="mg_renderer_summary_multidrawCompute">使用計算著色器進行多重繪制模擬</string>
     <string name="demo_versions_supported">試玩帳號僅支持原版 1.3.1 及以上版本</string>
     <string name="demo_unsupported">不支持試玩玩家檔案</string>
     <string name="change_account">請更換帳號以使用此功能</string>
@@ -441,7 +437,6 @@
     <string name="mg_renderer_summary_dsaExt">可能對 Iris 光影包有幫助，這是 AcceleratedRendering 模組所必需的</string>
     <string name="mg_renderer_title_fsr">AMD FSR 1 升頻</string>
     <string name="autorendererselectfailed">自動渲染器選擇失敗，預設改用 HolyGL4ES</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) —（可用於所有版本，速度中等）</string>
     <string name="sodium_warning_title">偵測到 Sodium！</string>
     <string name="sodium_warning_message">看來你正在使用 Sodium，這是不被支援的，可能會導致畫面顯示問題或遊戲崩潰。請移除 Sodium 以及所有它的前置模組。</string>
     <string name="delete_sodium">刪除 Sodium 並啟動</string>
