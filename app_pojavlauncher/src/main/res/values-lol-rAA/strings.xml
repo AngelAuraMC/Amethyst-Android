@@ -44,7 +44,6 @@
     <string name="mcl_setting_subtitle_mousescale">Change da size of da virtual mouse.</string>
     <string name="mcl_setting_title_javaargs">CCz’UM L’unch argumentz</string>
     <string name="mcl_setting_subtitle_javaargs">Bees careful, dis can mak teh game crash if modified witout knowledge.</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (vulkan) - (awl versionz, mid)</string>
     <string name="mcl_setting_veroption_release">RELEASD</string>
     <string name="mcl_setting_veroption_oldalpha">Old-alaf</string>
     <string name="mcl_setting_veroption_oldbeta">Old-beat</string>
