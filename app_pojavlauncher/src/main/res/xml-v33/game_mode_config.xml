@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Disables OEM "optimizations" because we tell it "we'll apply our own, trust".-->
+<game-mode-config
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:allowGameDownscaling="false"
+    android:allowGameFpsOverride="false"
+    android:supportsBatteryGameMode="true"
+    android:supportsPerformanceGameMode="true"
+    />

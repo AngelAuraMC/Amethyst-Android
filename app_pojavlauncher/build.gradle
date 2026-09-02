@@ -180,6 +180,8 @@ android {
     packagingOptions {
         jniLibs {
             useLegacyPackaging = true
+            // If you're debugging mesa libs, put them here, android will strip them
+            // and not properly link to source files, very smart android studio.
             keepDebugSymbols += ['**/libcutils.so']
             pickFirsts += ['**/libbytehook.so']
         }
@@ -248,6 +250,8 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
 
     implementation "net.java.dev.jna:jna:5.14.0@aar"
+
+    implementation project(":androidnsbypass")
 
 }
 apply from: rootProject.file('gradle/prefab_bypass.gradle')

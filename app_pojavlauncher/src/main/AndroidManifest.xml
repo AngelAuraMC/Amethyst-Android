@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-sdk
+        tools:overrideLibrary="dev.alexytomi.androidnsbypass"/>
+
     <uses-feature android:glEsVersion="0x00020000" />
     <uses-feature
         android:name="android.hardware.type.pc"
@@ -21,7 +24,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"/>
     <uses-permission android:name="android.permission.VIBRATE" />
-
+    <meta-data android:name="android.game_mode_config"
+        android:resource="@xml/game_mode_config" />
     <application
         android:name=".PojavApplication"
         android:allowBackup="true"

@@ -20,6 +20,7 @@ public class MinecraftProfile {
 	public String logConfig;
 	public boolean logConfigIsXML;
 	public String pojavRendererName;
+	public boolean useANGLE;
 	public String controlFile;
 	public MinecraftResolution[] resolution;
 
@@ -55,5 +56,6 @@ public class MinecraftProfile {
 		pojavRendererName = profile.pojavRendererName;
 		controlFile = profile.controlFile;
 		resolution = profile.resolution;
+		useANGLE = profile.useANGLE;
 	}
 }

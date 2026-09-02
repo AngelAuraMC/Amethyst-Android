@@ -266,6 +266,16 @@
                 app:layout_constraintEnd_toEndOf="@id/vprof_editor_profile_renderer"
                 app:layout_constraintTop_toTopOf="@id/vprof_editor_profile_renderer" />
 
+            <CheckBox
+                android:id="@+id/vprof_editor_profile_angle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+
+                android:text="@string/use_angle_checkbox"
+
+                app:layout_constraintTop_toBottomOf="@+id/vprof_editor_profile_renderer"
+                tools:paddingVertical="@dimen/_12sdp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

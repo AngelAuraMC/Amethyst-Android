@@ -32,6 +32,7 @@ import net.kdt.pojavlaunch.multirt.MultiRTUtils;
 import net.kdt.pojavlaunch.multirt.Runtime;
 import net.kdt.pojavlaunch.plugins.FFmpegPlugin;
 import net.kdt.pojavlaunch.prefs.*;
+import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 
 import org.lwjgl.glfw.*;
 
@@ -209,7 +210,6 @@ public class JREUtils {
         envMap.put("force_glsl_extensions_warn", "true");
         envMap.put("allow_higher_compat_version", "true");
         envMap.put("allow_glsl_extension_directive_midshader", "true");
-        envMap.put("MESA_LOADER_DRIVER_OVERRIDE", "zink");
         envMap.put("VTEST_SOCKET_NAME", new File(Tools.DIR_CACHE, ".virgl_test").getAbsolutePath());
 
         envMap.put("LD_LIBRARY_PATH", LD_LIBRARY_PATH);
@@ -228,17 +228,43 @@ public class JREUtils {
                 envMap.put("MG_DIR_PATH", Tools.DIR_DATA + "/MobileGlues");
                 envMap.put("POJAVEXEC_EGL","libmobileglues.so");
             }
+            /*
+                Set these to enable ANGLE on GL4ES
+                LIBGL_GLES=libGLESv2_angle.so
+                LIBGL_EGL=libEGL_angle.so
+                LD_PRELOAD=libGLESv2_angle:libEGL_angle.so
+            */
             if(LOCAL_RENDERER.equals("opengles2")){
                 envMap.put("LIBGL_ES", "2"); // Krypton Wrapper crashes with 1
+                if (Tools.useANGLE) {
+                    envMap.put("LIBGL_GLES", "libGLESv2_angle.so");
+                    envMap.put("LIBGL_EGL", "libEGL_angle.so");
+                    envMap.put("POJAVEXEC_EGL", "libEGL_angle.so");
+                }
+                // Don't use with gl4es, they're both doing the same thing.
+                Tools.useSFPEW = false;
+            }
+            if (LOCAL_RENDERER.equals("opengles_system_gles")) {
+                if (Tools.useANGLE) {
+                    envMap.put("POJAVEXEC_EGL", "libEGL_angle.so");
+                }
+                // Not advised to be used with android GLES drivers for now.
+                // MobileGL(ues) adds GPU specific fixes which SFPEW needs.
+                Tools.useSFPEW = false;
             }
             if (LOCAL_RENDERER.equals("opengles3_desktopgl_zink_kopper")){
-                envMap.put("POJAVEXEC_EGL","libEGL_mesa.so"); // Use Mesa EGL
+                envMap.put("POJAVEXEC_EGL", "libEGL_mesa.so"); // Use Mesa EGL
                 if (Tools.shouldUseUBWC()) envMap.put("FD_DEV_FEATURES", "enable_tp_ubwc_flag_hint=1"); // Turnip fix for OneUI rendering issues
             }
             if (LOCAL_RENDERER.toLowerCase().contains("zink")){
                 // This is sketch but it fixes a lot of things, if it causes problems we can just undo it.
                 envMap.put("MESA_GL_VERSION_OVERRIDE","4.6COMPAT");
                 envMap.put("MESA_GLSL_VERSION_OVERRIDE","460");
+                // Don't use with Zink, it also does the same thing.
+                Tools.useSFPEW = false;
+            }
+            if (Tools.useSFPEW) {
+                envMap.put("SFPEW_EGL", envMap.get("POJAVEXEC_EGL"));
             }
         }
 
@@ -313,9 +339,12 @@ public class JREUtils {
 
         // Has to run after SDL env vars are set
         try {
-            if (graphicsLib != null)
+            // If using nothing (aka sys driver) then don't set this so SDL can auto find the
+            // native gles driver, because providing it ourselves is useless effort.
+            // This only matters for Angelica because Mojunk is never using SDL on non-Core
+            if (graphicsLib != null && !LOCAL_RENDERER.equals("opengles_system_gles"))
                 Os.setenv("SDL_OPENGL_LIBRARY", graphicsLib, true);
-            if (Os.getenv("POJAVEXEC_EGL") != null)
+            if (Os.getenv("POJAVEXEC_EGL") != null && !LOCAL_RENDERER.equals("opengles_system_gles"))
                 Os.setenv("SDL_EGL_LIBRARY", NATIVE_LIB_DIR+"/"+Os.getenv("POJAVEXEC_EGL"), true);
         } catch (ErrnoException e) {
             Log.wtf("RENDER_LIBRARY", "Failed to load set SDL env vars");
@@ -516,9 +545,10 @@ public class JREUtils {
             case "opengles_mobileglues": renderLibrary = "libmobileglues.so"; break;
             case "opengles3_desktopgl_zink_kopper": renderLibrary = "libglxshim.so"; break;
             case "opengles3_ltw" : renderLibrary = "libltw.so"; break;
+            case "opengles_system_gles" : return null; // Literally nothing, this is for system GLES.
             default:
-                Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles2");
-                renderLibrary = "libng_gl4es.so";
+                Log.w("RENDER_LIBRARY", "No renderer selected, defaulting to opengles_mobileglues");
+                renderLibrary = "libmobileglues.so";
                 break;
         }
         // Has to run before dlopening mobileglues
@@ -532,10 +562,15 @@ public class JREUtils {
         }
 
         if (!dlopen(renderLibrary) && !dlopen(findInLdLibPath(renderLibrary))) {
-            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to Krypton Wrapper");
-            LOCAL_RENDERER = "opengles2";
-            renderLibrary = "libng_gl4es.so";
-            dlopen(NATIVE_LIB_DIR + "/libng_gl4es.so");
+            Log.e("RENDER_LIBRARY","Failed to load renderer " + renderLibrary + ". Falling back to SFPEW/MobileGlues");
+            LOCAL_RENDERER = "opengles_mobileglues";
+            renderLibrary = "libmobileglues.so";
+            dlopen(NATIVE_LIB_DIR + "/libmobileglues.so");
+        }
+
+        // The final switch for using SFPEW.
+        if (Tools.useSFPEW) {
+            renderLibrary = "libSimpleFPEWrapper.so";
         }
         return renderLibrary;
     }

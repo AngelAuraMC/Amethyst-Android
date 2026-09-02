@@ -6,7 +6,10 @@
 #include <dlfcn.h>
 #include <string.h>
 #include "egl_loader.h"
+#include "global_state.h"
 #include "loader_dlopen.h"
+#include <androidnsbypass/nsbypass_t.h>
+#include <androidnsbypass/nsbypass.h>
 
 EGLBoolean (*eglMakeCurrent_p) (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 EGLBoolean (*eglDestroyContext_p) (EGLDisplay dpy, EGLContext ctx);
@@ -32,15 +35,27 @@ EGLBoolean (*eglQuerySurface_p)( 	EGLDisplay display,
                                            EGLint * value);
 __eglMustCastToProperFunctionPointerType (*eglGetProcAddress_p) (const char *procname);
 
+struct android_namespace_t* app_escapeNs;
+
 bool dlsym_EGL() {
     char* gles = getenv("LIBGL_GLES");
     char* eglName = (strncmp(gles ? gles : "", "libGLESv2_angle.so", 18) == 0) ? "libEGL_angle.so" : getenv("POJAVEXEC_EGL");
-    // Kopper needs this
-    if (eglName != NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
-        void* cutils_handle = loader_dlopen("libcutils.so", "libcutils.so", RTLD_GLOBAL|RTLD_NOW);
-        if(cutils_handle == NULL) return false;
-    }
     void* dl_handle = loader_dlopen(eglName,"libEGL.so", RTLD_LOCAL|RTLD_LAZY);
+    // Mesa renderers that are also GPU drivers need this
+    if (eglName != NULL && dl_handle == NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
+        // Not sure where to put this because pojavexec is shit
+        if (!app_escapeNs) {
+            app_escapeNs = private_create_namespace(
+                    "app-escapeNs",
+                    NULL,
+                    getenv("POJAV_NATIVEDIR"), // append to search path!
+                    ANDROID_NAMESPACE_TYPE_SHARED, // Inherit from escapeNs paths
+                    getenv("POJAV_NATIVEDIR"), // not needed, useless for non-isolate
+                    get_escape_namespace(), // Inherit from escapeNs so we get the system lib paths too
+                    __builtin_return_address(0));
+        }
+        dl_handle = linker_ns_dlopen(eglName, RTLD_LOCAL | RTLD_LAZY, app_escapeNs);
+    }
     if(dl_handle == NULL) return false;
     eglGetProcAddress_p = dlsym(dl_handle, "eglGetProcAddress");
     if(eglGetProcAddress_p == NULL) {
@@ -67,4 +82,9 @@ bool dlsym_EGL() {
     eglGetCurrentSurface_p = (void*) eglGetProcAddress_p("eglGetCurrentSurface");
     eglQuerySurface_p = (void*) eglGetProcAddress_p("eglQuerySurface");
     return true;
+}
+
+__attribute__((visibility("default")))
+void *getProcAddress(const char* procname){
+    return eglGetProcAddress_p(procname);
 }
