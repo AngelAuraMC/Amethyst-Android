@@ -47,7 +47,6 @@
     <string name="mcl_setting_title_javaargs">آرگومان‌های جاوا در هنگام اجرا</string>
     <string name="mcl_setting_subtitle_javaargs">مراقب باشید، این ممکن است باعث از کار افتادن بازی در صورت اصلاح بدون اطلاع شود.</string>
     <string name="mcl_setting_category_renderer">رندر کننده</string>
-    <string name="mcl_setting_renderer_vulkan_zink">(همه نسخه ها، متوسط) - Zink (Vulkan)</string>
     <string name="mcl_setting_veroption_release">ریلیز</string>
     <string name="mcl_setting_veroption_snapshot">اسنپ‌شات</string>
     <string name="mcl_setting_veroption_oldalpha">آلفای-قدیمی</string>
