@@ -52,8 +52,7 @@
     <string name="mcl_setting_category_renderer">Renderizador</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - ( apenas 1.21.4&Lt; rápido)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (todas as versões, rápido)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas as versões, mediano)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - ( apenas 1.17+, rápido)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (todas as versões, mediano)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - apenas 1.17+</string>
     <string name="mcl_setting_veroption_release">Versões finais</string>
     <string name="mcl_setting_veroption_oldalpha">Alpha antiga</string>
@@ -385,7 +384,6 @@
     <string name="preference_renderer_mobileglues_settings">Configurações de renderizador do MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Tamanho máximo do cachê GLSL</string>
     <string name="mg_renderer_angle">Usar o ANGLE como driver</string>
-    <string name="mg_renderer_multidraw">Modo de emulação de múltiplos desenhos</string>
     <string name="mg_renderer_title_errorSetting">Erro na filtragem</string>
     <string name="mg_renderer_title_timerQueryExt">Disabilitar Utilização da GPU no menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Arruma fechamentos aleatórios quando o F3 está aberto em alguns dispositivos Mali</string>
@@ -397,8 +395,6 @@
     <string name="mg_renderer_summary_gl43exts">Pode ajudar com fechamentos causados por mods. Desative se não for preciso, pois pode causar fechamentos.</string>
     <string name="mg_renderer_title_computeShaderext">Anunciar extensão experimental de Compute Shader</string>
     <string name="mg_renderer_summary_computeShaderext">Pode ajudar com erros com pacotes de shaders. Desative se não for preciso, pois pode causar fechamentos.</string>
-    <string name="mg_renderer_title_multidrawCompute">Usar emulação Compute Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Utiliza compute shaders para emular multidraw</string>
     <string name="demo_versions_supported">Apenas versões Vanilla 1.3.1 e adiante suportam contas demo</string>
     <string name="demo_unsupported">Perfil demo não compatível</string>
     <string name="change_account">Por favor mude de contas para usar essa função </string>
@@ -421,7 +417,6 @@
     <string name="mcl_gamepad_forcedSDL">Forçar inicialização do controle SDL</string>
     <string name="preference_category_SDL_settings">Configurações do SDL</string>
     <string name="controllableFound">Controllable atualmente possui uma chance aleatória de fechar ao iniciar o jogo. Você pode ou continuar novamente e esperar que o jogo inicie ou use um outro mod como o Controlify.</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (todas as versões, mediano)</string>
     <string name="sodium_warning_title">Sodium detectado!</string>
     <string name="sodium_warning_message">Parece que você está usando o Sodium, ele é incompatível e pode gerar problemas gráficos ou fechamentos do jogo. Por favor remova-o e todas as dependências.</string>
     <string name="delete_sodium">Deletar o Sodium e Iniciar</string>
