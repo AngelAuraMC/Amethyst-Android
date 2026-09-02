@@ -52,8 +52,7 @@
     <string name="mcl_setting_category_renderer">Trình kết xuất</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (chỉ 1.21.4 trở xuống, nhanh)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Wrapper Krypton - (tất cả phiên bản, nhanh)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (chỉ 1.17 trở lên, nhanh)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - chỉ 1.17 trở lên</string>
     <string name="mcl_setting_veroption_release">Bản phát hành</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -397,7 +396,6 @@
     <string name="preference_renderer_mobileglues_settings">Cài đặt trình kết xuất MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Kích cỡ bộ đệm GLSL tối đa</string>
     <string name="mg_renderer_angle">Dùng ANGLE làm trình điều khiển</string>
-    <string name="mg_renderer_multidraw">Chế độ giả lập Multidraw</string>
     <string name="mg_renderer_title_errorSetting">Lọc lỗi</string>
     <string name="mg_renderer_title_timerQueryExt">Không dùng GPU trong menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Sửa lỗi thoát đột ngột khi mở menu F3 trên một số thiết bị Mali</string>
@@ -409,8 +407,6 @@
     <string name="mg_renderer_summary_gl43exts">Có thể giúp giảm tình trạng lỗi mod. Tính năng cũng có thể gây thoát đột ngột, hãy tắt nếu không cần thiết.</string>
     <string name="mg_renderer_title_computeShaderext">Truyền phần mở rộng tính toán shader thử nghiệm</string>
     <string name="mg_renderer_summary_computeShaderext">Có thể giúp giảm hiện tượng lỗi trên các gói shader. Tính năng cũng có thể gây thoát đột ngột, hãy tắt nếu không cần thiết.</string>
-    <string name="mg_renderer_title_multidrawCompute">Mô phỏng tính toán Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Dùng shader tính toán để mô phỏng Multidraw</string>
     <string name="demo_versions_supported">Tài khoản chơi thử chỉ hỗ trợ chạy phiên bản từ 1.3.1 trở lên</string>
     <string name="demo_unsupported">Không hỗ trợ chế độ chơi thử</string>
     <string name="change_account">Vui lòng thay đổi tài khoản để sử dụng chức năng này</string>
@@ -440,7 +436,6 @@
     <string name="mg_renderer_summary_dsaExt">Có thể giúp cải thiện một số shader Iris, bắt buộc sử dụng đối với mod AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">Tăng phân giải AMD FSR 1</string>
     <string name="autorendererselectfailed">Không thể tự động chọn trình kết xuất, đang chuyển về mặc định HolyGL4ES</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
     <string name="sodium_warning_title">Đã phát hiện Sodium!</string>
     <string name="sodium_warning_message">Có vẻ bạn đang sử dụng Sodium, mod này không được hỗ trợ và có thể gây ra vấn đề đồ họa hoặc thoát đột ngột. Vui lòng loại bỏ mod này cùng các mod phụ thuộc khác.</string>
     <string name="delete_sodium">Xóa Sodium và khởi chạy</string>
