@@ -25,13 +25,6 @@
             android:entryValues="@array/mg_renderer_values_multidraw"
             app2:useSimpleSummaryProvider="true"/>
         <androidx.preference.ListPreference
-            android:title="@string/mg_renderer_title_fsr"
-            android:key="mg_renderer_setting_fsr"
-            android:defaultValue="0"
-            android:entries="@array/mg_renderer_names_fsr"
-            android:entryValues="@array/mg_renderer_values_fsr"
-            app2:useSimpleSummaryProvider="true"/>
-        <androidx.preference.ListPreference
             android:title="@string/mg_renderer_title_errorSetting"
             android:key="mg_renderer_setting_errorSetting"
             android:defaultValue="0"

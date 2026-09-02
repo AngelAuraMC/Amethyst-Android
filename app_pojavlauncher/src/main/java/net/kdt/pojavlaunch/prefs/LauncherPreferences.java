@@ -243,7 +243,6 @@ public class LauncherPreferences {
          */
         MGConfigJson.put("enableANGLE", Tools.useANGLE ? 3 : 2);
         MGConfigJson.put("enableNoError", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_errorSetting", "0")));
-        MGConfigJson.put("fsr1Setting", Integer.parseInt(DEFAULT_PREF.getString("mg_renderer_setting_fsr", "0")));
 
         // These guys are SwitchPreferences so they get special treatment, they need to be converted to ints
         int computeShaderext = DEFAULT_PREF.getBoolean("mg_renderer_computeShaderext", false) ? 1 : 0;
