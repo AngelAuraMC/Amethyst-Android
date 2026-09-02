@@ -52,8 +52,7 @@
     <string name="mcl_setting_category_renderer">Визуализатор</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (только 1.21.4&lt;, быстро)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (все версии, быстро)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan; все версии, средний)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (только 1.17+, быстро)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (все версии, среднее быстродействие)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3; 1.17 и выше)</string>
     <string name="mcl_setting_veroption_release">Релизы</string>
     <string name="mcl_setting_veroption_snapshot">Снапшот</string>
@@ -395,7 +394,6 @@
     <string name="preference_renderer_mobileglues_settings">Настройки отображения MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Максимальный размер кэша GLSL</string>
     <string name="mg_renderer_angle">Использовать ANGLE в качестве драйвера</string>
-    <string name="mg_renderer_multidraw">Режим эмуляции MultiDraw</string>
     <string name="mg_renderer_title_errorSetting">Ошибка фильтрации</string>
     <string name="mg_renderer_title_timerQueryExt">Отключить использование графического процессора в меню F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Исправляет случайные вылеты когда F3 открыто на некоторых устройствах Mali</string>
@@ -407,8 +405,6 @@
     <string name="mg_renderer_summary_gl43exts">Может помочь при сбоях мода. Отключите, если не требуется, может привести к сбоям.</string>
     <string name="mg_renderer_title_computeShaderext">Извещать экспериментальное расширение вычислительного шейдера</string>
     <string name="mg_renderer_summary_computeShaderext">Может помочь при сбоях набора шейдеров. Отключите, если не требуется, может привести к сбоям.</string>
-    <string name="mg_renderer_title_multidrawCompute">Использовать вычислительную эмуляцию MultiDraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Использует вычислительные шейдеры для эмуляции MultiDraw</string>
     <string name="demo_versions_supported">Только ванильные версии от 1.3.1 поддерживается для демонстрационных учётных записей</string>
     <string name="demo_unsupported">Демо-профиль не поддерживается</string>
     <string name="change_account">Пожалуйста, измените учётную запись для использования этой функции</string>
@@ -437,7 +433,6 @@
     <string name="mg_renderer_summary_dsaExt">Может помочь с шейдер-паками для Iris, обязателен для AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">Апскейлинг AMD FSR 1</string>
     <string name="autorendererselectfailed">Ошибка выбора визуализатора, возврат к визуализатору HolyGL4ES</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (все версии, среднее быстродействие)</string>
     <string name="sodium_warning_title">Обнаружен Sodium!</string>
     <string name="sodium_warning_message">Похоже, вы используете Sodium, он не поддерживается и может привести к графическим проблемам или крашам, Пожалуйста удалите его.</string>
     <string name="delete_sodium">Удалить Sodium и запустить</string>
