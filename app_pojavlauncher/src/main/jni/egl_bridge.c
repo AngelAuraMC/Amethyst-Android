@@ -96,10 +96,13 @@ Java_net_kdt_pojavlaunch_utils_JREUtils_releaseBridgeWindow(ABI_COMPAT JNIEnv *e
 EXTERNAL_API void* pojavGetCurrentContext() {
     return br_get_current();
 }
+
+static void *g_vulkan_ptr = NULL;
 static struct android_namespace_t* vulkanLoaderNs;
 void* load_turnip_vulkan() {
     if(getenv("POJAV_LOAD_TURNIP") == NULL) return NULL;
-    if(getenv("VULKAN_PTR")) return getenv("VULKAN_PTR");
+    if(g_vulkan_ptr) return g_vulkan_ptr;
+
     const char* native_dir = getenv("POJAV_NATIVEDIR");
     const char* cache_dir = getenv("TMPDIR");
     vulkanLoaderNs = private_create_namespace(
@@ -130,6 +133,7 @@ void* load_turnip_vulkan() {
 static void set_vulkan_ptr(void* ptr) {
     char envval[64];
     sprintf(envval, "%"PRIxPTR, (uintptr_t)ptr);
+    g_vulkan_ptr = ptr;
     setenv("VULKAN_PTR", envval, 1);
 }
 
