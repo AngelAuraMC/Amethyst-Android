@@ -51,8 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Configuración específica del renderizado</string>
     <string name="mcl_setting_category_renderer">Renderizador</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (solo 1.21.4&lt;, rápido)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas las versiones, medio)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (solo 1.17+, rápido)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (todas las versiones, media)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - solo 1.17+</string>
     <string name="mcl_setting_veroption_release">Lanzamientos</string>
     <string name="mcl_setting_veroption_snapshot">Snapshots</string>
@@ -392,7 +391,6 @@
     <string name="preference_renderer_mobileglues_settings">Configuración del renderizado de MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Tamaño máximo de caché GLSL</string>
     <string name="mg_renderer_angle">Utilice ANGLE como controlador</string>
-    <string name="mg_renderer_multidraw">Modo de emulación de dibujo múltiple</string>
     <string name="mg_renderer_title_errorSetting">Filtrado de errores</string>
     <string name="mg_renderer_title_timerQueryExt">Deshabilitar la utilización de la GPU en el menú F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Corrige fallos aleatorios cuando se abre F3 en algunos dispositivos Mali</string>
@@ -404,8 +402,6 @@
     <string name="mg_renderer_summary_gl43exts">Puede ayudar evitar fallos causados por mods. Desactívalo si no se necesita, puede causar fallos.</string>
     <string name="mg_renderer_title_computeShaderext">Publicitar extensión experimental del Compute Shader</string>
     <string name="mg_renderer_summary_computeShaderext">Puede ayudar con los problemas en los shaderpacks. Desactívalo si no se necesita, puede causar fallos.</string>
-    <string name="mg_renderer_title_multidrawCompute">Usar emulación Compute Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Usa Compute Shaders para la emulación de multidraw</string>
     <string name="demo_versions_supported">Solo las versiones Vanilla 1.3.1 y superior son compatibles con cuentas demo</string>
     <string name="demo_unsupported">Perfil Demo no compatible</string>
     <string name="change_account">Por favor cambie de cuentas para usar esta función</string>
@@ -434,7 +430,6 @@
     <string name="mg_renderer_summary_dsaExt">Puede ayudar con los shaderpacks Iris, necesario para el mod AcceleratedRendering</string>
     <string name="mg_renderer_title_fsr">Re-escalado AMD FSR 1</string>
     <string name="autorendererselectfailed">Falló la selección automática del renderizador. Se usará HolyGL4ES por defecto</string>
-    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (todas las versiones, media)</string>
     <string name="sodium_warning_title">¡Sodium detectado!</string>
     <string name="sodium_warning_message">Parece que está usando Sodium, lo cual no está soportado y puede causar problemas gráficos o bloqueos. Por favor, elimínelo junto con todos los mods que dependan de él.</string>
     <string name="delete_sodium">Eliminar Sodium e iniciar juego</string>
