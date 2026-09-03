@@ -276,6 +276,7 @@ public class JREUtils {
             }
             if (LOCAL_RENDERER.startsWith("opengles_mobilegl_")){
                 envMap.put("POJAVEXEC_EGL","libMobileGL.so");
+                envMap.put("LIBGL_ES", "3");
             }
         }
         if (Tools.useSFPEW) {
