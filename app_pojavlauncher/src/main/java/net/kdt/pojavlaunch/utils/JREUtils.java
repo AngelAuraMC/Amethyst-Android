@@ -265,6 +265,9 @@ public class JREUtils {
             }
             if (LOCAL_RENDERER.equals("opengles_mobilegl_gles")){
                 envMap.put("MOBILEGL_BACKEND_TYPE", "DirectGLES");
+                if (Tools.useANGLE) {
+                    envMap.put("MOBILEGL_USE_ANGLE", "1");
+                }
             }
             if (LOCAL_RENDERER.equals("opengles_mobilegl_vk")){
                 envMap.put("MOBILEGL_BACKEND_TYPE", "DirectVulkan");
