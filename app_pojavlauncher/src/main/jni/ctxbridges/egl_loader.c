@@ -1,15 +1,11 @@
 //
 // Created by maks on 21.09.2022.
 //
-#include <stddef.h>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <string.h>
 #include "egl_loader.h"
-#include "global_state.h"
 #include "loader_dlopen.h"
-#include <androidnsbypass/nsbypass_t.h>
-#include <androidnsbypass/nsbypass.h>
 
 EGLBoolean (*eglMakeCurrent_p) (EGLDisplay dpy, EGLSurface draw, EGLSurface read, EGLContext ctx);
 EGLBoolean (*eglDestroyContext_p) (EGLDisplay dpy, EGLContext ctx);
@@ -41,21 +37,6 @@ bool dlsym_EGL() {
     char* gles = getenv("LIBGL_GLES");
     char* eglName = (strncmp(gles ? gles : "", "libGLESv2_angle.so", 18) == 0) ? "libEGL_angle.so" : getenv("POJAVEXEC_EGL");
     void* dl_handle = loader_dlopen(eglName,"libEGL.so", RTLD_LOCAL|RTLD_LAZY);
-    // Mesa renderers that are also GPU drivers need this
-    if (eglName != NULL && dl_handle == NULL && strncmp(eglName, "libEGL_mesa.so", 14) == 0) {
-        // Not sure where to put this because pojavexec is shit
-        if (!app_escapeNs) {
-            app_escapeNs = private_create_namespace(
-                    "app-escapeNs",
-                    NULL,
-                    getenv("POJAV_NATIVEDIR"), // append to search path!
-                    ANDROID_NAMESPACE_TYPE_SHARED, // Inherit from escapeNs paths
-                    getenv("POJAV_NATIVEDIR"), // not needed, useless for non-isolate
-                    get_escape_namespace(), // Inherit from escapeNs so we get the system lib paths too
-                    __builtin_return_address(0));
-        }
-        dl_handle = linker_ns_dlopen(eglName, RTLD_LOCAL | RTLD_LAZY, app_escapeNs);
-    }
     if(dl_handle == NULL) return false;
     eglGetProcAddress_p = dlsym(dl_handle, "eglGetProcAddress");
     if(eglGetProcAddress_p == NULL) {
