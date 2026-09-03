@@ -2,7 +2,6 @@
 // Created by maks on 21.09.2022.
 //
 #include <stdio.h>
-#include <stdlib.h>
 #include <dlfcn.h>
 #include "loader_dlopen.h"
 #include "osmesa_loader.h"
