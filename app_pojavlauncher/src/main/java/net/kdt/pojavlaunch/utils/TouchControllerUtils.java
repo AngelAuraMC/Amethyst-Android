@@ -102,11 +102,12 @@ public class TouchControllerUtils {
         }
         try {
             Os.setenv("TOUCH_CONTROLLER_PROXY_SOCKET", socketName, true);
+            Os.setenv("TOUCH_CONTROLLER_USE_NATIVE", "1", true);
         } catch (ErrnoException e) {
             Log.w("TouchController", "Failed to set TouchController environment variable", e);
         }
         MessageTransport transport = UnixSocketTransportKt.UnixSocketTransport(socketName);
-        proxyClient = new LauncherProxyClient(transport, Set.of(PlatformCapability.TEXT_STATUS, PlatformCapability.KEYBOARD_SHOW));
+        proxyClient = new LauncherProxyClient(transport, Set.of(PlatformCapability.TEXT_STATUS, PlatformCapability.KEYBOARD_SHOW), true);
         proxyClient.run();
         touchControllerInputView.setClient(proxyClient);
         Vibrator vibrator = ContextCompat.getSystemService(context, Vibrator.class);
