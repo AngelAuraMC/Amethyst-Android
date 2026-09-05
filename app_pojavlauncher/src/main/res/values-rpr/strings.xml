@@ -122,4 +122,5 @@
     <string name="of_dl_progress">Загрузка %s</string>
     <string name="generic_debug">Отладка</string>
     <string name="customctrl_visibility_title">Видимость</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

@@ -36,4 +36,5 @@
     <string name="control_more4"></string>
 -->
     <string name="of_dl_progress">%s डाउनलोड हो रहा है</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

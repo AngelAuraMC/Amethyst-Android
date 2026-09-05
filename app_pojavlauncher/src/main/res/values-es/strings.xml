@@ -7,6 +7,7 @@
     <string name="login_online_username_hint">Nombre de usuario</string>
     <string name="login_online_login_label">Iniciar sesión</string>
     <!-- Hint -->
+    <string name="hint_control_mapping">"Toque la rueda dentada central superior para abrir el menú de la puerta ⚙\nToque un botón para personalizarlo: editarlo, cambiar su tamaño, eliminarlo o cambiar sus combinaciones de teclas."</string>
     <!-- Warnings -->
     <string name="warning_remove_account">¡Esta cuenta será borrada!</string>
     <!-- AlertDialog title -->
@@ -46,8 +47,11 @@
     <string name="mcl_setting_subtitle_mousescale">Cambia el tamaño del ratón virtual.</string>
     <string name="mcl_setting_title_javaargs">JRE Argumentos de lanzamiento</string>
     <string name="mcl_setting_subtitle_javaargs">Ten cuidado, esto puede hacer que el juego se cierre si es modificado sin ningún conocimiento previo.</string>
+    <string name="mcl_setting_title_renderer_settings">Configuración adicional del renderizado</string>
+    <string name="mcl_setting_title_renderer_subtitle">Configuración específica del renderizado</string>
     <string name="mcl_setting_category_renderer">Renderizador</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (todas las versiones, medio)</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (solo 1.21.4&lt;, rápido)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (todas las versiones, media)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - solo 1.17+</string>
     <string name="mcl_setting_veroption_release">Lanzamientos</string>
     <string name="mcl_setting_veroption_snapshot">Snapshots</string>
@@ -69,6 +73,7 @@
     <string name="global_select">Seleccionar</string>
     <string name="global_retry">Reintentar</string>
     <string name="global_default">Predeterminado</string>
+    <string name="global_off">Apagado</string>
     <!-- MainActivity: strings -->
     <string name="mcn_exit_title">La aplicación/juego ha finalizado con el código %d, mira el archivo latestlog.txt para más detalles.</string>
     <string name="mcn_signal_title">La aplicación/juego ha finalizado con código %d, revise latestlog.txt para más detalles.</string>
@@ -77,7 +82,10 @@
     <!-- MainActivity: Control buttons -->
     <string name="control_chat">Chat</string>
     <string name="control_debug">Depuración</string>
+    <string name="control_primary">Pri</string>
     <string name="control_secondary">Seg</string>
+    <string name="control_shift">◇</string>
+    <string name="control_inventory">Inv</string>
     <string name="control_up">▲</string>
     <string name="control_left">◀</string>
     <string name="control_right">▶</string>
@@ -96,7 +104,7 @@
     <!-- ImportControlActivity Strings -->
     <string name="import_control_label">Importar controles</string>
     <string name="import_control_invalid_file">Archivo inválido o dañado</string>
-    <string name="import_control_import_button">importar controles</string>
+    <string name="import_control_import_button">Importar controles</string>
     <string name="import_control_verifying_file">El archivo está siendo verificado, por favor espere y vuelva a intentarlo…</string>
     <string name="import_control_invalid_name">El nombre es inválido o el archivo ya existe</string>
     <string name="import_control_done">Importación hecha</string>
@@ -128,6 +136,8 @@
     <string name="dl_library_sha_fail">La librería %s está dañada y se volverá a descargar</string>
     <string name="dl_library_sha_unknown">La librería %s no puede ser revisada, se asumirá que está en buen estado</string>
     <string name="dl_library_sha_pass">La librería %s está en buen estado y se puede utilizar</string>
+    <string name="mcl_gamepad_SDL">Habilitar el backend del controlador SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Habilita el backend del controlador SDL. Ofrece mejor compatibilidad con mods. Recurre a GLFW si no se usa.</string>
     <string name="mcl_disable_gestures">Desactivar gestos</string>
     <string name="mcl_disable_gestures_subtitle">Quita los gestos, como mantener pulsado para romper el bloque y tocar para colocar un bloque.</string>
     <string name="mcl_disable_swap_hand">Desactivar doble toque para intercambiar manos</string>
@@ -135,8 +145,10 @@
     <string name="mcl_setting_title_mousespeed">Velocidad del ratón</string>
     <string name="mcl_setting_subtitle_mousespeed">Cambia la velocidad del ratón virtual.</string>
     <string name="mcl_setting_title_grab_mouse">Usar cursor virtual</string>
+    <string name="mcl_setting_subtitle_grab_mouse">Garantiza que el cursor permanezca dentro del juego. Evita que el ratón haga clic en el diseño de control táctil.</string>
     <string name="customctrl_passthru">Passthrough del ratón</string>
     <string name="customctrl_swipeable">Deslizable</string>
+    <string name="customctrl_forward_lock">Bloqueo adelante</string>
     <string name="customctrl_absolute_tracking">Seguimiento absoluto del dedo</string>
     <string name="memory_warning_msg">La cantidad actual de memoria RAM libre (%d) es menor que la memoria RAM asignada (%d), lo que puede provocar cierres forzados. Cambia la asignación si el juego se cierra.</string>
     <string name="address_memory_warning_msg">La cantidad actual de RAM libre (%d) es menor que la RAM asignada (%d), lo cual puede causar cierres forzados. Cambie la cantidad asignada si el juego se cierra.</string>
@@ -191,6 +203,7 @@
     <string name="profiles_profile_name">Nombre</string>
     <string name="profiles_profile_version">Versión</string>
     <string name="global_delete">Eliminar</string>
+    <string name="pedit_java_runtime">Java Runtime</string>
     <string name="pedit_renderer">Renderizador</string>
     <string name="arc_capes_title">Capas de Comestica</string>
     <string name="arc_capes_desc">Activa las capas de Cosmetica (anteriormente Arc). Para más información ve a esta página https://cosmetica.cc. Necesitas Optifine.</string>
@@ -248,6 +261,7 @@
     <string name="version_select_hint">Elige una versión</string>
     <string name="forge_dl_progress">Descargando instalador para %s</string>
     <string name="forge_dl_searching">Buscando el número de la versión de Forge</string>
+    <string name="neoforge_dl_searching">Buscando el número de versión de NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Oh no, ¡Ocurrió un error cargando la lista de versiones!</string>
     <string name="forge_dl_no_installer">Lo siento, pero esta versión de Forge no tiene un instalador, lo cúal aún no esta soportado por Pojav.</string>
     <string name="forge_dl_select_version">Elige la versión de Forge</string>
@@ -322,6 +336,8 @@
     <string name="newdl_downloading_game_files">Descargando el juego...(%d/%d,%.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">Descargando el juego...(%.2f/%.2f MB, %.2f MB/s)</string>
     <string name="cropper_title">Seleccione la región de la imagen</string>
+    <string name="cropper_lock_vertical">V. bloqueo</string>
+    <string name="cropper_lock_horizontal">H. bloqueo</string>
     <string name="cropper_reset">Reiniciar</string>
     <string name="cropper_select_cancelled">Selección cancelada</string>
     <string name="log_view_button_scroll_off">Desplazamiento automático\nApagado</string>
@@ -334,13 +350,29 @@
     <string name="controller_button_b">B</string>
     <string name="controller_button_x">X</string>
     <string name="controller_button_y">Y</string>
+    <string name="controller_button_start">Start</string>
     <string name="controller_button_select">Seleccionar</string>
     <string name="controller_button_trigger_left">Activador izquierdo</string>
     <string name="controller_button_trigger_right">Activador derecho</string>
+    <string name="controller_button_shoulder_left">Hombro izquierdo</string>
+    <string name="controller_button_shoulder_right">Hombro derecho</string>
+    <string name="controller_direction_forward">Stick Up</string>
+    <string name="controller_direction_backward">Stick Down</string>
+    <string name="controller_direction_left">Stick Left</string>
+    <string name="controller_direction_right">Stick Right</string>
+    <string name="controller_stick_press_l">Joystick izquierdo (clic)</string>
+    <string name="controller_stick_press_r">Joystick derecho (clic)</string>
+    <string name="controller_dpad_up">D-Pad arriba</string>
+    <string name="controller_dpad_down">D-Pad abajo</string>
+    <string name="controller_dpad_left">D-Pad izquierdo</string>
+    <string name="controller_dpad_right">D-Pad derecho</string>
     <string name="controller_remapper_exit_part1">Mantenga</string>
     <string name="controller_remapper_exit_part2">para salir</string>
     <string name="controller_remapper_operating_mode">Modo actual</string>
     <string name="customctrl_visibility_title">Visibilidad</string>
+    <string name="customctrl_visibility_ingame">En el juego</string>
+    <string name="customctrl_visibility_in_menus">En los menús</string>
+    <string name="controller_remapper_expand_entry">Expandir para cambiar códigos de teclas</string>
     <string name="preference_remap_controller_title">Cambiar configuración de teclas del controlador</string>
     <string name="preference_remap_controller_description">Te permite modificar las teclas del teclado asignadas a cada botón del controlador</string>
     <string name="mcl_button_discord">Discord</string>
@@ -349,8 +381,61 @@
     <string name="local_login_bad_username_title">Nombre de usuario inadecuado</string>
     <string name="local_login_bad_username_text">El nombre de usuario debe de ser entre 3 a 16 caracteres, y solo contener letras latinas, números de 0 a 9 y guiones bajos.</string>
     <string name="quick_setting_title">Configuraciones rápidas</string>
+    <string name="create_bta_profile">Crea un perfil \"¡Mejor que la aventura!\"</string>
+    <string name="select_bta_version">Selecciona la versión \"¡Mejor que la aventura!\"</string>
+    <string name="bta_installer_available_versions">Versiones de BTA compatibles</string>
+    <string name="bta_installer_untested_versions">Versiones de BTA no probadas</string>
+    <string name="bta_installer_nightly_versions">Versiones nocturnas de BTA</string>
+    <string name="newdl_extracting_native_libraries">Extrayendo bibliotecas nativas (%d/%d)</string>
+    <string name="toast_not_available_demo">Esto no está disponible en modo de demostración.</string>
+    <string name="preference_renderer_mobileglues_settings">Configuración del renderizado de MobileGlues</string>
+    <string name="mg_renderer_glsl_cache">Tamaño máximo de caché GLSL</string>
+    <string name="mg_renderer_angle">Utilice ANGLE como controlador</string>
+    <string name="mg_renderer_title_errorSetting">Filtrado de errores</string>
+    <string name="mg_renderer_title_timerQueryExt">Deshabilitar la utilización de la GPU en el menú F3</string>
+    <string name="mg_renderer_summary_timerQueryExt">Corrige fallos aleatorios cuando se abre F3 en algunos dispositivos Mali</string>
+    <string name="preference_ANGLE_only">Opciones únicamente de ANGLE</string>
+    <string name="mg_renderer_title_angleDepthClearFixMode">Arreglar los objetos que se sostienen con la mano para que no atraviesen los bloques</string>
+    <string name="mg_renderer_summary_angleDepthClearFixMode">Solo afecta el ANGLE, puede afectar el rendimiento.</string>
     <string name="preference_experimental_title">Cosas Experimentales</string>
+    <string name="mg_renderer_title_gl43exts">Publicitar extensiones experimentales de OpenGL 4.3</string>
+    <string name="mg_renderer_summary_gl43exts">Puede ayudar evitar fallos causados por mods. Desactívalo si no se necesita, puede causar fallos.</string>
+    <string name="mg_renderer_title_computeShaderext">Publicitar extensión experimental del Compute Shader</string>
+    <string name="mg_renderer_summary_computeShaderext">Puede ayudar con los problemas en los shaderpacks. Desactívalo si no se necesita, puede causar fallos.</string>
+    <string name="demo_versions_supported">Solo las versiones Vanilla 1.3.1 y superior son compatibles con cuentas demo</string>
+    <string name="demo_unsupported">Perfil Demo no compatible</string>
+    <string name="change_account">Por favor cambie de cuentas para usar esta función</string>
+    <string name="no_minecraft_account_found">Ninguna cuenta de Minecraft encontrada</string>
+    <string name="feature_requires_java_account">Esta función requiere una cuenta de Microsoft que posee Minecraft Java Edition.</string>
+    <string name="delete_account_and_login">Borrar cuenta e iniciar sesión</string>
+    <string name="login_again">Por favor inicie la sesión de nuevo</string>
+    <string name="account_corrupted">La cuenta seleccionada está corrupta</string>
     <string name="modloader_dl_install_neoforge">Crear perfil de Neoforge</string>
     <string name="neoforge_dl_select_version">Seleccionar versión de NeoForge</string>
     <string name="neoforge_dl_no_installer">Lo sentimos, pero esta versión de NeoForge no tiene un instalador, lo cual aún no está soportado.</string>
+    <string name="preference_category_touchcontroller_settings">Ajustes del TouchController</string>
+    <string name="preference_force_enable_touchcontroller_title">Forzar activación del TouchController</string>
+    <string name="preference_force_enable_touchcontroller_description">Forzar la activación del TouchController, incluso si el archivo del mod no se encuentra.</string>
+    <string name="preference_touchcontroller_vibrate_length_title">Longitud de vibración del TouchController</string>
+    <string name="preference_touchcontroller_vibrate_length_description">Establece la longitud de la vibración al usar TouchController.</string>
+    <string name="error_vanilla_json_corrupt">El JSON de Vanilla parece estar corrupto. Por favor, envíe un informe de error en GitHub o Discord.</string>
+    <string name="preference_ask_for_microphone_title">Permitir micrófono</string>
+    <string name="preference_ask_for_microphone_description">Haga clic para volver a solicitar el permiso de notificaciones, necesario para mods de chat de voz como Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL">Forzar inicio de manejo de controlador SDL</string>
+    <string name="preference_category_SDL_settings">Ajustes SDL</string>
+    <string name="oldL4JFound">¡Estás usando una versión de Legacy4J sin los arreglos de Android! ¡Necesitarás activar manualmente el SDL en los ajustes del control para obtener la mejor experiencia!</string>
+    <string name="global_warning">¡Advertencia!</string>
+    <string name="controllableFound">\"Controllable\" actualmente tiene una probabilidad aleatoria de fallar al iniciarse. Sigue intentándolo hasta que inicie o usa otro mod como \"Controlify\".</string>
+    <string name="mg_renderer_title_dsaExt">Publicitar la extensión experimental de Direct State Access</string>
+    <string name="mg_renderer_summary_dsaExt">Puede ayudar con los shaderpacks Iris, necesario para el mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Re-escalado AMD FSR 1</string>
+    <string name="autorendererselectfailed">Falló la selección automática del renderizador. Se usará HolyGL4ES por defecto</string>
+    <string name="sodium_warning_title">¡Sodium detectado!</string>
+    <string name="sodium_warning_message">Parece que está usando Sodium, lo cual no está soportado y puede causar problemas gráficos o bloqueos. Por favor, elimínelo junto con todos los mods que dependan de él.</string>
+    <string name="delete_sodium">Eliminar Sodium e iniciar juego</string>
+    <string name="sodium_override_title">Ejecutar Sodium a fuerza</string>
+    <string name="sodium_override_summaryOff">El uso de Sodium puede causar errores visuales y fallos. Se le ha advertido.</string>
+    <string name="sodium_override_summaryOn">Sodium no está soportado. No se ofrecerá ayuda si encuentra algún problema.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">¡No es un archivo modpack!</string>
 </resources>

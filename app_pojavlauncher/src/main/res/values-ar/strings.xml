@@ -48,7 +48,6 @@
     <string name="mcl_setting_title_javaargs">حجج إطلاق JVM</string>
     <string name="mcl_setting_subtitle_javaargs">كن حذرا، تعديلها بغير علم قد يتسبب بتعطيل اللعبة.</string>
     <string name="mcl_setting_category_renderer">العارض</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (جميع الإصدارات، متوسط)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ فقط</string>
     <string name="mcl_setting_veroption_release">إصدار نهائي</string>
     <string name="mcl_setting_veroption_snapshot">اللمحات (سنابشوت)</string>
@@ -306,7 +305,7 @@
     <string name="newdl_downloading_game_files">جاري تحميل اللعبة… (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">جاري تحميل اللعبة… (%.2f/%.2f MB، %.2f MB/s)</string>
     <string name="cropper_title">اختيار منطقة الصورة</string>
-    <string name="cropper_lock_vertical">تأمين المحور العمودي</string>
+    <string name="cropper_lock_vertical">T</string>
     <string name="cropper_lock_horizontal">تأمين المحور الأفقي</string>
     <string name="cropper_reset">إعادة الضبط</string>
     <string name="cropper_select_cancelled">تم إلغاء الاختيار</string>
@@ -346,4 +345,5 @@
     <string name="local_login_bad_username_text">يجب أن يكون اسم المستخدم بين 3–16 حرفاً، ويجب أن يحتوي فقط على أحرف لاتينية وأرقام 0-9 وتسطيرات سفلية.</string>
     <string name="quick_setting_title">قائمة الإعدادات السريعة</string>
     <string name="preference_experimental_title">أشياء تجريبية</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

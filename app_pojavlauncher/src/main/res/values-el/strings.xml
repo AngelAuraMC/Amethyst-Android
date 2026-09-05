@@ -45,7 +45,6 @@
     <string name="mcl_setting_title_javaargs">JVM Εντολές εκκίνησης</string>
     <string name="mcl_setting_subtitle_javaargs">Να είστε προσεκτικοί, αυτό μπορεί να προκαλέσει συντριβή στο παιχνίδι αν τροποποιηθεί χωρίς γνώση.</string>
     <string name="mcl_setting_category_renderer">Απόδοση</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (όλες οι εκδόσεις, mid)</string>
     <string name="mcl_setting_veroption_release">Κυκλοφορία</string>
     <string name="mcl_setting_veroption_snapshot">Στιγμιότυπο</string>
     <string name="mcl_setting_veroption_oldalpha">Παλιά-alpha</string>
@@ -296,4 +295,5 @@
     <string name="newdl_starting">Ανάγνωση μεταδεδομένων παιχνιδιού…</string>
     <string name="newdl_downloading_metadata">Λήψη μεταδεδομένων παιχνιδιού (%s)</string>
     <string name="preference_experimental_title">Πειραματικές αντικείμενα</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

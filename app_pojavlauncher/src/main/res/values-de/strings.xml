@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -52,8 +51,8 @@
     <string name="mcl_setting_title_renderer_subtitle">Renderer-spezifische Einstellungen</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; nur, schnell)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle Versionen, mittel)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (nur 1.17+, schnell)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper – (alle Versionen, schnell)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (alle Versionen, Mitte)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - nur 1.17+</string>
     <string name="mcl_setting_veroption_release">Vollversionen</string>
     <string name="mcl_setting_veroption_snapshot">Entwicklungsversionen</string>
@@ -148,8 +147,11 @@
     <string name="mcl_setting_subtitle_mousespeed">Ändert die Geschwindigkeit der virtuellen Maus.</string>
     <string name="mcl_setting_title_grab_mouse">Virtuellen Cursor verwenden</string>
     <string name="mcl_setting_subtitle_grab_mouse">Stellt sicher, dass der Cursor innerhalb des Spiels bleibt. Verhindert, dass die Maus auf das Touch-Steuerungslayout klickt.</string>
+    <string name="mcl_setting_title_keyboard_panning">Tastatur Navigation</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Schiebe den Bildschirm nach oben, wenn die Tastatur geöffnet ist.</string>
     <string name="customctrl_passthru">Maus ignoriert Schaltflächen</string>
     <string name="customctrl_swipeable">Wischbar</string>
+    <string name="customctrl_forward_lock">Vorwärts-Sperre</string>
     <string name="customctrl_absolute_tracking">Absolutes Finger-Tracking</string>
     <string name="memory_warning_msg">Die aktuelle Menge an freiem RAM (%d) ist niedriger als zugewiesener RAM (%d), was zu Abstürzen führen kann. Ändere die Zuordnung, wenn das Spiel abstürzt.</string>
     <string name="address_memory_warning_msg">Der aktuelle freie adressierbare RAM-Speicherplatz (%d) ist niedriger als der zugewiesene RAM (%d), was zu Abstürzen führen wird. Sollte das Spiel abstürzen, ändere die Zuweisung.</string>
@@ -202,6 +204,7 @@
     <string name="profiles_latest_snapshot">Neuste Entwicklungsversion</string>
     <string name="profiles_latest_release">Neuste Vollversion</string>
     <string name="profiles_profile_name">Namen</string>
+    <string name="profiles_profile_version">Version</string>
     <string name="global_delete">Löschen</string>
     <string name="pedit_java_runtime">Java-Laufzeitumgebungen</string>
     <string name="pedit_renderer">Renderer</string>
@@ -241,6 +244,7 @@
     <string name="storage_required">PojavLauncher benötigt einen verbundenen externen Speicher. Bitte verbinde ihn erneut und starte dann die App neu.</string>
     <string name="mcl_setting_title_buttonallcaps">Nur Großbuchstaben in Tastenbeschriftungen verwenden</string>
     <string name="mcl_setting_subtitle_buttonallcaps">Deaktivieren, um Kleinbuchstaben für die Steuerung zu verwenden.</string>
+    <string name="create_profile">Neues Profil erstellen</string>
     <string name="preference_shader_dump_title">Shader-Dumping aktivieren</string>
     <string name="preference_shader_dump_description">Konvertierte Shader mit in die Protokolldatei schreiben.</string>
     <string name="millisecond_format">%d ms</string>
@@ -261,6 +265,7 @@
     <string name="version_select_hint">Wähle eine Version</string>
     <string name="forge_dl_progress">Installer für %s wird heruntergeladen</string>
     <string name="forge_dl_searching">Suche nach Forge-Versionsnummer</string>
+    <string name="neoforge_dl_searching">Suche nach der NeoForge-Versionsnummer</string>
     <string name="modloader_dl_failed_to_load_list">Fehler beim Laden der Versionsliste!</string>
     <string name="forge_dl_no_installer">Entschuldigung, aber diese Version von Forge hat keinen Installer, der noch nicht unterstützt wird.</string>
     <string name="forge_dl_select_version">Forge-Version auswählen</string>
@@ -331,6 +336,7 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="preference_vsync_in_zink_description">Ermöglicht dem Launcher, interne System-APIs zu verwenden, um V-Sync für Zink zu aktivieren. Sollte deaktiviert werden, wenn der Launcher nach einer Systemaktualisierung plötzlich mit Zink abstürzt.</string>
     <string name="exception_failed_to_unpack_jre17">Konnte JRE 17 nicht installieren</string>
     <string name="newdl_starting">Lese Spiel-Metadaten…</string>
+    <string name="newdl_downloading_jre_runtime">Herunterladen von Java %s Laufzeitumgebung (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Lade Spiel-Metadaten herunter (%s)</string>
     <string name="newdl_downloading_game_files">Lade das Spiel herunter… (%d/%d, %.2f MB)</string>
     <string name="newdl_downloading_game_files_size">Lade das Spiel herunter… (%.2f/%.2f MB, %.2f MB/s)</string>
@@ -345,6 +351,11 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="log_view_button_output_on">Ausgabe\nAN</string>
     <string name="log_view_label_log_output">Protokoll-Ausgabe:</string>
     <string name="execute_jar_failed_to_read_file">Fehler beim Lesen der .jar-Datei</string>
+    <string name="controller_button_a">A</string>
+    <string name="controller_button_b">B</string>
+    <string name="controller_button_x">X</string>
+    <string name="controller_button_y">Y</string>
+    <string name="controller_button_start">Start</string>
     <string name="controller_button_select">Auswählen</string>
     <string name="controller_button_trigger_left">Linker Trigger</string>
     <string name="controller_button_trigger_right">Rechter Trigger</string>
@@ -385,7 +396,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="preference_renderer_mobileglues_settings">MobileGlues Renderer-Einstellungen</string>
     <string name="mg_renderer_glsl_cache">Maximale GLSL-Cache-Größe</string>
     <string name="mg_renderer_angle">Nutze ANGLE als Treiber</string>
-    <string name="mg_renderer_multidraw">Multidraw-Emulationsmodus</string>
     <string name="mg_renderer_title_errorSetting">Filterung von Fehlern</string>
     <string name="mg_renderer_title_timerQueryExt">GPU-Nutzung im F3-Menü deaktivieren</string>
     <string name="mg_renderer_summary_timerQueryExt">Behebt zufällige Abstürze, wenn F3 auf einigen Mali Geräten geöffnet ist</string>
@@ -397,9 +407,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="mg_renderer_summary_gl43exts">Kann bei Abstürzen von Mods helfen. Deaktivieren, wenn nicht nötig, kann Abstürze verursachen.</string>
     <string name="mg_renderer_title_computeShaderext">Experimentelle Rechen-Shader-Erweiterung anzeigen</string>
     <string name="mg_renderer_summary_computeShaderext">Kann bei Shaderpack-Problemen helfen. Deaktivieren, wenn nicht benötigt, kann Abstürze verursachen.</string>
-    <string name="mg_renderer_title_multidrawCompute">Nutze die Compute Multidraw-Emulation</string>
-    <string name="mg_renderer_summary_multidrawCompute">Verwendet den Compute-Shader Shader für die Multidraw-Emulation</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Auf Demo-Konten wird nur Vanilla 1.3.1 unterstützt</string>
     <string name="demo_unsupported">Demo-Profil wird nicht unterstützt</string>
     <string name="change_account">Bitte wechsle das Konto, um diese Funktion zu nutzen</string>
@@ -419,10 +426,38 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="error_vanilla_json_corrupt">Vanilla JSON scheint beschädigt zu sein. Bitte sende einen Fehlerbericht auf GitHub oder Discord.</string>
     <string name="preference_ask_for_microphone_title">Mikrofon zulassen</string>
     <string name="preference_ask_for_microphone_description">Klicke hier, um die Berechtigung zu Benachrichtigungen, die für Voice-Chat-Mods wie Simple Voice Chat erforderlich ist, erneut anzufordern.</string>
-    <string name="mcl_gamepad_forcedSDL_subtitle">Kann alten Versionen von Legacy4J erlauben, das SDL Backend zu verwenden</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Falls 26.3-snapshot-4 und höhere Versionen oder Controller-Mods nicht ordnungsgemäß funktionieren, kann dies das Problem beheben.</string>
     <string name="mcl_gamepad_forcedSDL">SDL Controller-Behandlung erzwingen</string>
     <string name="preference_category_SDL_settings">SDL-Einstellungen</string>
     <string name="oldL4JFound">Du verwendest eine Version von Legacy4J ohne die Android-Korrekturen! Du musst SDL manuell in den Controller-Einstellungen aktivieren, um das beste Spielerlebnis zu erhalten!</string>
     <string name="global_warning">Warnung!</string>
     <string name="controllableFound">Controllable hat derzeit eine zufällige Wahrscheinlichkeit, beim Start abzustürzen. Versuche es entweder erneut und hoffe, dass es startet, oder verwende einen anderen Mod wie Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Experimentelle Erweiterung für direkten Statuszugriff bewerben</string>
+    <string name="mg_renderer_summary_dsaExt">Kann bei Iris-Shaderpacks helfen, die für den AcceleratedRendering-Mod erforderlich sind</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 Hochskalierung</string>
+    <string name="autorendererselectfailed">Auswahl des Auto-Renderers fehlgeschlagen, Standard ist HolyGL4ES</string>
+    <string name="sodium_warning_title">Sodium erkannt!</string>
+    <string name="sodium_warning_message">Es scheint, dass du Sodium verwendest. Dieses wird nicht unterstützt und kann zu Grafikfehlern oder Abstürzen führen. Bitte entferne es und alle davon abhängigen Mods.</string>
+    <string name="delete_sodium">Sodium löschen und starten</string>
+    <string name="sodium_override_title">Sodium zwangsweise starten</string>
+    <string name="sodium_override_summaryOff">Die Verwendung von Sodium verursacht möglicherweise visuelle Bugs und Abstürze. Du wurdest gewarnt.</string>
+    <string name="sodium_override_summaryOn">Sodium wird nicht unterstützt. Bei etwaigen Problemen wird keine Hilfe geleistet.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Keine Modpack Datei!</string>
+    <string name="global_not_installed">Nicht installiert</string>
+    <string name="global_download">Herunterladen</string>
+    <string name="multirt_no_internet">Herunterladen fehlgeschlagen, überprüfe deine Internetverbindung.</string>
+    <string name="global_installing">Installieren…</string>
+    <string name="error_key_unsupported">Fehler! Der dieser Schaltfläche zugewiesene Schlüssel ist ungültig. Hast du eine Aktualisierung versucht durchzuführen?</string>
+    <string name="error_invalid_value">Fehler! Ungültiger Wert!</string>
+    <string name="minecraft_no_username_set">Dein Minecraft-Benutzername ist noch nicht gesetzt! Du musst ihn auf der Minecraft-Website setzen, bevor du dich anmelden kannst!</string>
+    <string name="create_lwjgl3ify_profile">LWJGL3ify-Profil erstellen</string>
+    <string name="select_lwjgl3ify_version">LWJGL3ify-Version auswählen</string>
+    <string name="lwjgl3ify_installer_available_versions">Unterstützte LWJGL3IFY-Versionen</string>
+    <string name="lwjgl3ify_installer_broken_versions">Defekte LWJGL3ify-Versionen (SDL)</string>
+    <string name="new_default_controls">Die neuen Standardsteuerelemente wurden in die Datei new_default.json extrahiert. Probiere sie aus!</string>
+    <string name="import_modpack_start">Modpack wird importiert…</string>
+    <string name="import_modpack_hash">Modpack-Datei wird gehasht… (%s MB/ %s MB)</string>
+    <string name="import_modpack_json">Modpack-Info wird gelesen…</string>
+    <string name="import_modpack_copy">Modpack-Datei wird in den Cache kopiert… (%s MB/ %s MB)</string>
 </resources>

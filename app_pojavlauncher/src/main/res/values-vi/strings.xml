@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -35,13 +34,13 @@
     <string name="mcl_options">Tùy chọn</string>
     <string name="mcl_option_customcontrol">Tùy chỉnh bố cục</string>
     <string name="mcl_setting_title_use_surface_view">Dùng cách kết xuất thay thế</string>
-    <string name="mcl_setting_subtitle_use_surface_view">Có thể giúp cải thiện hiệu năng nếu GPU bị nghẽn cổ chai.</string>
+    <string name="mcl_setting_subtitle_use_surface_view">Có thể giúp cải thiện hiệu năng nếu bị giới hạn bởi GPU.</string>
     <string name="mcl_setting_title_ignore_notch">Bỏ qua phần khuyết màn hình</string>
     <string name="mcl_setting_subtitle_ignore_notch">Hiển thị nội dung cả dưới phần màn hình bị khuyết.\nGiúp trải nâng cao trải nghiệm chơi.</string>
     <string name="mcl_setting_title_resolution_scaler">Tỷ lệ độ phân giải</string>
     <string name="mcl_setting_subtitle_resolution_scaler">Cho phép bạn giảm độ phân giải trò chơi. 100% nghĩa là sử dụng độ phân giải tối đa.</string>
     <string name="mcl_setting_title_longpresstrigger">Độ trễ nhấn giữ</string>
-    <string name="mcl_setting_subtitle_longpresstrigger">Thay đổi khoảng thời gian nhấn giữ để phá khối và thả vật phẩm.</string>
+    <string name="mcl_setting_subtitle_longpresstrigger">Thay đổi thời lượng nhấn giữ để phá khối và thả vật phẩm.</string>
     <string name="mcl_setting_title_buttonscale">Quy mô nút điều khiển</string>
     <string name="mcl_setting_subtitle_buttonscale">Tăng giá trị nếu các nút quá nhỏ.</string>
     <string name="mcl_setting_title_mousescale">Kích cỡ chuột</string>
@@ -52,8 +51,8 @@
     <string name="mcl_setting_title_renderer_subtitle">Cài đặt riêng của trình kết xuất</string>
     <string name="mcl_setting_category_renderer">Trình kết xuất</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (chỉ 1.21.4 trở xuống, nhanh)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (chỉ 1.17 trở lên, nhanh)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Wrapper Krypton - (tất cả phiên bản, nhanh)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - chỉ 1.17 trở lên</string>
     <string name="mcl_setting_veroption_release">Bản phát hành</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -83,7 +82,7 @@
     <string name="mcn_check_fail_vulkan_support">Trình kết xuất Zink (Vulkan) không được hỗ trợ trên thiết bị này!</string>
     <!-- MainActivity: Control buttons -->
     <string name="control_chat">Chat</string>
-    <string name="control_debug">Debug</string>
+    <string name="control_debug">Gỡ lỗi</string>
     <string name="control_primary">Pri</string>
     <string name="control_secondary">Sec</string>
     <string name="control_shift">◇</string>
@@ -138,6 +137,8 @@
     <string name="dl_library_sha_fail">Thư viện %s đã bị hỏng và sẽ được tải lại</string>
     <string name="dl_library_sha_unknown">Không thể kiểm tra thư viện %s, tệp vẫn sẽ được sử dụng</string>
     <string name="dl_library_sha_pass">Thư viện %s không có vấn đề</string>
+    <string name="mcl_gamepad_SDL">Bật hậu phần tay cầm SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Sử dụng hậu phần tay cầm SDL để cải thiện tương thích với các bản mod. Tự động chuyển về GLFW nếu không sử dụng.</string>
     <string name="mcl_disable_gestures">Tắt cử chỉ</string>
     <string name="mcl_disable_gestures_subtitle">Tắt các cử chỉ thông dụng, chẳng hạn như giữ để phá khối, chạm để đặt khối.</string>
     <string name="mcl_disable_swap_hand">Tắt nhấn hai lần để đổi tay</string>
@@ -146,6 +147,8 @@
     <string name="mcl_setting_subtitle_mousespeed">Thay đổi tốc độ con trỏ chuột ảo.</string>
     <string name="mcl_setting_title_grab_mouse">Dùng chuột ảo</string>
     <string name="mcl_setting_subtitle_grab_mouse">Đảm bảo con trỏ chuột chỉ có tác dụng trong trò chơi. Ngăn con trỏ tương tác với bố cục điều khiển cảm ứng.</string>
+    <string name="mcl_setting_title_keyboard_panning">Đẩy màn hình khi mở bàn phím</string>
+    <string name="mcl_setting_subtitle_keyboard_panning">Di chuyển màn hình lên trên khi mở bàn phím.</string>
     <string name="customctrl_passthru">Di chuyển chuột</string>
     <string name="customctrl_swipeable">Có thể vuốt</string>
     <string name="customctrl_forward_lock">Khóa tiến về trước</string>
@@ -262,6 +265,7 @@
     <string name="version_select_hint">Chọn phiên bản</string>
     <string name="forge_dl_progress">Đang tải trình cài đặt cho %s</string>
     <string name="forge_dl_searching">Đang tìm số phiên bản Forge</string>
+    <string name="neoforge_dl_searching">Đang tìm kiếm số phiên bản NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Không thể tải danh sách phiên bản!</string>
     <string name="forge_dl_no_installer">Xin lỗi, phiên bản Forge này không có trình cài đặt, vì vậy không được hỗ trợ.</string>
     <string name="forge_dl_select_version">Chọn phiên bản Forge</string>
@@ -286,7 +290,7 @@
     <string name="preference_vulkan_driver_system_description">Buộc trình khởi chạy sử dụng trình điều khiển Vulkan của hệ thống thay vì Turnip trên GPU Adreno. Chỉ ảnh hưởng đến trình kết xuất Zink và các bản mod có sử dụng Vulkan.</string>
     <string name="generic_install">Cài đặt</string>
     <string name="generic_apply">Áp dụng</string>
-    <string name="generic_debug">Debug</string>
+    <string name="generic_debug">Gỡ lỗi</string>
     <string name="search_modpack_no_result">Không tìm thấy modpack</string>
     <string name="search_modpack_error">Không thể tìm kiếm modpack</string>
     <string name="search_modpack_download_error">Không thể tải dữ liệu thuộc tính modpack</string>
@@ -332,6 +336,7 @@
     <string name="preference_vsync_in_zink_description">Cho phép trình khởi chạy dùng các API nội bộ trong hệ thống để bật đồng bộ hóa dọc khi sử dụng trình kết xuất Zink. Tắt tùy chọn này nếu ứng dụng bị thoát đột ngột khi sử dụng Zink sau khi cập nhật hệ thống.</string>
     <string name="exception_failed_to_unpack_jre17">Không thể cài đặt JRE 17</string>
     <string name="newdl_starting">Đang đọc dữ liệu thuộc tính trò chơi…</string>
+    <string name="newdl_downloading_jre_runtime">Đang tải trình chạy Java %s (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Đang tải dữ liệu thuộc tính trò chơi (%s)</string>
     <string name="newdl_downloading_game_files">Đang tải trò chơi… (%d/%d, %.2f MB/s)</string>
     <string name="newdl_downloading_game_files_size">Đang tải trò chơi… (%.2f/%.2f MB, %.2f MB/s)</string>
@@ -391,7 +396,6 @@
     <string name="preference_renderer_mobileglues_settings">Cài đặt trình kết xuất MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Kích cỡ bộ đệm GLSL tối đa</string>
     <string name="mg_renderer_angle">Dùng ANGLE làm trình điều khiển</string>
-    <string name="mg_renderer_multidraw">Chế độ giả lập Multidraw</string>
     <string name="mg_renderer_title_errorSetting">Lọc lỗi</string>
     <string name="mg_renderer_title_timerQueryExt">Không dùng GPU trong menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Sửa lỗi thoát đột ngột khi mở menu F3 trên một số thiết bị Mali</string>
@@ -403,9 +407,6 @@
     <string name="mg_renderer_summary_gl43exts">Có thể giúp giảm tình trạng lỗi mod. Tính năng cũng có thể gây thoát đột ngột, hãy tắt nếu không cần thiết.</string>
     <string name="mg_renderer_title_computeShaderext">Truyền phần mở rộng tính toán shader thử nghiệm</string>
     <string name="mg_renderer_summary_computeShaderext">Có thể giúp giảm hiện tượng lỗi trên các gói shader. Tính năng cũng có thể gây thoát đột ngột, hãy tắt nếu không cần thiết.</string>
-    <string name="mg_renderer_title_multidrawCompute">Mô phỏng tính toán Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Dùng shader tính toán để mô phỏng Multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Tài khoản chơi thử chỉ hỗ trợ chạy phiên bản từ 1.3.1 trở lên</string>
     <string name="demo_unsupported">Không hỗ trợ chế độ chơi thử</string>
     <string name="change_account">Vui lòng thay đổi tài khoản để sử dụng chức năng này</string>
@@ -423,4 +424,40 @@
     <string name="preference_touchcontroller_vibrate_length_title">Thời lượng rung TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Định thời lượng rung khi sử dụng TouchController.</string>
     <string name="error_vanilla_json_corrupt">Tệp json gốc có vẻ đã bị hỏng. Vui lòng báo lỗi qua GitHub hoặc Discord.</string>
+    <string name="preference_ask_for_microphone_title">Cho phép sử dụng micrô</string>
+    <string name="preference_ask_for_microphone_description">Nhấn để gửi lại yêu cầu cấp quyền thông báo, bắt buộc khi sử dụng một số bản mod, ví dụ: Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL_subtitle">Nếu phiên bản 26.3-snapshot-4 trở lên hoặc mod tay cầm không hoạt động đúng cách, tùy chọn này có thể giúp khắc phục.</string>
+    <string name="mcl_gamepad_forcedSDL">Buộc khởi động xử lý tay cầm SDL</string>
+    <string name="preference_category_SDL_settings">Cài đặt SDL</string>
+    <string name="oldL4JFound">Bạn hiện đang sử dụng bản Legacy4J cũ mà không dùng sửa lỗi cho Android! Bạn sẽ cần phải bật SDL thủ công trong phần cài đặt tay cầm để có trải nghiệm chơi tốt nhất!</string>
+    <string name="global_warning">Cảnh báo!</string>
+    <string name="controllableFound">Controllable hiện gặp vấn đề thi thoảng bị thoát đột ngột. Bạn có thể tiếp tục thử khởi động lại xem có chạy được hay không hoặc dùng một bản mod khác như Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Truyền phần mở rộng Direct State Access thử nghiệm</string>
+    <string name="mg_renderer_summary_dsaExt">Có thể giúp cải thiện một số shader Iris, bắt buộc sử dụng đối với mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Tăng phân giải AMD FSR 1</string>
+    <string name="autorendererselectfailed">Không thể tự động chọn trình kết xuất, đang chuyển về mặc định HolyGL4ES</string>
+    <string name="sodium_warning_title">Đã phát hiện Sodium!</string>
+    <string name="sodium_warning_message">Có vẻ bạn đang sử dụng Sodium, mod này không được hỗ trợ và có thể gây ra vấn đề đồ họa hoặc thoát đột ngột. Vui lòng loại bỏ mod này cùng các mod phụ thuộc khác.</string>
+    <string name="delete_sodium">Xóa Sodium và khởi chạy</string>
+    <string name="sodium_override_title">Vẫn chạy Sodium</string>
+    <string name="sodium_override_summaryOff">Sử dụng Sodium có thể gây ra sai lệnh hiển thị hoặc thoát đột ngột. Vui lòng lưu ý điều này.</string>
+    <string name="sodium_override_summaryOn">Sodium không được hỗ trợ. Bạn sẽ không được nhận hỗ trợ cho các vấn đề gặp phải.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Không phải tệp modpack!</string>
+    <string name="global_not_installed">Chưa cài đặt</string>
+    <string name="global_download">Tải xuống</string>
+    <string name="multirt_no_internet">Không thể tải xuống, hãy kiểm tra kết nối Internet.</string>
+    <string name="global_installing">Đang cài đặt…</string>
+    <string name="error_key_unsupported">Lỗi! Phím được gán cho nút này không hợp lệ. Bạn đã thử cập nhật chưa?</string>
+    <string name="error_invalid_value">Lỗi! Giá trị không hợp lệ!</string>
+    <string name="minecraft_no_username_set">Bạn chưa đặt tên đăng nhập Minecraft cho bản thân! Bạn phải đặt tên trên trang web của Minecraft trước khi có thể đăng nhập!</string>
+    <string name="create_lwjgl3ify_profile">Tạo hồ sơ LWJGL3ify</string>
+    <string name="select_lwjgl3ify_version">Chọn phiên bản LWJGL3ify</string>
+    <string name="lwjgl3ify_installer_available_versions">Phiên bản LWJGL3ify được hỗ trợ</string>
+    <string name="lwjgl3ify_installer_broken_versions">Phiên bản LWJGL3ify bị hỏng (SDL)</string>
+    <string name="new_default_controls">Đã trích xuất bố cục điều khiển mặc định mới vào new_default.json. Thử ngay!</string>
+    <string name="import_modpack_start">Đang nhập modpack…</string>
+    <string name="import_modpack_hash">Đang kiểm tra hash tệp modpack... (%s MB/%s MB)</string>
+    <string name="import_modpack_json">Đang đọc thông tin modpack…</string>
+    <string name="import_modpack_copy">Đang sao chép tệp modpack vào bộ nhớ đệm... (%s MB/%s MB)</string>
 </resources>
