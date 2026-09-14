@@ -53,6 +53,8 @@
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; nur, schnell)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper – (alle Versionen, schnell)</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) – (alle Versionen, Mitte)</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (alle Versionen, langsam)</string>
+    <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) - (alle Versionen, schnell)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - nur 1.17+</string>
     <string name="mcl_setting_veroption_release">Vollversionen</string>
     <string name="mcl_setting_veroption_snapshot">Entwicklungsversionen</string>
@@ -460,4 +462,6 @@ Um die offizielle Download-Quelle zu verwenden, drücke \"Auf offizielle Seite u
     <string name="import_modpack_hash">Modpack-Datei wird gehasht… (%s MB/ %s MB)</string>
     <string name="import_modpack_json">Modpack-Info wird gelesen…</string>
     <string name="import_modpack_copy">Modpack-Datei wird in den Cache kopiert… (%s MB/ %s MB)</string>
+    <string name="angelica_found_sfpew_notice">Angelica Mod gefunden, Einfacher FPE Wrapper nicht benötigt</string>
+    <string name="use_angle_checkbox">Nutze ANGLE (könnte FPS helfen)</string>
 </resources>
