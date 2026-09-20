@@ -110,6 +110,12 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private RectF inputAreaRect;
     private int imeHeight;
     private boolean hasOngoingImeAnimation;
+    private static boolean sChatLikelyOpen;
+
+    // When the mouse re-grabs, every screen (chat included) is guaranteed closed.
+    private final GrabListener mChatStateGrabListener = isGrabbing -> {
+        if (isGrabbing) sChatLikelyOpen = false;
+    };
 
     MinecraftProfile minecraftProfile;
 
@@ -138,6 +144,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         initLayout(R.layout.activity_basemain);
         CallbackBridge.addGrabListener(touchpad);
         CallbackBridge.addGrabListener(minecraftGLView);
+        CallbackBridge.addGrabListener(mChatStateGrabListener);
 
         if (Tools.hasTouchController(new File(gameDirPath)) || LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
             TouchControllerUtils.initialize(this, touchControllerInputView);
@@ -383,6 +390,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         super.onDestroy();
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);
+        CallbackBridge.removeGrabListener(mChatStateGrabListener);
         ContextExecutor.clearActivity();
     }
 
@@ -734,6 +742,27 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         refreshImeTranslation();
     }
 
+    /**
+     * Tracks whether the in-game chat is open, so keyboard panning only kicks in
+     * when the chat input actually needs to be revealed above the IME.
+     * The chat keybind can only open chat from gameplay (mouse grabbed), while
+     * Enter/Esc or the mouse grabbing back (any screen closes) mark it closed.
+     */
+    public static void trackChatStateKey(int keycode, boolean isDown) {
+        if (!isDown) return;
+        switch (keycode) {
+            case LwjglGlfwKeycode.GLFW_KEY_T:
+            case LwjglGlfwKeycode.GLFW_KEY_SLASH:
+                if (CallbackBridge.isGrabbing()) sChatLikelyOpen = true;
+                break;
+            case LwjglGlfwKeycode.GLFW_KEY_ENTER:
+            case LwjglGlfwKeycode.GLFW_KEY_KP_ENTER:
+            case LwjglGlfwKeycode.GLFW_KEY_ESCAPE:
+                sChatLikelyOpen = false;
+                break;
+        }
+    }
+
     private void refreshImeTranslation() {
         if (imeHeight == 0) {
             // Early exit
@@ -744,7 +773,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         int inputAreaBottom;
         if (inputAreaRect != null) {
             inputAreaBottom = (int) inputAreaRect.bottom;
-        } else if (LauncherPreferences.PREF_KEYBOARD_PANNING) {
+        } else if (LauncherPreferences.PREF_KEYBOARD_PANNING && sChatLikelyOpen) {
             inputAreaBottom = contentFrame.getHeight();
         } else {
             contentFrame.setTranslationY(0);
