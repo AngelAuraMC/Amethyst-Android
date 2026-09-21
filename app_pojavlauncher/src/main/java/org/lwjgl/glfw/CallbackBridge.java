@@ -226,8 +226,8 @@ public class CallbackBridge {
     // Notification actions
     public static final int ACTION_INIT_LAUNCHER_INTEGRATION = 0;
     public static final int ACTION_SEND_TEXTBOX_RECT = 1;
-    public static final int ACTION_INIT_CONTROLLER = 0;
-    public static final int ACTION_DEINIT_CONTROLLER = 0;
+    public static final int ACTION_INIT_CONTROLLER = 2;
+    public static final int ACTION_DEINIT_CONTROLLER = 3;
     /**
      * Used for any sort of notification that needs to be given from the JRE side
      * @return if notification successful
