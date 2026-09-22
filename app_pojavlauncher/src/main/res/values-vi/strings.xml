@@ -53,6 +53,8 @@
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (chỉ 1.21.4 trở xuống, nhanh)</string>
     <string name="mcl_setting_renderer_ng_gl4es">Wrapper Krypton - (tất cả phiên bản, nhanh)</string>
     <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tất cả phiên bản, trung bình)</string>
+    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tất cả phiên bản, chậm)</string>
+    <string name="mcl_setting_renderer_mobileglues">SFPEW/MobileGlues (OpenGL ES) - (tất cả phiên bản, nhanh)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - chỉ 1.17 trở lên</string>
     <string name="mcl_setting_veroption_release">Bản phát hành</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -460,4 +462,6 @@
     <string name="import_modpack_hash">Đang kiểm tra hash tệp modpack... (%s MB/%s MB)</string>
     <string name="import_modpack_json">Đang đọc thông tin modpack…</string>
     <string name="import_modpack_copy">Đang sao chép tệp modpack vào bộ nhớ đệm... (%s MB/%s MB)</string>
+    <string name="angelica_found_sfpew_notice">Không tìm thấy mod Angelica, không cần thiết sử dụng Simple FPE Wrapper</string>
+    <string name="use_angle_checkbox">Dùng ANGLE (có thể cải thiện FPS)</string>
 </resources>
