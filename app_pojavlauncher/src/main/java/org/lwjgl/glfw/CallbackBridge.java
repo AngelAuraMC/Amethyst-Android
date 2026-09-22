@@ -91,9 +91,6 @@ public class CallbackBridge {
             nativeSendCharMods(keychar,modifiers);
             nativeSendChar(keychar);
         }
-        // Track the chat screen state so keyboard panning can stay limited
-        // to when the chat input is actually open.
-        MainActivity.trackChatStateKey(keycode, isDown);
         if (!MinecraftGLSurface.sdlEnabled) return;
         if(isDown){
             SDLActivity.onNativeKeyDown(EfficientAndroidLWJGLKeycode.getAndroidKeycode(keycode));

@@ -758,6 +758,16 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         }
     }
 
+    /**
+     * Char-input variant of the above for software keyboards, which commit
+     * characters instead of raw keycodes. GLFW keycodes for printable keys
+     * match their ASCII values, with letters using the uppercase code.
+     */
+    public static void trackChatStateChar(char character) {
+        int keycode = character >= 'a' && character <= 'z' ? character - ('a' - 'A') : character;
+        trackChatStateKey(keycode, true);
+    }
+
     private void refreshImeTranslation() {
         if (imeHeight == 0) {
             // Early exit
