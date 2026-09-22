@@ -276,9 +276,9 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
     private void createGamepad(View contextView, InputDevice inputDevice) {
         if (CallbackBridge.sGamepadDirectInput) {
             mGamepadHandler = new DirectGamepad();
-        } else if (!sdlEnabled) {
+        } else if (!CallbackBridge.sdlControllerActive) {
             mGamepadHandler = new Gamepad(contextView, inputDevice, DefaultDataProvider.INSTANCE, true);
-        }
+        } else mGamepadHandler = (i, v) -> {};
     }
 
     /**

@@ -44,6 +44,7 @@ public class CallbackBridge {
     public static final ByteBuffer sGamepadButtonBuffer;
     public static final FloatBuffer sGamepadAxisBuffer;
     public static boolean sGamepadDirectInput = false;
+    public static boolean sdlControllerActive = false;
     private static int sMouseButtonState = 0;
 
     public static void putMouseEventWithCoords(int button, float x, float y) {
@@ -228,6 +229,8 @@ public class CallbackBridge {
     // Notification actions
     public static final int ACTION_INIT_LAUNCHER_INTEGRATION = 0;
     public static final int ACTION_SEND_TEXTBOX_RECT = 1;
+    public static final int ACTION_INIT_CONTROLLER = 2;
+    public static final int ACTION_DEINIT_CONTROLLER = 3;
     /**
      * Used for any sort of notification that needs to be given from the JRE side
      * @return if notification successful
@@ -245,7 +248,6 @@ public class CallbackBridge {
                         System.loadLibrary("SDL3");
                         System.loadLibrary("SDL2");
                         org.libsdl.app.SDL.setupJNI();
-                        onDirectInputEnable();
                         MinecraftGLSurface.sdlEnabled = true;
                         if (SDLActivity.getSDLSurface() != null) {
                             // Notifies SDL of native surface res which is needed for proper input handling
@@ -259,6 +261,14 @@ public class CallbackBridge {
                 }
                 if (action[0] == ACTION_SEND_TEXTBOX_RECT) {
                     // implement
+                }
+                if (action[0] == ACTION_INIT_CONTROLLER) {
+                    sdlControllerActive = true;
+                    onDirectInputEnable();
+                }
+                if (action[0] == ACTION_DEINIT_CONTROLLER) {
+                    sdlControllerActive = false;
+                    onDirectInputEnable();
                 }
 
         }

@@ -275,6 +275,10 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
             return new TextRange(newStart, newLength);
         }
 
+        private int clamp(int value, int min, int max) {
+            return Math.min(max, Math.max(value, min));
+        }
+
         private void refreshState() {
             inputMethodManager.updateSelection(
                     TouchControllerInputView.this,
@@ -361,7 +365,7 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
                 int finalCursorPosition = newCursorPosition > 0 ?
                         currentState.getComposition().getStart() + text.length() + newCursorPosition - 1 :
                         currentState.getComposition().getStart() - newCursorPosition;
-                finalCursorPosition = Math.max(0, Math.min(finalCursorPosition, newText.length()));
+                finalCursorPosition = clamp(finalCursorPosition, 0, newText.length());
                 return new TextInputState(
                         newText,
                         TextRange.Companion.getEMPTY(),
@@ -373,7 +377,7 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
                 int finalCursorPosition = newCursorPosition > 0 ?
                         currentState.getSelection().getStart() + text.length() + newCursorPosition - 1 :
                         currentState.getSelection().getStart() - newCursorPosition;
-                finalCursorPosition = Math.max(0, Math.min(finalCursorPosition, newText.length()));
+                finalCursorPosition = clamp(finalCursorPosition, 0, newText.length());
                 return new TextInputState(
                         newText,
                         TextRange.Companion.getEMPTY(),
@@ -662,12 +666,17 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
 
         @Override
         public boolean setComposingRegion(int start, int end) {
-            updateState(false, currentState -> new TextInputState(
-                    currentState.getText(),
-                    new TextRange(start, end - start),
-                    currentState.getSelection(),
-                    currentState.getSelectionLeft()
-            ));
+            updateState(false, currentState -> {
+                int length = currentState.getText().length();
+                int effectiveStart = clamp(Math.min(start, end), 0, length);
+                int effectiveEnd = clamp(Math.max(start, end), 0, length);
+                return new TextInputState(
+                        currentState.getText(),
+                        new TextRange(effectiveStart, effectiveEnd - effectiveStart),
+                        currentState.getSelection(),
+                        currentState.getSelectionLeft()
+                );
+            });
             return true;
         }
 
@@ -679,7 +688,7 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
                     int finalCursorPosition = newCursorPosition > 0 ?
                             currentState.getComposition().getStart() + text.length() + newCursorPosition - 1 :
                             currentState.getComposition().getStart() - newCursorPosition;
-                    finalCursorPosition = Math.max(0, Math.min(finalCursorPosition, newText.length()));
+                    finalCursorPosition = clamp(finalCursorPosition, 0, newText.length());
                     return new TextInputState(
                             newText,
                             new TextRange(currentState.getComposition().getStart(), text.length()),
@@ -691,7 +700,7 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
                     int finalCursorPosition = newCursorPosition > 0 ?
                             currentState.getSelection().getStart() + text.length() + newCursorPosition - 1 :
                             currentState.getSelection().getStart() - newCursorPosition;
-                    finalCursorPosition = Math.max(0, Math.min(finalCursorPosition, newText.length()));
+                    finalCursorPosition = clamp(finalCursorPosition, 0, newText.length());
                     return new TextInputState(
                             newText,
                             new TextRange(currentState.getSelection().getStart(), text.length()),
@@ -705,12 +714,17 @@ public class TouchControllerInputView extends View implements LauncherProxyClien
 
         @Override
         public boolean setSelection(int start, int end) {
-            updateState(currentState -> new TextInputState(
-                    currentState.getText(),
-                    currentState.getComposition(),
-                    new TextRange(start, end - start),
-                    currentState.getSelectionLeft()
-            ));
+            updateState(currentState -> {
+                int length = currentState.getText().length();
+                int effectiveStart = clamp(Math.min(start, end), 0, length);
+                int effectiveEnd = clamp(Math.max(start, end), 0, length);
+                return new TextInputState(
+                        currentState.getText(),
+                        currentState.getComposition(),
+                        new TextRange(effectiveStart, effectiveEnd - effectiveStart),
+                        start > end
+                );
+            });
             return true;
         }
     }

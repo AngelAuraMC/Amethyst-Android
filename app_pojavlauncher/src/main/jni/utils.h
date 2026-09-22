@@ -10,6 +10,8 @@
 #define NOTIF_TYPE_SDL 0
 #define ACTION_INIT_LAUNCHER_INTEGRATION 0
 #define ACTION_SEND_TEXTBOX_RECT 1
+#define ACTION_INIT_CONTROLLER 2
+#define ACTION_DEINIT_CONTROLLER 3
 
 #define DECL_DLSYM(fn) typedef typeof(&fn) fn##_t;
 
