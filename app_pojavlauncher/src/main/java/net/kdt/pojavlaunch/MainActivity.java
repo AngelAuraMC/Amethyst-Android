@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private RectF inputAreaRect;
     private int imeHeight;
     private boolean hasOngoingImeAnimation;
-    private static boolean sChatLikelyOpen;
+    private static volatile boolean sChatLikelyOpen;
 
     // When the mouse re-grabs, every screen (chat included) is guaranteed closed.
     private final GrabListener mChatStateGrabListener = isGrabbing -> {
@@ -745,21 +745,16 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     /**
      * Tracks whether the in-game chat is open, so keyboard panning only kicks in
      * when the chat input actually needs to be revealed above the IME.
-     * The chat keybind can only open chat from gameplay (mouse grabbed), while
-     * Enter/Esc or the mouse grabbing back (any screen closes) mark it closed.
+     * Chat open keys only count from gameplay (mouse grabbed), while the close
+     * keys or the mouse grabbing back (any screen closes) mark it closed.
+     * Both key lists are user-configurable from the control settings.
      */
     public static void trackChatStateKey(int keycode, boolean isDown) {
         if (!isDown) return;
-        switch (keycode) {
-            case LwjglGlfwKeycode.GLFW_KEY_T:
-            case LwjglGlfwKeycode.GLFW_KEY_SLASH:
-                if (CallbackBridge.isGrabbing()) sChatLikelyOpen = true;
-                break;
-            case LwjglGlfwKeycode.GLFW_KEY_ENTER:
-            case LwjglGlfwKeycode.GLFW_KEY_KP_ENTER:
-            case LwjglGlfwKeycode.GLFW_KEY_ESCAPE:
-                sChatLikelyOpen = false;
-                break;
+        if (LauncherPreferences.PREF_CHAT_PAN_CLOSE_KEYS.contains(keycode)) {
+            sChatLikelyOpen = false;
+        } else if (LauncherPreferences.PREF_CHAT_PAN_OPEN_KEYS.contains(keycode) && CallbackBridge.isGrabbing()) {
+            sChatLikelyOpen = true;
         }
     }
 
