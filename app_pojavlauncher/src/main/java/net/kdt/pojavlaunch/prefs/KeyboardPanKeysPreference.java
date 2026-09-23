@@ -84,7 +84,7 @@ public class KeyboardPanKeysPreference extends Preference {
     /** Re-creates one tappable row per key; tapping a key removes it */
     private void rebuildKeyList(LinearLayout container, List<Integer> keys) {
         container.removeAllViews();
-        int padding = (int) (12 * getResources().getDisplayMetrics().density);
+        int padding = (int) (12 * getContext().getResources().getDisplayMetrics().density);
         for (Integer key : keys) {
             TextView keyView = new TextView(container.getContext());
             keyView.setText(getKeyName(key));
