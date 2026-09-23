@@ -114,7 +114,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
 
     // When the mouse re-grabs, every screen (chat included) is guaranteed closed.
     private final GrabListener mChatStateGrabListener = isGrabbing -> {
-        if (isGrabbing) sChatLikelyOpen = false;
+        if (isGrabbing) {
+            sChatLikelyOpen = false;
+            refreshImeTranslation();
+        }
     };
 
     MinecraftProfile minecraftProfile;
