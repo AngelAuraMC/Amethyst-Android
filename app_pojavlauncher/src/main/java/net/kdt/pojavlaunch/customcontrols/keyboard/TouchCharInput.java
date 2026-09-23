@@ -163,7 +163,6 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
                 }
 
                 for(int i=start, count = 0; count < lengthAfter; ++i){
-                    MainActivity.trackChatStateChar(text.charAt(i));
                     mCharacterSender.sendChar(text.charAt(i));
                     ++count;
                 }
