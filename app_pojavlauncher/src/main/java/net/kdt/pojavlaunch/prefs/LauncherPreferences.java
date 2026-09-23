@@ -76,8 +76,8 @@ public class LauncherPreferences {
 
     public static boolean PREF_MOUSE_GRAB_FORCE = false;
     public static boolean PREF_KEYBOARD_PANNING = true;
-    public static Set<Integer> PREF_CHAT_PAN_OPEN_KEYS = new HashSet<>();
-    public static Set<Integer> PREF_CHAT_PAN_CLOSE_KEYS = new HashSet<>();
+    public static Set<Integer> PREF_CHAT_PAN_OPEN_KEYS = null;
+    public static Set<Integer> PREF_CHAT_PAN_CLOSE_KEYS = null;
 
 
     public static void loadPreferences(Context ctx) {
