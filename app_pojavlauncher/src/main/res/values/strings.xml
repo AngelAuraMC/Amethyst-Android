@@ -177,6 +177,13 @@
     <string name="mcl_setting_subtitle_grab_mouse">Ensures the cursor stays inside the game. Prevents mouse from clicking touch control layout.</string>
     <string name="mcl_setting_title_keyboard_panning">Keyboard panning</string>
     <string name="mcl_setting_subtitle_keyboard_panning">Shift the screen upwards when the keyboard is open.</string>
+    <string name="mcl_setting_title_chat_pan_open_keys">Chat open keys</string>
+    <string name="mcl_setting_subtitle_chat_pan_open_keys">Pick the keys that mark the chat as open.</string>
+    <string name="mcl_setting_title_chat_pan_close_keys">Chat close keys</string>
+    <string name="mcl_setting_subtitle_chat_pan_close_keys">Pick the keys that mark the chat as closed.</string>
+    <string name="mcl_setting_chat_pan_keys_hint">Tap a key to remove it. Pick a key below and press add to add it.</string>
+    <string name="mcl_setting_chat_pan_keys_add">Add</string>
+    <string name="mcl_setting_chat_pan_keys_none">No keys set, defaults apply</string>
     <string name="customctrl_passthru">Mouse pass-thru</string>
     <string name="customctrl_swipeable">Swipeable</string>
     <string name="customctrl_forward_lock">Forward lock</string>

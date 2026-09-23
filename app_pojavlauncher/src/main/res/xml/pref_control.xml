@@ -67,6 +67,18 @@
             android:key="keyboardPanning"
             android:summary="@string/mcl_setting_subtitle_keyboard_panning"
             android:title="@string/mcl_setting_title_keyboard_panning" />
+        <net.kdt.pojavlaunch.prefs.KeyboardPanKeysPreference
+            android:key="chatPanOpenKeys"
+            android:defaultValue="84,47"
+            android:dependency="keyboardPanning"
+            android:summary="@string/mcl_setting_subtitle_chat_pan_open_keys"
+            android:title="@string/mcl_setting_title_chat_pan_open_keys" />
+        <net.kdt.pojavlaunch.prefs.KeyboardPanKeysPreference
+            android:key="chatPanCloseKeys"
+            android:defaultValue="256,257,335"
+            android:dependency="keyboardPanning"
+            android:summary="@string/mcl_setting_subtitle_chat_pan_close_keys"
+            android:title="@string/mcl_setting_title_chat_pan_close_keys" />
 
     </PreferenceCategory>
 
