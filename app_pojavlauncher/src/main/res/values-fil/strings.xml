@@ -139,4 +139,5 @@
     <string name="controller_button_select">Iselekta</string>
     <string name="customctrl_visibility_title">Pagkakakita</string>
     <string name="preference_experimental_title">Pang-eksperimentong ng bagay</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

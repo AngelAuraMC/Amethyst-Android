@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -52,8 +51,8 @@
     <string name="mcl_setting_title_renderer_subtitle">İşleyiciye özgü ayarlar</string>
     <string name="mcl_setting_category_renderer">İşleyici</string>
     <string name="mcl_setting_renderer_gles2_4">Kutsal GL4ES- (1.21.4&lt; sadece, Hızlı)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tüm sürümler için, orta)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (sadece 1.17+, hızlı)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Kripton Toplayıcı - (bütün sürümler, hızlı)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Bakır Zink (Vulkan) — (Tüm Versiyonlar, Orta)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - sadece 1.17+</string>
     <string name="mcl_setting_veroption_release">Sürümler</string>
     <string name="mcl_setting_veroption_snapshot">Test sürümleri</string>
@@ -93,7 +92,7 @@
     <string name="control_right">▶</string>
     <string name="control_down">▼</string>
     <string name="control_jump">⬛</string>
-    <string name="control_thirdperson">3rd</string>
+    <string name="control_thirdperson">3.</string>
     <string name="control_listplayers">Tab</string>
     <string name="control_mouse">İmleç</string>
     <string name="control_mouseoff">İmleç: kapalı</string>
@@ -138,6 +137,8 @@
     <string name="dl_library_sha_fail">\"%s\" kütüphanesi hasarlı ve yeniden indirilecek</string>
     <string name="dl_library_sha_unknown">\"%s\" kütüphanesi kontrol edilemiyor, düzgün olduğu varsayılacak</string>
     <string name="dl_library_sha_pass">\"%s\" kütüphanesi iyi durumda ve kullanılabilir</string>
+    <string name="mcl_gamepad_SDL">SDL kontrolcüsü arkayüzünü aktif et</string>
+    <string name="mcl_gamepad_SDL_subtitle">SDL kontrolcü arkayüzünü aktif eder. Daha iyi mod desteğine sahiptir. GLFW kullanılmadığında devre dışı kalır.</string>
     <string name="mcl_disable_gestures">Hareketleri devre dışı bırak</string>
     <string name="mcl_disable_gestures_subtitle">Blok kırmak için basılı tutma ve blok koymak için dokunma gibi hareketleri devre dışı bırakır.</string>
     <string name="mcl_disable_swap_hand">El değiştirmek için çift dokunmayı devre dışı bırak</string>
@@ -262,6 +263,7 @@
     <string name="version_select_hint">Bir Sürüm Seçin</string>
     <string name="forge_dl_progress">%s için yükleyici indiriliyor</string>
     <string name="forge_dl_searching">Forge sürüm numarası aranıyor</string>
+    <string name="neoforge_dl_searching">NeoForge sürüm numarası aranıyor</string>
     <string name="modloader_dl_failed_to_load_list">Sürüm listesi yüklenemedi!</string>
     <string name="forge_dl_no_installer">Üzgünüz, bu Forge sürümünün yükleyicisinin kurulum dosyası bulunmuyor, bu nedenle şuanlık desteklenmemektedir.</string>
     <string name="forge_dl_select_version">Forge sürümünü seç</string>
@@ -391,7 +393,6 @@
     <string name="preference_renderer_mobileglues_settings">MobileGlues Ișleyici Seçenekleri</string>
     <string name="mg_renderer_glsl_cache">Maks GLSL önbellek boyutu</string>
     <string name="mg_renderer_angle">Sürücü olarak ANGLE\'ı kullan</string>
-    <string name="mg_renderer_multidraw">Multidraw emulasyon modu</string>
     <string name="mg_renderer_title_errorSetting">Hata filtreleme</string>
     <string name="mg_renderer_title_timerQueryExt">GPU kullanımını F3 menüsünde devre dışı bırak</string>
     <string name="mg_renderer_summary_timerQueryExt">Bazı Mali Cihazlarda F3 menüsü açıldığında oluşan rastgele crash hatalarını düzeltir</string>
@@ -403,9 +404,6 @@
     <string name="mg_renderer_summary_gl43exts">Mod çökmelerine yardımcı olabilir. Ihtiyaç yoksa devre dışı bırakın, çökmelere sebep olabilir.</string>
     <string name="mg_renderer_title_computeShaderext">Deneysel Compute Shader uzantısını destekliyormuş gibi göster</string>
     <string name="mg_renderer_summary_computeShaderext">Shader paketi bozulmalarına yardımcı olabilir. Ihtiyaç yoksa devre dışı bırakın, çökmelere sebep olabilir.</string>
-    <string name="mg_renderer_title_multidrawCompute">Hesaplama ile Çoklu Çizim Taklidi Kullan</string>
-    <string name="mg_renderer_summary_multidrawCompute">Çoklu çizim emülasyonu için hesaplama shader’larını kullanır</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Sadece Vanilla 1.3.1 ve üzeri sürümler deneme hesaplarında desteklenmektedir</string>
     <string name="demo_unsupported">Deneme Profili desteklenmemektedir</string>
     <string name="change_account">Lütfen hesapları değiştirmek için bu fonksiyonu kullanınız</string>
@@ -424,4 +422,22 @@
     <string name="preference_touchcontroller_vibrate_length_description">DokunmatikKontrolcü kullanılır iken oluşan titreşim uzunluğunu ayarla.</string>
     <string name="error_vanilla_json_corrupt">Vanila json dosyaları görünüşe göre bozulmuş veya deforme halde. Lütfen Github veya discord\'a bir Hata raporu yollayınız.</string>
     <string name="preference_ask_for_microphone_title">Mikrofona izin ver</string>
+    <string name="preference_ask_for_microphone_description">Yeniden notifikasyon izni isteği için tıklayınız, Simple Voice Chat gibi modlar için gereklidir.</string>
+    <string name="mcl_gamepad_forcedSDL">Zorlama ile SDL kontrolcü yönetimini başlat</string>
+    <string name="preference_category_SDL_settings">SDL ayarları</string>
+    <string name="oldL4JFound">Sen Legacy4J\'nin android hata düzeltmelernin olmadığı bir sürümü kullanıyorsun! En iyi deneyim için Kontrolcü ayarlarından manuel olarak SDL\'yi aktif etmelisin!</string>
+    <string name="global_warning">Uyarı!</string>
+    <string name="controllableFound">Controllable modnun şuanlık rastgele bir şans ile Başlangıçta oyunu çökertme riski var. Ya Başlayana kadar dua et ve tekrar dene yada Controllify gibi başka bir mod kullan.</string>
+    <string name="mg_renderer_title_dsaExt">Deneysel Doğrudan durum erişim uzantısını yayınlayın</string>
+    <string name="mg_renderer_summary_dsaExt">Belki iris Shaderpaketlerinde yardımcı olabilir, AcceleratedRendering modu için gerekli</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 Video ölçekleme</string>
+    <string name="autorendererselectfailed">Otomatik grafik işleyici seçilemedi; varsayılan olarak HolyGL4ES kullanılacak</string>
+    <string name="sodium_warning_title">Sodium tespit edildi!</string>
+    <string name="sodium_warning_message">Sodium kullanıyor gibi görünüyorsunuz, bu desteklenmemektedir ve grafik sorunlarına veya çökmelere neden olabilir. Lütfen bunu ve tüm bağımlı modları kaldırın.</string>
+    <string name="delete_sodium">Sodium\'u kaldır ve Başlat</string>
+    <string name="sodium_override_title">Sodium\'u zorla çalıştır</string>
+    <string name="sodium_override_summaryOff">Sodium kullanmak görsel hatalara ve çökmelere sebebiyet verebilir. Uyarıldınız.</string>
+    <string name="sodium_override_summaryOn">Sodium desteklenmemektedir. Herhangi bir sorunla karşılaşırsanız yardım sağlanmayacaktır.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Modpack dosyası değil!</string>
 </resources>

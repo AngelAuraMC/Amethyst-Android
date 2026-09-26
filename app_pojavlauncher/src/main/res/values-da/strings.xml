@@ -32,4 +32,5 @@
     <string name="customctrl_size">Størrelse</string>
     <string name="customctrl_orientation">Orientering</string>
     <string name="customctrl_background_color">Baggrundsfarve</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

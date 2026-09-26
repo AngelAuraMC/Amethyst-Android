@@ -27,4 +27,5 @@
 -->
     <string name="mc_download_failed">Failed to download Minecraft! This could be due to bad network connection, incorrectly placed files, etc..</string>
     <string name="preference_category_video">Video Settings</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
