@@ -196,7 +196,7 @@
    "isToggle": false,
    "keycodes": [
     84,
-    0,
+    -1,
     0,
     0
    ],

@@ -80,8 +80,8 @@ public class AsyncAssetManager {
                     Tools.copyAssetFile(ctx, "default.json", Tools.CTRLMAP_PATH, false);
                 }
 
-                // Layout estilo Bedrock (no sobrescribe si ya existe)
-                Tools.copyAssetFile(ctx, "bedrock.json", Tools.CTRLMAP_PATH, false);
+                // Layout estilo Bedrock (se actualiza con la app; duplícalo con otro nombre para personalizarlo)
+                Tools.copyAssetFile(ctx, "bedrock.json", Tools.CTRLMAP_PATH, true);
 
                 Tools.copyAssetFile(ctx, "launcher_profiles.json", Tools.DIR_GAME_NEW, false);
                 Tools.copyAssetFile(ctx,"resolv.conf",Tools.DIR_DATA, false);

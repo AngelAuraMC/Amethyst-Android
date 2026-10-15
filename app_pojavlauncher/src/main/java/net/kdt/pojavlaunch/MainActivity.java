@@ -577,6 +577,10 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         return handleEvent;
     }
 
+    public static void showKeyboard() {
+        if(touchCharInput != null && !touchCharInput.hasFocus()) touchCharInput.enable();
+    }
+
     public static void switchKeyboardState() {
         if(touchCharInput != null) touchCharInput.switchKeyboardState();
     }
