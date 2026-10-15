@@ -5,100 +5,8 @@
    "cornerRadius": 100,
    "displayInGame": true,
    "displayInMenu": true,
-   "dynamicX": "px(36) + ${width}",
-   "dynamicY": "${screen_height} - px(24) - ${height} * 3",
-   "height": 56,
-   "isSwipeable": true,
-   "isToggle": false,
-   "keycodes": [
-    87,
-    0,
-    0,
-    0
-   ],
-   "name": "▲",
-   "opacity": 1,
-   "passThruEnabled": false,
-   "strokeColor": -1,
-   "strokeWidth": 2,
-   "width": 56
-  },
-  {
-   "bgColor": 1291845632,
-   "cornerRadius": 100,
-   "displayInGame": true,
-   "displayInMenu": true,
-   "dynamicX": "px(36)",
-   "dynamicY": "${screen_height} - px(24) - ${height} * 3 + ${height}",
-   "height": 56,
-   "isSwipeable": true,
-   "isToggle": false,
-   "keycodes": [
-    65,
-    0,
-    0,
-    0
-   ],
-   "name": "◀",
-   "opacity": 1,
-   "passThruEnabled": false,
-   "strokeColor": -1,
-   "strokeWidth": 2,
-   "width": 56
-  },
-  {
-   "bgColor": 1291845632,
-   "cornerRadius": 100,
-   "displayInGame": true,
-   "displayInMenu": true,
-   "dynamicX": "px(36) + ${width} * 2",
-   "dynamicY": "${screen_height} - px(24) - ${height} * 3 + ${height}",
-   "height": 56,
-   "isSwipeable": true,
-   "isToggle": false,
-   "keycodes": [
-    68,
-    0,
-    0,
-    0
-   ],
-   "name": "▶",
-   "opacity": 1,
-   "passThruEnabled": false,
-   "strokeColor": -1,
-   "strokeWidth": 2,
-   "width": 56
-  },
-  {
-   "bgColor": 1291845632,
-   "cornerRadius": 100,
-   "displayInGame": true,
-   "displayInMenu": true,
-   "dynamicX": "px(36) + ${width}",
-   "dynamicY": "${screen_height} - px(24) - ${height} * 3 + ${height} * 2",
-   "height": 56,
-   "isSwipeable": true,
-   "isToggle": false,
-   "keycodes": [
-    83,
-    0,
-    0,
-    0
-   ],
-   "name": "▼",
-   "opacity": 1,
-   "passThruEnabled": false,
-   "strokeColor": -1,
-   "strokeWidth": 2,
-   "width": 56
-  },
-  {
-   "bgColor": 1291845632,
-   "cornerRadius": 100,
-   "displayInGame": true,
-   "displayInMenu": true,
-   "dynamicX": "px(36) + ${width}",
-   "dynamicY": "${screen_height} - px(24) - ${height} * 3 + ${height}",
+   "dynamicX": "px(8) + px(102) - ${width} / 2",
+   "dynamicY": "${screen_height} - px(5) - px(205) - ${height} - px(8)",
    "height": 56,
    "isSwipeable": false,
    "isToggle": true,
@@ -505,7 +413,7 @@
      0,
      0
     ],
-    "name": "···",
+    "name": "\u00b7\u00b7\u00b7",
     "opacity": 1,
     "passThruEnabled": false,
     "strokeColor": -1,
@@ -514,7 +422,33 @@
    }
   }
  ],
- "mJoystickDataList": [],
+ "mJoystickDataList": [
+  {
+   "absolute": false,
+   "forwardLock": false,
+   "bgColor": 1291845632,
+   "cornerRadius": 0,
+   "displayInGame": true,
+   "displayInMenu": false,
+   "dynamicX": "0 * ${screen_width} + (px(8.0) / 100.0 * 100.0)",
+   "dynamicY": "1.0 * ${screen_height} - ${height} - (px(5.0) / 100.0 * 100.0)",
+   "height": 204.8,
+   "isSwipeable": false,
+   "isToggle": false,
+   "keycodes": [
+    0,
+    0,
+    0,
+    0
+   ],
+   "name": "Joystick",
+   "opacity": 1,
+   "passThruEnabled": false,
+   "strokeColor": 1291845632,
+   "strokeWidth": 0,
+   "width": 204.8
+  }
+ ],
  "scaledAt": 100,
  "version": 8
 }
