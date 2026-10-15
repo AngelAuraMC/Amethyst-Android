@@ -203,10 +203,20 @@ public class ControlButton extends TextView implements ControlInterface {
         }
     }
 
+    private boolean hasRegularKeycode() {
+        for(int keycode : mProperties.keycodes) if(keycode > GLFW_KEY_UNKNOWN) return true;
+        return false;
+    }
+
     private void sendSpecialKey(int keycode, boolean isDown){
         switch (keycode) {
             case ControlData.SPECIALBTN_KEYBOARD:
-                if(isDown) MainActivity.switchKeyboardState();
+                if(isDown) {
+                    // Si el botón también envía una tecla normal (p. ej. Chat = T + Keyboard),
+                    // el teclado solo se muestra, para no cerrarse si ya estaba abierto.
+                    if(hasRegularKeycode()) MainActivity.showKeyboard();
+                    else MainActivity.switchKeyboardState();
+                }
                 break;
 
             case ControlData.SPECIALBTN_TOGGLECTRL:

@@ -1,3 +1,4 @@
+# CI habilitado en el fork
 name: Android CI
 
 on:
@@ -9,6 +10,9 @@ on:
     branches-ignore:
       - 'l10n_v3_openjdk'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -78,16 +82,6 @@ jobs:
           ./scripts/languagelist_updater.sh
           mkdir out
 
-      - name: Build Release .apk
-        run: |
-          # Build the launcher
-          gradle :app_pojavlauncher:assembleRelease
-          mv app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk out/app-release.apk
-
-      - name: Gen md5sums
-        run: |
-          md5sum out/app-release.apk > out/app-release.md5
-
       - name: Build Debug .apk
         run: |
           # Build the launcher
@@ -104,8 +98,15 @@ jobs:
           name: app-debug (recommended)
           path: out/app-debug.*
 
-      - name: Upload release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: out/app-release.*
+      - name: Publish APK to Release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${GITHUB_REF_NAME//\//-}"
+          gh release delete "$TAG" --cleanup-tag --yes || true
+          gh release create "$TAG" out/app-debug.apk out/app-debug.md5 \
+            --target "$GITHUB_SHA" \
+            --title "Build $GITHUB_REF_NAME (${GITHUB_SHA::7})" \
+            --notes "APK debug compilado desde la rama $GITHUB_REF_NAME, commit $GITHUB_SHA." \
+            --prerelease
