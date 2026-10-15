@@ -11,6 +11,9 @@ on:
       - 'l10n_v3_openjdk'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -94,3 +97,16 @@ jobs:
         with:
           name: app-debug (recommended)
           path: out/app-debug.*
+
+      - name: Publish APK to Release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="build-${GITHUB_REF_NAME//\//-}"
+          gh release delete "$TAG" --cleanup-tag --yes || true
+          gh release create "$TAG" out/app-debug.apk out/app-debug.md5 \
+            --target "$GITHUB_SHA" \
+            --title "Build $GITHUB_REF_NAME (${GITHUB_SHA::7})" \
+            --notes "APK debug compilado desde la rama $GITHUB_REF_NAME, commit $GITHUB_SHA." \
+            --prerelease
