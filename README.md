@@ -1,4 +1,4 @@
-<h1 align="center">Angel Aura Amethyst</h1>
+<h1 align="center">Makarlus lancher</h1>
 
 <img src="https://github.com/AngelAuraMC/Amethyst-Android/blob/v3_openjdk/app_pojavlauncher/src/main/assets/amethyst.png" align="left" width="130" height="130" alt="Amethyst logo">
 
