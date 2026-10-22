@@ -175,9 +175,9 @@ public final class Tools {
             } else {
                 File markerFile = new File(ctx.getFilesDir(), AMETHYST_MARKER_NAME);
                 if(markerFile.exists())
-                    return ctx.getFilesDir();
+                    return new File(ctx.getFilesDir(), "instances");
             }
-            return retFile;
+            return new File(retFile, "instances");
         } else {
             return new File(Environment.getExternalStorageDirectory(),"games/Amethyst");
         }
@@ -189,9 +189,10 @@ public final class Tools {
      * @return true if storage is fine, false if storage is not accessible
      */
     public static boolean checkStorageRoot(Context context) {
-        File externalFilesDir = DIR_GAME_HOME  == null ? Tools.getPojavStorageRoot(context) : new File(DIR_GAME_HOME);
-        //externalFilesDir == null when the storage is not mounted if it was obtained with the context call
-        return externalFilesDir != null && Environment.getExternalStorageState(externalFilesDir).equals(Environment.MEDIA_MOUNTED);
+        File storageRoot = DIR_GAME_HOME == null ? Tools.getPojavStorageRoot(context) : new File(DIR_GAME_HOME);
+        if(storageRoot.getAbsolutePath().startsWith(context.getFilesDir().getAbsolutePath()))
+            return true;
+        return Environment.getExternalStorageState(storageRoot).equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
