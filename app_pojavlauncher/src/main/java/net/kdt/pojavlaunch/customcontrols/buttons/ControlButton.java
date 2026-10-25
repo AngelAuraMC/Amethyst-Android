@@ -30,6 +30,7 @@ import org.lwjgl.glfw.CallbackBridge;
 
 @SuppressLint({"ViewConstructor", "AppCompatCustomView"})
 public class ControlButton extends TextView implements ControlInterface {
+    private android.graphics.drawable.Drawable mIcon;
     private final Paint mRectPaint = new Paint();
     protected ControlData mProperties;
     private final ControlLayout mControlLayout;
@@ -82,6 +83,19 @@ public class ControlButton extends TextView implements ControlInterface {
         }
 
         setText(properties.name);
+        updateIcon(properties.icon);
+    }
+
+    /** Loads the optional icon of the button; when there is one the text is not shown */
+    private void updateIcon(String iconName) {
+        mIcon = null;
+        if (iconName == null || iconName.isEmpty()) return;
+        int resId = getResources().getIdentifier(iconName, "drawable", getContext().getPackageName());
+        if (resId == 0) return;
+        android.graphics.drawable.Drawable drawable = androidx.core.content.ContextCompat.getDrawable(getContext(), resId);
+        if (drawable == null) return;
+        mIcon = drawable.mutate();
+        setText("");
     }
 
     @Override
@@ -89,6 +103,13 @@ public class ControlButton extends TextView implements ControlInterface {
         super.onDraw(canvas);
         if (mIsToggled || (!mProperties.isToggle && isActivated()))
             canvas.drawRoundRect(0, 0, getWidth(), getHeight(), mComputedRadius, mComputedRadius, mRectPaint);
+        if (mIcon != null) {
+            int size = Math.round(Math.min(getWidth(), getHeight()) * 0.56f);
+            int left = (getWidth() - size) / 2;
+            int top = (getHeight() - size) / 2;
+            mIcon.setBounds(left, top, left + size, top + size);
+            mIcon.draw(canvas);
+        }
     }
 
 

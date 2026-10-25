@@ -71,12 +71,12 @@
   },
   {
    "bgColor": 1494356500,
-   "cornerRadius": 50,
+   "cornerRadius": 100,
    "displayInGame": true,
    "displayInMenu": false,
-   "dynamicX": "${screen_width} / 2 - px(78)",
+   "dynamicX": "${screen_width} / 2 - px(72)",
    "dynamicY": "${margin} * 2 + px(4)",
-   "height": 34,
+   "height": 44,
    "isSwipeable": false,
    "isToggle": false,
    "keycodes": [
@@ -90,16 +90,17 @@
    "passThruEnabled": false,
    "strokeColor": -1275068417,
    "strokeWidth": 2,
-   "width": 50
+   "width": 44,
+   "icon": "ic_ctrl_chat"
   },
   {
    "bgColor": 1494356500,
-   "cornerRadius": 50,
+   "cornerRadius": 100,
    "displayInGame": true,
    "displayInMenu": false,
-   "dynamicX": "${screen_width} / 2 - px(25)",
+   "dynamicX": "${screen_width} / 2 - px(22)",
    "dynamicY": "${margin} * 2 + px(4)",
-   "height": 34,
+   "height": 44,
    "isSwipeable": false,
    "isToggle": false,
    "keycodes": [
@@ -113,16 +114,17 @@
    "passThruEnabled": false,
    "strokeColor": -1275068417,
    "strokeWidth": 2,
-   "width": 50
+   "width": 44,
+   "icon": "ic_ctrl_pause"
   },
   {
    "bgColor": 1494356500,
-   "cornerRadius": 50,
+   "cornerRadius": 100,
    "displayInGame": true,
    "displayInMenu": false,
    "dynamicX": "${screen_width} / 2 + px(28)",
    "dynamicY": "${margin} * 2 + px(4)",
-   "height": 34,
+   "height": 44,
    "isSwipeable": false,
    "isToggle": false,
    "keycodes": [
@@ -131,12 +133,13 @@
     0,
     0
    ],
-   "name": "Inv.",
+   "name": "Inventario",
    "opacity": 1,
    "passThruEnabled": false,
    "strokeColor": -1275068417,
    "strokeWidth": 2,
-   "width": 50
+   "width": 44,
+   "icon": "ic_ctrl_inventory"
   },
   {
    "bgColor": 1494356500,

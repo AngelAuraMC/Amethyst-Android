@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Los iconos de los controles se cargan por nombre (getIdentifier): evitar que se eliminen al reducir recursos -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/ic_ctrl_*" />

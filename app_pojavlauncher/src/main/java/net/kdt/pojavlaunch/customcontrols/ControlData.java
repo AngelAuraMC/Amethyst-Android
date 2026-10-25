@@ -58,6 +58,8 @@ public class ControlData {
     public String dynamicX, dynamicY;
     public boolean isToggle, passThruEnabled;
     public String name;
+    /** Optional name of a drawable (without extension) drawn in the middle of the button instead of its text */
+    public String icon = null;
     public int[] keycodes;      //Should store up to 4 keys
     public float opacity;       //Alpha value from 0 to 1;
     public int bgColor;
@@ -153,6 +155,7 @@ public class ControlData {
                 controlData.isSwipeable,
                 controlData.passThruEnabled
         );
+        this.icon = controlData.icon;
     }
 
     public static ControlData[] getSpecialButtons() {
