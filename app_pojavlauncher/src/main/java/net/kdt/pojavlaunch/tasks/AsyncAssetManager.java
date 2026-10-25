@@ -80,8 +80,17 @@ public class AsyncAssetManager {
                     Tools.copyAssetFile(ctx, "default.json", Tools.CTRLMAP_PATH, false);
                 }
 
-                // Layout estilo Bedrock (se actualiza con la app; duplícalo con otro nombre para personalizarlo)
-                Tools.copyAssetFile(ctx, "bedrock.json", Tools.CTRLMAP_PATH, true);
+                // Layout estilo Bedrock: solo se reemplaza cuando cambia la versión incluida en la app,
+                // así las ediciones del usuario no se pierden en cada arranque.
+                try (InputStream is = ctx.getAssets().open("bedrock.json")) {
+                    String bundledSha1 = new String(org.apache.commons.codec.binary.Hex.encodeHex(org.apache.commons.codec.digest.DigestUtils.sha1(is)));
+                    android.content.SharedPreferences prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(ctx);
+                    File bedrockFile = new File(Tools.CTRLMAP_PATH, "bedrock.json");
+                    if (!bedrockFile.exists() || !bundledSha1.equals(prefs.getString("bedrockLayoutSha1", ""))) {
+                        Tools.copyAssetFile(ctx, "bedrock.json", Tools.CTRLMAP_PATH, true);
+                        prefs.edit().putString("bedrockLayoutSha1", bundledSha1).apply();
+                    }
+                }
 
                 Tools.copyAssetFile(ctx, "launcher_profiles.json", Tools.DIR_GAME_NEW, false);
                 Tools.copyAssetFile(ctx,"resolv.conf",Tools.DIR_DATA, false);
