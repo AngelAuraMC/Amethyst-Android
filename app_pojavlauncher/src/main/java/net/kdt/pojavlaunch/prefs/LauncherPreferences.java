@@ -120,7 +120,8 @@ public class LauncherPreferences {
         PREF_KEYBOARD_PANNING = DEFAULT_PREF.getBoolean("keyboardPanning", true);
 
         // User may have deleted their default control
-        String userDefCtrl = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLDEF_FILE);
+        // Si el usuario no eligió un layout, usar el estilo Bedrock (cae a default.json si aún no existe)
+        String userDefCtrl = DEFAULT_PREF.getString("defaultCtrl", Tools.CTRLMAP_PATH + "/bedrock.json");
         PREF_DEFAULTCTRL_PATH = FileUtils.exists(userDefCtrl) ? userDefCtrl : Tools.CTRLDEF_FILE;
 
         String argLwjglLibname = "-Dorg.lwjgl.opengl.libname=";
