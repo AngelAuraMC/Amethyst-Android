@@ -375,12 +375,14 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     @Override
     protected void onStop() {
         CallbackBridge.nativeSetWindowAttrib(LwjglGlfwKeycode.GLFW_VISIBLE, 0);
+        net.kdt.pojavlaunch.utils.ServerListSync.flush();
         super.onStop();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        net.kdt.pojavlaunch.utils.ServerListSync.stopWatching();
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);
         ContextExecutor.clearActivity();

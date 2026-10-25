@@ -1413,11 +1413,22 @@ public class GLFW
     public static long glfwCreateCursor(@NativeType("const GLFWimage *") GLFWImage image, int xhot, int yhot) {
         return 4L;
     }
+    private static final long STANDARD_CURSOR_BASE = 0x4000L;
+    private static boolean sTextFieldHovered = false;
+
     public static long glfwCreateStandardCursor(int shape) {
-        return 4L;
+        // Un handle distinto por forma, para poder saber cuándo Minecraft pide el cursor de texto
+        return STANDARD_CURSOR_BASE + shape;
     }
     public static void glfwDestroyCursor(@NativeType("GLFWcursor *") long cursor) {}
-    public static void glfwSetCursor(@NativeType("GLFWwindow *") long window, @NativeType("GLFWcursor *") long cursor) {}
+    public static void glfwSetCursor(@NativeType("GLFWwindow *") long window, @NativeType("GLFWcursor *") long cursor) {
+        boolean hovered = cursor == STANDARD_CURSOR_BASE + GLFW_IBEAM_CURSOR;
+        if (hovered == sTextFieldHovered) return;
+        sTextFieldHovered = hovered;
+        try {
+            CallbackBridge.nativeNotifyLauncher(CallbackBridge.TEXT_FIELD, CallbackBridge.TEXT_FIELD_HOVER, hovered ? 1 : 0);
+        } catch (Throwable ignored) {}
+    }
 
     public static boolean glfwRawMouseMotionSupported() {
         // Should be not supported?

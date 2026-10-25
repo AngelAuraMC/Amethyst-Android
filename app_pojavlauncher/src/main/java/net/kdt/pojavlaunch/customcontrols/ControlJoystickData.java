@@ -9,6 +9,11 @@ public class ControlJoystickData extends ControlData {
      * or relative (joystick stays in the center)
      */
     public boolean absolute = false;
+    /*
+     * Whether leaving the joystick's circle with the finger makes the player sprint
+     * (Ctrl is held while the finger stays outside of the circle)
+     */
+    public boolean sprintOutside = false;
 
     public ControlJoystickData(){
         super();
@@ -18,5 +23,6 @@ public class ControlJoystickData extends ControlData {
         super(properties);
         forwardLock = properties.forwardLock;
         absolute = properties.absolute;
+        sprintOutside = properties.sprintOutside;
     }
 }

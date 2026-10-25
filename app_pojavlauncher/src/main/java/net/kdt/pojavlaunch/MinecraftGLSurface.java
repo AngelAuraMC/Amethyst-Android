@@ -521,6 +521,9 @@ public class MinecraftGLSurface extends View implements GrabListener, DirectGame
     }
 
     private void updateGrabState(boolean isGrabbing) {
+        // Al volver al juego (chat cerrado, etc.) el teclado ya no hace falta
+        if (isGrabbing && !mLastGrabState && MainActivity.touchCharInput != null && MainActivity.touchCharInput.hasFocus())
+            MainActivity.touchCharInput.disable();
         TouchEventProcessor desiredProcessor = pickEventProcessor(isGrabbing);
         if (mLastGrabState != isGrabbing || mCurrentTouchProcessor != desiredProcessor) {
             mCurrentTouchProcessor.cancelPendingActions();

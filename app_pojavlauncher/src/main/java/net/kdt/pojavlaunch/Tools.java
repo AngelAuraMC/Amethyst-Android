@@ -70,6 +70,7 @@ import net.kdt.pojavlaunch.utils.DateUtils;
 import net.kdt.pojavlaunch.utils.DownloadUtils;
 import net.kdt.pojavlaunch.utils.FileUtils;
 import net.kdt.pojavlaunch.utils.GLInfoUtils;
+import net.kdt.pojavlaunch.utils.ServerListSync;
 import net.kdt.pojavlaunch.utils.JREUtils;
 import net.kdt.pojavlaunch.utils.JSONUtils;
 import net.kdt.pojavlaunch.utils.MCOptionUtils;
@@ -430,6 +431,9 @@ public final class Tools {
         }
         LauncherProfiles.load();
         File gamedir = Tools.getGameDirPath(minecraftProfile);
+        // Servidores guardados compartidos entre versiones/instancias
+        ServerListSync.syncBeforeLaunch(gamedir);
+        ServerListSync.startWatching(gamedir);
         startControllableMitigation(activity, gamedir);
         startOldLegacy4JMitigation(activity, gamedir);
         if(affectedByLTWRenderDistanceIssue()) {

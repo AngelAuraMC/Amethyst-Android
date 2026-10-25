@@ -5,6 +5,8 @@ import net.kdt.pojavlaunch.customcontrols.gamepad.direct.DirectGamepadEnableHand
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 
 import android.content.*;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Choreographer;
@@ -222,6 +224,14 @@ public class CallbackBridge {
 
     // Notification types
     public static final int NOTIF_TYPE_SDL = 0;
+    public static final int NOTIF_TYPE_TEXT_FIELD = 1;
+
+    /** true while Minecraft shows the text (I-beam) cursor, i.e. the pointer is over a text field */
+    public static volatile boolean sTextFieldHovered = false;
+    private static final Handler sUiHandler = new Handler(Looper.getMainLooper());
+
+    // Notification actions for NOTIF_TYPE_TEXT_FIELD
+    public static final int ACTION_TEXT_FIELD_HOVER = 0;
 
     // Notification actions
     public static final int ACTION_INIT_LAUNCHER_INTEGRATION = 0;
@@ -237,6 +247,15 @@ public class CallbackBridge {
     @Keep
     public static boolean notifyLauncher(int type, int... action) {
         switch (type) {
+            case NOTIF_TYPE_TEXT_FIELD:
+                if (action != null && action.length >= 2 && action[0] == ACTION_TEXT_FIELD_HOVER) {
+                    boolean hovered = action[1] != 0;
+                    sTextFieldHovered = hovered;
+                    // El cursor pasó a "texto": se enfocó o se tocó un cuadro de texto
+                    if (hovered) sUiHandler.post(MainActivity::showKeyboard);
+                    return true;
+                }
+                return false;
             case NOTIF_TYPE_SDL:
                 if (action[0] == ACTION_INIT_LAUNCHER_INTEGRATION) {
                     try {
@@ -270,6 +289,15 @@ public class CallbackBridge {
 
         }
         return false;
+    }
+
+    /**
+     * Called when a finger is lifted in a menu. If the pointer is over a text field, make sure the
+     * keyboard is up (covers tapping a field again after the keyboard was dismissed).
+     */
+    public static void onGuiTouchReleased() {
+        // Minecraft updates the cursor a frame or two after the pointer moves
+        sUiHandler.postDelayed(() -> { if (sTextFieldHovered) MainActivity.showKeyboard(); }, 120);
     }
 
     public static int getCurrentMods() {

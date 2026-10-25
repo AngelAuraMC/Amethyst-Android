@@ -11,6 +11,7 @@ import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTI
 import static net.kdt.pojavlaunch.customcontrols.gamepad.GamepadJoystick.DIRECTION_WEST;
 
 import android.annotation.SuppressLint;
+import android.view.MotionEvent;
 import android.view.View;
 
 import net.kdt.pojavlaunch.LwjglGlfwKeycode;
@@ -37,6 +38,14 @@ public class ControlJoystick extends JoystickView implements ControlInterface {
     private ControlJoystickData mControlData;
     private int mLastDirectionInt = GamepadJoystick.DIRECTION_NONE;
     private int mCurrentDirectionInt = GamepadJoystick.DIRECTION_NONE;
+
+    // Sprint when the finger leaves the joystick's circle
+    private final int[] mDirectionSprint = new int[]{LwjglGlfwKeycode.GLFW_KEY_LEFT_CONTROL};
+    private int mSprintPointerId = -1;
+    private float mSprintCenterX, mSprintCenterY;
+    private boolean mSprinting = false;
+    private int mStickColor = 0xCCFFFFFF;
+    private static final int STICK_SPRINT_COLOR = 0xFF4CD964; // green while sprinting
     public ControlJoystick(ControlLayout parent, ControlJoystickData data) {
         super(parent.getContext());
         init(data, parent);
@@ -82,6 +91,75 @@ public class ControlJoystick extends JoystickView implements ControlInterface {
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // Read these first: the base class may rewrite the action of the event
+        final int action = event.getActionMasked();
+        final int actionIndex = event.getActionIndex();
+        final int actionPointerId = event.getPointerId(actionIndex);
+        final boolean handled = super.onTouchEvent(event);
+        if (mControlData == null || !mControlData.sprintOutside) return handled;
+
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN:
+                if (handled && mSprintPointerId == -1) {
+                    mSprintPointerId = actionPointerId;
+                    if (mControlData.absolute) {
+                        // Fixed center: the middle of the ring, same maths as JoystickView
+                        mSprintCenterX = getWidth() / 2f;
+                        mSprintCenterY = getHeight() - getWidth() / 2f;
+                    } else {
+                        // Relative center: where the finger first touched
+                        mSprintCenterX = event.getX(actionIndex);
+                        mSprintCenterY = event.getY(actionIndex);
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                updateSprint(event);
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                setSprinting(false);
+                mSprintPointerId = -1;
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                if (actionPointerId == mSprintPointerId) {
+                    setSprinting(false);
+                    mSprintPointerId = -1;
+                }
+                break;
+        }
+        return handled;
+    }
+
+    private void updateSprint(MotionEvent event) {
+        if (mSprintPointerId == -1) return;
+        int index = event.findPointerIndex(mSprintPointerId);
+        if (index < 0) return;
+        float distance = (float) Math.hypot(event.getX(index) - mSprintCenterX, event.getY(index) - mSprintCenterY);
+        float radius = Math.min(getWidth(), getHeight()) / 2f * getBackgroundSizeRatio();
+        // A little hysteresis so the key does not flicker right on the edge of the circle
+        float threshold = mSprinting ? radius - Tools.dpToPx(8) : radius;
+        setSprinting(distance > threshold);
+    }
+
+    private void setSprinting(boolean sprinting) {
+        if (sprinting == mSprinting) return;
+        mSprinting = sprinting;
+        sendInput(mDirectionSprint, sprinting);
+        // Visual feedback: the stick turns green while sprinting
+        setButtonColor(sprinting ? STICK_SPRINT_COLOR : mStickColor);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        setSprinting(false);
+        mSprintPointerId = -1;
+        super.onDetachedFromWindow();
+    }
+
+    @Override
     public ControlData getProperties() {
         return mControlData;
     }
@@ -115,6 +193,11 @@ public class ControlJoystick extends JoystickView implements ControlInterface {
         setBorderWidth((int) Tools.dpToPx(getProperties().strokeWidth * (getControlLayoutParent().getLayoutScale()/100f)));
         setBorderColor(getProperties().strokeColor);
         setBackgroundColor(getProperties().bgColor);
+        if (mControlData != null && mControlData.sprintOutside) {
+            // Light stick in the border's color instead of the default black one
+            mStickColor = (getProperties().strokeColor & 0x00FFFFFF) | 0xCC000000;
+            setButtonColor(mSprinting ? STICK_SPRINT_COLOR : mStickColor);
+        }
     }
 
     @Override

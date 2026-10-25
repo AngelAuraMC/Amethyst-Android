@@ -74,6 +74,7 @@ public class InGUIEventProcessor implements TouchEventProcessor {
 
                 if(mIsMouseDown) disableMouse();
                 resetGesture();
+                if(motionEvent.getActionMasked() == MotionEvent.ACTION_UP) CallbackBridge.onGuiTouchReleased();
         }
 
 
