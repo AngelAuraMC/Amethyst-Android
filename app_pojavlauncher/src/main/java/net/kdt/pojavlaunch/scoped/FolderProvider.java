@@ -151,11 +151,13 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public String createDocument(String parentDocumentId, String mimeType, String displayName) throws FileNotFoundException {
-        File newFile = new File(parentDocumentId, displayName);
+        File parent = getFileForDocId(parentDocumentId);
+        File newFile = new File(parent, displayName);
         int noConflictId = 2;
         while (newFile.exists()) {
-            newFile = new File(parentDocumentId, displayName + " (" + noConflictId++ + ")");
+            newFile = new File(parent, displayName + " (" + noConflictId++ + ")");
         }
+        if(!isInsideBaseDir(newFile)) throw new FileNotFoundException("Cannot create document outside of the storage root");
         try {
             boolean succeeded;
             if (Document.MIME_TYPE_DIR.equals(mimeType)) {
@@ -179,7 +181,9 @@ public class FolderProvider extends DocumentsProvider {
         File sourceFile = getFileForDocId(documentId);
         File sourceParent = sourceFile.getParentFile();
         if(sourceParent == null) throw new FileNotFoundException("Cannot rename root");
-        File targetFile = new File(getDocIdForFile(sourceParent) + "/" + displayName);
+        if(isBaseDir(sourceFile)) throw new FileNotFoundException("Cannot rename root");
+        File targetFile = new File(sourceParent, displayName);
+        if(!isInsideBaseDir(targetFile)) throw new FileNotFoundException("Cannot rename document outside of the storage root");
         if(!sourceFile.renameTo(targetFile)){
             throw new FileNotFoundException("Couldn't rename the document with id" + documentId);
         }
@@ -188,8 +192,9 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public String moveDocument(String sourceDocumentId, String sourceParentDocumentId, String targetParentDocumentId) throws FileNotFoundException {
-        File sourceFile = getFileForDocId(sourceParentDocumentId + sourceDocumentId);
-        File targetFile = new File(targetParentDocumentId + sourceDocumentId);
+        File sourceFile = getFileForDocId(sourceDocumentId);
+        if(isBaseDir(sourceFile)) throw new FileNotFoundException("Cannot move root");
+        File targetFile = new File(getFileForDocId(targetParentDocumentId), sourceFile.getName());
         if(!sourceFile.renameTo(targetFile)){
             throw new FileNotFoundException("Failed to move the document with id " + sourceFile.getPath());
         }
@@ -198,12 +203,15 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public void removeDocument(String documentId, String parentDocumentId) throws FileNotFoundException {
-        deleteDocument(parentDocumentId + "/" + documentId);
+        if(!isChildDocument(parentDocumentId, documentId))
+            throw new FileNotFoundException(documentId + " is not a child of " + parentDocumentId);
+        deleteDocument(documentId);
     }
 
     @Override
     public void deleteDocument(String documentId) throws FileNotFoundException {
         File file = getFileForDocId(documentId);
+        if(isBaseDir(file)) throw new FileNotFoundException("Cannot delete root");
         if(file.isDirectory()){
             try {
                 FileUtils.deleteDirectory(file);
@@ -243,13 +251,7 @@ public class FolderProvider extends DocumentsProvider {
             final File file = pending.removeFirst();
             // Avoid directories outside the $HOME directory linked with symlinks (to avoid e.g. search
             // through the whole SD card).
-            boolean isInsideHome;
-            try {
-                isInsideHome = file.getCanonicalPath().startsWith(Tools.DIR_GAME_HOME);
-            } catch (IOException e) {
-                isInsideHome = true;
-            }
-            if (isInsideHome) {
+            if (isInsideBaseDir(file)) {
                 if (file.isDirectory()) {
                     File[] listing = file.listFiles();
                     if(listing != null) Collections.addAll(pending, listing);
@@ -266,7 +268,13 @@ public class FolderProvider extends DocumentsProvider {
 
     @Override
     public boolean isChildDocument(String parentDocumentId, String documentId) {
-        return documentId.startsWith(parentDocumentId);
+        try {
+            String parentPath = getFileForDocId(parentDocumentId).getCanonicalPath();
+            String childPath = getFileForDocId(documentId).getCanonicalPath();
+            return childPath.equals(parentPath) || childPath.startsWith(parentPath + File.separator);
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     /**
@@ -281,11 +289,35 @@ public class FolderProvider extends DocumentsProvider {
 
     /**
      * Get the file given a document id (the reverse of {@link #getDocIdForFile(File)}).
+     * Rejects any document id that resolves outside of the storage root.
      */
-    private static File getFileForDocId(String docId) throws FileNotFoundException {
+    private File getFileForDocId(String docId) throws FileNotFoundException {
         final File f = new File(docId);
+        if (!isInsideBaseDir(f)) throw new FileNotFoundException(f.getAbsolutePath() + " is outside of the storage root");
         if (!f.exists()) throw new FileNotFoundException(f.getAbsolutePath() + " not found");
         return f;
+    }
+
+    private boolean isBaseDir(File file) {
+        try {
+            return file.getCanonicalPath().equals(BASE_DIR.getCanonicalPath());
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
+    /**
+     * Check whether a file resolves to the storage root or somewhere inside it.
+     * Canonical paths are used so that ".." segments and symlinks can't escape the root.
+     */
+    private boolean isInsideBaseDir(File file) {
+        try {
+            String basePath = BASE_DIR.getCanonicalPath();
+            String filePath = file.getCanonicalPath();
+            return filePath.equals(basePath) || filePath.startsWith(basePath + File.separator);
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     private static String getMimeType(File file) {
