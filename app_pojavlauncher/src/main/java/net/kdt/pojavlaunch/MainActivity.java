@@ -110,6 +110,15 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
     private RectF inputAreaRect;
     private int imeHeight;
     private boolean hasOngoingImeAnimation;
+    private static volatile boolean sChatLikelyOpen;
+
+    // When the mouse re-grabs, every screen (chat included) is guaranteed closed.
+    private final GrabListener mChatStateGrabListener = isGrabbing -> {
+        if (isGrabbing) {
+            sChatLikelyOpen = false;
+            refreshImeTranslation();
+        }
+    };
 
     MinecraftProfile minecraftProfile;
 
@@ -138,6 +147,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         initLayout(R.layout.activity_basemain);
         CallbackBridge.addGrabListener(touchpad);
         CallbackBridge.addGrabListener(minecraftGLView);
+        CallbackBridge.addGrabListener(mChatStateGrabListener);
 
         if (Tools.hasTouchController(new File(gameDirPath)) || LauncherPreferences.PREF_FORCE_ENABLE_TOUCHCONTROLLER) {
             TouchControllerUtils.initialize(this, touchControllerInputView);
@@ -383,6 +393,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         super.onDestroy();
         CallbackBridge.removeGrabListener(touchpad);
         CallbackBridge.removeGrabListener(minecraftGLView);
+        CallbackBridge.removeGrabListener(mChatStateGrabListener);
         ContextExecutor.clearActivity();
     }
 
@@ -734,6 +745,32 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         refreshImeTranslation();
     }
 
+    /**
+     * Tracks whether the in-game chat is open, so keyboard panning only kicks in
+     * when the chat input actually needs to be revealed above the IME.
+     * Chat open keys only count from gameplay (mouse grabbed), while the close
+     * keys or the mouse grabbing back (any screen closes) mark it closed.
+     * Both key lists are user-configurable from the control settings.
+     */
+    public static void trackChatStateKey(int keycode, boolean isDown) {
+        if (!isDown) return;
+        if (LauncherPreferences.PREF_CHAT_PAN_CLOSE_KEYS.contains(keycode)) {
+            sChatLikelyOpen = false;
+        } else if (LauncherPreferences.PREF_CHAT_PAN_OPEN_KEYS.contains(keycode) && CallbackBridge.isGrabbing()) {
+            sChatLikelyOpen = true;
+        }
+    }
+
+    /**
+     * Char-input variant of the above for software keyboards, which commit
+     * characters instead of raw keycodes. GLFW keycodes for printable keys
+     * match their ASCII values, with letters using the uppercase code.
+     */
+    public static void trackChatStateChar(char character) {
+        int keycode = character >= 'a' && character <= 'z' ? character - ('a' - 'A') : character;
+        trackChatStateKey(keycode, true);
+    }
+
     private void refreshImeTranslation() {
         if (imeHeight == 0) {
             // Early exit
@@ -744,7 +781,7 @@ public class MainActivity extends BaseActivity implements ControlButtonMenuListe
         int inputAreaBottom;
         if (inputAreaRect != null) {
             inputAreaBottom = (int) inputAreaRect.bottom;
-        } else if (LauncherPreferences.PREF_KEYBOARD_PANNING) {
+        } else if (LauncherPreferences.PREF_KEYBOARD_PANNING && sChatLikelyOpen) {
             inputAreaBottom = contentFrame.getHeight();
         } else {
             contentFrame.setTranslationY(0);
