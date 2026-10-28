@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -51,8 +50,7 @@
     <string name="mcl_setting_title_renderer_settings">Impostazioni Renderer Extra</string>
     <string name="mcl_setting_title_renderer_subtitle">Impostazioni specifiche del Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; solo, veloce)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (tutte le persone, med)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ only, fast)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (tutte le versioni, prestazioni medie)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - solo 1.17+</string>
     <string name="mcl_setting_veroption_release">Finale</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -137,6 +135,8 @@
     <string name="dl_library_sha_fail">La libreria %s è danneggiata e sarà scaricata nuovamente</string>
     <string name="dl_library_sha_unknown">La libreria %s non può essere controllata, sarà ignorata e applicata comunque</string>
     <string name="dl_library_sha_pass">La libreria %s va bene ed è usabile</string>
+    <string name="mcl_gamepad_SDL">Abilita il backend del controller SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Abilita il backend del controller SDL. Ha un miglior supporto per le mod. Torna a GLFW se non utilizzato.</string>
     <string name="mcl_disable_gestures">Disattiva gestures</string>
     <string name="mcl_disable_gestures_subtitle">Disattiva gestures, ad esempio premere per rompere un blocco, e cliccare per piazzarlo.</string>
     <string name="mcl_disable_swap_hand">Disabilita il doppio tocco per cambiare mano</string>
@@ -259,6 +259,7 @@ Accedi almeno una volta su https://minecraft.net/ e riprova.</string>
     <string name="version_select_hint">Seleziona versione</string>
     <string name="forge_dl_progress">Download installer %s</string>
     <string name="forge_dl_searching">Ricerca del numero della versione di Forge</string>
+    <string name="neoforge_dl_searching">Ricerca del numero della versione di NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Impossibile caricare la lista delle versioni!</string>
     <string name="forge_dl_no_installer">Ci scusiamo per il disagio, ma questa versione di Forge non ha un installer, non è ancora supportato.</string>
     <string name="forge_dl_select_version">Seleziona versione Forge</string>
@@ -383,7 +384,6 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="preference_renderer_mobileglues_settings">Impostazioni Renderer MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Dimensione cache GLSL massima</string>
     <string name="mg_renderer_angle">Usa ANGLE come driver</string>
-    <string name="mg_renderer_multidraw">Modalità di emulazione multidraw</string>
     <string name="mg_renderer_title_errorSetting">Filtro Errori</string>
     <string name="mg_renderer_title_timerQueryExt">Disabilita l\'utilizzo della GPU nel menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Corregge alcuni crash casuali quando F3 è aperto su alcuni dispositivi Mali</string>
@@ -395,9 +395,6 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="mg_renderer_summary_gl43exts">Può aiutare con i crash delle mod. Disabilitare se non necessario, può causare crash.</string>
     <string name="mg_renderer_title_computeShaderext">Pubblicizza estensioni Compute Sheder Sperimentali</string>
     <string name="mg_renderer_summary_computeShaderext">Può aiutare con glich dei shaderpack. Disabilitare se non necessario, può causare crash.</string>
-    <string name="mg_renderer_title_multidrawCompute">Utilizza Calcola Emulazione Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Usa i compute shaders per l\'emulazione multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Solo Vanilla 1.3.1 e superiori sono supportati su account demo</string>
     <string name="demo_unsupported">Profilo demo non supportato</string>
     <string name="change_account">Si prega di cambiare account per utilizzare questa funzione</string>
@@ -415,4 +412,23 @@ se vuoi scaricare dalla sorgente ufficiale premi \"Passa al sito ufficiale"\ e r
     <string name="preference_touchcontroller_vibrate_length_title">Durata vibrazione TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Impostare la lunghezza della vibrazione quando si utilizza TouchController.</string>
     <string name="error_vanilla_json_corrupt">Il Vanilla json sembra essere corrotto. Per favore invia una segnalazione bug su github o discord.</string>
+    <string name="preference_ask_for_microphone_title">Consenti accesso al microfono</string>
+    <string name="preference_ask_for_microphone_description">Clicca per richiedere nuovamente la notifica di autorizzazione, richiesto per le mod di chat vocale come Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL">Avvia forzatamente la gestione del controller SDL</string>
+    <string name="preference_category_SDL_settings">Impostazioni SDL</string>
+    <string name="oldL4JFound">Stai usando una versione di Legacy4J senza le fix di Android! È necessario abilitare manualmente SDL nelle impostazioni del controller per ottenere la migliore esperienza!</string>
+    <string name="global_warning">Avviso!</string>
+    <string name="controllableFound">Controllable attualmente ha una possibilità casuale di crash al lancio. Puoi provare di nuovo nella speranza che parta o utilizzare un\'altra mod come Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Annuncia estensione Experimental Direct State Access</string>
+    <string name="mg_renderer_summary_dsaExt">Può aiutare con i shaderpack Iris, richiesto per la mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Upscaling AMD FSR 1</string>
+    <string name="autorendererselectfailed">Selezione automatica del renderer non riuscita, utilizzo di HolyGL4ES come predefinito</string>
+    <string name="sodium_warning_title">Rilevato Sodium!</string>
+    <string name="sodium_warning_message">Sembra che tu stia usando Sodium, questa mod non è supportata e potrebbe causare problemi grafici o crash. Si prega di rimuoverla insieme a tutte le mod che ne dipendono.</string>
+    <string name="delete_sodium">Elimina Sodium e rilancia</string>
+    <string name="sodium_override_title">Esegui Sodium forzatamente</string>
+    <string name="sodium_override_summaryOff">L\'uso di Sodium potrebbe causare dei bug e crash. Sei stato avvisato.</string>
+    <string name="sodium_override_summaryOn">Sodium non è supportato. Nessun aiuto sarà fornito se si verificano problemi.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Non è un file modpack!</string>
 </resources>

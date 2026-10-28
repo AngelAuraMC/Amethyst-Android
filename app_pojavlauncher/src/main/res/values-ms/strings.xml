@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -52,8 +51,7 @@
     <string name="mcl_setting_title_renderer_subtitle">Tetapan khusus pemapar</string>
     <string name="mcl_setting_category_renderer">Pemapar</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (1.21.4&lt; sahaja, pantas)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (semua versi, sederhana)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (1.17+ sahaja, pantas)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (semua versi, sederhana)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - 1.17+ sahaja</string>
     <string name="mcl_setting_veroption_release">Terbitan</string>
     <string name="mcl_setting_veroption_snapshot">Petikan</string>
@@ -138,6 +136,8 @@
     <string name="dl_library_sha_fail">Pustaka %s ini rosak dan akan dimuat turun semula</string>
     <string name="dl_library_sha_unknown">Pustaka %s tidak boleh diperiksa, harus menganggap bahawa ianya baik</string>
     <string name="dl_library_sha_pass">Pustaka %s adalah baik dan boleh digunakan</string>
+    <string name="mcl_gamepad_SDL">Dayakan bahagian belakang pengawal SDL</string>
+    <string name="mcl_gamepad_SDL_subtitle">Mendayakan bahagian belakang pengawal SDL. Mempunyai sokongan mod yang lebih baik. Akan kembali menggunakan GLFW jika SDL tidak digunakan.</string>
     <string name="mcl_disable_gestures">Nyahdayakan gerak isyarat</string>
     <string name="mcl_disable_gestures_subtitle">Menyahdayakan gerak isyarat, seperti menahan untuk menhancurkan blok, dan tekan untuk meletakkan blok.</string>
     <string name="mcl_disable_swap_hand">Naydaya ketik dua kali untuk bertukar tangan</string>
@@ -262,6 +262,7 @@
     <string name="version_select_hint">Pilih versi</string>
     <string name="forge_dl_progress">Memuat turun pemasang untuk %s</string>
     <string name="forge_dl_searching">Mencari nombor versi Forge</string>
+    <string name="neoforge_dl_searching">Mencari nombor versi NeoForge</string>
     <string name="modloader_dl_failed_to_load_list">Gagal memuat senarai versi!</string>
     <string name="forge_dl_no_installer">Maaf, tetapi versi Forge ini tidak mempunyai pemasang, yang masih belum disokong.</string>
     <string name="forge_dl_select_version">Pilih versi Forge</string>
@@ -391,7 +392,6 @@
     <string name="preference_renderer_mobileglues_settings">Tetapan Pemapar MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Saiz cache GLSL maksimum</string>
     <string name="mg_renderer_angle">Gunakan ANGLE sebagai pemacu</string>
-    <string name="mg_renderer_multidraw">Mod emulasi multidraw</string>
     <string name="mg_renderer_title_errorSetting">Penapisan Ralat</string>
     <string name="mg_renderer_title_timerQueryExt">Lumpuhkan Penggunaan GPU dalam menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Memperbaiki ranap rawak apabila F3 dibuka pada beberapa peranti Mali</string>
@@ -403,9 +403,6 @@
     <string name="mg_renderer_summary_gl43exts">Boleh membantu dengan ranap mod. Nyahdayakan jika tidak diperlukan, boleh menyebabkan ranap.</string>
     <string name="mg_renderer_title_computeShaderext">Gunakan Sambungan Compute Shader Uji Kaji</string>
     <string name="mg_renderer_summary_computeShaderext">Boleh membantu dengan gangguan dengan pek pembayang. Nyahdayakan jika tidak diperlukan, boleh menyebabkan ranap.</string>
-    <string name="mg_renderer_title_multidrawCompute">Gunakan Emulasi Compute Multidraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Menggunakan pembayang compute untuk emulasi multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Hanya versi 1.3.1 Vanila dan ke atas disokong pada akaun demo</string>
     <string name="demo_unsupported">Profil Demo tidak disokong</string>
     <string name="change_account">Sila tukar akaun untuk menggunakan fungsi ini</string>
@@ -423,4 +420,23 @@
     <string name="preference_touchcontroller_vibrate_length_title">Panjang getaran TouchController</string>
     <string name="preference_touchcontroller_vibrate_length_description">Menetapkan panjang getaran apabila menggunakan TouchController.</string>
     <string name="error_vanilla_json_corrupt">Json vanila nampaknya rosak. Sila hantar laporan pepijat pada github atau discord.</string>
+    <string name="preference_ask_for_microphone_title">Benarkan mikrofon</string>
+    <string name="preference_ask_for_microphone_description">Klik untuk meminta semula kebenaran pemberitahuan, diperlukan untuk mod perbualan suara seperti Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL">Mulakan pengendalian pengawal SDL secara paksa</string>
+    <string name="preference_category_SDL_settings">Tetapan SDL</string>
+    <string name="oldL4JFound">Anda sedang menggunakan versi Legacy4J tanpa pembaikan untuk android! Anda perlu mendayakan SDL secara manual dalam tetapan pengawal untuk mendapatkan pengalaman terbaik!</string>
+    <string name="global_warning">Amaran!</string>
+    <string name="controllableFound">Controllable pada masa ini mempunyai peluang rawak untuk ranap semasa pelancaran. Sama ada terus mencuba lagi dan berharap ia dilancarkan atau gunakan mod lain seperti Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Gunakan sambungan Direct State Access Uji Kaji</string>
+    <string name="mg_renderer_summary_dsaExt">Boleh membantu dengan pek pembayang Iris, diperlukan untuk mod AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">AMD FSR 1 Upscaling</string>
+    <string name="autorendererselectfailed">Pilihan pemapar automatik gagal, akan lalai kepada HolyGL4ES</string>
+    <string name="sodium_warning_title">Sodium dikesan!</string>
+    <string name="sodium_warning_message">Amaran ini muncul apabila anda menggunakan Sodium, ini tidak disokong dan mungkin menyebabkan masalah grafik ataupun ranap. Sila alih keluar mod tersebut beserta semua mod yang bergantung padanya.</string>
+    <string name="delete_sodium">Hapus Sodium dan Lancarkan</string>
+    <string name="sodium_override_title">Jalankan Sodium secara paksa</string>
+    <string name="sodium_override_summaryOff">Menggunakan Sodium mungkin menyebabkan pepijat visual dan ranap permainan. Anda telah diberi amaran.</string>
+    <string name="sodium_override_summaryOn">Sodium tidak disokong. Tiada bantuan akan diberikan jika anda menghadapi sebarang masalah.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Bukan fail pek mod!</string>
 </resources>
