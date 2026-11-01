@@ -440,4 +440,11 @@
     <string name="sodium_override_summaryOn">Sodium desteklenmemektedir. Herhangi bir sorunla karşılaşırsanız yardım sağlanmayacaktır.</string>
     <!--  Make sure the people turning this on can read English.  -->
     <string name="not_modpack_file">Modpack dosyası değil!</string>
+    <string name="global_not_installed">Kurulu değil</string>
+    <string name="global_download">İndir</string>
+    <string name="global_installing">kuruluyor...</string>
+    <string name="error_invalid_value">Hata! Geçersiz değer!</string>
+    <string name="import_modpack_json">Modpack bilgisi okunuyor...</string>
+    <string name="angelica_found_sfpew_notice">Angelica modu bulundu, Simple FPE Wrapper\'a ihtiyaç yok</string>
+    <string name="use_angle_checkbox">ANGLE kullan (FPS\'e yardımcı olabilir)</string>
 </resources>
