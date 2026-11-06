@@ -94,10 +94,6 @@ org.gradle.java.home=C:/Program Files/Eclipse Adoptium/jdk-21.0.13.9-hotspot
 
 </details>
 
-  
-
-
-
 ### Quick Build (Recommended)
 
 The easiest way to build Amethyst is to use the pre-built JREs provided by our CI.
