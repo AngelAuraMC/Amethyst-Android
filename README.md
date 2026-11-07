@@ -49,48 +49,11 @@ You can get Amethyst via two methods:
 
 <details>
 
-<summary>
-<b>Developing on Windows (PowerShell)</b>
-</summary>
+<summary>Preparing your build environment</summary>
 
-The commands shown in these guides were executed using [PowerShell](https://apps.microsoft.com/detail/9mz1snwt0n5d?hl=en-US&gl=US), you will also need [git](https://git-scm.com/install/windows) (see install guides using winget)
+1. ⚠️ Because of an upstream [issue](https://github.com/android/ndk/issues/1400#issuecomment-744620270) with ndk-build, do not clone the repository into any directory whose absolute path contains spaces. Doing so on will result in a build failure.
 
-1. You will need to have [SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) set-up for cloning git submodules. To check if you have SSH working, run
-
-```PowerShell
-git clone git@github.com:AngelAuraMC/Amethyst-Android.git # Will fail if SSH is not configured
-```
-
-2. ⚠️ Do not clone the repository into any directory that contains spaces. Doing so on will result in a build failure, to get around this issue you will have to create a new Windows user account without spaces, or move your repository and [Android Studio SDK](https://developer.android.com/studio/intro/studio-config#custom-locations) into a location that doesn't contain spaces in the path (`C:\dev\cloned-repo` and `C:\Android\Sdk` for example).
-
-3. Once you've set-up SSH and you've cloned your repository in a non-spaced path, you will need to initialize your git submodules. In your main repo, run:
-```PowerShell
-git submodule init # Will see ~ "Submodule 'x' registered for path" (x2)
-git submodule update # Will see ~ "Submodule path 'x' checked out 'sha'"
-```
-
-4. You must have Java installed for compiling your builds
-```PowerShell
-winget install EclipseAdoptium.Temurin.8.JDK # Will see ~ "Successfully installed"
-winget install EclipseAdoptium.Temurin.21.JDK
-```
-
-5. Once installed add to and save your `gradle.properties` file the following text
-```gradle.properties
-# Verify these paths correspond to where winget added the JDK's
-org.gradle.java.installations.paths=C:/Program Files/Eclipse Adoptium/jdk-8.0.472.8-hotspot
-org.gradle.java.home=C:/Program Files/Eclipse Adoptium/jdk-21.0.13.9-hotspot
-```
-
-6. Verify your gradlew is ready to begin building:
-```PowerShell
-.\gradlew --version
-[Environment]::GetEnvironmentVariable("JAVA_HOME", "Machine")
-# Should see output where 'Launcher JVM' and 'Daemon JVM' are both set to 21.x
-```
-
-7. For next steps, see [Quick Build](#quick-build-recommended)
-
+2. You must have [JDK](https://www.oracle.com/java/technologies/downloads/) installed and a `JAVA_HOME` system environment variable configured for compiling your builds
 
 </details>
 
@@ -125,8 +88,6 @@ If you need more control over the build process, follow these steps:
 4. **Build GLFW stub:** `./gradlew :jre_lwjgl3glfw:build`
 
 5. **Build the launcher:** `./gradlew :app_pojavlauncher:assembleDebug` (Replace `gradlew` with `gradlew.bat` on Windows).
-
-6. **Delete** `app_pojavlauncher/build/` when rebuilding or switching branches to ensure a fresh build
 
 ## Current Status
 
