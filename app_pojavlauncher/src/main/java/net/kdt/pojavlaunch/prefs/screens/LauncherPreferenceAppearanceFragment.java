@@ -34,7 +34,7 @@ public class LauncherPreferenceAppearanceFragment extends LauncherPreferenceFrag
     };
 
     private final ActivityResultLauncher<String> exportLauncher =
-            registerForActivityResult(new ActivityResultContracts.CreateDocument("application/json"),
+            registerForActivityResult(new ActivityResultContracts.CreateDocument(),
                     this::exportTheme);
 
     private final ActivityResultLauncher<String[]> importLauncher =
