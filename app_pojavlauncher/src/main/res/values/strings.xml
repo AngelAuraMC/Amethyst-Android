@@ -613,4 +613,51 @@
     <string name="novacraft_device_note_general">These values are informational. NovaCraft does not overclock the processor, change GPU hardware limits or promise extra FPS.</string>
     <string name="novacraft_device_unavailable">Not available</string>
 
+
+    <!-- NovaCraft Worlds & Maps -->
+    <string name="novacraft_worlds_title">Worlds &amp; Maps</string>
+    <string name="novacraft_worlds_summary">Import, back up, rename and manage Java worlds for the selected installation.</string>
+    <string name="novacraft_worlds_active_profile">Selected installation</string>
+    <string name="novacraft_worlds_active_profile_summary">Worlds are managed separately for each Minecraft installation.</string>
+    <string name="novacraft_worlds_active_profile_value">%1$s\n%2$s</string>
+    <string name="novacraft_worlds_profile_unavailable">The current installation could not be identified.</string>
+    <string name="novacraft_worlds_actions_category">World actions</string>
+    <string name="novacraft_worlds_import_title">Import Java world ZIP</string>
+    <string name="novacraft_worlds_import_summary">Import a ZIP containing a Java world folder with level.dat.</string>
+    <string name="novacraft_worlds_refresh_title">Refresh worlds</string>
+    <string name="novacraft_worlds_refresh_summary">Rescan the saves folder for worlds.</string>
+    <string name="novacraft_worlds_list_category">Worlds in this installation</string>
+    <string name="novacraft_worlds_empty">No Java worlds found in this installation yet.</string>
+    <string name="novacraft_worlds_folder_unavailable">The saves folder is not currently available.</string>
+    <string name="novacraft_worlds_last_modified">Last folder update: %1$s</string>
+    <string name="novacraft_worlds_action_backup">Create backup ZIP</string>
+    <string name="novacraft_worlds_action_rename">Rename world folder</string>
+    <string name="novacraft_worlds_action_open">Open world folder</string>
+    <string name="novacraft_worlds_action_delete">Delete world</string>
+    <string name="novacraft_worlds_rename_title">Rename world folder</string>
+    <string name="novacraft_worlds_bad_name">Choose a name without slashes, colons or control characters (maximum 80 characters).</string>
+    <string name="novacraft_worlds_name_exists">A folder with that name already exists.</string>
+    <string name="novacraft_worlds_rename_failed">Could not rename this world folder.</string>
+    <string name="novacraft_worlds_renamed">World folder renamed.</string>
+    <string name="novacraft_worlds_delete_title">Delete this world?</string>
+    <string name="novacraft_worlds_delete_message">Delete the world folder %1$s? This cannot be undone. Export a backup first to keep a copy.</string>
+    <string name="novacraft_worlds_delete_failed">Could not delete the selected world folder.</string>
+    <string name="novacraft_worlds_deleted">World folder deleted.</string>
+    <string name="novacraft_worlds_invalid_folder">This is not a valid world folder in the selected installation.</string>
+    <string name="novacraft_worlds_backup_done">World backup ZIP created.</string>
+    <string name="novacraft_worlds_backup_failed">Could not create backup: %1$s</string>
+    <string name="novacraft_worlds_import_done">Imported world: %1$s</string>
+    <string name="novacraft_worlds_import_failed">Could not import world: %1$s</string>
+    <string name="novacraft_worlds_folder_open_failed">Could not open the %1$s folder.</string>
+    <string name="novacraft_worlds_folder_open_failed_generic">Could not open this folder.</string>
+    <string name="novacraft_worlds_content_category">Content folders</string>
+    <string name="novacraft_worlds_open_mods">Open mods folder</string>
+    <string name="novacraft_worlds_open_mods_summary">Manage installed mods for this Minecraft installation.</string>
+    <string name="novacraft_worlds_open_resourcepacks">Open resource packs folder</string>
+    <string name="novacraft_worlds_open_resourcepacks_summary">Browse installed texture and resource packs.</string>
+    <string name="novacraft_worlds_open_shaderpacks">Open shader packs folder</string>
+    <string name="novacraft_worlds_open_shaderpacks_summary">Browse shader packs for supported renderers and versions.</string>
+    <string name="novacraft_worlds_open_screenshots">Open screenshots folder</string>
+    <string name="novacraft_worlds_open_screenshots_summary">View screenshots saved by Minecraft.</string>
+
 </resources>

@@ -37,6 +37,7 @@ import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 import net.kdt.pojavlaunch.utils.NovaCraftAppearance;
+import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceWorldsFragment;
 
 import java.io.File;
 import java.util.List;
@@ -59,6 +60,7 @@ public class MainMenuFragment extends Fragment {
         Button mInstallJarButton = view.findViewById(R.id.install_jar_button);
         Button mShareLogsButton = view.findViewById(R.id.share_logs_button);
         Button mOpenDirectoryButton = view.findViewById(R.id.open_files_button);
+        Button mWorldsButton = view.findViewById(R.id.worlds_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -94,6 +96,7 @@ public class MainMenuFragment extends Fragment {
         });
 
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
+        mWorldsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), LauncherPreferenceWorldsFragment.class, "NOVACRAFT_WORLDS_MANAGER", null));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
             if (Tools.isDemoProfile(v.getContext())){ // Say a different message when on demo profile since they might see the hidden demo folder

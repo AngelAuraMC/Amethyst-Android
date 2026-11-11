@@ -24,6 +24,12 @@
 
     <PreferenceCategory android:title="@string/novacraft_settings_category_game">
         <Preference
+            android:key="worlds_manager_screen_setting"
+            android:title="@string/novacraft_worlds_title"
+            android:summary="@string/novacraft_worlds_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceWorldsFragment"
+            android:icon="@drawable/ic_folder" />
+        <Preference
             android:key="java_screen_setting"
             android:title="@string/novacraft_settings_java_title"
             android:summary="@string/novacraft_settings_java_summary"

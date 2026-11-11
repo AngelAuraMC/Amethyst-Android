@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <net.kdt.pojavlaunch.prefs.BackButtonPreference/>
+
+    <Preference
+        android:key="worlds_active_profile"
+        android:title="@string/novacraft_worlds_active_profile"
+        android:summary="@string/novacraft_worlds_active_profile_summary"
+        android:selectable="false"
+        android:persistent="false" />
+
+    <PreferenceCategory android:title="@string/novacraft_worlds_actions_category">
+        <Preference
+            android:key="worlds_import"
+            android:title="@string/novacraft_worlds_import_title"
+            android:summary="@string/novacraft_worlds_import_summary"
+            android:icon="@drawable/ic_folder" />
+        <Preference
+            android:key="worlds_refresh"
+            android:title="@string/novacraft_worlds_refresh_title"
+            android:summary="@string/novacraft_worlds_refresh_summary" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="worlds_list"
+        android:title="@string/novacraft_worlds_list_category" />
+
+    <PreferenceCategory android:title="@string/novacraft_worlds_content_category">
+        <Preference
+            android:key="worlds_open_mods"
+            android:title="@string/novacraft_worlds_open_mods"
+            android:summary="@string/novacraft_worlds_open_mods_summary" />
+        <Preference
+            android:key="worlds_open_resourcepacks"
+            android:title="@string/novacraft_worlds_open_resourcepacks"
+            android:summary="@string/novacraft_worlds_open_resourcepacks_summary" />
+        <Preference
+            android:key="worlds_open_shaderpacks"
+            android:title="@string/novacraft_worlds_open_shaderpacks"
+            android:summary="@string/novacraft_worlds_open_shaderpacks_summary" />
+        <Preference
+            android:key="worlds_open_screenshots"
+            android:title="@string/novacraft_worlds_open_screenshots"
+            android:summary="@string/novacraft_worlds_open_screenshots_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

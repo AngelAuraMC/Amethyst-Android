@@ -267,6 +267,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/worlds_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_folder"
+                android:text="@string/novacraft_worlds_title"
+                app:layout_constraintTop_toBottomOf="@id/open_files_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <TextView
                 android:id="@+id/novacraft_home_footer"
                 android:layout_width="match_parent"
@@ -280,7 +291,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:letterSpacing="0.08"
                 android:includeFontPadding="false"
-                app:layout_constraintTop_toBottomOf="@id/open_files_button"
+                app:layout_constraintTop_toBottomOf="@id/worlds_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
