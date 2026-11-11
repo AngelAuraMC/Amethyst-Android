@@ -34,7 +34,7 @@
     -->
 
     <!-- MCLauncherActivity: Tabs -->
-    <string name="mcl_tab_wiki">Wiki</string>
+    <string name="mcl_tab_wiki">Help &amp; Wiki</string>
 
     <!-- MCLauncherActivity: Account status -->
 
@@ -45,7 +45,7 @@
     <string name="mcl_launch_download_assets">Preparing to download resources</string>
 
     <string name="mcl_options">Options</string>
-    <string name="mcl_option_customcontrol">Custom controls</string>
+    <string name="mcl_option_customcontrol">Touch controls</string>
 
 
     <string name="mcl_setting_title_use_surface_view">Use alternate surface rendering</string>
@@ -156,8 +156,8 @@
     <string name="customctrl_selectdefault">Select default controlmap</string>
     <string name="customctrl_export">Export controlmap</string>
 
-    <string name="main_share_logs">Share log file</string>
-    <string name="main_install_jar_file">Execute a .jar</string>
+    <string name="main_share_logs">Share logs</string>
+    <string name="main_install_jar_file">Install JAR</string>
     <string name="main_play">Play</string>
     <string name="autoram_info_msg">Memory set to %d MB</string>
     <string name="mcl_setting_check_libraries">Check libraries after downloading</string>
@@ -428,7 +428,7 @@
     <string name="preference_remap_controller_description">Allows you to modify the keyboard keys bound to each controller button</string>
     <string name="mcl_button_discord">Discord</string>
     <string name="ltw_render_distance_warning_msg">Your GPU is not capable of rendering above 7 render distance without Sodium or other similar mods. The render distance will be automatically reduced when you click "OK".</string>
-    <string name="mcl_button_open_directory">Open game directory</string>
+    <string name="mcl_button_open_directory">Open game folder</string>
     <string name="discord_invite" translatable="false">https://discord.gg/5ptqkyZxEy</string>
     <string name="local_login_bad_username_title">Unsuitable username</string>
     <string name="local_login_bad_username_text">The username must be between 3–16 characters long, and must only contain latin letters, numbers 0–9 and underscores.</string>
@@ -516,5 +516,16 @@
     <string name="import_modpack_copy">Copying modpack file to cache… (%s MB/ %s MB)</string>
     <string name="angelica_found_sfpew_notice">Angelica mod found, Simple FPE Wrapper not needed</string>
     <string name="use_angle_checkbox">Use ANGLE (might help FPS)</string>
+
+
+    <!-- NovaCraft home screen -->
+    <string name="novacraft_home_eyebrow">MINECRAFT JAVA • ANDROID</string>
+    <string name="novacraft_brand_tagline">A better home for your worlds.</string>
+    <string name="novacraft_hero_badge">YOUR JAVA LAUNCHPAD</string>
+    <string name="novacraft_hero_title">Ready for your next world?</string>
+    <string name="novacraft_hero_body">Choose an installation below, then launch Minecraft Java Edition.</string>
+    <string name="novacraft_quick_tools">QUICK TOOLS</string>
+    <string name="novacraft_select_installation">SELECT INSTALLATION</string>
+    <string name="novacraft_edit_profile">Edit selected installation</string>
 
 </resources>
