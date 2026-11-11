@@ -111,15 +111,14 @@ public final class NovaCraftAppearance {
         View panel = root.findViewById(R.id._background_display_view);
         if (panel != null) panel.setBackground(rounded(palette.surface, palette.border, dp(context, 22)));
 
-        String[] shortcutIds = {
-                "news_button", "discord_button", "custom_control_button",
-                "install_jar_button", "share_logs_button", "open_files_button"
+        int[] shortcutIds = {
+                R.id.news_button, R.id.discord_button, R.id.custom_control_button,
+                R.id.install_jar_button, R.id.share_logs_button, R.id.open_files_button
         };
         int buttonHeight = "compact".equals(density) ? 48
                 : ("spacious".equals(density) ? 64 : 56);
-        for (String idName : shortcutIds) {
-            int id = context.getResources().getIdentifier(idName, "id", context.getPackageName());
-            View candidate = id == 0 ? null : root.findViewById(id);
+        for (int id : shortcutIds) {
+            View candidate = root.findViewById(id);
             if (candidate instanceof Button) {
                 Button button = (Button) candidate;
                 button.setBackground(makeToolButton(palette, buttonStyle, context));
