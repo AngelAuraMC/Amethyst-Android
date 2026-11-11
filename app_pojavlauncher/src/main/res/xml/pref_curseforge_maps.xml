@@ -21,6 +21,5 @@
     <Preference
         android:key="curseforge_maps_more"
         android:title="@string/novacraft_curseforge_maps_page_more"
-        android:selectable="false"
         android:persistent="false" />
 </PreferenceScreen>

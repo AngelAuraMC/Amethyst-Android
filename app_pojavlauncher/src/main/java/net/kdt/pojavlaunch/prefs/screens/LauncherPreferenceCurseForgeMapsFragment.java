@@ -174,6 +174,8 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
         }
         final int requestedIndex = mIndex;
         final String queryText = mSearchText;
+        final String selectedGameVersion = getSelectedMinecraftVersion();
+        final ApiHandler apiHandler = api();
 
         PojavApplication.sExecutorService.execute(() -> {
             ArrayList<MapProject> projects = new ArrayList<>();
@@ -188,10 +190,9 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
                 params.put("index", requestedIndex);
                 params.put("pageSize", PAGE_SIZE);
                 if (!TextUtils.isEmpty(queryText)) params.put("searchFilter", queryText);
-                String gameVersion = getSelectedMinecraftVersion();
-                if (!TextUtils.isEmpty(gameVersion)) params.put("gameVersion", gameVersion);
+                if (!TextUtils.isEmpty(selectedGameVersion)) params.put("gameVersion", selectedGameVersion);
 
-                JsonObject response = api().get("mods/search", params, JsonObject.class);
+                JsonObject response = apiHandler.get("mods/search", params, JsonObject.class);
                 if (response == null || response.getAsJsonArray("data") == null) {
                     throw new IOException("CurseForge returned an empty response");
                 }
@@ -274,6 +275,8 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
             mLoading = false;
             return;
         }
+        final ApiHandler apiHandler = api();
+        final String selectedVersion = getSelectedMinecraftVersion();
         PojavApplication.sExecutorService.execute(() -> {
             ArrayList<MapFile> files = new ArrayList<>();
             Exception failure = null;
@@ -281,11 +284,10 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
                 HashMap<String, Object> params = new HashMap<>();
                 params.put("index", 0);
                 params.put("pageSize", 50);
-                JsonObject response = api().get("mods/" + project.id + "/files", params, JsonObject.class);
+                JsonObject response = apiHandler.get("mods/" + project.id + "/files", params, JsonObject.class);
                 JsonArray data = response == null ? null : response.getAsJsonArray("data");
                 if (data == null) throw new IOException("CurseForge returned no file list");
 
-                String selectedVersion = getSelectedMinecraftVersion();
                 for (JsonElement element : data) {
                     JsonObject obj = element.getAsJsonObject();
                     JsonElement allowed = obj.get("isAvailable");
@@ -374,20 +376,23 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
         Toast.makeText(host, R.string.novacraft_curseforge_maps_download_started,
                 Toast.LENGTH_LONG).show();
 
+        final ApiHandler apiHandler = api();
+        final String apiKey = getCurseForgeKey();
+        final File savesDirectory = getSavesDirectory();
         PojavApplication.sExecutorService.execute(() -> {
             String installedName = null;
             String failure = null;
             File archive = new File(host.getCacheDir(), "novacraft-curseforge-" + UUID.randomUUID() + ".zip");
             try {
-                String url = resolveDownloadUrl(project.id, file);
+                String url = resolveDownloadUrl(project.id, file, apiHandler);
                 if (TextUtils.isEmpty(url)) {
                     throw new IOException("DOWNLOAD_NOT_AVAILABLE");
                 }
-                downloadCurseForgeFile(url, archive, getCurseForgeKey());
+                downloadCurseForgeFile(url, archive, apiKey);
                 if (!TextUtils.isEmpty(file.sha1) && !verifySha1(archive, file.sha1)) {
                     throw new IOException("HASH_MISMATCH");
                 }
-                installedName = installWorldArchive(archive, project.name, getSavesDirectory());
+                installedName = installWorldArchive(archive, project.name, savesDirectory);
             } catch (Exception error) {
                 failure = error.getMessage() == null ? "Unknown error" : error.getMessage();
             } finally {
@@ -407,6 +412,16 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
                 } else if ("HASH_MISMATCH".equals(failureReason)) {
                     Toast.makeText(host, R.string.novacraft_curseforge_maps_hash_failed,
                             Toast.LENGTH_LONG).show();
+                } else if ("DOWNLOAD_SIZE_LIMIT".equals(failureReason)
+                        || "EXTRACT_SIZE_LIMIT".equals(failureReason)) {
+                    Toast.makeText(host, R.string.novacraft_curseforge_maps_size_limit,
+                            Toast.LENGTH_LONG).show();
+                } else if ("INVALID_MAP_ARCHIVE".equals(failureReason)) {
+                    Toast.makeText(host, R.string.novacraft_curseforge_maps_invalid_archive,
+                            Toast.LENGTH_LONG).show();
+                } else if ("UNSAFE_MAP_ARCHIVE".equals(failureReason)) {
+                    Toast.makeText(host, R.string.novacraft_curseforge_maps_unsafe_archive,
+                            Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(host, getString(R.string.novacraft_curseforge_maps_install_failed,
                             failureReason == null ? "Unknown error" : failureReason),
@@ -416,9 +431,9 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
         });
     }
 
-    private String resolveDownloadUrl(long projectId, MapFile file) throws IOException {
+    private String resolveDownloadUrl(long projectId, MapFile file, ApiHandler apiHandler) throws IOException {
         if (!TextUtils.isEmpty(file.downloadUrl)) return file.downloadUrl;
-        JsonObject response = api().get("mods/" + projectId + "/files/" + file.id + "/download-url",
+        JsonObject response = apiHandler.get("mods/" + projectId + "/files/" + file.id + "/download-url",
                 JsonObject.class);
         if (response == null) return null;
         JsonElement data = response.get("data");
@@ -455,7 +470,7 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
                 if (status != HttpURLConnection.HTTP_OK) {
                     throw new IOException("CurseForge CDN returned HTTP " + status);
                 }
-                long contentLength = connection.getContentLengthLong();
+                long contentLength = connection.getContentLength();
                 if (contentLength > MAX_DOWNLOAD_BYTES) {
                     throw new IOException("DOWNLOAD_SIZE_LIMIT");
                 }
@@ -568,7 +583,7 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
     }
 
     private String normalizeZipPath(String raw) throws IOException {
-        String path = raw.replace('\\\\', '/');
+        String path = raw.replace('\\', '/');
         if (path.startsWith("/") || path.matches("(?i)^[a-z]:.*")) {
             throw new IOException("UNSAFE_MAP_ARCHIVE");
         }
