@@ -133,30 +133,30 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
 
+                <View
+                    android:id="@+id/novacraft_hero_accent"
+                    android:layout_width="32dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="11dp"
+                    android:background="@drawable/novacraft_accent_bar"
+                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_title"
+                    app:layout_constraintStart_toStartOf="parent" />
+
                 <TextView
                     android:id="@+id/novacraft_hero_body"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="38dp"
                     android:text="@string/novacraft_hero_body"
                     android:textColor="@color/secondary_text"
                     android:textSize="12sp"
                     android:lineSpacingExtra="2dp"
                     android:includeFontPadding="false"
-                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_title"
+                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_accent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
-
-                <View
-                    android:id="@+id/novacraft_hero_accent"
-                    android:layout_width="32dp"
-                    android:layout_height="3dp"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/novacraft_accent_bar"
-                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_body"
-                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
