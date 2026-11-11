@@ -12,6 +12,12 @@
 
     <PreferenceCategory android:title="@string/novacraft_worlds_actions_category">
         <Preference
+            android:key="worlds_curseforge_catalog"
+            android:title="@string/novacraft_curseforge_maps_title"
+            android:summary="@string/novacraft_curseforge_maps_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceCurseForgeMapsFragment"
+            android:icon="@drawable/ic_folder" />
+        <Preference
             android:key="worlds_import"
             android:title="@string/novacraft_worlds_import_title"
             android:summary="@string/novacraft_worlds_import_summary"

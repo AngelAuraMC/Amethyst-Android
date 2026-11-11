@@ -660,4 +660,51 @@
     <string name="novacraft_worlds_open_screenshots">Open screenshots folder</string>
     <string name="novacraft_worlds_open_screenshots_summary">View screenshots saved by Minecraft.</string>
 
+
+    <!-- NovaCraft official Minecraft news -->
+    <string name="novacraft_news_button">Minecraft News</string>
+    <string name="novacraft_news_title">Minecraft News &amp; Updates</string>
+    <string name="novacraft_news_summary">Official articles and updates from Minecraft.net.</string>
+    <string name="novacraft_news_refresh">Refresh news</string>
+    <string name="novacraft_news_refresh_summary">Fetch the latest official Minecraft articles.</string>
+    <string name="novacraft_news_articles">Latest from Minecraft.net</string>
+    <string name="novacraft_news_loading">Loading official Minecraft news…</string>
+    <string name="novacraft_news_empty">No articles are available right now. Check your connection and refresh.</string>
+    <string name="novacraft_news_error">Could not load the official news feed. Please try again.</string>
+    <string name="novacraft_news_open_error">Could not open this article.</string>
+
+    <!-- NovaCraft CurseForge world maps catalogue -->
+    <string name="novacraft_curseforge_maps_title">Discover CurseForge Maps</string>
+    <string name="novacraft_curseforge_maps_summary">Search Minecraft worlds on CurseForge and install compatible map files into this installation.</string>
+    <string name="novacraft_curseforge_maps_search">Search maps</string>
+    <string name="novacraft_curseforge_maps_search_summary">Find worlds by map name or creator.</string>
+    <string name="novacraft_curseforge_maps_profile">Target installation</string>
+    <string name="novacraft_curseforge_maps_loading">Searching CurseForge Worlds…</string>
+    <string name="novacraft_curseforge_maps_empty">No maps found. Try another search.</string>
+    <string name="novacraft_curseforge_maps_error">Could not reach CurseForge. Check your connection and try again.</string>
+    <string name="novacraft_curseforge_maps_key_missing">CurseForge catalogue access is not configured in this build. The app developer must configure an application-specific CurseForge API key before in-app search and downloads can work.</string>
+    <string name="novacraft_curseforge_maps_key_help">CurseForge API access requires an approved application key. The current launcher build reads the key from the CURSEFORGE_API_KEY build setting.</string>
+    <string name="novacraft_curseforge_maps_open_project">Open official CurseForge project page</string>
+    <string name="novacraft_curseforge_maps_files_loading">Loading available map files…</string>
+    <string name="novacraft_curseforge_maps_no_files">No downloadable map files were found for this project.</string>
+    <string name="novacraft_curseforge_maps_files_error">Could not load map files from CurseForge.</string>
+    <string name="novacraft_curseforge_maps_no_distribution">CurseForge has not provided a third-party download URL for this file. Open its official project page to review the creator's download options.</string>
+    <string name="novacraft_curseforge_maps_download_title">Install this map?</string>
+    <string name="novacraft_curseforge_maps_download_message">%1$s\nFile: %2$s\nMinecraft versions: %3$s\n\nThe map will be installed into the saves folder for the selected installation. Existing worlds will not be overwritten.</string>
+    <string name="novacraft_curseforge_maps_version_warning">This file does not list the selected Minecraft version (%1$s). The map may not work correctly. Continue anyway?</string>
+    <string name="novacraft_curseforge_maps_download_started">Downloading map from CurseForge…</string>
+    <string name="novacraft_curseforge_maps_install_success">Map installed: %1$s</string>
+    <string name="novacraft_curseforge_maps_install_failed">Could not install map: %1$s</string>
+    <string name="novacraft_curseforge_maps_page_more">Load more maps</string>
+    <string name="novacraft_curseforge_maps_download_count">%1$s downloads</string>
+    <string name="novacraft_curseforge_maps_current_version">Selected Minecraft version: %1$s</string>
+    <string name="novacraft_curseforge_maps_version_unknown">Not detected</string>
+    <string name="novacraft_curseforge_maps_file_label">%1$s • %2$s • %3$s MB</string>
+    <string name="novacraft_curseforge_maps_invalid_archive">The downloaded file did not contain one valid Java world.</string>
+    <string name="novacraft_curseforge_maps_size_limit">This map archive exceeds NovaCraft's 512 MB safety limit.</string>
+    <string name="novacraft_curseforge_maps_download_limit">Map download exceeds NovaCraft's 512 MB safety limit.</string>
+    <string name="novacraft_curseforge_maps_hash_failed">The downloaded map did not pass CurseForge's SHA-1 verification.</string>
+    <string name="novacraft_curseforge_maps_unsafe_archive">The map archive contains an unsafe file path and was rejected.</string>
+    <string name="novacraft_curseforge_maps_cancelled">Map installation cancelled.</string>
+
 </resources>

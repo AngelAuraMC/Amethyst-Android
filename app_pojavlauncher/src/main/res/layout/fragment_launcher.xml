@@ -196,7 +196,7 @@
                 android:layout_width="0dp"
                 android:layout_marginTop="11dp"
                 android:drawableStart="@drawable/ic_menu_news"
-                android:text="@string/mcl_tab_wiki"
+                android:text="@string/novacraft_news_button"
                 app:layout_constraintTop_toBottomOf="@id/novacraft_quick_tools_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/social_divider" />

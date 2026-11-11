@@ -38,6 +38,7 @@ import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 import net.kdt.pojavlaunch.utils.NovaCraftAppearance;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceWorldsFragment;
+import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceNewsFragment;
 
 import java.io.File;
 import java.util.List;
@@ -69,7 +70,7 @@ public class MainMenuFragment extends Fragment {
         NovaCraftAppearance.applyHome(view, requireContext());
         NovaCraftAppearance.applyHeader(requireActivity());
 
-        mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
+        mNewsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), LauncherPreferenceNewsFragment.class, "NOVACRAFT_MINECRAFT_NEWS", null));
         mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.discord_invite)));
         mCustomControlButton.setOnClickListener(v -> startActivity(new Intent(requireContext(), CustomControlsActivity.class)));
         if (hasOnlineProfile()) {

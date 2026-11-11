@@ -53,6 +53,12 @@
 
     <PreferenceCategory android:title="@string/novacraft_settings_category_launcher">
         <Preference
+            android:key="minecraft_news_screen_setting"
+            android:title="@string/novacraft_news_title"
+            android:summary="@string/novacraft_news_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceNewsFragment"
+            android:icon="@drawable/ic_menu_news" />
+        <Preference
             android:key="misc_screen_setting"
             android:title="@string/novacraft_settings_downloads_title"
             android:summary="@string/novacraft_settings_downloads_summary"
