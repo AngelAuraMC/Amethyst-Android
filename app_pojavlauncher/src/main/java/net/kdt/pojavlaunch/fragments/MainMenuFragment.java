@@ -8,10 +8,13 @@ import static net.kdt.pojavlaunch.Tools.openPath;
 import static net.kdt.pojavlaunch.Tools.runOnUiThread;
 import static net.kdt.pojavlaunch.Tools.shareLog;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -41,6 +44,7 @@ public class MainMenuFragment extends Fragment {
     public static final String TAG = "MainMenuFragment";
 
     private mcVersionSpinner mVersionSpinner;
+    private ObjectAnimator mAmbientAnimator;
 
     public MainMenuFragment(){
         super(R.layout.fragment_launcher);
@@ -58,6 +62,16 @@ public class MainMenuFragment extends Fragment {
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
+
+        // A subtle, low-cost ambient glow animates only while the home screen is visible.
+        View ambientGlow = view.findViewById(R.id.novacraft_ambient_glow);
+        if (ambientGlow != null) {
+            mAmbientAnimator = ObjectAnimator.ofFloat(ambientGlow, View.ALPHA, 0.18f, 0.42f);
+            mAmbientAnimator.setDuration(5200L);
+            mAmbientAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            mAmbientAnimator.setRepeatMode(ValueAnimator.REVERSE);
+            mAmbientAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        }
 
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
         mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.discord_invite)));
@@ -116,6 +130,26 @@ public class MainMenuFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mVersionSpinner.reloadProfiles();
+        if (mAmbientAnimator != null && !mAmbientAnimator.isStarted()) {
+            mAmbientAnimator.start();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        if (mAmbientAnimator != null) {
+            mAmbientAnimator.cancel();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mAmbientAnimator != null) {
+            mAmbientAnimator.cancel();
+            mAmbientAnimator = null;
+        }
+        super.onDestroyView();
     }
 
     private void runInstallerWithConfirmation(boolean isCustomArgs) {
