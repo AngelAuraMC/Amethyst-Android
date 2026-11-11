@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="control_button_color">#4CC4C4C4</color>
-    <color name="control_button_pressed_color">#4D000000</color>
+    <!-- Existing launcher colour resources, retained for compatibility -->
+    <color name="control_button_color">#5527D6B3</color>
+    <color name="control_button_pressed_color">#9927D6B3</color>
 
-    <color name="minebutton_color">#9649b8</color>
-    <color name="background_app">#181818</color>
-    <color name="divider">@color/background_overlay</color>
-    <color name="background_overlay">#464646</color>
-    <color name="background_status_bar">#242424</color>
-    <color name="background_bottom_bar">#232323</color>
+    <color name="minebutton_color">#27D6B3</color>
+    <color name="background_app">#0A1117</color>
+    <color name="divider">@color/novacraft_border</color>
+    <color name="background_overlay">#16252D</color>
+    <color name="background_status_bar">#081016</color>
+    <color name="background_bottom_bar">#101D24</color>
 
-    <color name="primary_text">#FFFFFF</color>
-    <color name="secondary_text">#B2B2B2</color>
+    <color name="primary_text">#F4FAFC</color>
+    <color name="secondary_text">#A2B4BE</color>
+
+    <!-- NovaCraft design tokens -->
+    <color name="novacraft_accent">#27D6B3</color>
+    <color name="novacraft_accent_dark">#159B82</color>
+    <color name="novacraft_accent_soft">#1D574F</color>
+    <color name="novacraft_surface">#13212A</color>
+    <color name="novacraft_surface_elevated">#1A2C35</color>
+    <color name="novacraft_border">#29414B</color>
+    <color name="novacraft_text_muted">#91A6B1</color>
+    <color name="novacraft_ripple">#5527D6B3</color>
+    <color name="novacraft_play_text">#061711</color>
 </resources>
