@@ -122,8 +122,8 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.customDebug
-            resValue "string", "app_name", "Amethyst (Debug)"
-            resValue "string", "app_short_name", "Amethyst (Debug)"
+            resValue "string", "app_name", "NovaCraft (Debug)"
+            resValue "string", "app_short_name", "NovaCraft (Debug)"
             resValue 'string', 'application_package', 'org.angelauramc.amethyst.debug'
             resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder.debug'
             resValue 'string', 'shareProviderAuthority', 'org.angelauramc.amethyst.scoped.controlfolder.debug'
@@ -146,8 +146,8 @@ android {
             // defaultConfig already set
             // multiDexEnabled = true
             // debuggable = true
-            resValue "string", "app_name", "Amethyst"
-            resValue "string", "app_short_name", "Amethyst"
+            resValue "string", "app_name", "NovaCraft"
+            resValue "string", "app_short_name", "NovaCraft"
             resValue 'string', 'storageProviderAuthorities', 'org.angelauramc.amethyst.scoped.gamefolder'
             resValue 'string', 'application_package', 'org.angelauramc.amethyst'
         }
