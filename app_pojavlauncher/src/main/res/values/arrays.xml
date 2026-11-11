@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="novacraft_theme_entries">
+        <item>Nova Cyan</item>
+        <item>Amethyst Violet</item>
+        <item>Solar Amber</item>
+    </string-array>
+    <string-array name="novacraft_theme_values">
+        <item>cyan</item>
+        <item>violet</item>
+        <item>amber</item>
+    </string-array>
+
+    <string-array name="novacraft_button_style_entries">
+        <item>Rounded cards</item>
+        <item>Accent outline</item>
+        <item>Solid accent</item>
+    </string-array>
+    <string-array name="novacraft_button_style_values">
+        <item>rounded</item>
+        <item>outline</item>
+        <item>solid</item>
+    </string-array>
+
+    <string-array name="novacraft_background_entries">
+        <item>Ambient haze</item>
+        <item>Fine grid</item>
+        <item>Plain</item>
+    </string-array>
+    <string-array name="novacraft_background_values">
+        <item>haze</item>
+        <item>grid</item>
+        <item>plain</item>
+    </string-array>
+
+    <string-array name="novacraft_font_entries">
+        <item>System</item>
+        <item>Condensed</item>
+        <item>Monospace</item>
+    </string-array>
+    <string-array name="novacraft_font_values">
+        <item>system</item>
+        <item>condensed</item>
+        <item>mono</item>
+    </string-array>
+
+    <string-array name="novacraft_density_entries">
+        <item>Compact</item>
+        <item>Comfortable</item>
+        <item>Spacious</item>
+    </string-array>
+    <string-array name="novacraft_density_values">
+        <item>compact</item>
+        <item>comfortable</item>
+        <item>spacious</item>
+    </string-array>
+</resources>

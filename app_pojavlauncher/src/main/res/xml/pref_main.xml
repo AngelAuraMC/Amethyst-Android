@@ -14,6 +14,14 @@
         >
 
         <Preference
+            android:key="appearance_screen_setting"
+            android:title="@string/novacraft_appearance_title"
+            android:summary="@string/novacraft_appearance_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceAppearanceFragment"
+            android:icon="@drawable/ic_setting_misc"
+            />
+
+        <Preference
             android:key="video_screen_setting"
             android:title="@string/preference_video_title"
             android:summary="@string/preference_video_description"

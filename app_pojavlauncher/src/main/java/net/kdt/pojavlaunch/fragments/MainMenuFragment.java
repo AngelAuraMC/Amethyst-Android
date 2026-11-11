@@ -36,6 +36,7 @@ import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
+import net.kdt.pojavlaunch.utils.NovaCraftAppearance;
 
 import java.io.File;
 import java.util.List;
@@ -63,15 +64,8 @@ public class MainMenuFragment extends Fragment {
         Button mPlayButton = view.findViewById(R.id.play_button);
         mVersionSpinner = view.findViewById(R.id.mc_version_spinner);
 
-        // A subtle, low-cost ambient glow animates only while the home screen is visible.
-        View ambientGlow = view.findViewById(R.id.novacraft_ambient_glow);
-        if (ambientGlow != null) {
-            mAmbientAnimator = ObjectAnimator.ofFloat(ambientGlow, View.ALPHA, 0.18f, 0.42f);
-            mAmbientAnimator.setDuration(5200L);
-            mAmbientAnimator.setRepeatCount(ValueAnimator.INFINITE);
-            mAmbientAnimator.setRepeatMode(ValueAnimator.REVERSE);
-            mAmbientAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-        }
+        NovaCraftAppearance.applyHome(view, requireContext());
+        NovaCraftAppearance.applyHeader(requireActivity());
 
         mNewsButton.setOnClickListener(v -> Tools.openURL(requireActivity(), Tools.URL_HOME));
         mDiscordButton.setOnClickListener(v -> Tools.openURL(requireActivity(), getString(R.string.discord_invite)));
@@ -129,8 +123,39 @@ public class MainMenuFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mVersionSpinner.reloadProfiles();
-        if (mAmbientAnimator != null && !mAmbientAnimator.isStarted()) {
+        if (mVersionSpinner != null) {
+            mVersionSpinner.reloadProfiles();
+        }
+        if (getView() != null) {
+            NovaCraftAppearance.applyHome(getView(), requireContext());
+            NovaCraftAppearance.applyHeader(requireActivity());
+            updateAmbientAnimation();
+        }
+    }
+
+    private void updateAmbientAnimation() {
+        View root = getView();
+        if (root == null) return;
+        View ambientGlow = root.findViewById(R.id.novacraft_ambient_glow);
+        boolean shouldAnimate = NovaCraftAppearance.shouldAnimate(requireContext());
+
+        if (!shouldAnimate || ambientGlow == null) {
+            if (mAmbientAnimator != null) {
+                mAmbientAnimator.cancel();
+                mAmbientAnimator = null;
+            }
+            return;
+        }
+
+        if (mAmbientAnimator == null) {
+            mAmbientAnimator = ObjectAnimator.ofFloat(ambientGlow, View.ALPHA, 0.16f, 0.38f);
+            mAmbientAnimator.setDuration(5600L);
+            mAmbientAnimator.setRepeatCount(ValueAnimator.INFINITE);
+            mAmbientAnimator.setRepeatMode(ValueAnimator.REVERSE);
+            mAmbientAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
+        }
+
+        if (!mAmbientAnimator.isStarted()) {
             mAmbientAnimator.start();
         }
     }

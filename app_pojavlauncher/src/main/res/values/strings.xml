@@ -528,4 +528,38 @@
     <string name="novacraft_select_installation">SELECT INSTALLATION</string>
     <string name="novacraft_edit_profile">Edit selected installation</string>
 
+
+    <!-- NovaCraft Appearance Workshop -->
+    <string name="novacraft_appearance_title">Appearance &amp; themes</string>
+    <string name="novacraft_appearance_summary">Personalize colours, buttons, backgrounds and interface density</string>
+    <string name="novacraft_appearance_category_theme">Theme and colours</string>
+    <string name="novacraft_appearance_theme_title">Colour theme</string>
+    <string name="novacraft_appearance_theme_summary">Choose a NovaCraft colour palette</string>
+    <string name="novacraft_appearance_button_title">Button style</string>
+    <string name="novacraft_appearance_button_summary">Choose how home screen shortcuts look</string>
+    <string name="novacraft_appearance_background_title">Background texture</string>
+    <string name="novacraft_appearance_background_summary">Choose ambient haze, a subtle grid or a plain background</string>
+    <string name="novacraft_appearance_font_title">Interface font</string>
+    <string name="novacraft_appearance_font_summary">Choose a typography preset for the home screen</string>
+    <string name="novacraft_appearance_category_layout">Layout and motion</string>
+    <string name="novacraft_appearance_density_title">Home screen spacing</string>
+    <string name="novacraft_appearance_density_summary">Adjust the height and spacing of shortcut buttons</string>
+    <string name="novacraft_appearance_animation_title">Animate ambient background</string>
+    <string name="novacraft_appearance_animation_summary">Slowly animate the home screen glow while the home screen is visible</string>
+    <string name="novacraft_appearance_lightweight_title">Lightweight interface mode</string>
+    <string name="novacraft_appearance_lightweight_summary">Disable decorative motion and use a simpler background for lower-end phones</string>
+    <string name="novacraft_appearance_category_profiles">Theme profiles</string>
+    <string name="novacraft_appearance_export_title">Export theme profile</string>
+    <string name="novacraft_appearance_export_summary">Save your NovaCraft appearance settings as a JSON file</string>
+    <string name="novacraft_appearance_import_title">Import theme profile</string>
+    <string name="novacraft_appearance_import_summary">Load appearance settings from a NovaCraft JSON theme file</string>
+    <string name="novacraft_appearance_reset_title">Restore appearance defaults</string>
+    <string name="novacraft_appearance_reset_summary">Restore the original NovaCraft cyan theme and standard layout</string>
+    <string name="novacraft_theme_exported">NovaCraft theme exported</string>
+    <string name="novacraft_theme_imported">NovaCraft theme imported. Return to Home to preview it.</string>
+    <string name="novacraft_theme_invalid">This is not a valid NovaCraft theme file</string>
+    <string name="novacraft_theme_io_error">Could not read or write the theme file</string>
+    <string name="novacraft_theme_reset">Appearance defaults restored</string>
+    <string name="novacraft_theme_file_name">NovaCraft-theme.json</string>
+
 </resources>

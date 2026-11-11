@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <net.kdt.pojavlaunch.prefs.BackButtonPreference />
+
+    <PreferenceCategory android:title="@string/novacraft_appearance_category_theme">
+        <ListPreference
+            android:key="novacraft_theme"
+            android:title="@string/novacraft_appearance_theme_title"
+            android:summary="@string/novacraft_appearance_theme_summary"
+            android:entries="@array/novacraft_theme_entries"
+            android:entryValues="@array/novacraft_theme_values"
+            android:defaultValue="cyan" />
+
+        <ListPreference
+            android:key="novacraft_button_style"
+            android:title="@string/novacraft_appearance_button_title"
+            android:summary="@string/novacraft_appearance_button_summary"
+            android:entries="@array/novacraft_button_style_entries"
+            android:entryValues="@array/novacraft_button_style_values"
+            android:defaultValue="rounded" />
+
+        <ListPreference
+            android:key="novacraft_background_texture"
+            android:title="@string/novacraft_appearance_background_title"
+            android:summary="@string/novacraft_appearance_background_summary"
+            android:entries="@array/novacraft_background_entries"
+            android:entryValues="@array/novacraft_background_values"
+            android:defaultValue="haze" />
+
+        <ListPreference
+            android:key="novacraft_font_style"
+            android:title="@string/novacraft_appearance_font_title"
+            android:summary="@string/novacraft_appearance_font_summary"
+            android:entries="@array/novacraft_font_entries"
+            android:entryValues="@array/novacraft_font_values"
+            android:defaultValue="system" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/novacraft_appearance_category_layout">
+        <ListPreference
+            android:key="novacraft_home_density"
+            android:title="@string/novacraft_appearance_density_title"
+            android:summary="@string/novacraft_appearance_density_summary"
+            android:entries="@array/novacraft_density_entries"
+            android:entryValues="@array/novacraft_density_values"
+            android:defaultValue="comfortable" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="novacraft_animated_background"
+            android:title="@string/novacraft_appearance_animation_title"
+            android:summary="@string/novacraft_appearance_animation_summary"
+            android:defaultValue="true" />
+
+        <androidx.preference.SwitchPreferenceCompat
+            android:key="novacraft_lightweight_mode"
+            android:title="@string/novacraft_appearance_lightweight_title"
+            android:summary="@string/novacraft_appearance_lightweight_summary"
+            android:defaultValue="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/novacraft_appearance_category_profiles">
+        <Preference
+            android:key="novacraft_export_theme"
+            android:title="@string/novacraft_appearance_export_title"
+            android:summary="@string/novacraft_appearance_export_summary" />
+        <Preference
+            android:key="novacraft_import_theme"
+            android:title="@string/novacraft_appearance_import_title"
+            android:summary="@string/novacraft_appearance_import_summary" />
+        <Preference
+            android:key="novacraft_restore_theme"
+            android:title="@string/novacraft_appearance_reset_title"
+            android:summary="@string/novacraft_appearance_reset_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>

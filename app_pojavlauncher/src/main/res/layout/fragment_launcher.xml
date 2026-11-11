@@ -8,6 +8,15 @@
     android:layout_height="match_parent"
     android:background="@color/background_app">
 
+    <!-- Selectable NovaCraft background texture, kept behind all interactive content. -->
+    <View
+        android:id="@+id/novacraft_background_texture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="false"
+        android:focusable="false"
+        android:importantForAccessibility="no" />
+
     <ScrollView
         android:id="@+id/novacraft_home_scroll"
         android:layout_width="match_parent"
