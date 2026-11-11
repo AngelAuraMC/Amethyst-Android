@@ -562,4 +562,55 @@
     <string name="novacraft_theme_reset">Appearance defaults restored</string>
     <string name="novacraft_theme_file_name">NovaCraft-theme.json</string>
 
+
+    <!-- NovaCraft Settings Centre -->
+    <string name="novacraft_settings_welcome_title">NovaCraft Settings Centre</string>
+    <string name="novacraft_settings_welcome_summary">Manage your interface, Minecraft runtime, graphics, controls, downloads and device information.</string>
+    <string name="novacraft_settings_category_personalization">Personalization</string>
+    <string name="novacraft_settings_category_game">Minecraft settings</string>
+    <string name="novacraft_settings_category_launcher">Launcher &amp; device</string>
+    <string name="novacraft_settings_category_advanced">Advanced</string>
+    <string name="novacraft_settings_category_app">App preferences &amp; permissions</string>
+    <string name="novacraft_settings_java_title">Java runtime &amp; memory</string>
+    <string name="novacraft_settings_java_summary">Manage Java runtimes, allocated game memory and JVM arguments.</string>
+    <string name="novacraft_settings_video_title">Video &amp; graphics</string>
+    <string name="novacraft_settings_video_summary">Adjust resolution, display behavior and renderer options.</string>
+    <string name="novacraft_settings_controls_title">Controls &amp; input</string>
+    <string name="novacraft_settings_controls_summary">Customize touch controls, gestures, mouse, keyboard and controllers.</string>
+    <string name="novacraft_settings_downloads_title">Downloads &amp; integrity</string>
+    <string name="novacraft_settings_downloads_summary">Configure download sources, library checks and manifest verification.</string>
+    <string name="novacraft_settings_device_title">Device &amp; compatibility</string>
+    <string name="novacraft_settings_device_summary">View Android, memory, processor, graphics and compatibility information.</string>
+    <string name="novacraft_settings_experimental_title">Experimental settings</string>
+    <string name="novacraft_settings_experimental_summary">Advanced options that may affect stability or compatibility.</string>
+
+    <!-- NovaCraft device information -->
+    <string name="novacraft_device_category_hardware">Device information</string>
+    <string name="novacraft_device_category_memory">Memory</string>
+    <string name="novacraft_device_category_graphics">Graphics &amp; display</string>
+    <string name="novacraft_device_category_compatibility">Compatibility notes</string>
+    <string name="novacraft_device_model_title">Device</string>
+    <string name="novacraft_device_android_title">Android version</string>
+    <string name="novacraft_device_android_value">Android %1$s (API %2$d)</string>
+    <string name="novacraft_device_security_title">Android security patch</string>
+    <string name="novacraft_device_architecture_title">Supported architecture</string>
+    <string name="novacraft_device_architecture_value">%1$s • %2$s</string>
+    <string name="novacraft_device_cpu_title">Available processor cores</string>
+    <string name="novacraft_device_cpu_value">%1$d logical cores</string>
+    <string name="novacraft_device_total_memory_title">Total device memory</string>
+    <string name="novacraft_device_available_memory_title">Available memory now</string>
+    <string name="novacraft_device_game_memory_title">Minecraft memory allocation</string>
+    <string name="novacraft_device_game_memory_value">%1$d MB assigned to the Java game process</string>
+    <string name="novacraft_device_gpu_title">Graphics renderer</string>
+    <string name="novacraft_device_gpu_value">%1$s • %2$s • OpenGL ES %3$d</string>
+    <string name="novacraft_device_display_title">Display resolution</string>
+    <string name="novacraft_device_display_value">%1$d × %2$d px • density %3$.2f</string>
+    <string name="novacraft_device_compatibility_title">Compatibility overview</string>
+    <string name="novacraft_device_compatibility_loading">Reading device information…</string>
+    <string name="novacraft_device_note_64bit">A 64-bit Android ABI is available. Java runtime and Minecraft version support still depend on the selected runtime and game requirements.</string>
+    <string name="novacraft_device_note_32bit">Only 32-bit Android ABIs were detected. Some newer Java runtimes and Minecraft versions may not be available on this device.</string>
+    <string name="novacraft_device_note_low_memory">The device reports less than 4 GB of physical memory. Keep Minecraft memory allocation conservative and avoid running many background apps during play.</string>
+    <string name="novacraft_device_note_general">These values are informational. NovaCraft does not overclock the processor, change GPU hardware limits or promise extra FPS.</string>
+    <string name="novacraft_device_unavailable">Not available</string>
+
 </resources>

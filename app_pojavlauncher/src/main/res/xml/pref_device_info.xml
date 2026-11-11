@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <net.kdt.pojavlaunch.prefs.BackButtonPreference/>
+
+    <PreferenceCategory android:title="@string/novacraft_device_category_hardware">
+        <Preference
+            android:key="device_info_model"
+            android:title="@string/novacraft_device_model_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_android"
+            android:title="@string/novacraft_device_android_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_security"
+            android:title="@string/novacraft_device_security_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_architecture"
+            android:title="@string/novacraft_device_architecture_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_cpu"
+            android:title="@string/novacraft_device_cpu_title"
+            android:selectable="false"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/novacraft_device_category_memory">
+        <Preference
+            android:key="device_info_total_memory"
+            android:title="@string/novacraft_device_total_memory_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_available_memory"
+            android:title="@string/novacraft_device_available_memory_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_game_memory"
+            android:title="@string/novacraft_device_game_memory_title"
+            android:selectable="false"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/novacraft_device_category_graphics">
+        <Preference
+            android:key="device_info_gpu"
+            android:title="@string/novacraft_device_gpu_title"
+            android:selectable="false"
+            android:persistent="false" />
+        <Preference
+            android:key="device_info_display"
+            android:title="@string/novacraft_device_display_title"
+            android:selectable="false"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/novacraft_device_category_compatibility">
+        <Preference
+            android:key="device_info_compatibility"
+            android:title="@string/novacraft_device_compatibility_title"
+            android:summary="@string/novacraft_device_compatibility_loading"
+            android:selectable="false"
+            android:persistent="false" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

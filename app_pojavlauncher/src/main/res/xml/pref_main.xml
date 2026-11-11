@@ -1,87 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app2="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    app:key=""
-    >
+    app:key="">
 
     <net.kdt.pojavlaunch.prefs.BackButtonPreference/>
 
-    <PreferenceCategory
-        android:title="@string/preference_category_main_categories"
-        >
+    <Preference
+        android:key="novacraft_settings_intro"
+        android:title="@string/novacraft_settings_welcome_title"
+        android:summary="@string/novacraft_settings_welcome_summary"
+        android:selectable="false"
+        android:persistent="false" />
 
+    <PreferenceCategory android:title="@string/novacraft_settings_category_personalization">
         <Preference
             android:key="appearance_screen_setting"
             android:title="@string/novacraft_appearance_title"
             android:summary="@string/novacraft_appearance_summary"
             android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceAppearanceFragment"
-            android:icon="@drawable/ic_setting_misc"
-            />
+            android:icon="@drawable/ic_setting_misc" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/novacraft_settings_category_game">
+        <Preference
+            android:key="java_screen_setting"
+            android:title="@string/novacraft_settings_java_title"
+            android:summary="@string/novacraft_settings_java_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceJavaFragment"
+            android:icon="@drawable/ic_setting_java_runtime" />
 
         <Preference
             android:key="video_screen_setting"
-            android:title="@string/preference_video_title"
-            android:summary="@string/preference_video_description"
+            android:title="@string/novacraft_settings_video_title"
+            android:summary="@string/novacraft_settings_video_summary"
             android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceVideoFragment"
-            android:icon="@drawable/ic_setting_video"
-            />
-
+            android:icon="@drawable/ic_setting_video" />
 
         <Preference
             android:key="control_screen_setting"
-            android:title="@string/preference_control_title"
-            android:summary="@string/preference_control_description"
+            android:title="@string/novacraft_settings_controls_title"
+            android:summary="@string/novacraft_settings_controls_summary"
             android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceControlFragment"
-            android:icon="@drawable/ic_menu_custom_controls"
-            />
-
-        <Preference
-            android:key="java_screen_setting"
-            android:title="@string/preference_java_title"
-            android:summary="@string/preference_java_description"
-            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceJavaFragment"
-            android:icon="@drawable/ic_setting_java_runtime"
-            />
-
-        <Preference
-            android:key="misc_screen_setting"
-            android:title="@string/preference_misc_title"
-            android:summary="@string/preference_misc_description"
-            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceMiscellaneousFragment"
-            android:icon="@drawable/ic_setting_misc"
-            />
-
-
-        <Preference
-            android:key="experimental_screen_setting"
-            android:title="@string/preference_experimental_title"
-            android:summary="@string/preference_experimental_description"
-            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceExperimentalFragment"
-            />
+            android:icon="@drawable/ic_menu_custom_controls" />
     </PreferenceCategory>
 
-    <SwitchPreference
-        android:title="@string/preference_force_english_title"
-        android:key="force_english"
-        android:summary="@string/preference_force_english_description"
-        />
+    <PreferenceCategory android:title="@string/novacraft_settings_category_launcher">
+        <Preference
+            android:key="misc_screen_setting"
+            android:title="@string/novacraft_settings_downloads_title"
+            android:summary="@string/novacraft_settings_downloads_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceMiscellaneousFragment"
+            android:icon="@drawable/ic_setting_misc" />
 
-    <Preference
-        android:title="@string/preference_ask_for_notification_title"
-        android:summary="@string/preference_ask_for_notification_description"
-        android:key="notification_permission_request"
-        />
-    <Preference
-        android:title="@string/preference_ask_for_microphone_title"
-        android:summary="@string/preference_ask_for_microphone_description"
-        android:key="microphone_permission_request"
-        />
+        <Preference
+            android:key="device_info_screen_setting"
+            android:title="@string/novacraft_settings_device_title"
+            android:summary="@string/novacraft_settings_device_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceDeviceFragment"
+            android:icon="@drawable/ic_setting_misc" />
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/novacraft_settings_category_advanced">
+        <Preference
+            android:key="experimental_screen_setting"
+            android:title="@string/novacraft_settings_experimental_title"
+            android:summary="@string/novacraft_settings_experimental_summary"
+            android:fragment="net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceExperimentalFragment"
+            android:icon="@drawable/ic_setting_engine" />
+    </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/novacraft_settings_category_app">
+        <SwitchPreference
+            android:title="@string/preference_force_english_title"
+            android:key="force_english"
+            android:summary="@string/preference_force_english_description" />
 
+        <Preference
+            android:title="@string/preference_ask_for_notification_title"
+            android:summary="@string/preference_ask_for_notification_description"
+            android:key="notification_permission_request" />
 
+        <Preference
+            android:title="@string/preference_ask_for_microphone_title"
+            android:summary="@string/preference_ask_for_microphone_description"
+            android:key="microphone_permission_request" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
