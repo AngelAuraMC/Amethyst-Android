@@ -1,142 +1,356 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/fragment_menu_main"
-	android:gravity="top"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	android:orientation="vertical"
-	android:background="@color/background_app"
-	>
-	<ScrollView
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintBottom_toTopOf="@id/mc_version_spinner">
-		<androidx.constraintlayout.widget.ConstraintLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
-			<androidx.constraintlayout.widget.Guideline
-				android:id="@+id/center_guideline"
-				android:layout_width="0dp"
-				android:layout_height="0dp"
-				android:orientation="vertical"
-				app:layout_constraintGuide_percent="0.5"/>
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/news_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="0dp"
-				android:text="@string/mcl_tab_wiki"
-				android:drawableStart="@drawable/ic_menu_news"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintStart_toStartOf="parent"
-				app:layout_constraintEnd_toStartOf="@id/social_divider" />
-			<View
-				android:id="@+id/social_divider"
-				style="@style/LauncherFragment_Divider"
-				android:layout_marginVertical="@dimen/padding_large"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintStart_toStartOf="@id/center_guideline"
-				app:layout_constraintEnd_toEndOf="@id/center_guideline"
-				app:layout_constraintBottom_toBottomOf="@id/news_button"/>
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/discord_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="0dp"
-				android:text="@string/mcl_button_discord"
-				android:drawableStart="@drawable/ic_discord"
-				app:layout_constraintTop_toTopOf="parent"
-				app:layout_constraintStart_toEndOf="@id/social_divider"
-				app:layout_constraintEnd_toEndOf="parent"/>
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_menu_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app">
 
+    <ScrollView
+        android:id="@+id/novacraft_home_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="false"
+        android:paddingStart="18dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/novacraft_install_label">
 
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/custom_control_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_menu_custom_controls"
-				android:text="@string/mcl_option_customcontrol"
-				app:layout_constraintTop_toBottomOf="@id/news_button" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/install_jar_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_menu_install_jar"
-				android:text="@string/main_install_jar_file"
-				app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
+            <View
+                android:id="@+id/novacraft_ambient_glow"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:alpha="0.34"
+                android:background="@drawable/novacraft_ambient_glow"
+                android:importantForAccessibility="no"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/share_logs_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@android:drawable/ic_menu_share"
-				android:text="@string/main_share_logs"
-				app:layout_constraintTop_toBottomOf="@id/install_jar_button" />
+            <TextView
+                android:id="@+id/novacraft_brand_eyebrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/novacraft_home_eyebrow"
+                android:textColor="@color/novacraft_accent"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-bold"
+                android:letterSpacing="0.12"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
-			<com.kdt.mcgui.LauncherMenuButton
-				android:id="@+id/open_files_button"
-				style="@style/LauncherMenuButton.Universal"
-				android:layout_width="match_parent"
-				android:drawableStart="@drawable/ic_folder"
-				android:text="@string/mcl_button_open_directory"
-				app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
-		</androidx.constraintlayout.widget.ConstraintLayout>
-	</ScrollView>
+            <TextView
+                android:id="@+id/novacraft_brand_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/app_name"
+                android:textColor="@color/primary_text"
+                android:textSize="32sp"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="-0.02"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/novacraft_brand_eyebrow"
+                app:layout_constraintStart_toStartOf="parent" />
 
-	<com.kdt.mcgui.mcVersionSpinner
-		android:id="@+id/mc_version_spinner"
-		android:layout_width="0dp"
-		android:layout_height="@dimen/_52sdp"
-		android:background="@android:color/transparent"
-		android:drawableEnd="@drawable/spinner_arrow"
+            <TextView
+                android:id="@+id/novacraft_brand_tagline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/novacraft_brand_tagline"
+                android:textColor="@color/secondary_text"
+                android:textSize="13sp"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/novacraft_brand_title"
+                app:layout_constraintStart_toStartOf="parent" />
 
-		app:drawableEndSize="@dimen/padding_heavy"
-		app:drawableStartIntegerScaling="true"
-		app:drawableStartSize="@dimen/_36sdp"
-		app:drawableEndPadding="@dimen/_1sdp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/novacraft_hero_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:minHeight="166dp"
+                android:background="@drawable/novacraft_hero_card"
+                android:padding="18dp"
+                app:layout_constraintTop_toBottomOf="@id/novacraft_brand_tagline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-		app:layout_constraintBottom_toTopOf="@id/play_button"
-		app:layout_constraintEnd_toStartOf="@+id/edit_profile_button"
-		app:layout_constraintStart_toStartOf="parent" />
+                <TextView
+                    android:id="@+id/novacraft_hero_watermark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="N"
+                    android:textColor="@color/novacraft_accent"
+                    android:textSize="118sp"
+                    android:fontFamily="sans-serif-black"
+                    android:alpha="0.09"
+                    android:includeFontPadding="false"
+                    android:importantForAccessibility="no"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
-	<ImageButton
-		android:id="@+id/edit_profile_button"
-		android:layout_width="@dimen/_52sdp"
-		android:layout_height="@dimen/_52sdp"
-		android:background="?android:attr/selectableItemBackground"
+                <TextView
+                    android:id="@+id/novacraft_hero_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/novacraft_badge"
+                    android:paddingStart="10dp"
+                    android:paddingTop="6dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/novacraft_hero_badge"
+                    android:textColor="@color/novacraft_accent"
+                    android:textSize="9sp"
+                    android:fontFamily="sans-serif-bold"
+                    android:letterSpacing="0.10"
+                    android:includeFontPadding="false"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-		android:src="@drawable/ic_edit_profile"
-		app:layout_constraintBottom_toBottomOf="@+id/mc_version_spinner"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintTop_toTopOf="@+id/mc_version_spinner" />
+                <TextView
+                    android:id="@+id/novacraft_hero_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginEnd="54dp"
+                    android:text="@string/novacraft_hero_title"
+                    android:textColor="@color/primary_text"
+                    android:textSize="20sp"
+                    android:fontFamily="sans-serif-bold"
+                    android:includeFontPadding="false"
+                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_badge"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
+                <TextView
+                    android:id="@+id/novacraft_hero_body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="38dp"
+                    android:text="@string/novacraft_hero_body"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp"
+                    android:lineSpacingExtra="2dp"
+                    android:includeFontPadding="false"
+                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
-	<!-- This view is for cosmetic purpose only -->
-	<View
-		android:id="@+id/_background_display_view"
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
-		android:background="@color/background_bottom_bar"
-		android:translationZ="-1dp"
+                <View
+                    android:id="@+id/novacraft_hero_accent"
+                    android:layout_width="32dp"
+                    android:layout_height="3dp"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/novacraft_accent_bar"
+                    app:layout_constraintTop_toBottomOf="@id/novacraft_hero_body"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-		app:layout_constraintBottom_toBottomOf="parent"
-		app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-	<com.kdt.mcgui.MineButton
-		android:id="@+id/play_button"
-		android:layout_width="match_parent"
-		android:layout_height="@dimen/_62sdp"
+            <TextView
+                android:id="@+id/novacraft_quick_tools_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/novacraft_quick_tools"
+                android:textColor="@color/novacraft_text_muted"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-bold"
+                android:letterSpacing="0.14"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/novacraft_hero_card"
+                app:layout_constraintStart_toStartOf="parent" />
 
-		android:layout_marginHorizontal="@dimen/_17sdp"
-		android:layout_marginBottom="@dimen/_15sdp"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/novacraft_center_guideline"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.5" />
 
-		android:textAllCaps="true"
-		android:text="@string/main_play"
-		app:layout_constraintBottom_toBottomOf="parent"
-		/>
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/news_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="0dp"
+                android:layout_marginTop="11dp"
+                android:drawableStart="@drawable/ic_menu_news"
+                android:text="@string/mcl_tab_wiki"
+                app:layout_constraintTop_toBottomOf="@id/novacraft_quick_tools_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/social_divider" />
+
+            <View
+                android:id="@+id/social_divider"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_marginVertical="12dp"
+                android:background="@color/novacraft_border"
+                app:layout_constraintTop_toTopOf="@id/news_button"
+                app:layout_constraintBottom_toBottomOf="@id/news_button"
+                app:layout_constraintStart_toStartOf="@id/novacraft_center_guideline"
+                app:layout_constraintEnd_toEndOf="@id/novacraft_center_guideline" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/discord_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="0dp"
+                android:layout_marginTop="11dp"
+                android:drawableStart="@drawable/ic_discord"
+                android:text="@string/mcl_button_discord"
+                app:layout_constraintTop_toBottomOf="@id/novacraft_quick_tools_title"
+                app:layout_constraintStart_toEndOf="@id/social_divider"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/custom_control_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_menu_custom_controls"
+                android:text="@string/mcl_option_customcontrol"
+                app:layout_constraintTop_toBottomOf="@id/news_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/install_jar_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_menu_install_jar"
+                android:text="@string/main_install_jar_file"
+                app:layout_constraintTop_toBottomOf="@id/custom_control_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/share_logs_button" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/share_logs_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="0dp"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@android:drawable/ic_menu_share"
+                android:text="@string/main_share_logs"
+                app:layout_constraintTop_toBottomOf="@id/custom_control_button"
+                app:layout_constraintStart_toEndOf="@id/social_divider"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/open_files_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_folder"
+                android:text="@string/mcl_button_open_directory"
+                app:layout_constraintTop_toBottomOf="@id/install_jar_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/novacraft_home_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="4dp"
+                android:gravity="center"
+                android:text="MORE NOVACRAFT TOOLS ARE ON THE WAY"
+                android:textColor="@color/novacraft_text_muted"
+                android:textSize="9sp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.08"
+                android:includeFontPadding="false"
+                app:layout_constraintTop_toBottomOf="@id/open_files_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!-- Decorative backing panel for the fixed installation dock -->
+    <View
+        android:id="@+id/_background_display_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/novacraft_bottom_panel"
+        android:translationZ="-1dp"
+        android:importantForAccessibility="no"
+        app:layout_constraintTop_toTopOf="@id/novacraft_install_label"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/novacraft_install_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="13dp"
+        android:text="@string/novacraft_select_installation"
+        android:textColor="@color/novacraft_text_muted"
+        android:textSize="9sp"
+        android:fontFamily="sans-serif-bold"
+        android:letterSpacing="0.12"
+        android:includeFontPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/novacraft_home_scroll"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.kdt.mcgui.mcVersionSpinner
+        android:id="@+id/mc_version_spinner"
+        android:layout_width="0dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/novacraft_version_selector"
+        android:textColor="@color/primary_text"
+        android:drawableEnd="@drawable/spinner_arrow"
+        app:drawableEndSize="@dimen/padding_heavy"
+        app:drawableStartIntegerScaling="true"
+        app:drawableStartSize="@dimen/_30sdp"
+        app:drawableEndPadding="@dimen/_1sdp"
+        app:layout_constraintTop_toBottomOf="@id/novacraft_install_label"
+        app:layout_constraintBottom_toTopOf="@id/play_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/edit_profile_button" />
+
+    <ImageButton
+        android:id="@+id/edit_profile_button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/novacraft_icon_button"
+        android:contentDescription="@string/novacraft_edit_profile"
+        android:padding="13dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_edit_profile"
+        app:layout_constraintTop_toTopOf="@id/mc_version_spinner"
+        app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.kdt.mcgui.MineButton
+        android:id="@+id/play_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="17dp"
+        android:textAllCaps="true"
+        android:text="@string/main_play"
+        app:layout_constraintTop_toBottomOf="@id/mc_version_spinner"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
