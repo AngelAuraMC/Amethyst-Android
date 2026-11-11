@@ -7,6 +7,10 @@
         <item name="android:statusBarColor">@color/background_status_bar</item>
         <item name="android:navigationBarColor">@color/background_app</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="colorPrimary">@color/background_bottom_bar</item>
+        <item name="colorPrimaryDark">@color/background_status_bar</item>
+        <item name="colorAccent">@color/novacraft_accent</item>
+        <item name="android:colorAccent">@color/novacraft_accent</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
         <item name="android:textSize">@dimen/_12ssp</item>
     </style>
