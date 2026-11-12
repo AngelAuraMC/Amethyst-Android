@@ -161,7 +161,14 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(R.string.global_save, (dialog, which) -> {
                     String value = input.getText().toString().trim();
-                    if (value.length() < 16 || value.length() > 256 || value.matches(".*\\\\s+.*")) {
+                    boolean hasWhitespace = false;
+                    for (int i = 0; i < value.length(); i++) {
+                        if (Character.isWhitespace(value.charAt(i))) {
+                            hasWhitespace = true;
+                            break;
+                        }
+                    }
+                    if (value.length() < 16 || value.length() > 256 || hasWhitespace) {
                         Toast.makeText(requireContext(), R.string.novacraft_curseforge_key_invalid,
                                 Toast.LENGTH_LONG).show();
                         return;
@@ -475,7 +482,7 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
                 if (TextUtils.isEmpty(url)) {
                     throw new IOException("DOWNLOAD_NOT_AVAILABLE");
                 }
-                downloadCurseForgeFile(url, archive, apiKey);
+                downloadCurseForgeFile(url, archive);
                 if (!TextUtils.isEmpty(file.sha1) && !verifySha1(archive, file.sha1)) {
                     throw new IOException("HASH_MISMATCH");
                 }
@@ -527,7 +534,7 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
         return data == null || data.isJsonNull() ? null : data.getAsString();
     }
 
-    private static void downloadCurseForgeFile(String downloadUrl, File destination, String apiKey)
+    private static void downloadCurseForgeFile(String downloadUrl, File destination)
             throws IOException {
         URL current = new URL(downloadUrl);
         byte[] buffer = new byte[32768];
@@ -542,7 +549,6 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
             connection.setConnectTimeout(15000);
             connection.setReadTimeout(20000);
             connection.setRequestProperty("User-Agent", "NovaCraft Android Launcher");
-            connection.setRequestProperty("x-api-key", apiKey);
             try {
                 int status = connection.getResponseCode();
                 if (status == HttpURLConnection.HTTP_MOVED_PERM

@@ -2,6 +2,7 @@ package net.kdt.pojavlaunch.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Base64;
@@ -82,24 +83,36 @@ public final class NovaCraftApiKeyStore {
     }
 
     private static SecretKey getOrCreateKey() throws Exception {
-        KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
-        keyStore.load(null);
-        if (keyStore.containsAlias(KEY_ALIAS)) {
-            KeyStore.Entry entry = keyStore.getEntry(KEY_ALIAS, null);
-            if (entry instanceof KeyStore.SecretKeyEntry) {
-                return ((KeyStore.SecretKeyEntry) entry).getSecretKey();
-            }
-            throw new IllegalStateException("Android Keystore key entry has an unexpected type");
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            throw new IllegalStateException("Secure CurseForge key storage requires Android 6.0 or newer");
         }
+        return Api23KeyStore.getOrCreateKey();
+    }
 
-        KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
-        KeyGenParameterSpec spec = new KeyGenParameterSpec.Builder(KEY_ALIAS,
-                KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                .setRandomizedEncryptionRequired(true)
-                .build();
-        generator.init(spec);
-        return generator.generateKey();
+    /**
+     * Isolated so Android 5.x devices do not need to load API 23 Keystore classes.
+     */
+    private static final class Api23KeyStore {
+        private static SecretKey getOrCreateKey() throws Exception {
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore.load(null);
+            if (keyStore.containsAlias(KEY_ALIAS)) {
+                KeyStore.Entry entry = keyStore.getEntry(KEY_ALIAS, null);
+                if (entry instanceof KeyStore.SecretKeyEntry) {
+                    return ((KeyStore.SecretKeyEntry) entry).getSecretKey();
+                }
+                throw new IllegalStateException("Android Keystore key entry has an unexpected type");
+            }
+
+            KeyGenerator generator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+            KeyGenParameterSpec spec = new KeyGenParameterSpec.Builder(KEY_ALIAS,
+                    KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .setRandomizedEncryptionRequired(true)
+                    .build();
+            generator.init(spec);
+            return generator.generateKey();
+        }
     }
 }
