@@ -294,7 +294,7 @@ public class JavaRuntimeManagerFragment extends Fragment {
             statusColor = R.color.novacraft_text_muted;
         } else if (!cardData.compatible) {
             statusText = R.string.novacraft_runtime_status_incompatible;
-            statusColor = R.color.warning_text;
+            statusColor = R.color.novacraft_text_muted;
         } else if (cardData.active) {
             statusText = R.string.novacraft_runtime_status_active;
             statusColor = R.color.novacraft_accent;
