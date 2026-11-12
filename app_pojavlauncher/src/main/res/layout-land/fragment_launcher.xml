@@ -128,6 +128,15 @@
                 android:drawableStart="@drawable/ic_setting_java_runtime"
                 android:text="@string/novacraft_runtime_button"
                 app:layout_constraintTop_toBottomOf="@id/packs_button" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/performance_optimizer_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_setting_engine"
+                android:text="@string/novacraft_performance_button"
+                app:layout_constraintTop_toBottomOf="@id/runtime_manager_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

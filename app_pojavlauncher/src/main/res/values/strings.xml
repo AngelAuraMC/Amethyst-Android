@@ -852,5 +852,41 @@
     <string name="novacraft_runtime_import_started">Runtime import started. Refresh the dashboard after installation finishes.</string>
     <string name="novacraft_runtime_help">Use the runtime manager to install Java 8, 17, 21, or 25 where supported, set the launcher default, or remove unused builds. Runtime downloads require internet and free storage. Minecraft version requirements are taken from the version metadata, not guessed from the version name.</string>
     <string name="novacraft_runtime_scan_failed">Could not scan runtimes: %1$s</string>
+    <!-- NovaCraft Phase 13: device-aware performance presets -->
+    <string name="novacraft_performance_button">Low-End Optimizer</string>
+    <string name="novacraft_performance_title">PERFORMANCE CENTRE</string>
+    <string name="novacraft_performance_subtitle">Device-aware recommendations and safe launcher presets for smoother Minecraft sessions.</string>
+    <string name="novacraft_performance_device">DEVICE PROFILE</string>
+    <string name="novacraft_performance_device_name">%1$s</string>
+    <string name="novacraft_performance_device_stats">%1$d MB total RAM • %2$d MB currently available • %3$d CPU cores</string>
+    <string name="novacraft_performance_display">Display: %1$d × %2$d • ABI: %3$s</string>
+    <string name="novacraft_performance_class_low">Device class: Entry-level / memory-conscious</string>
+    <string name="novacraft_performance_class_mid">Device class: Mainstream</string>
+    <string name="novacraft_performance_class_high">Device class: Higher-capacity</string>
+    <string name="novacraft_performance_recommendation">RECOMMENDED STARTING POINT</string>
+    <string name="novacraft_performance_recommendation_low">This device has limited memory or CPU headroom. Start with Performance preset, keep shaders off, and close unused apps before launching.</string>
+    <string name="novacraft_performance_recommendation_mid">Balanced is a good starting point. Reduce render scale only if frame pacing is poor or the device becomes hot.</string>
+    <string name="novacraft_performance_recommendation_high">Balanced or Visual should be reasonable starting points. Actual performance still depends on the GPU, renderer, Minecraft version and mods.</string>
+    <string name="novacraft_performance_current">CURRENT LAUNCHER SETTINGS</string>
+    <string name="novacraft_performance_current_values">Minecraft memory: %1$d MB • Render scale: %2$d%% • Sustained mode: %3$s</string>
+    <string name="novacraft_performance_presets">QUICK PRESETS</string>
+    <string name="novacraft_performance_preset_lite">Performance · low GPU load</string>
+    <string name="novacraft_performance_preset_balanced">Balanced · recommended</string>
+    <string name="novacraft_performance_preset_visual">Visual · full render scale</string>
+    <string name="novacraft_performance_apply_title">Apply %1$s preset?</string>
+    <string name="novacraft_performance_apply_message">This changes Minecraft memory allocation and render-resolution scale. Sustained performance mode is enabled where Android supports it. Changes apply to the next Minecraft launch; the running game is not modified.</string>
+    <string name="novacraft_performance_applied">Preset applied. Changes take effect the next time Minecraft starts.</string>
+    <string name="novacraft_performance_restore">Restore previous settings</string>
+    <string name="novacraft_performance_restore_none">There are no saved settings to restore.</string>
+    <string name="novacraft_performance_restore_title">Restore previous performance settings?</string>
+    <string name="novacraft_performance_restored">Previous launcher settings restored.</string>
+    <string name="novacraft_performance_sustained_yes">On</string>
+    <string name="novacraft_performance_sustained_no">Off</string>
+    <string name="novacraft_performance_free_ram_warning">Available system memory is currently tight. Close background apps before launching; do not increase Minecraft allocation to compensate.</string>
+    <string name="novacraft_performance_tips_title">IN-GAME TIPS</string>
+    <string name="novacraft_performance_tips">For low-end phones: try 6–8 chunks render distance, turn off shaders, reduce particles and clouds, use Fast graphics, and avoid large modpacks. These in-game options are recommendations only; NovaCraft does not silently change a world's settings.</string>
+    <string name="novacraft_performance_open_video">Video &amp; renderer settings</string>
+    <string name="novacraft_performance_open_java">Java &amp; memory settings</string>
+    <string name="novacraft_performance_no_preferences">Launcher settings are not ready yet. Reopen the optimizer from the main menu.</string>
 
 </resources>
