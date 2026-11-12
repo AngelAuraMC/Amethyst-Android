@@ -65,6 +65,22 @@ def getCFApiKey = {
     return "DUMMY";
 }
 
+
+def novacraftReleaseKeystorePath = System.getenv("NOVACRAFT_RELEASE_KEYSTORE_PATH")
+def novacraftReleaseStorePassword = System.getenv("NOVACRAFT_RELEASE_STORE_PASSWORD")
+def novacraftReleaseKeyPassword = System.getenv("NOVACRAFT_RELEASE_KEY_PASSWORD")
+def novacraftReleaseKeyAlias = System.getenv("NOVACRAFT_RELEASE_KEY_ALIAS")
+def novacraftReleaseKeystore = novacraftReleaseKeystorePath
+        ? file(novacraftReleaseKeystorePath)
+        : file("missing-novacraft-release-key.jks")
+def novacraftReleaseRequested = gradle.startParameter.taskNames.any {
+    it.toLowerCase().contains("release")
+}
+if (novacraftReleaseRequested && (!novacraftReleaseKeystorePath
+        || !novacraftReleaseStorePassword || !novacraftReleaseKeyPassword || !novacraftReleaseKeyAlias)) {
+    throw new GradleException("Signed NovaCraft Release requires the four NOVACRAFT_RELEASE_* environment values. Never commit a keystore to Git.");
+}
+
 configurations {
     instrumentedClasspath {
         canBeConsumed = false
@@ -86,10 +102,10 @@ android {
             keyPassword "android"
         }
         customRelease {
-            storeFile file("aamc_upload.jks")
-            storePassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
-            keyAlias "android_github_release"
-            keyPassword System.getenv("GPLAY_KEYSTORE_PASSWORD")
+            storeFile novacraftReleaseKeystore
+            storePassword novacraftReleaseStorePassword ?: ""
+            keyAlias novacraftReleaseKeyAlias ?: "novacraft_release"
+            keyPassword novacraftReleaseKeyPassword ?: ""
         }
         googlePlayBuild {
             storeFile file("upload.jks")
@@ -216,6 +232,7 @@ afterEvaluate {
 }
 
 dependencies {
+    testImplementation 'junit:junit:4.13.2'
     implementation 'javax.annotation:javax.annotation-api:1.3.2'
     implementation 'commons-codec:commons-codec:1.15'
     // implementation 'com.wu-man:android-bsf-api:3.1.3'

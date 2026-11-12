@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+      NOVACRAFT_RELEASE_KEYSTORE_BASE64: ${{ secrets.NOVACRAFT_RELEASE_KEYSTORE_BASE64 }}
+      NOVACRAFT_RELEASE_STORE_PASSWORD: ${{ secrets.NOVACRAFT_RELEASE_STORE_PASSWORD }}
+      NOVACRAFT_RELEASE_KEY_PASSWORD: ${{ secrets.NOVACRAFT_RELEASE_KEY_PASSWORD }}
+      NOVACRAFT_RELEASE_KEY_ALIAS: ${{ secrets.NOVACRAFT_RELEASE_KEY_ALIAS }}
 
     steps:
       - name: Checkout source
@@ -49,6 +53,9 @@ jobs:
           bash ./scripts/languagelist_updater.sh
           mkdir -p out
 
+      - name: Run NovaCraft unit tests
+        run: gradle :app_pojavlauncher:testDebugUnitTest
+
       - name: Build Debug APK only
         run: |
           gradle :app_pojavlauncher:assembleDebug
@@ -56,6 +63,33 @@ jobs:
 
       - name: Generate checksum
         run: md5sum out/app-debug.apk > out/app-debug.md5
+
+      - name: Prepare protected release signing key
+        if: ${{ env.NOVACRAFT_RELEASE_KEYSTORE_BASE64 != '' && env.NOVACRAFT_RELEASE_STORE_PASSWORD != '' && env.NOVACRAFT_RELEASE_KEY_PASSWORD != '' && env.NOVACRAFT_RELEASE_KEY_ALIAS != '' }}
+        run: |
+          printf '%s' "$NOVACRAFT_RELEASE_KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/novacraft-release.jks"
+          test -s "$RUNNER_TEMP/novacraft-release.jks"
+          echo "NOVACRAFT_RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/novacraft-release.jks" >> "$GITHUB_ENV"
+
+      - name: Build signed NovaCraft Release APK
+        if: ${{ env.NOVACRAFT_RELEASE_KEYSTORE_BASE64 != '' && env.NOVACRAFT_RELEASE_STORE_PASSWORD != '' && env.NOVACRAFT_RELEASE_KEY_PASSWORD != '' && env.NOVACRAFT_RELEASE_KEY_ALIAS != '' }}
+        run: |
+          gradle :app_pojavlauncher:assembleRelease
+          mkdir -p out/release
+          cp app_pojavlauncher/build/outputs/apk/release/app_pojavlauncher-release.apk out/release/NovaCraft-Android-Release.apk
+          sha256sum out/release/NovaCraft-Android-Release.apk > out/release/NovaCraft-Android-Release.sha256
+
+      - name: Upload signed Release APK
+        if: ${{ env.NOVACRAFT_RELEASE_KEYSTORE_BASE64 != '' && env.NOVACRAFT_RELEASE_STORE_PASSWORD != '' && env.NOVACRAFT_RELEASE_KEY_PASSWORD != '' && env.NOVACRAFT_RELEASE_KEY_ALIAS != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: NovaCraft-Android-Release
+          path: out/release/*
+          if-no-files-found: error
+
+      - name: Explain release signing setup
+        if: ${{ env.NOVACRAFT_RELEASE_KEYSTORE_BASE64 == '' || env.NOVACRAFT_RELEASE_STORE_PASSWORD == '' || env.NOVACRAFT_RELEASE_KEY_PASSWORD == '' || env.NOVACRAFT_RELEASE_KEY_ALIAS == '' }}
+        run: echo "Signed release skipped. Configure the four NOVACRAFT_RELEASE_* GitHub Actions secrets to enable it."
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4

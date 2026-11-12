@@ -40,6 +40,13 @@ Actual compatibility depends on the Minecraft version, Java runtime, Android dev
 - Short application name changed to **NovaCraft**.
 - Foreground-service notification and fatal-error wording updated to NovaCraft.
 - A GitHub Actions workflow builds a **Debug APK** and uploads it as an artifact.
+- Mod compatibility inspection for declared dependencies, conflicts, and Minecraft version metadata.
+- Resource-pack and shader-pack import, validation, and visibility management.
+- A Java runtime centre with ABI-aware runtime guidance and the existing runtime installer.
+- Low-end performance presets that adjust launcher memory allocation and render scale.
+- A local backup and restore centre for worlds, mods, packs, profile settings, and the NovaCraft skin library.
+- A local PNG skin library with a touch-rotatable 3D-style avatar preview. Skin changes are not uploaded to online accounts.
+- Full backup verification with ZIP entry validation, CRC checks, an extraction-size limit, and a SHA-256 fingerprint.
 
 The full custom home screen, icon, themes, animated backgrounds, and additional modules are still part of the development plan unless implemented in the source.
 
@@ -129,7 +136,18 @@ Official source: [Minecraft News and Articles](https://www.minecraft.net/en-us/a
 6. Under **Artifacts**, download `NovaCraft-Android-Debug`.
 7. Extract the downloaded ZIP to obtain the debug APK.
 
-The current workflow builds a **Debug APK**. It is not a production-signed release package.
+The workflow runs NovaCraft backup unit tests and builds a **Debug APK**. A signed Release APK is also built when all four protected signing secrets described below are configured; otherwise release signing is explicitly skipped and the debug artifact remains clearly labelled.
+
+### Optional signed Release APK
+
+For a signed release, create a **new** private keystore outside the repository. Add these repository secrets under **Settings → Secrets and variables → Actions**:
+
+- `NOVACRAFT_RELEASE_KEYSTORE_BASE64`: one-line Base64 encoding of the new keystore file.
+- `NOVACRAFT_RELEASE_STORE_PASSWORD`: keystore password.
+- `NOVACRAFT_RELEASE_KEY_PASSWORD`: private-key password.
+- `NOVACRAFT_RELEASE_KEY_ALIAS`: alias stored in that keystore.
+
+The workflow decodes the secret keystore only into the temporary GitHub runner. Never paste passwords into chat or commit a keystore/base64 file. Until all four secrets exist, CI builds only the debug APK. A release should not be labelled production-ready until its signing identity, update path, and on-device installation have been checked.
 
 ### Build locally
 
@@ -185,6 +203,7 @@ Open issues in the [NovaCraft issue tracker](https://github.com/kritikakumari097
 - Archive extraction must validate paths and reject unsafe entries.
 - Downloads should be checked when reliable integrity information is available.
 - Existing worlds and installations should be protected from accidental destructive changes.
+- Production signing material must be supplied through protected GitHub Actions secrets and never committed to Git. Treat the legacy keystore already present in repository history as exposed; do not use it for a new public release. If an APK signed with that key has already been distributed, do not rotate signing identity blindly because Android will reject updates signed by a different key.
 - Online catalogues and news must use permitted sources and respect their terms.
 
 ## License and upstream acknowledgements

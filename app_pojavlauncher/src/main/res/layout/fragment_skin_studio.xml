@@ -91,6 +91,14 @@
             </LinearLayout>
         </LinearLayout>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/novacraft_skin_rotate_hint"
+            android:textColor="@color/secondary_text"
+            android:textSize="10sp" />
+
         <Button
             android:id="@+id/skin_studio_upload"
             android:layout_width="match_parent"

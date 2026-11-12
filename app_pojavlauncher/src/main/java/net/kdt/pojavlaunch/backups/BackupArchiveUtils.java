@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.zip.CRC32;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -54,12 +57,14 @@ public final class BackupArchiveUtils {
         if (selectedCategories == null || selectedCategories.isEmpty()) {
             throw new IOException("Select at least one backup category.");
         }
-        File parent = outputFile.getParentFile();
-        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+        File absoluteOutput = outputFile.getAbsoluteFile();
+        File parent = absoluteOutput.getParentFile();
+        if (parent == null) throw new IOException("Invalid backup destination.");
+        if (!parent.exists() && !parent.mkdirs()) {
             throw new IOException("Unable to create backup directory.");
         }
 
-        File temporary = new File(outputFile.getParentFile(), outputFile.getName() + ".partial");
+        File temporary = new File(parent, absoluteOutput.getName() + ".partial");
         if (temporary.exists() && !temporary.delete()) throw new IOException("Unable to clear partial backup.");
 
         long entries = 0;
@@ -120,11 +125,20 @@ public final class BackupArchiveUtils {
             temporary.delete();
             throw new IOException("The selected categories contain no files to back up.");
         }
-        if (outputFile.exists() && !outputFile.delete()) {
-            temporary.delete();
-            throw new IOException("Unable to replace previous backup.");
+        // Never silently replace an earlier backup if two snapshots share a timestamp.
+        File finalOutput = absoluteOutput;
+        if (finalOutput.exists()) {
+            String name = absoluteOutput.getName();
+            int dot = name.lastIndexOf('.');
+            String baseName = dot > 0 ? name.substring(0, dot) : name;
+            String extension = dot > 0 ? name.substring(dot) : "";
+            int index = 2;
+            do {
+                finalOutput = new File(parent, baseName + "_" + index + extension);
+                index++;
+            } while (finalOutput.exists());
         }
-        if (!temporary.renameTo(outputFile)) {
+        if (!temporary.renameTo(finalOutput)) {
             temporary.delete();
             throw new IOException("Unable to finish backup archive.");
         }
@@ -239,6 +253,60 @@ public final class BackupArchiveUtils {
             }
             return new String(output.toByteArray(), "UTF-8");
         }
+    }
+
+
+    /**
+     * Fully reads every payload entry before a backup is trusted for restore.
+     * This catches corrupt ZIP entries and CRC failures, enforces the extraction
+     * ceiling, and returns a SHA-256 fingerprint of the ZIP bytes.
+     */
+    public static VerificationResult verifyBackup(File archive) throws IOException {
+        validateBackup(archive);
+        int payloadEntries = 0;
+        long totalBytes = 0;
+        try (ZipFile zip = new ZipFile(archive)) {
+            Enumeration<? extends ZipEntry> entries = zip.entries();
+            byte[] buffer = new byte[32768];
+            while (entries.hasMoreElements()) {
+                ZipEntry entry = entries.nextElement();
+                if (MANIFEST.equals(entry.getName())) continue;
+                if (++payloadEntries > MAX_ENTRIES) throw new IOException("Archive contains too many entries.");
+                CRC32 crc = new CRC32();
+                long entryBytes = 0;
+                try (InputStream input = new BufferedInputStream(zip.getInputStream(entry))) {
+                    int read;
+                    while ((read = input.read(buffer)) != -1) {
+                        entryBytes += read;
+                        totalBytes += read;
+                        if (totalBytes > MAX_RESTORE_BYTES) throw new IOException("Archive exceeds the 4 GB extraction safety limit.");
+                        crc.update(buffer, 0, read);
+                    }
+                }
+                if (entry.getSize() != entryBytes) throw new IOException("Archive entry size does not match its contents.");
+                if (entry.getCrc() >= 0 && entry.getCrc() != crc.getValue()) {
+                    throw new IOException("Archive entry failed its CRC integrity check.");
+                }
+            }
+        }
+        return new VerificationResult(payloadEntries, totalBytes, sha256(archive));
+    }
+
+    private static String sha256(File file) throws IOException {
+        final MessageDigest digest;
+        try {
+            digest = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException error) {
+            throw new IOException("SHA-256 is unavailable on this device.", error);
+        }
+        byte[] buffer = new byte[32768];
+        try (InputStream input = new BufferedInputStream(new FileInputStream(file))) {
+            int read;
+            while ((read = input.read(buffer)) != -1) digest.update(buffer, 0, read);
+        }
+        StringBuilder result = new StringBuilder(64);
+        for (byte value : digest.digest()) result.append(String.format(Locale.US, "%02x", value & 0xff));
+        return result.toString();
     }
 
     public static RestoreResult restoreBackup(File archive, File gameDirectory, File skinDirectory) throws IOException {
@@ -419,6 +487,18 @@ public final class BackupArchiveUtils {
         if (bytes >= 1024L * 1024L * 1024L) return String.format(Locale.US, "%.2f GB", bytes / (1024.0 * 1024.0 * 1024.0));
         if (bytes >= 1024L * 1024L) return String.format(Locale.US, "%.1f MB", bytes / (1024.0 * 1024.0));
         return String.format(Locale.US, "%.0f KB", Math.max(1.0, bytes / 1024.0));
+    }
+
+
+    public static class VerificationResult {
+        public final int payloadEntries;
+        public final long uncompressedBytes;
+        public final String sha256;
+        VerificationResult(int payloadEntries, long uncompressedBytes, String sha256) {
+            this.payloadEntries=payloadEntries;
+            this.uncompressedBytes=uncompressedBytes;
+            this.sha256=sha256;
+        }
     }
 
     public static class RestoreResult {

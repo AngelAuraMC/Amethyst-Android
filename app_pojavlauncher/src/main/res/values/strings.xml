@@ -908,6 +908,10 @@
     <string name="novacraft_backup_history">LOCAL BACKUP HISTORY</string>
     <string name="novacraft_backup_empty">No local backups yet. Choose categories and create your first snapshot.</string>
     <string name="novacraft_backup_status_working">Working on backup...</string>
+    <string name="novacraft_backup_status_verifying">Checking archive contents and integrity...</string>
+    <string name="novacraft_backup_verify">Verify integrity</string>
+    <string name="novacraft_backup_verified">Verified %1$d files (%2$s). SHA-256: %3$s</string>
+    <string name="novacraft_backup_verify_failed">Verification failed: %1$s</string>
     <string name="novacraft_backup_created">Backup created successfully.</string>
     <string name="novacraft_backup_imported">Backup archive imported and validated.</string>
     <string name="novacraft_backup_invalid">This is not a valid NovaCraft backup ZIP.</string>
@@ -950,6 +954,7 @@
     <string name="novacraft_skin_dimensions">%1$d x %2$d PNG</string>
     <string name="novacraft_skin_selected">Selected for preview</string>
     <string name="novacraft_skin_preview_label">FRONT VIEW</string>
+    <string name="novacraft_skin_rotate_hint">Drag the avatar left or right to rotate the preview.</string>
     <string name="novacraft_skin_texture_label">SKIN TEXTURE</string>
     <string name="novacraft_skin_export_failed">Could not export skin: %1$s</string>
 

@@ -264,6 +264,28 @@ public class BackupManagerFragment extends Fragment {
         }, "NovaCraft-Backup-Export").start();
     }
 
+
+    private void verifyBackup(File archive) {
+        setBusy(true, R.string.novacraft_backup_status_verifying);
+        new Thread(() -> {
+            try {
+                BackupArchiveUtils.VerificationResult result = BackupArchiveUtils.verifyBackup(archive);
+                mainHandler.post(() -> {
+                    if (!isAdded()) return;
+                    setBusy(false, 0);
+                    showStatus(getString(R.string.novacraft_backup_verified,
+                            result.payloadEntries, BackupArchiveUtils.formatBytes(result.uncompressedBytes), result.sha256));
+                });
+            } catch (Exception error) {
+                mainHandler.post(() -> {
+                    if (!isAdded()) return;
+                    setBusy(false, 0);
+                    showStatus(getString(R.string.novacraft_backup_verify_failed, message(error)));
+                });
+            }
+        }, "NovaCraft-Backup-Verify").start();
+    }
+
     private void confirmRestore(File archive) {
         new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.novacraft_backup_restore_title)
@@ -367,6 +389,13 @@ public class BackupManagerFragment extends Fragment {
         LinearLayout.LayoutParams actionsParams = new LinearLayout.LayoutParams(-1, -2);
         actionsParams.topMargin = dp(5);
         card.addView(actions, actionsParams);
+
+        Button verify = new Button(requireContext());
+        verify.setText(R.string.novacraft_backup_verify);
+        verify.setOnClickListener(v -> verifyBackup(backup));
+        LinearLayout.LayoutParams verifyParams = new LinearLayout.LayoutParams(-1, -2);
+        verifyParams.topMargin = dp(2);
+        card.addView(verify, verifyParams);
 
         LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(-1, -2);
         cardParams.bottomMargin = dp(8);
