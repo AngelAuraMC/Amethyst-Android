@@ -798,4 +798,26 @@
     <string name="novacraft_launch_mod_continue">Launch anyway</string>
     <string name="novacraft_launch_mod_checking">Checking installed mods…</string>
 
+
+    <!-- NovaCraft Phase 11: Resource packs and shader packs -->
+    <string name="novacraft_packs_button">Resource Packs &amp; Shaders</string>
+    <string name="novacraft_pack_manager_title">PACKS MANAGER</string>
+    <string name="novacraft_resourcepacks_tab">Resource Packs</string>
+    <string name="novacraft_shaderpacks_tab">Shader Packs</string>
+    <string name="novacraft_resourcepacks_help">Install .zip resource packs here. NovaCraft validates pack.mcmeta and displays the declared pack format. To activate a pack, open Minecraft Options → Resource Packs and select it in-game.</string>
+    <string name="novacraft_shaderpacks_help">Install shader-pack .zip files here. Shaders require a compatible shader mod such as Iris or OptiFine and a supported renderer. Importing only makes a pack available; select it in the shader settings in-game.</string>
+    <string name="novacraft_pack_profile">Active installation: %1$s</string>
+    <string name="novacraft_pack_summary">%1$d available • %2$d hidden</string>
+    <string name="novacraft_pack_import">Import ZIP</string>
+    <string name="novacraft_pack_available">AVAILABLE IN-GAME</string>
+    <string name="novacraft_pack_hidden">HIDDEN FROM IN-GAME LIST</string>
+    <string name="novacraft_pack_hide">Hide</string>
+    <string name="novacraft_pack_show">Show</string>
+    <string name="novacraft_pack_empty">No valid packs found in this profile yet. Import a .zip resource pack or shader pack.</string>
+    <string name="novacraft_pack_folder_error">Unable to create or access the active installation pack folder.</string>
+    <string name="novacraft_pack_import_success">Pack imported and validated. Select it from Minecraft's in-game pack settings.</string>
+    <string name="novacraft_pack_remove_title">Remove pack?</string>
+    <string name="novacraft_pack_remove_message">Permanently remove %1$s from this installation?</string>
+    <string name="novacraft_pack_file_action_failed">Pack action failed: %1$s</string>
+
 </resources>
