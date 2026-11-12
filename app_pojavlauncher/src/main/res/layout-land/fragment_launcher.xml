@@ -90,12 +90,28 @@
                 app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
 
             <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/worlds_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:drawableStart="@drawable/ic_folder"
+                android:text="@string/novacraft_worlds_title"
+                app:layout_constraintTop_toBottomOf="@id/open_files_button" />
+
+            <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/accounts_button"
                 style="@style/LauncherMenuButton.Universal"
                 android:layout_width="match_parent"
                 android:drawableStart="@drawable/ic_add"
                 android:text="@string/novacraft_accounts_button"
-                app:layout_constraintTop_toBottomOf="@id/open_files_button" />
+                app:layout_constraintTop_toBottomOf="@id/worlds_button" />
+
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/mods_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:drawableStart="@drawable/ic_add_modded"
+                android:text="@string/novacraft_mod_manager_button"
+                app:layout_constraintTop_toBottomOf="@id/accounts_button" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

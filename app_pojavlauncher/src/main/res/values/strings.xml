@@ -745,4 +745,38 @@
     <string name="novacraft_account_remove_failed">Could not remove this saved profile.</string>
     <string name="novacraft_accounts_auth_note">Sign-in methods currently wired into this build: Microsoft and local/offline profiles. Ely.by authentication is not implemented in this build yet. No passwords or session tokens are displayed on this screen.</string>
 
+
+    <!-- NovaCraft Phase 9: Mods and modpacks -->
+    <string name="novacraft_mod_manager_button">Mods &amp; Modpacks</string>
+    <string name="novacraft_mod_manager_title">MODS MANAGER</string>
+    <string name="novacraft_mod_profile_summary">Profile: %1$s • Loader: %2$s</string>
+    <string name="novacraft_profile_default">Default profile</string>
+    <string name="novacraft_profile_unknown">Unknown version</string>
+    <string name="novacraft_loader_not_detected">Not detected</string>
+    <string name="novacraft_mods_summary">%1$d enabled • %2$d disabled</string>
+    <string name="novacraft_mod_import">Import JAR</string>
+    <string name="novacraft_mod_browse">Browse mods</string>
+    <string name="novacraft_mod_empty">No .jar mods found in this profile yet. Import a mod or browse Modrinth and CurseForge.</string>
+    <string name="novacraft_mod_enabled">ENABLED</string>
+    <string name="novacraft_mod_disabled">DISABLED</string>
+    <string name="novacraft_mod_disable">Disable</string>
+    <string name="novacraft_mod_enable">Enable</string>
+    <string name="novacraft_mod_remove_title">Remove mod?</string>
+    <string name="novacraft_mod_remove_message">Permanently remove %1$s from this profile?</string>
+    <string name="novacraft_mod_compatibility_warning">Compatibility warning</string>
+    <string name="novacraft_mod_loader_mismatch">This mod declares the %1$s loader, but the selected profile appears to use %2$s. Enabling it may prevent Minecraft from starting.</string>
+    <string name="novacraft_mod_enable_anyway">Enable anyway</string>
+    <string name="novacraft_mod_file_action_failed">Mod file action failed: %1$s</string>
+    <string name="novacraft_mod_folder_error">Unable to create the active profile mods folder.</string>
+    <string name="novacraft_mod_import_success">Mod JAR imported. Restart Minecraft before testing it.</string>
+    <string name="novacraft_mod_search_hint">Search mods on Modrinth and CurseForge</string>
+    <string name="novacraft_mod_search_error">Unable to search mod providers. Check your connection and try again.</string>
+    <string name="novacraft_mod_search_no_result">No mods matched this search.</string>
+    <string name="novacraft_mod_search_no_compatible_release">No releases match the selected Minecraft version and loader. Try changing the filter or install the matching loader first.</string>
+    <string name="novacraft_mod_install_started">Downloading mod…</string>
+    <string name="novacraft_mod_install_success">Mod installed in the active profile. Restart Minecraft to load it.</string>
+    <string name="novacraft_mod_installed_check_dependencies">Mod downloaded. Check its required dependencies before launching Minecraft.</string>
+    <string name="novacraft_mod_install_failed">Could not install this mod. Check the download or profile folder and try again.</string>
+
+    <string name="novacraft_mod_loader_mismatch_tag">LOADER MISMATCH • %1$s / profile: %2$s</string>
 </resources>

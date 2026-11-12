@@ -21,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import net.kdt.pojavlaunch.R;
 import net.kdt.pojavlaunch.modloaders.modpacks.ModItemAdapter;
+import net.kdt.pojavlaunch.modloaders.modpacks.ModCompatibility;
+import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
+import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.CommonApi;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.ModpackApi;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
@@ -30,6 +33,7 @@ import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 public class SearchModFragment extends Fragment implements ModItemAdapter.SearchResultCallback {
 
     public static final String TAG = "SearchModFragment";
+    public static final String ARG_IS_MODPACK = "novacraft_search_is_modpack";
     private View mOverlay;
     private float mOverlayTopCache; // Padding cache reduce resource lookup
 
@@ -59,6 +63,20 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        mSearchFilters.isModpack = args == null || args.getBoolean(ARG_IS_MODPACK, true);
+        if (!mSearchFilters.isModpack) {
+            try {
+                MinecraftProfile profile = LauncherProfiles.getCurrentProfile();
+                mSearchFilters.mcVersion = ModCompatibility.detectMinecraftVersion(profile.lastVersionId);
+                mSearchFilters.loader = ModCompatibility.detectLoader(profile);
+            } catch (Exception ignored) {}
+        }
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         modpackApi = new CommonApi(context.getString(R.string.curseforge_api_key));
@@ -79,6 +97,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         mFilterButton = view.findViewById(R.id.search_mod_filter);
 
         mDefaultTextColor = mStatusTextView.getTextColors();
+        mSearchEditText.setHint(mSearchFilters.isModpack ? R.string.hint_search_modpack : R.string.novacraft_mod_search_hint);
 
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerview.setAdapter(mModItemAdapter);
@@ -123,11 +142,11 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         switch (error) {
             case ERROR_INTERNAL:
                 mStatusTextView.setTextColor(Color.RED);
-                mStatusTextView.setText(R.string.search_modpack_error);
+                mStatusTextView.setText(mSearchFilters.isModpack ? R.string.search_modpack_error : R.string.novacraft_mod_search_error);
                 break;
             case ERROR_NO_RESULTS:
                 mStatusTextView.setTextColor(mDefaultTextColor);
-                mStatusTextView.setText(R.string.search_modpack_no_result);
+                mStatusTextView.setText(mSearchFilters.isModpack ? R.string.search_modpack_no_result : R.string.novacraft_mod_search_no_result);
                 break;
         }
     }

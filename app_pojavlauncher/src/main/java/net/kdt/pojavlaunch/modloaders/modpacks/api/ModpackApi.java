@@ -4,6 +4,7 @@ package net.kdt.pojavlaunch.modloaders.modpacks.api;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
+import android.widget.Toast;
 
 import com.kdt.mcgui.ProgressLayout;
 
@@ -54,8 +55,36 @@ public interface ModpackApi {
      * @param selectedVersion The selected version
      */
     default void handleInstallation(Context context, ModDetail modDetail, int selectedVersion) {
-        // Doing this here since when starting installation, the progress does not start immediately
-        // which may lead to two concurrent installations (very bad)
+        if (!modDetail.isModpack) {
+            Toast.makeText(context, R.string.novacraft_mod_install_started, Toast.LENGTH_SHORT).show();
+            PojavApplication.sExecutorService.execute(() -> {
+                try {
+                    installMod(modDetail, selectedVersion);
+                    boolean hasDependencies = false;
+                    if (modDetail.dependencies != null && selectedVersion < modDetail.dependencies.length) {
+                        ModDetail.Dependencies[] dependencies = modDetail.dependencies[selectedVersion];
+                        if (dependencies != null) {
+                            for (ModDetail.Dependencies dependency : dependencies) {
+                                if (dependency != null && dependency.dependency_type != null &&
+                                        dependency.dependency_type.toLowerCase(java.util.Locale.ROOT).contains("required")) {
+                                    hasDependencies = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    final int message = hasDependencies
+                            ? R.string.novacraft_mod_installed_check_dependencies
+                            : R.string.novacraft_mod_install_success;
+                    Tools.runOnUiThread(() -> Toast.makeText(context, message, Toast.LENGTH_LONG).show());
+                } catch (IOException e) {
+                    Tools.showErrorRemote(context, R.string.novacraft_mod_install_failed, e);
+                }
+            });
+            return;
+        }
+
+        // For modpacks, loader installation and the original progress workflow remain unchanged.
         ProgressLayout.setProgress(ProgressLayout.INSTALL_MODPACK, 0, R.string.global_waiting);
         PojavApplication.sExecutorService.execute(() -> {
             try {

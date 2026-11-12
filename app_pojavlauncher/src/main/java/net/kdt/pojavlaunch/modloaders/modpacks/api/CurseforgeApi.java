@@ -114,15 +114,37 @@ public class CurseforgeApi implements ModpackApi{
         String[] mcVersionNames = new String[length];
         String[] versionUrls = new String[length];
         String[] hashes = new String[length];
+        String[][] supportedGameVersions = new String[length][];
+        String[][] supportedLoaders = new String[length][];
         ModDetail.Dependencies[][] dependencies = new ModDetail.Dependencies[length][];
         for(int i = 0; i < allModDetails.size(); i++) {
             JsonObject modDetail = allModDetails.get(i);
             versionNames[i] = modDetail.get("displayName").getAsString();
             versionIds[i] = modDetail.get("id").getAsString();
             JsonElement downloadUrl = modDetail.get("downloadUrl");
-            versionUrls[i] = downloadUrl.getAsString();
+            versionUrls[i] = downloadUrl == null || downloadUrl.isJsonNull() ? null : downloadUrl.getAsString();
 
             JsonArray gameVersions = modDetail.getAsJsonArray("gameVersions");
+            ArrayList<String> minecraftVersions = new ArrayList<>();
+            ArrayList<String> loaderVersions = new ArrayList<>();
+            try {
+                for (JsonElement jsonElement : gameVersions) {
+                    String gameVersion = jsonElement.getAsString();
+                    if (sMcVersionPattern.matcher(gameVersion).matches()) {
+                        minecraftVersions.add(gameVersion);
+                    } else {
+                        String lower = gameVersion.toLowerCase(java.util.Locale.ROOT);
+                        if (lower.contains("fabric") || lower.contains("forge") ||
+                                lower.contains("quilt") || lower.contains("neoforge")) {
+                            loaderVersions.add(gameVersion);
+                        }
+                    }
+                }
+            } catch (Exception ignored) {}
+            supportedGameVersions[i] = minecraftVersions.toArray(new String[0]);
+            supportedLoaders[i] = loaderVersions.toArray(new String[0]);
+            mcVersionNames[i] = minecraftVersions.isEmpty() ? null : minecraftVersions.get(0);
+
             try {
                 JsonArray dependenciesJsonArray = modDetail.getAsJsonArray("dependencies");
                 dependencies[i] = new ModDetail.Dependencies[dependenciesJsonArray.size()];
@@ -131,23 +153,16 @@ public class CurseforgeApi implements ModpackApi{
                     dependencies[i][i1] = new ModDetail.Dependencies(
                             GsonJsonUtils.getStringSafe(obj, "modId"),
                             null,
-                            null, // These two are only present on modrinth
+                            null,
                             GsonJsonUtils.getStringSafe(obj, "relationType")
                     );
                 }
             } catch (Exception ignored) {}
-            for(JsonElement jsonElement : gameVersions) {
-                String gameVersion = jsonElement.getAsString();
-                if(!sMcVersionPattern.matcher(gameVersion).matches()) {
-                    continue;
-                }
-                mcVersionNames[i] = gameVersion;
-                break;
-            }
 
             hashes[i] = getSha1FromModData(modDetail);
         }
-        return new ModDetail(item, versionNames, versionIds, mcVersionNames, versionUrls, hashes, dependencies);
+        return new ModDetail(item, versionNames, versionIds, mcVersionNames, versionUrls, hashes, dependencies,
+                supportedGameVersions, supportedLoaders);
     }
 
     private void fillInMissingModItemData(ModItem item) {
@@ -171,7 +186,10 @@ public class CurseforgeApi implements ModpackApi{
 
     @Override
     public ModLoader installMod(ModDetail modDetail, int selectedVersion) throws IOException{
-        //TODO considering only modpacks for now
+        if (!modDetail.isModpack) {
+            SingleModInstaller.install(modDetail, selectedVersion);
+            return null;
+        }
         return ModpackInstaller.installModpack(modDetail, selectedVersion, this::installCurseforgeZip);
     }
 

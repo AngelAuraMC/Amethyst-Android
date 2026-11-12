@@ -33,6 +33,7 @@ import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchFilters;
 import net.kdt.pojavlaunch.modloaders.modpacks.models.SearchResult;
 import net.kdt.pojavlaunch.progresskeeper.TaskCountListener;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Set;
@@ -160,6 +161,7 @@ public class ModItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private Bitmap mThumbnailBitmap;
         private ImageReceiver mImageReceiver;
         private boolean mInstallEnabled;
+        private int[] mVisibleVersionIndices = new int[0];
 
         /* Used to display available versions of the mod(pack) */
         private final SimpleArrayAdapter<String> mVersionAdapter = new SimpleArrayAdapter<>(null);
@@ -175,10 +177,14 @@ public class ModItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     mExtendedSpinner = mExtendedLayout.findViewById(R.id.mod_extended_version_spinner);
                     mExtendedErrorTextView = mExtendedLayout.findViewById(R.id.mod_extended_error_textview);
 
-                    mExtendedButton.setOnClickListener(v1 -> mModpackApi.handleInstallation(
-                            mExtendedButton.getContext().getApplicationContext(),
-                            mModDetail,
-                            mExtendedSpinner.getSelectedItemPosition()));
+                    mExtendedButton.setOnClickListener(v1 -> {
+                        int visiblePosition = mExtendedSpinner.getSelectedItemPosition();
+                        if (mModDetail == null || visiblePosition < 0 || visiblePosition >= mVisibleVersionIndices.length) return;
+                        mModpackApi.handleInstallation(
+                                mExtendedButton.getContext().getApplicationContext(),
+                                mModDetail,
+                                mVisibleVersionIndices[visiblePosition]);
+                    });
                     mExtendedSpinner.setAdapter(mLoadingAdapter);
                 } else {
                     if(isExtended()) closeDetailedView();
@@ -231,6 +237,7 @@ public class ModItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         /** Display basic info about the moditem */
         public void setStateLimited(ModItem item) {
             mModDetail = null;
+            mVisibleVersionIndices = new int[0];
             if(mThumbnailBitmap != null) {
                 mIconView.setImageBitmap(null);
                 mThumbnailBitmap.recycle();
@@ -269,11 +276,46 @@ public class ModItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         /** Display extended info/interaction about a modpack */
         private void setStateDetailed(ModDetail detailedItem) {
             if(detailedItem != null) {
-                setInstallEnabled(true);
-                mExtendedErrorTextView.setVisibility(View.GONE);
-                mVersionAdapter.setObjects(Arrays.asList(detailedItem.versionNames));
+                ArrayList<String> visibleNames = new ArrayList<>();
+                ArrayList<Integer> visibleIndices = new ArrayList<>();
+                for (int i = 0; i < detailedItem.versionNames.length; i++) {
+                    boolean compatible = true;
+                    if (!detailedItem.isModpack && mSearchFilters != null) {
+                        String targetVersion = mSearchFilters.mcVersion;
+                        String targetLoader = mSearchFilters.loader;
+                        if (targetVersion != null && !targetVersion.isEmpty()) {
+                            String[] gameVersions = detailedItem.supportedGameVersions != null &&
+                                    i < detailedItem.supportedGameVersions.length
+                                    ? detailedItem.supportedGameVersions[i] : null;
+                            compatible = ModCompatibility.matchesAny(gameVersions, targetVersion);
+                        }
+                        if (compatible && targetLoader != null && !targetLoader.isEmpty()) {
+                            String[] loaders = detailedItem.supportedLoaders != null &&
+                                    i < detailedItem.supportedLoaders.length
+                                    ? detailedItem.supportedLoaders[i] : null;
+                            compatible = ModCompatibility.loaderMatches(loaders, targetLoader);
+                        }
+                    }
+                    if (compatible) {
+                        visibleNames.add(detailedItem.versionNames[i]);
+                        visibleIndices.add(i);
+                    }
+                }
+                mVisibleVersionIndices = new int[visibleIndices.size()];
+                for (int i = 0; i < visibleIndices.size(); i++) mVisibleVersionIndices[i] = visibleIndices.get(i);
+
+                mVersionAdapter.setObjects(visibleNames);
                 mExtendedSpinner.setAdapter(mVersionAdapter);
+                if (visibleNames.isEmpty()) {
+                    setInstallEnabled(false);
+                    mExtendedErrorTextView.setText(R.string.novacraft_mod_search_no_compatible_release);
+                    mExtendedErrorTextView.setVisibility(View.VISIBLE);
+                } else {
+                    setInstallEnabled(true);
+                    mExtendedErrorTextView.setVisibility(View.GONE);
+                }
             } else {
+                mVisibleVersionIndices = new int[0];
                 closeDetailedView();
                 setInstallEnabled(false);
                 mExtendedErrorTextView.setVisibility(View.VISIBLE);

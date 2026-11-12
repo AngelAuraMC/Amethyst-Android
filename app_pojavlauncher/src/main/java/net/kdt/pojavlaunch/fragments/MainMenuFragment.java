@@ -63,6 +63,7 @@ public class MainMenuFragment extends Fragment {
         Button mOpenDirectoryButton = view.findViewById(R.id.open_files_button);
         Button mWorldsButton = view.findViewById(R.id.worlds_button);
         Button mAccountsButton = view.findViewById(R.id.accounts_button);
+        Button mModsButton = view.findViewById(R.id.mods_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -100,6 +101,7 @@ public class MainMenuFragment extends Fragment {
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
         mWorldsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), LauncherPreferenceWorldsFragment.class, "NOVACRAFT_WORLDS_MANAGER", null));
         mAccountsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), AccountManagerFragment.class, AccountManagerFragment.TAG, null));
+        mModsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ModManagerFragment.class, ModManagerFragment.TAG, null));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
             if (Tools.isDemoProfile(v.getContext())){ // Say a different message when on demo profile since they might see the hidden demo folder

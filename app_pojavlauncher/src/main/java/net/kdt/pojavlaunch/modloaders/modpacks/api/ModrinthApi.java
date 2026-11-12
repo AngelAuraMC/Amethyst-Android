@@ -99,6 +99,8 @@ public class ModrinthApi implements ModpackApi{
         String[] mcNames = new String[response.size()];
         String[] urls = new String[response.size()];
         String[] hashes = new String[response.size()];
+        String[][] supportedGameVersions = new String[response.size()][];
+        String[][] supportedLoaders = new String[response.size()][];
         ModDetail.Dependencies[][] dependencies = new ModDetail.Dependencies[response.size()][];
 
         for (int i=0; i<response.size(); ++i) {
@@ -119,20 +121,47 @@ public class ModrinthApi implements ModpackApi{
                 }
             } catch (Exception ignored) {}
 
-            mcNames[i] = version.get("game_versions").getAsJsonArray().get(0).getAsString();
-            urls[i] = version.get("files").getAsJsonArray().get(0).getAsJsonObject().get("url").getAsString();
-            // Assume there may not be hashes, in case the API changes
-            JsonObject hashesMap = version.getAsJsonArray("files").get(0).getAsJsonObject()
-                    .get("hashes").getAsJsonObject();
-            if(hashesMap == null || hashesMap.get("sha1") == null){
+            JsonArray gameVersions = version.getAsJsonArray("game_versions");
+            java.util.ArrayList<String> gameVersionList = new java.util.ArrayList<>();
+            if (gameVersions != null) {
+                for (JsonElement value : gameVersions) gameVersionList.add(value.getAsString());
+            }
+            supportedGameVersions[i] = gameVersionList.toArray(new String[0]);
+            mcNames[i] = gameVersionList.isEmpty() ? "" : gameVersionList.get(0);
+
+            JsonArray loaders = version.getAsJsonArray("loaders");
+            java.util.ArrayList<String> loaderList = new java.util.ArrayList<>();
+            if (loaders != null) {
+                for (JsonElement value : loaders) loaderList.add(value.getAsString());
+            }
+            supportedLoaders[i] = loaderList.toArray(new String[0]);
+
+            JsonArray files = version.getAsJsonArray("files");
+            JsonObject selectedFile = null;
+            if (files != null && files.size() > 0) {
+                selectedFile = files.get(0).getAsJsonObject();
+                for (JsonElement fileElement : files) {
+                    JsonObject candidate = fileElement.getAsJsonObject();
+                    if (candidate.has("primary") && candidate.get("primary").getAsBoolean()) {
+                        selectedFile = candidate;
+                        break;
+                    }
+                }
+            }
+            if (selectedFile == null || !selectedFile.has("url") || selectedFile.get("url").isJsonNull()) {
+                urls[i] = null;
                 hashes[i] = null;
                 continue;
             }
-
-            hashes[i] = hashesMap.get("sha1").getAsString();
+            urls[i] = selectedFile.get("url").getAsString();
+            JsonObject hashesMap = selectedFile.has("hashes") && selectedFile.get("hashes").isJsonObject()
+                    ? selectedFile.getAsJsonObject("hashes") : null;
+            hashes[i] = hashesMap != null && hashesMap.has("sha1") && !hashesMap.get("sha1").isJsonNull()
+                    ? hashesMap.get("sha1").getAsString() : null;
         }
 
-        return new ModDetail(item, names, ids, mcNames, urls, hashes, dependencies);
+        return new ModDetail(item, names, ids, mcNames, urls, hashes, dependencies,
+                supportedGameVersions, supportedLoaders);
     }
 
     private void fillInMissingModItemData(ModItem item) {
@@ -155,7 +184,10 @@ public class ModrinthApi implements ModpackApi{
 
     @Override
     public ModLoader installMod(ModDetail modDetail, int selectedVersion) throws IOException{
-        //TODO considering only modpacks for now
+        if (!modDetail.isModpack) {
+            SingleModInstaller.install(modDetail, selectedVersion);
+            return null;
+        }
         return ModpackInstaller.installModpack(modDetail, selectedVersion, this::installMrpack);
     }
 
