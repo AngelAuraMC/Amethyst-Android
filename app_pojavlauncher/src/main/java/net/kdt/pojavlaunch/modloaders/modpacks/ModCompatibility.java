@@ -63,7 +63,7 @@ public final class ModCompatibility {
         if ((source.startsWith("[") || source.startsWith("(")) &&
                 !(source.startsWith("[") && source.length() > 1 && source.charAt(1) == '"') &&
                 !source.startsWith("['")) {
-            if (source.length >= 2) {
+            if (source.length() >= 2) {
                 String opening = source.substring(0, 1);
                 String closing = source.substring(source.length() - 1);
                 String body = source.substring(1, source.length() - 1);
