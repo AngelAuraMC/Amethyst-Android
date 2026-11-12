@@ -69,6 +69,8 @@ public class MainMenuFragment extends Fragment {
         Button mPacksButton = view.findViewById(R.id.packs_button);
         Button mRuntimeManagerButton = view.findViewById(R.id.runtime_manager_button);
         Button mPerformanceButton = view.findViewById(R.id.performance_optimizer_button);
+        Button mBackupButton = view.findViewById(R.id.backup_manager_button);
+        Button mSkinButton = view.findViewById(R.id.skin_studio_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -98,6 +100,8 @@ public class MainMenuFragment extends Fragment {
         mPacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), PackManagerFragment.class, PackManagerFragment.TAG, null));
         mRuntimeManagerButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), JavaRuntimeManagerFragment.class, JavaRuntimeManagerFragment.TAG, null));
         mPerformanceButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), PerformanceOptimizerFragment.class, PerformanceOptimizerFragment.TAG, null));
+        mBackupButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), BackupManagerFragment.class, BackupManagerFragment.TAG, null));
+        mSkinButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), SkinStudioFragment.class, SkinStudioFragment.TAG, null));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
             if (Tools.isDemoProfile(v.getContext())){ // Say a different message when on demo profile since they might see the hidden demo folder

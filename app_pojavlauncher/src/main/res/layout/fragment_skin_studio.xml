@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app"
+    android:clipToPadding="false"
+    android:fillViewport="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/fragment_padding_medium"
+        android:paddingTop="@dimen/padding_large"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/novacraft_skin_title"
+            android:textColor="@color/primary_text"
+            android:textSize="23sp"
+            android:fontFamily="sans-serif-black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/novacraft_skin_subtitle"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:text="@string/novacraft_skin_preview_label"
+            android:textColor="@color/novacraft_text_muted"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif-bold"
+            android:letterSpacing="0.12" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/background_overlay"
+            android:padding="10dp">
+
+            <net.kdt.pojavlaunch.views.SkinPreviewView
+                android:id="@+id/skin_studio_avatar"
+                android:layout_width="110dp"
+                android:layout_height="165dp"
+                android:contentDescription="@string/novacraft_skin_preview_label" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingStart="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/novacraft_skin_texture_label"
+                    android:textColor="@color/novacraft_text_muted"
+                    android:textSize="10sp"
+                    android:fontFamily="sans-serif-bold" />
+
+                <ImageView
+                    android:id="@+id/skin_studio_texture"
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="6dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/novacraft_skin_texture_label"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/skin_studio_active"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/novacraft_accent"
+                    android:textSize="11sp"
+                    android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/skin_studio_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="11dp"
+            android:text="@string/novacraft_skin_upload" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="11dp"
+            android:background="@drawable/background_overlay"
+            android:text="@string/novacraft_skin_note"
+            android:textColor="@color/secondary_text"
+            android:textSize="11sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/novacraft_skin_library"
+                android:textColor="@color/novacraft_text_muted"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-bold"
+                android:letterSpacing="0.12" />
+
+            <Button
+                android:id="@+id/skin_studio_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/novacraft_backup_refresh" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/skin_studio_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="13dp"
+            android:background="@drawable/background_overlay"
+            android:text="@string/novacraft_skin_empty"
+            android:textColor="@color/secondary_text"
+            android:textSize="12sp"
+            android:visibility="visible" />
+
+        <LinearLayout
+            android:id="@+id/skin_studio_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical" />
+
+    </LinearLayout>
+</ScrollView>
