@@ -819,5 +819,38 @@
     <string name="novacraft_pack_remove_title">Remove pack?</string>
     <string name="novacraft_pack_remove_message">Permanently remove %1$s from this installation?</string>
     <string name="novacraft_pack_file_action_failed">Pack action failed: %1$s</string>
+    <!-- NovaCraft Phase 12: Java runtime centre -->
+    <string name="novacraft_runtime_button">Java Runtimes</string>
+    <string name="novacraft_runtime_manager_title">JAVA RUNTIME CENTRE</string>
+    <string name="novacraft_runtime_manager_subtitle">Inspect installed Java builds, check device compatibility, and manage the launcher runtime.</string>
+    <string name="novacraft_runtime_device">Device architecture: %1$s</string>
+    <string name="novacraft_runtime_profile">Selected profile: %1$s</string>
+    <string name="novacraft_runtime_profile_version">Minecraft version: %1$s</string>
+    <string name="novacraft_runtime_no_profile">No active Minecraft profile is available.</string>
+    <string name="novacraft_runtime_requirement">Java requirement from version metadata: Java %1$d or newer.</string>
+    <string name="novacraft_runtime_requirement_pending">Java requirement will be read from Minecraft version metadata before launch.</string>
+    <string name="novacraft_runtime_active">Profile runtime: %1$s</string>
+    <string name="novacraft_runtime_active_unknown">Profile runtime: not detected</string>
+    <string name="novacraft_runtime_active_ok">The selected profile runtime meets the detected Java requirement and device architecture.</string>
+    <string name="novacraft_runtime_active_warn">The selected profile runtime may not meet this Minecraft version requirement. Automatic selection can choose a compatible installed build when enabled.</string>
+    <string name="novacraft_runtime_auto_on">Automatic Java selection is ON. NovaCraft uses Minecraft version metadata to select a suitable runtime during launch.</string>
+    <string name="novacraft_runtime_auto_off">Automatic Java selection is OFF. Check the selected runtime before launching different Minecraft versions.</string>
+    <string name="novacraft_runtime_storage">Runtime storage: %1$s</string>
+    <string name="novacraft_runtime_summary">%1$d installed runtimes • %2$d compatible with this device</string>
+    <string name="novacraft_runtime_installed_header">INSTALLED RUNTIMES</string>
+    <string name="novacraft_runtime_empty">No Java runtimes were found. Open Manage runtimes to install a supported build.</string>
+    <string name="novacraft_runtime_card_details">%1$s • ABI: %2$s</string>
+    <string name="novacraft_runtime_status_corrupt">Corrupted runtime metadata</string>
+    <string name="novacraft_runtime_status_incompatible">Different device architecture</string>
+    <string name="novacraft_runtime_status_active">Selected for this profile</string>
+    <string name="novacraft_runtime_status_default">Launcher default</string>
+    <string name="novacraft_runtime_status_ready">Installed and architecture-compatible</string>
+    <string name="novacraft_runtime_downloads">Available builds to install: %1$s</string>
+    <string name="novacraft_runtime_downloads_none">All runtime builds offered for this device are already installed.</string>
+    <string name="novacraft_runtime_manage">Manage / install / remove runtimes</string>
+    <string name="novacraft_runtime_refresh">Refresh status</string>
+    <string name="novacraft_runtime_import_started">Runtime import started. Refresh the dashboard after installation finishes.</string>
+    <string name="novacraft_runtime_help">Use the runtime manager to install Java 8, 17, 21, or 25 where supported, set the launcher default, or remove unused builds. Runtime downloads require internet and free storage. Minecraft version requirements are taken from the version metadata, not guessed from the version name.</string>
+    <string name="novacraft_runtime_scan_failed">Could not scan runtimes: %1$s</string>
 
 </resources>

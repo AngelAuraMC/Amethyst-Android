@@ -67,6 +67,7 @@ public class MainMenuFragment extends Fragment {
         Button mAccountsButton = view.findViewById(R.id.accounts_button);
         Button mModsButton = view.findViewById(R.id.mods_button);
         Button mPacksButton = view.findViewById(R.id.packs_button);
+        Button mRuntimeManagerButton = view.findViewById(R.id.runtime_manager_button);
 
         ImageButton mEditProfileButton = view.findViewById(R.id.edit_profile_button);
         Button mPlayButton = view.findViewById(R.id.play_button);
@@ -94,6 +95,7 @@ public class MainMenuFragment extends Fragment {
         mAccountsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), AccountManagerFragment.class, AccountManagerFragment.TAG, null));
         mModsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), ModManagerFragment.class, ModManagerFragment.TAG, null));
         mPacksButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), PackManagerFragment.class, PackManagerFragment.TAG, null));
+        mRuntimeManagerButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), JavaRuntimeManagerFragment.class, JavaRuntimeManagerFragment.TAG, null));
 
         mOpenDirectoryButton.setOnClickListener((v)-> {
             if (Tools.isDemoProfile(v.getContext())){ // Say a different message when on demo profile since they might see the hidden demo folder

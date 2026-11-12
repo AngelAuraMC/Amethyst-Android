@@ -14,6 +14,7 @@ import net.kdt.pojavlaunch.R;
 public class MultiRTConfigDialog {
     private AlertDialog mDialog;
     private RecyclerView mDialogView;
+    private Runnable mOnDismiss;
 
     /** Show the dialog, refreshes the adapter data before showing it */
     public void show(){
@@ -25,6 +26,10 @@ public class MultiRTConfigDialog {
     public void refresh() {
         RecyclerView.Adapter<?> adapter = mDialogView.getAdapter();
         if(adapter != null) adapter.notifyDataSetChanged();
+    }
+
+    public void setOnDismissListener(Runnable listener) {
+        mOnDismiss = listener;
     }
 
     public MultiRTConfigDialog get() {
@@ -45,6 +50,10 @@ public class MultiRTConfigDialog {
                 .setPositiveButton(R.string.multirt_config_add, (dialog, which) -> installJvmLauncher.launch(null))
                 .setNeutralButton(R.string.multirt_delete_runtime, null)
                 .create();
+
+        mDialog.setOnDismissListener(ignored -> {
+            if (mOnDismiss != null) mOnDismiss.run();
+        });
 
         // Custom button behavior without dismiss
         mDialog.setOnShowListener(dialog -> {

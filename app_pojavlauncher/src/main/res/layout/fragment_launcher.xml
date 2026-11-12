@@ -311,6 +311,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
+            <com.kdt.mcgui.LauncherMenuButton
+                android:id="@+id/runtime_manager_button"
+                style="@style/LauncherMenuButton.Universal"
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:drawableStart="@drawable/ic_setting_java_runtime"
+                android:text="@string/novacraft_runtime_button"
+                app:layout_constraintTop_toBottomOf="@id/packs_button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
             <TextView
                 android:id="@+id/novacraft_home_footer"
                 android:layout_width="match_parent"
@@ -324,7 +335,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:letterSpacing="0.08"
                 android:includeFontPadding="false"
-                app:layout_constraintTop_toBottomOf="@id/packs_button"
+                app:layout_constraintTop_toBottomOf="@id/runtime_manager_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />

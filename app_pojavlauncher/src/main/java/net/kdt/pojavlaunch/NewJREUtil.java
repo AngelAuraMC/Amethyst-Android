@@ -23,6 +23,7 @@ import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -65,14 +66,32 @@ public class NewJREUtil {
         return null;
     }
 
+    /** Reject broken or wrong-ABI runtimes before considering them for automatic selection. */
+    private static boolean isRuntimeDeviceCompatible(Runtime runtime) {
+        return runtime != null
+                && runtime.versionString != null
+                && runtime.javaVersion > 0
+                && runtime.arch != null
+                && Architecture.archAsInt(runtime.arch) == getDeviceArchitecture();
+    }
+
     private static MathUtils.RankedValue<Runtime> getNearestInstalledRuntime(int targetVersion) {
-        List<Runtime> runtimes = MultiRTUtils.getInstalledRuntimes();
-        return MathUtils.findNearestPositive(targetVersion, runtimes, (runtime)->runtime.javaVersion);
+        List<Runtime> compatibleRuntimes = new ArrayList<>();
+        for (Runtime runtime : MultiRTUtils.getInstalledRuntimes()) {
+            if (isRuntimeDeviceCompatible(runtime)) compatibleRuntimes.add(runtime);
+        }
+        return MathUtils.findNearestPositive(targetVersion, compatibleRuntimes, (runtime)->runtime.javaVersion);
     }
 
     private static MathUtils.RankedValue<InternalRuntime> getNearestInternalRuntime(int targetVersion) {
-        List<InternalRuntime> runtimeList = Arrays.asList(InternalRuntime.values());
-        return MathUtils.findNearestPositive(targetVersion, runtimeList, (runtime)->runtime.majorVersion);
+        List<InternalRuntime> compatibleRuntimes = new ArrayList<>();
+        for (InternalRuntime runtime : InternalRuntime.values()) {
+            // The bundled Android x86 builds stop at Java 17; do not choose an absent newer ABI pack.
+            if (!(getDeviceArchitecture() == Architecture.ARCH_X86 && runtime.majorVersion >= 21)) {
+                compatibleRuntimes.add(runtime);
+            }
+        }
+        return MathUtils.findNearestPositive(targetVersion, compatibleRuntimes, (runtime)->runtime.majorVersion);
     }
 
 
@@ -90,7 +109,7 @@ public class NewJREUtil {
         String profileRuntime = Tools.getSelectedRuntime(minecraftProfile);
         Runtime runtime = MultiRTUtils.read(profileRuntime);
         // Partly trust the user with his own selection, if the game can even try to run in this case
-        if (runtime.javaVersion >= gameRequiredVersion) {
+        if (isRuntimeDeviceCompatible(runtime) && runtime.javaVersion >= gameRequiredVersion) {
             // Check whether the selection is an internal runtime
             InternalRuntime internalRuntime = getInternalRuntime(runtime);
             // If it is, check if updates are available from the APK file
