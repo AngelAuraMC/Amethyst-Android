@@ -191,28 +191,32 @@ public class BackupManagerFragment extends Fragment {
     private void onBackupImport(@Nullable Uri uri) {
         if (uri == null || getContext() == null) return;
         setBusy(true, R.string.novacraft_backup_status_working);
+        final android.content.ContentResolver resolver = requireContext().getContentResolver();
+        final File backupDirectory = getBackupDirectory();
+        final String invalidArchiveMessage = getString(R.string.novacraft_backup_invalid);
+        final String tooLargeMessage = getString(R.string.novacraft_backup_too_large);
         new Thread(() -> {
             File temporary = null;
             try {
                 String name = displayName(uri);
                 if (name == null || !name.toLowerCase(Locale.ROOT).endsWith(".zip")) {
-                    throw new java.io.IOException(getString(R.string.novacraft_backup_invalid));
+                    throw new java.io.IOException(invalidArchiveMessage);
                 }
-                temporary = new File(getBackupDirectory(), safeName(name) + ".importing");
+                temporary = new File(backupDirectory, safeName(name) + ".importing");
                 long total = 0;
-                try (InputStream input = requireContext().getContentResolver().openInputStream(uri);
+                try (InputStream input = resolver.openInputStream(uri);
                      OutputStream output = new FileOutputStream(temporary)) {
                     if (input == null) throw new java.io.IOException("Unable to read selected archive.");
                     byte[] buffer = new byte[32768];
                     int read;
                     while ((read = input.read(buffer)) != -1) {
                         total += read;
-                        if (total > MAX_IMPORT_BYTES) throw new java.io.IOException(getString(R.string.novacraft_backup_too_large));
+                        if (total > MAX_IMPORT_BYTES) throw new java.io.IOException(tooLargeMessage);
                         output.write(buffer, 0, read);
                     }
                 }
                 BackupArchiveUtils.validateBackup(temporary);
-                File destination = uniqueBackupFile(new File(getBackupDirectory(), safeName(name)));
+                File destination = uniqueBackupFile(new File(backupDirectory, safeName(name)));
                 if (!temporary.renameTo(destination)) throw new java.io.IOException("Unable to save imported backup.");
                 File finalDestination = destination;
                 mainHandler.post(() -> {
@@ -236,10 +240,11 @@ public class BackupManagerFragment extends Fragment {
         if (uri == null || pendingExport == null || getContext() == null) return;
         File source = pendingExport;
         pendingExport = null;
+        final android.content.ContentResolver resolver = requireContext().getContentResolver();
         setBusy(true, R.string.novacraft_backup_status_working);
         new Thread(() -> {
             try (InputStream input = new java.io.BufferedInputStream(new java.io.FileInputStream(source));
-                 OutputStream output = requireContext().getContentResolver().openOutputStream(uri, "wt")) {
+                 OutputStream output = resolver.openOutputStream(uri, "wt")) {
                 if (output == null) throw new java.io.IOException("Unable to open destination file.");
                 byte[] buffer = new byte[32768];
                 int read;
@@ -269,11 +274,18 @@ public class BackupManagerFragment extends Fragment {
     }
 
     private void restoreBackup(File archive) {
+        final File gameDirectory;
+        final File skinDirectory;
+        try {
+            gameDirectory = getGameDirectory();
+            skinDirectory = getSkinDirectory();
+        } catch (Exception error) {
+            showStatus(getString(R.string.novacraft_backup_restore_failed, message(error)));
+            return;
+        }
         setBusy(true, R.string.novacraft_backup_status_working);
         new Thread(() -> {
             try {
-                File gameDirectory = getGameDirectory();
-                File skinDirectory = getSkinDirectory();
                 BackupArchiveUtils.RestoreResult result =
                         BackupArchiveUtils.restoreBackup(archive, gameDirectory, skinDirectory);
                 mainHandler.post(() -> {
@@ -328,7 +340,7 @@ public class BackupManagerFragment extends Fragment {
         TextView summary = new TextView(requireContext());
         summary.setText(getString(R.string.novacraft_backup_archive_info,
                 BackupArchiveUtils.formatBytes(backup.length()),
-                android.text.format.DateFormat.getMediumDateFormat(requireContext()).format(backup.lastModified())));
+                android.text.format.DateFormat.getMediumDateFormat(requireContext()).format(new java.util.Date(backup.lastModified()))));
         summary.setTextColor(getResources().getColor(R.color.secondary_text));
         summary.setTextSize(11);
         LinearLayout.LayoutParams summaryParams = new LinearLayout.LayoutParams(-1, -2);

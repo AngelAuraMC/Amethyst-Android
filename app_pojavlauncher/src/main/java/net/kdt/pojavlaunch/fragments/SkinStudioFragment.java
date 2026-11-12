@@ -88,22 +88,25 @@ public class SkinStudioFragment extends Fragment {
 
     private void onSkinImport(@Nullable Uri uri) {
         if (uri == null || getContext() == null) return;
+        final android.content.ContentResolver resolver = requireContext().getContentResolver();
+        final File directory = getSkinDirectory();
+        final String tooLargeMessage = getString(R.string.novacraft_skin_too_large);
+        final String invalidSkinMessage = getString(R.string.novacraft_skin_invalid);
         new Thread(() -> {
             File temporary = null;
             try {
                 String originalName = displayName(uri);
                 String safeName = safeSkinName(originalName);
-                File directory = getSkinDirectory();
                 temporary = new File(directory, safeName + ".importing");
                 long total = 0;
-                try (InputStream input = requireContext().getContentResolver().openInputStream(uri);
+                try (InputStream input = resolver.openInputStream(uri);
                      OutputStream output = new FileOutputStream(temporary)) {
                     if (input == null) throw new java.io.IOException("Unable to read selected PNG.");
                     byte[] buffer = new byte[8192];
                     int read;
                     while ((read = input.read(buffer)) != -1) {
                         total += read;
-                        if (total > MAX_SKIN_BYTES) throw new java.io.IOException(getString(R.string.novacraft_skin_too_large));
+                        if (total > MAX_SKIN_BYTES) throw new java.io.IOException(tooLargeMessage);
                         output.write(buffer, 0, read);
                     }
                 }
@@ -111,10 +114,10 @@ public class SkinStudioFragment extends Fragment {
                 bounds.inJustDecodeBounds = true;
                 BitmapFactory.decodeFile(temporary.getAbsolutePath(), bounds);
                 boolean validDimensions = bounds.outWidth == 64 && (bounds.outHeight == 64 || bounds.outHeight == 32);
-                Bitmap decoded = BitmapFactory.decodeFile(temporary.getAbsolutePath());
+                Bitmap decoded = validDimensions ? BitmapFactory.decodeFile(temporary.getAbsolutePath()) : null;
                 if (!validDimensions || decoded == null) {
                     if (decoded != null) decoded.recycle();
-                    throw new java.io.IOException(getString(R.string.novacraft_skin_invalid));
+                    throw new java.io.IOException(invalidSkinMessage);
                 }
                 decoded.recycle();
 
@@ -143,9 +146,10 @@ public class SkinStudioFragment extends Fragment {
         if (uri == null || pendingExport == null || getContext() == null) return;
         File source = pendingExport;
         pendingExport = null;
+        final android.content.ContentResolver resolver = requireContext().getContentResolver();
         new Thread(() -> {
             try (InputStream input = new java.io.BufferedInputStream(new java.io.FileInputStream(source));
-                 OutputStream output = requireContext().getContentResolver().openOutputStream(uri, "wt")) {
+                 OutputStream output = resolver.openOutputStream(uri, "wt")) {
                 if (output == null) throw new java.io.IOException("Unable to open export destination.");
                 byte[] buffer = new byte[8192];
                 int read;
@@ -168,7 +172,14 @@ public class SkinStudioFragment extends Fragment {
         skinList.removeAllViews();
         File[] skins;
         try {
-            skins = getSkinDirectory().listFiles((dir, name) -> name.toLowerCase(Locale.ROOT).endsWith(".png"));
+            skins = getSkinDirectory().listFiles((dir, name) -> {
+                if (!name.toLowerCase(Locale.ROOT).endsWith(".png")) return false;
+                File candidate = new File(dir, name);
+                BitmapFactory.Options bounds = new BitmapFactory.Options();
+                bounds.inJustDecodeBounds = true;
+                BitmapFactory.decodeFile(candidate.getAbsolutePath(), bounds);
+                return bounds.outWidth == 64 && (bounds.outHeight == 64 || bounds.outHeight == 32);
+            });
         } catch (Exception error) {
             skins = null;
         }
