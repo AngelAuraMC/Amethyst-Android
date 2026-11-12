@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_app"
+    android:fillViewport="true"
+    android:clipToPadding="false">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="18dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="28dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/novacraft_accounts_title"
+            android:textColor="@color/primary_text"
+            android:textSize="26sp"
+            android:fontFamily="sans-serif-black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/novacraft_accounts_subtitle"
+            android:textColor="@color/secondary_text"
+            android:textSize="13sp"
+            android:lineSpacingExtra="2dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/novacraft_hero_card"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/novacraft_current_account"
+                android:textColor="@color/novacraft_accent"
+                android:textSize="10sp"
+                android:fontFamily="sans-serif-bold"
+                android:letterSpacing="0.12" />
+
+            <TextView
+                android:id="@+id/novacraft_current_account_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/novacraft_no_active_account"
+                android:textColor="@color/primary_text"
+                android:textSize="21sp"
+                android:fontFamily="sans-serif-bold" />
+
+            <TextView
+                android:id="@+id/novacraft_current_account_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/novacraft_account_choose_hint"
+                android:textColor="@color/secondary_text"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <com.kdt.mcgui.MineButton
+            android:id="@+id/novacraft_add_account_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/novacraft_add_account" />
+
+        <TextView
+            android:id="@+id/novacraft_account_count"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/novacraft_accounts_count_zero"
+            android:textColor="@color/novacraft_text_muted"
+            android:textSize="10sp"
+            android:fontFamily="sans-serif-bold"
+            android:letterSpacing="0.12" />
+
+        <TextView
+            android:id="@+id/novacraft_accounts_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_card"
+            android:padding="18dp"
+            android:text="@string/novacraft_accounts_empty"
+            android:textColor="@color/secondary_text"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/novacraft_accounts_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/background_card"
+            android:padding="14dp"
+            android:text="@string/novacraft_accounts_auth_note"
+            android:textColor="@color/novacraft_text_muted"
+            android:textSize="12sp"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -194,6 +194,55 @@ public class mcAccountSpinner extends AppCompatSpinner implements AdapterView.On
         removeAccount(getSelectedItemPosition());
     }
 
+    /** Reload account files after changes made by the account manager. */
+    public void refreshAccounts(){
+        reloadAccounts(true, 0);
+    }
+
+    /** Select a saved account and let the existing login flow refresh it when needed. */
+    public boolean selectAccount(String username){
+        int position = mAccountList.indexOf(username);
+        if(position <= 0) return false;
+
+        if(getSelectedItemPosition() == position){
+            pickAccount(position);
+            if(mSelectecAccount != null) performLogin(mSelectecAccount);
+        }else{
+            setSelection(position);
+        }
+        return true;
+    }
+
+    /** Remove only the local launcher profile file, never the external Microsoft account. */
+    public boolean removeAccountByName(String username){
+        if(username == null || username.isEmpty()) return false;
+
+        try{
+            File accountFolder = new File(Tools.DIR_ACCOUNT_NEW);
+            File accountFile = new File(accountFolder, username + ".json");
+            if(!accountFile.getCanonicalFile().getParentFile().equals(accountFolder.getCanonicalFile())) return false;
+            if(!accountFile.isFile() || !accountFile.delete()) return false;
+
+            if(username.equals(PojavProfile.getCurrentProfileName(getContext()))){
+                String nextAccount = null;
+                for(String name : PojavProfile.getAllProfilesList()){
+                    MinecraftAccount candidate = MinecraftAccount.load(name);
+                    if(candidate != null){
+                        nextAccount = candidate.username;
+                        break;
+                    }
+                }
+                PojavProfile.setCurrentProfile(getContext(), nextAccount);
+            }
+
+            reloadAccounts(true, 0);
+            return true;
+        }catch(IOException | SecurityException exception){
+            Log.e("McAccountSpinner", "Could not remove saved account", exception);
+            return false;
+        }
+    }
+
     private void removeAccount(int position) {
         if(position == 0) return;
         File accountFile = new File(Tools.DIR_ACCOUNT_NEW, mAccountList.get(position)+".json");

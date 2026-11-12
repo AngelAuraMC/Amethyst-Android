@@ -721,4 +721,28 @@
     <string name="novacraft_curseforge_key_remove">Remove saved API key</string>
     <string name="novacraft_curseforge_key_remove_confirm">Remove the locally saved CurseForge API key? You can add it again later.</string>
 
+
+    <!-- NovaCraft account manager -->
+    <string name="novacraft_accounts_button">Accounts</string>
+    <string name="novacraft_accounts_title">Account manager</string>
+    <string name="novacraft_accounts_subtitle">Manage the Minecraft profiles saved in this launcher.</string>
+    <string name="novacraft_current_account">CURRENT ACCOUNT</string>
+    <string name="novacraft_no_active_account">No active account</string>
+    <string name="novacraft_account_choose_hint">Choose a saved profile or add a sign-in.</string>
+    <string name="novacraft_add_account">Add account</string>
+    <string name="novacraft_accounts_count">%1$d SAVED ACCOUNTS</string>
+    <string name="novacraft_accounts_count_zero">SAVED ACCOUNTS</string>
+    <string name="novacraft_accounts_empty">No saved accounts yet. Add a Microsoft account or create a local offline profile.</string>
+    <string name="novacraft_account_type_microsoft">Microsoft account</string>
+    <string name="novacraft_account_type_offline">Local / offline profile</string>
+    <string name="novacraft_account_type_other">Other saved online profile</string>
+    <string name="novacraft_account_current_refresh">Current account · check session</string>
+    <string name="novacraft_account_use">Use account</string>
+    <string name="novacraft_account_remove">Remove</string>
+    <string name="novacraft_account_remove_title">Remove saved profile?</string>
+    <string name="novacraft_account_remove_message">Remove %1$s from this device? This deletes only its saved launcher profile. It does not delete the external Microsoft account.</string>
+    <string name="novacraft_account_removed">Saved profile removed.</string>
+    <string name="novacraft_account_remove_failed">Could not remove this saved profile.</string>
+    <string name="novacraft_accounts_auth_note">Sign-in methods currently wired into this build: Microsoft and local/offline profiles. Ely.by authentication is not implemented in this build yet. No passwords or session tokens are displayed on this screen.</string>
+
 </resources>
