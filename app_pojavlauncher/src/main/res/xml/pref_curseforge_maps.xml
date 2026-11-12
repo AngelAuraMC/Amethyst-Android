@@ -10,6 +10,17 @@
         android:persistent="false" />
 
     <Preference
+        android:key="curseforge_maps_api_key"
+        android:title="@string/novacraft_curseforge_key_setup_title"
+        android:summary="@string/novacraft_curseforge_key_missing_summary" />
+
+    <Preference
+        android:key="curseforge_maps_remove_api_key"
+        android:title="@string/novacraft_curseforge_key_remove"
+        android:summary="@string/novacraft_curseforge_key_remove_confirm"
+        android:persistent="false" />
+
+    <Preference
         android:key="curseforge_maps_search"
         android:title="@string/novacraft_curseforge_maps_search"
         android:summary="@string/novacraft_curseforge_maps_search_summary" />

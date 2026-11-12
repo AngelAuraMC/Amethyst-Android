@@ -707,4 +707,18 @@
     <string name="novacraft_curseforge_maps_unsafe_archive">The map archive contains an unsafe file path and was rejected.</string>
     <string name="novacraft_curseforge_maps_cancelled">Map installation cancelled.</string>
 
+
+    <string name="novacraft_curseforge_key_setup_title">Configure CurseForge API access</string>
+    <string name="novacraft_curseforge_key_setup_summary">Add your approved CurseForge API key. NovaCraft encrypts it on this device with Android Keystore.</string>
+    <string name="novacraft_curseforge_key_configured_summary">An API key is available. Tap to replace it.</string>
+    <string name="novacraft_curseforge_key_missing_summary">No API key is configured. Search and downloads need an approved CurseForge key.</string>
+    <string name="novacraft_curseforge_key_dialog_title">CurseForge API key</string>
+    <string name="novacraft_curseforge_key_dialog_hint">Paste your approved API key</string>
+    <string name="novacraft_curseforge_key_saved">CurseForge API key saved securely on this device.</string>
+    <string name="novacraft_curseforge_key_removed">Saved CurseForge API key removed.</string>
+    <string name="novacraft_curseforge_key_save_failed">Could not securely save the API key on this device.</string>
+    <string name="novacraft_curseforge_key_invalid">Enter a valid-looking API key without spaces.</string>
+    <string name="novacraft_curseforge_key_remove">Remove saved API key</string>
+    <string name="novacraft_curseforge_key_remove_confirm">Remove the locally saved CurseForge API key? You can add it again later.</string>
+
 </resources>

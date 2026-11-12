@@ -25,6 +25,7 @@ import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.modloaders.modpacks.api.ApiHandler;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.utils.FileUtils;
+import net.kdt.pojavlaunch.utils.NovaCraftApiKeyStore;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
 import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
 
@@ -63,6 +64,8 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
     private PreferenceCategory mResults;
     private Preference mMorePreference;
     private Preference mProfilePreference;
+    private Preference mApiKeyPreference;
+    private Preference mRemoveApiKeyPreference;
     private String mSearchText = "";
     private int mIndex = 0;
     private int mTotalCount = 0;
@@ -79,6 +82,18 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
         mResults = requirePreference("curseforge_maps_results", PreferenceCategory.class);
         mMorePreference = requirePreference("curseforge_maps_more");
         mProfilePreference = requirePreference("curseforge_maps_profile");
+        mApiKeyPreference = requirePreference("curseforge_maps_api_key");
+        mRemoveApiKeyPreference = requirePreference("curseforge_maps_remove_api_key");
+
+        mApiKeyPreference.setOnPreferenceClickListener(preference -> {
+            showApiKeyDialog();
+            return true;
+        });
+        mRemoveApiKeyPreference.setOnPreferenceClickListener(preference -> {
+            confirmRemoveApiKey();
+            return true;
+        });
+        updateApiKeyPreferenceState();
 
         requirePreference("curseforge_maps_search").setOnPreferenceClickListener(preference -> {
             showSearchDialog();
@@ -96,6 +111,7 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
         if (!hasCurseForgeKey()) {
             addResultStatus(R.string.novacraft_curseforge_maps_key_missing);
             mMorePreference.setVisible(false);
+            updateApiKeyPreferenceState();
             return;
         }
         searchMaps(true);
@@ -103,10 +119,81 @@ public class LauncherPreferenceCurseForgeMapsFragment extends LauncherPreference
 
     private String getCurseForgeKey() {
         try {
+            String saved = NovaCraftApiKeyStore.getCurseForgeKey(requireContext());
+            if (!TextUtils.isEmpty(saved)) return saved.trim();
+        } catch (Exception ignored) {
+            // A missing or invalid encrypted value is treated as unconfigured.
+        }
+        try {
             return getString(R.string.curseforge_api_key).trim();
         } catch (Exception ignored) {
             return "DUMMY";
         }
+    }
+
+    private boolean hasLocalApiKey() {
+        try {
+            return NovaCraftApiKeyStore.hasSavedCurseForgeKey(requireContext())
+                    && !TextUtils.isEmpty(NovaCraftApiKeyStore.getCurseForgeKey(requireContext()));
+        } catch (Exception ignored) {
+            return false;
+        }
+    }
+
+    private void updateApiKeyPreferenceState() {
+        if (mApiKeyPreference == null || mRemoveApiKeyPreference == null) return;
+        boolean localKey = hasLocalApiKey();
+        boolean anyKey = hasCurseForgeKey();
+        mApiKeyPreference.setSummary(anyKey
+                ? R.string.novacraft_curseforge_key_configured_summary
+                : R.string.novacraft_curseforge_key_missing_summary);
+        mRemoveApiKeyPreference.setVisible(localKey);
+    }
+
+    private void showApiKeyDialog() {
+        EditText input = new EditText(requireContext());
+        input.setSingleLine(true);
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        input.setHint(R.string.novacraft_curseforge_key_dialog_hint);
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.novacraft_curseforge_key_dialog_title)
+                .setView(input)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.global_save, (dialog, which) -> {
+                    String value = input.getText().toString().trim();
+                    if (value.length() < 16 || value.length() > 256 || value.matches(".*\\\\s+.*")) {
+                        Toast.makeText(requireContext(), R.string.novacraft_curseforge_key_invalid,
+                                Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    try {
+                        NovaCraftApiKeyStore.saveCurseForgeKey(requireContext(), value);
+                        Toast.makeText(requireContext(), R.string.novacraft_curseforge_key_saved,
+                                Toast.LENGTH_LONG).show();
+                        updateApiKeyPreferenceState();
+                        mResults.removeAll();
+                        searchMaps(true);
+                    } catch (Exception error) {
+                        Toast.makeText(requireContext(), R.string.novacraft_curseforge_key_save_failed,
+                                Toast.LENGTH_LONG).show();
+                    }
+                })
+                .show();
+    }
+
+    private void confirmRemoveApiKey() {
+        new AlertDialog.Builder(requireContext())
+                .setTitle(R.string.novacraft_curseforge_key_remove)
+                .setMessage(R.string.novacraft_curseforge_key_remove_confirm)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.global_delete, (dialog, which) -> {
+                    NovaCraftApiKeyStore.removeCurseForgeKey(requireContext());
+                    updateApiKeyPreferenceState();
+                    mResults.removeAll();
+                    if (hasCurseForgeKey()) searchMaps(true);
+                    else addResultStatus(R.string.novacraft_curseforge_maps_key_missing);
+                })
+                .show();
     }
 
     private boolean hasCurseForgeKey() {
