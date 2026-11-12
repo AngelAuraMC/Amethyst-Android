@@ -66,7 +66,7 @@ public class BackupManagerFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         importLauncher = registerForActivityResult(new ActivityResultContracts.OpenDocument(), this::onBackupImport);
-        exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument("application/zip"), this::onBackupExport);
+        exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument(), this::onBackupExport);
     }
 
     @Override

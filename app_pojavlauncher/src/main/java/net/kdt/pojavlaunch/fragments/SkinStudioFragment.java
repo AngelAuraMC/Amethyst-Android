@@ -56,7 +56,7 @@ public class SkinStudioFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         importLauncher = registerForActivityResult(new ActivityResultContracts.OpenDocument(), this::onSkinImport);
-        exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument("image/png"), this::onSkinExport);
+        exportLauncher = registerForActivityResult(new ActivityResultContracts.CreateDocument(), this::onSkinExport);
     }
 
     @Override
