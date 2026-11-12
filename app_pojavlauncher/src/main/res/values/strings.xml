@@ -884,7 +884,7 @@
     <string name="novacraft_performance_sustained_no">Off</string>
     <string name="novacraft_performance_free_ram_warning">Available system memory is currently tight. Close background apps before launching; do not increase Minecraft allocation to compensate.</string>
     <string name="novacraft_performance_tips_title">IN-GAME TIPS</string>
-    <string name="novacraft_performance_tips">For low-end phones: try 6–8 chunks render distance, turn off shaders, reduce particles and clouds, use Fast graphics, and avoid large modpacks. These in-game options are recommendations only; NovaCraft does not silently change a world's settings.</string>
+    <string name="novacraft_performance_tips">For low-end phones: try 6–8 chunks render distance, turn off shaders, reduce particles and clouds, use Fast graphics, and avoid large modpacks. These in-game options are recommendations only; NovaCraft does not silently change a world\'s settings.</string>
     <string name="novacraft_performance_open_video">Video &amp; renderer settings</string>
     <string name="novacraft_performance_open_java">Java &amp; memory settings</string>
     <string name="novacraft_performance_no_preferences">Launcher settings are not ready yet. Reopen the optimizer from the main menu.</string>
