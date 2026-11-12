@@ -32,6 +32,8 @@ import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.modloaders.LWJGL3ifyUtils;
+import net.kdt.pojavlaunch.modloaders.modpacks.ModCompatibility;
+import net.kdt.pojavlaunch.modloaders.modpacks.ModHealthReport;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.value.launcherprofiles.LauncherProfiles;
@@ -84,19 +86,7 @@ public class MainMenuFragment extends Fragment {
         } else mInstallJarButton.setOnClickListener(v -> hasNoOnlineProfileDialog(requireActivity()));
         mEditProfileButton.setOnClickListener(v -> mVersionSpinner.openProfileEditor(requireActivity()));
 
-        mPlayButton.setOnClickListener(v -> {
-            if (Tools.hasMods("sodium") && !(LauncherPreferences.DEFAULT_PREF.getBoolean("sodium_override", false))) {
-                AlertDialog sodiumWarningDialog = new AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.sodium_warning_title)
-                        .setMessage(R.string.sodium_warning_message)
-                        .setNeutralButton(R.string.delete_sodium, (d,w)-> {
-                            Tools.deleteSodiumMods();
-                            ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
-                        })
-                        .create();
-                sodiumWarningDialog.show();
-            } else ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
-        });
+        mPlayButton.setOnClickListener(v -> runModPreflight(mPlayButton));
 
         mShareLogsButton.setOnClickListener((v) -> shareLog(requireContext()));
         mWorldsButton.setOnClickListener(v -> Tools.swapFragment(requireActivity(), LauncherPreferenceWorldsFragment.class, "NOVACRAFT_WORLDS_MANAGER", null));
@@ -138,6 +128,70 @@ public class MainMenuFragment extends Fragment {
             NovaCraftAppearance.applyHome(getView(), requireContext());
             NovaCraftAppearance.applyHeader(requireActivity());
             updateAmbientAnimation();
+        }
+    }
+
+    /** Runs an offline metadata audit before starting Minecraft. Warnings never silently block the user. */
+    private void runModPreflight(Button playButton) {
+        if (playButton == null || !isAdded()) return;
+        playButton.setEnabled(false);
+        Toast.makeText(requireContext(), R.string.novacraft_launch_mod_checking, Toast.LENGTH_SHORT).show();
+
+        MinecraftProfile profile;
+        try {
+            profile = LauncherProfiles.getCurrentProfile();
+        } catch (Exception error) {
+            playButton.setEnabled(true);
+            continuePlayAfterModCheck();
+            return;
+        }
+        File gameDirectory = Tools.getGameDirPath(profile);
+        File modsDirectory = new File(gameDirectory, "mods");
+        String minecraftVersion = ModCompatibility.detectMinecraftVersion(profile.lastVersionId);
+        String loader = ModCompatibility.detectLoader(profile);
+
+        new Thread(() -> {
+            java.util.List<net.kdt.pojavlaunch.modloaders.modpacks.ModManagerAdapter.ModEntry> entries =
+                    ModHealthReport.scanDirectory(modsDirectory, loader);
+            ModHealthReport.Report report = ModHealthReport.analyze(entries, minecraftVersion, loader);
+            if (!isAdded() || getActivity() == null) return;
+            requireActivity().runOnUiThread(() -> {
+                if (!isAdded()) return;
+                playButton.setEnabled(true);
+                if (!report.hasProblems()) {
+                    continuePlayAfterModCheck();
+                    return;
+                }
+                new AlertDialog.Builder(requireContext())
+                        .setTitle(R.string.novacraft_launch_mod_warning_title)
+                        .setMessage(report.toDisplayText() + "\n\n" +
+                                getString(R.string.novacraft_launch_mod_warning_message))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setNeutralButton(R.string.novacraft_launch_mod_manage, (dialog, which) ->
+                                Tools.swapFragment(requireActivity(), ModManagerFragment.class, ModManagerFragment.TAG, null))
+                        .setPositiveButton(R.string.novacraft_launch_mod_continue, (dialog, which) ->
+                                continuePlayAfterModCheck())
+                        .show();
+            });
+        }, "NovaCraft-Launch-Preflight").start();
+    }
+
+    /** Preserve the existing Sodium warning after the new compatibility preflight. */
+    private void continuePlayAfterModCheck() {
+        if (Tools.hasMods("sodium") && !(LauncherPreferences.DEFAULT_PREF.getBoolean("sodium_override", false))) {
+            AlertDialog sodiumWarningDialog = new AlertDialog.Builder(requireContext())
+                    .setTitle(R.string.sodium_warning_title)
+                    .setMessage(R.string.sodium_warning_message)
+                    .setNeutralButton(R.string.delete_sodium, (d,w)-> {
+                        Tools.deleteSodiumMods();
+                        ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
+                    })
+                    .setPositiveButton(R.string.novacraft_launch_mod_continue,
+                            (d,w) -> ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true))
+                    .create();
+            sodiumWarningDialog.show();
+        } else {
+            ExtraCore.setValue(ExtraConstants.LAUNCH_GAME, true);
         }
     }
 

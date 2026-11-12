@@ -34,6 +34,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
 
     public static final String TAG = "SearchModFragment";
     public static final String ARG_IS_MODPACK = "novacraft_search_is_modpack";
+    public static final String ARG_INITIAL_QUERY = "novacraft_search_initial_query";
     private View mOverlay;
     private float mOverlayTopCache; // Padding cache reduce resource lookup
 
@@ -98,6 +99,12 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
 
         mDefaultTextColor = mStatusTextView.getTextColors();
         mSearchEditText.setHint(mSearchFilters.isModpack ? R.string.hint_search_modpack : R.string.novacraft_mod_search_hint);
+        Bundle args = getArguments();
+        String initialQuery = args == null ? null : args.getString(ARG_INITIAL_QUERY);
+        if (initialQuery != null && !initialQuery.trim().isEmpty()) {
+            mSearchEditText.setText(initialQuery);
+            mSearchEditText.setSelection(initialQuery.length());
+        }
 
         mRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerview.setAdapter(mModItemAdapter);
@@ -119,7 +126,7 @@ public class SearchModFragment extends Fragment implements ModItemAdapter.Search
         });
         mFilterButton.setOnClickListener(v -> displayFilterDialog());
 
-        searchMods(null);
+        searchMods(mSearchEditText.getText().toString());
     }
 
     @Override

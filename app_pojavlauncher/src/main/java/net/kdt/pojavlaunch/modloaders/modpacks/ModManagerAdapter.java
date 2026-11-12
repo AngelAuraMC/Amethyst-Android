@@ -48,8 +48,9 @@ public class ModManagerAdapter extends RecyclerView.Adapter<ModManagerAdapter.Mo
         holder.name.setText(title == null || title.trim().isEmpty() ? entry.file.getName() : title);
         holder.details.setText(entry.info == null ? entry.file.getName() : entry.info.describe());
         if (entry.info != null && entry.info.hasLoaderMismatch(entry.activeLoader)) {
+            String profileLoader = entry.activeLoader == null ? "vanilla / unknown" : entry.activeLoader;
             holder.status.setText(holder.itemView.getContext().getString(
-                    R.string.novacraft_mod_loader_mismatch_tag, entry.info.loader, entry.activeLoader));
+                    R.string.novacraft_mod_loader_mismatch_tag, entry.info.loader, profileLoader));
         } else {
             holder.status.setText(entry.enabled ? R.string.novacraft_mod_enabled : R.string.novacraft_mod_disabled);
         }

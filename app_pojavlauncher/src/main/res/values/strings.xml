@@ -779,4 +779,23 @@
     <string name="novacraft_mod_install_failed">Could not install this mod. Check the download or profile folder and try again.</string>
 
     <string name="novacraft_mod_loader_mismatch_tag">LOADER MISMATCH • %1$s / profile: %2$s</string>
+
+    <!-- NovaCraft Phase 10: Compatibility and dependency checks -->
+    <string name="novacraft_mod_check">Check compatibility</string>
+    <string name="novacraft_mod_resolve">Find dependencies</string>
+    <string name="novacraft_mod_report_title">MOD COMPATIBILITY REPORT</string>
+    <string name="novacraft_mod_check_running">The mod scan is running. Try again in a moment.</string>
+    <string name="novacraft_mod_no_missing_dependencies">No missing required dependencies were detected.</string>
+    <string name="novacraft_mod_missing_dependencies_title">Missing required dependencies</string>
+    <string name="novacraft_mod_dependency_warning">Dependency warning</string>
+    <string name="novacraft_mod_disable_dependents">These enabled mods declare this mod as a required dependency: %1$s. Disabling it may stop them from loading.</string>
+    <string name="novacraft_mod_remove_dependents">Other enabled mods declare this as a required dependency: %1$s. Removing it may stop them from loading.</string>
+    <string name="novacraft_mod_disable_anyway">Disable anyway</string>
+    <string name="novacraft_mod_version_mismatch">This mod declares Minecraft requirement %1$s, but the selected profile is %2$s.</string>
+    <string name="novacraft_launch_mod_warning_title">Mod compatibility warnings</string>
+    <string name="novacraft_launch_mod_warning_message">NovaCraft detected possible mod problems. Review the report before launching. You can still launch, but Minecraft may fail to start or behave unexpectedly.</string>
+    <string name="novacraft_launch_mod_manage">Manage mods</string>
+    <string name="novacraft_launch_mod_continue">Launch anyway</string>
+    <string name="novacraft_launch_mod_checking">Checking installed mods…</string>
+
 </resources>
