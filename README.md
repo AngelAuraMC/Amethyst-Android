@@ -45,6 +45,18 @@ You can get Amethyst via two methods:
 
 ## Building
 
+### Pre-requisites
+
+<details>
+
+<summary>Preparing your build environment</summary>
+
+1. ⚠️ Because of an upstream [issue](https://github.com/android/ndk/issues/1400#issuecomment-744620270) with ndk-build, do not clone the repository into any directory whose absolute path contains spaces. Doing so on will result in a build failure.
+
+2. You must have a JDK installation, [Temurin](https://adoptium.net/temurin/releases) or [OpenJDK](https://openjdk.org/install/) are recommended, and a `JAVA_HOME` system environment variable configured for compiling your builds
+
+</details>
+
 ### Quick Build (Recommended)
 
 The easiest way to build Amethyst is to use the pre-built JREs provided by our CI.
@@ -58,7 +70,7 @@ The built APK will be located in `app_pojavlauncher/build/outputs/apk/debug/`.
 
 If you need more control over the build process, follow these steps:
 
-1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMC/openjdk-build-multiarch/actions).  This package contains pre-built JREs for all supported architectures.  If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMC/openjdk-build-multiarch) repository.
+1. **Java Runtime Environment (JRE):** Download the `jre8-pojav` artifact from our [CI auto builds](https://github.com/AngelAuraMC/openjdk-build-multiarch/actions), unzip and paste the contents of the downloaded zip into `app_pojavlauncher/src/main/assets/components/jre/`, create the folder if it does not exist.  This package contains pre-built JREs for all supported architectures.  If you need to build the JRE yourself, follow the instructions in the [android-openjdk-build-multiarch](https://github.com/AngelAuraMC/openjdk-build-multiarch) repository.
 
 2. **LWJGL:** The build instructions for the custom LWJGL are available over the [LWJGL repository](https://github.com/AngelAuraMC/lwjgl3).
 
