@@ -114,6 +114,7 @@ import java.util.Map;
 public final class Tools {
     public  static final float BYTE_TO_MB = 1024 * 1024;
     public static final Handler MAIN_HANDLER = new Handler(Looper.getMainLooper());
+    private static final String AMETHYST_MARKER_NAME = ".amethyst_private_file";
     public static String APP_NAME = "Amethyst";
 
     public static final Gson GLOBAL_GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -154,11 +155,30 @@ public final class Tools {
     public static String lwjglNativesDir = null;
     public static String[] sAsmVersion = null;
 
-
     private static File getPojavStorageRoot(Context ctx) {
         if(SDK_INT >= 29) {
-            return ctx.getExternalFilesDir(null);
-        }else{
+            File retFile = ctx.getExternalFilesDir(null);
+            if(retFile == null) {
+                // Android spec states for the ret of getExternalFilesDir:
+                // the absolute path to application-specific directory. May return null if shared storage is not currently available.
+                // Since this is the only shared storage location we can try, and we can't do shared, fall back to private directory.
+                // Create a marker file to indicate to the app that files are stored privately in case it changes later.
+                // TODO: Provide a migration tool/button in case the files that are private can be moved later.
+                retFile = ctx.getFilesDir();
+                File markerFile = new File(retFile, Tools.AMETHYST_MARKER_NAME);
+                try {
+                    markerFile.createNewFile();
+                } catch (IOException e) {
+                    // Give up at this point.
+                    throw new RuntimeException("Unexpected IOException while determining storage root!", e);
+                }
+            } else {
+                File markerFile = new File(ctx.getFilesDir(), AMETHYST_MARKER_NAME);
+                if(markerFile.exists())
+                    return new File(ctx.getFilesDir(), "instances");
+            }
+            return new File(retFile, "instances");
+        } else {
             return new File(Environment.getExternalStorageDirectory(),"games/Amethyst");
         }
     }
@@ -169,9 +189,10 @@ public final class Tools {
      * @return true if storage is fine, false if storage is not accessible
      */
     public static boolean checkStorageRoot(Context context) {
-        File externalFilesDir = DIR_GAME_HOME  == null ? Tools.getPojavStorageRoot(context) : new File(DIR_GAME_HOME);
-        //externalFilesDir == null when the storage is not mounted if it was obtained with the context call
-        return externalFilesDir != null && Environment.getExternalStorageState(externalFilesDir).equals(Environment.MEDIA_MOUNTED);
+        File storageRoot = DIR_GAME_HOME == null ? Tools.getPojavStorageRoot(context) : new File(DIR_GAME_HOME);
+        if(storageRoot.getAbsolutePath().startsWith(context.getFilesDir().getAbsolutePath()))
+            return true;
+        return Environment.getExternalStorageState(storageRoot).equals(Environment.MEDIA_MOUNTED);
     }
 
     /**
