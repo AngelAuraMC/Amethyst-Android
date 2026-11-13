@@ -144,4 +144,5 @@
     <string name="controller_button_select">Сайлау</string>
     <string name="preference_experimental_title">Эксперименталь нәрсәләр</string>
     <string name="no_minecraft_account_found">Minecraft аккаунт юк</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

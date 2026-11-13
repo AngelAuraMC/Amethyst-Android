@@ -44,7 +44,6 @@
     <string name="mcl_setting_subtitle_mousescale">Možnosť zmeniť veľkosť virtuálnej myši.</string>
     <string name="mcl_setting_title_javaargs">Spúštacie argumenty pre JVM</string>
     <string name="mcl_setting_subtitle_javaargs">Pozor! Zmena JVM argumentov môže spôsobiť pád hry ak neviete, čo robíte.</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink - (všetky verzie, priemerný)</string>
     <string name="mcl_setting_veroption_release">Vydanie</string>
     <string name="mcl_setting_veroption_oldalpha">Stará alfa</string>
     <string name="mcl_setting_veroption_oldbeta">Stará beta</string>
@@ -290,5 +289,7 @@
     <string name="exception_failed_to_unpack_jre17">Nepodarilo sa nainštalovať Javu 17</string>
     <string name="newdl_starting">Čítanie metadát hry…</string>
     <string name="newdl_downloading_metadata">Sťahovanie metadát hry (%s)</string>
+    <string name="controller_button_shoulder_right">Pravé horné tlačidlo</string>
     <string name="preference_experimental_title">Experimentálne nastavenia</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

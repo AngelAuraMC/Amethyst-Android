@@ -35,4 +35,5 @@
     <string name="profiles_latest_snapshot">VIimeisin snapshot</string>
     <string name="profiles_latest_release">Viimeisin julkaisu</string>
     <string name="global_delete">Poista</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

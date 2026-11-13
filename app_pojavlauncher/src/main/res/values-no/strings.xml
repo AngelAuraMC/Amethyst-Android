@@ -96,4 +96,5 @@
     <string name="pedit_renderer">Gjengir</string>
     <string name="of_dl_progress">Laster ned %s</string>
     <string name="generic_debug">Avlusing</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>
