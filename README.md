@@ -53,7 +53,7 @@ You can get Amethyst via two methods:
 
 1. ⚠️ Because of an upstream [issue](https://github.com/android/ndk/issues/1400#issuecomment-744620270) with ndk-build, do not clone the repository into any directory whose absolute path contains spaces. Doing so on will result in a build failure.
 
-2. You must have [JDK](https://www.oracle.com/java/technologies/downloads/) installed and a `JAVA_HOME` system environment variable configured for compiling your builds
+2. You must have a JDK installation, [Temurin](https://adoptium.net/temurin/releases) or [OpenJDK](https://openjdk.org/install/) are recommended, and a `JAVA_HOME` system environment variable configured for compiling your builds
 
 </details>
 
