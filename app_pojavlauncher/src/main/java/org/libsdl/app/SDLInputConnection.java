@@ -12,6 +12,8 @@ import android.view.*;
 import android.view.inputmethod.BaseInputConnection;
 import android.widget.EditText;
 
+import net.kdt.pojavlaunch.MainActivity;
+
 class SDLInputConnection extends BaseInputConnection
 {
     protected EditText mEditText;
@@ -129,6 +131,7 @@ class SDLInputConnection extends BaseInputConnection
                     /* Higher code points don't generate simulated scancodes */
                     if (codePoint > 0 && codePoint < 128) {
                         nativeGenerateScancodeForUnichar((char)codePoint);
+                        MainActivity.trackChatStateChar((char)codePoint);
                     }
                     offset += Character.charCount(codePoint);
                 }
