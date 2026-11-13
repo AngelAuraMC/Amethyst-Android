@@ -12,7 +12,6 @@ import android.view.*;
 import android.view.inputmethod.BaseInputConnection;
 import android.widget.EditText;
 
-import net.kdt.pojavlaunch.LwjglGlfwKeycode;
 import net.kdt.pojavlaunch.MainActivity;
 
 class SDLInputConnection extends BaseInputConnection
@@ -52,9 +51,6 @@ class SDLInputConnection extends BaseInputConnection
 //
 //        return super.sendKeyEvent(event);
         if(KeyEvent.ACTION_DOWN == event.getAction()){
-            if (event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                MainActivity.trackChatStateKey(LwjglGlfwKeycode.GLFW_KEY_ENTER, true);
-            }
             SDLActivity.onNativeKeyDown(event.getKeyCode());
         } else SDLActivity.onNativeKeyUp(event.getKeyCode());
         return true;
@@ -129,7 +125,6 @@ class SDLInputConnection extends BaseInputConnection
                     int codePoint = pendingText.codePointAt(offset);
                     if (codePoint == '\n') {
                         if (SDLActivity.onNativeSoftReturnKey()) {
-                            MainActivity.trackChatStateKey(LwjglGlfwKeycode.GLFW_KEY_ENTER, true);
                             return;
                         }
                     }

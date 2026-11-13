@@ -13,8 +13,6 @@ import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import net.kdt.pojavlaunch.LwjglGlfwKeycode;
-import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.MinecraftGLSurface;
 import net.kdt.pojavlaunch.R;
 
@@ -119,7 +117,6 @@ public class TouchCharInput extends androidx.appcompat.widget.AppCompatEditText 
 
     /** Send the enter key. */
     private void sendEnter(){
-        MainActivity.trackChatStateKey(LwjglGlfwKeycode.GLFW_KEY_ENTER, true);
         mCharacterSender.sendEnter();
         clear();
     }
