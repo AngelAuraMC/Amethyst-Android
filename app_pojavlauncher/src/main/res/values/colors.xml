@@ -12,4 +12,9 @@
 
     <color name="primary_text">#FFFFFF</color>
     <color name="secondary_text">#B2B2B2</color>
+
+    <color name="launcher_nav_background">#121116</color>
+    <color name="launcher_nav_selected">#302342</color>
+    <color name="launcher_accent">#B86BFF</color>
+    <color name="launcher_nav_text">#AAA4B4</color>
 </resources>

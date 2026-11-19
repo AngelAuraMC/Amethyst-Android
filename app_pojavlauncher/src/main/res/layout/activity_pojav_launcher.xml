@@ -1,19 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
+    android:background="@color/background_app">
 
     <com.kdt.mcgui.mcAccountSpinner
         android:id="@+id/account_spinner"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="@dimen/_52sdp"
-
         android:dropDownWidth="@dimen/_250sdp"
         android:dropDownVerticalOffset="@dimen/_52sdp"
-
+        app:layout_constraintEnd_toStartOf="@id/setting_button"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -21,31 +21,35 @@
         android:layout_width="@dimen/_52sdp"
         android:layout_height="@dimen/_52sdp"
         android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_menu_settings"
-        android:scaleType="fitCenter"
+        android:contentDescription="@string/preference_misc_title"
         android:paddingVertical="@dimen/_8sdp"
-
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_menu_settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Holding most of the dynamic content -->
+    <net.kdt.pojavlaunch.LauncherNavigationView
+        android:id="@+id/launcher_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/account_spinner" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_fragment"
-
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/progress_layout"
-        app:layout_constraintTop_toBottomOf="@+id/account_spinner" />
-
+        app:layout_constraintBottom_toTopOf="@id/progress_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/launcher_navigation" />
 
     <com.kdt.mcgui.ProgressLayout
         android:id="@+id/progress_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         app:layout_constraintBottom_toBottomOf="parent" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
