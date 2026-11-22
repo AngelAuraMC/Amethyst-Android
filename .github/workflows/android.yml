@@ -42,7 +42,7 @@ jobs:
           mkdir -p out
 
       - name: Build Debug APK
-        run: gradle :app_pojavlauncher:assembleDebug
+        run: gradle :app_pojavlauncher:assembleDebug --stacktrace --info
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
