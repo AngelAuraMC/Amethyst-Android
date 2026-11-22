@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_app">
 
-    <!-- Main split -->
+    <!-- Center divider guideline -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/center_guideline"
         android:layout_width="0dp"
@@ -16,7 +16,7 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.47" />
 
-    <!-- LEFT: HERO -->
+    <!-- LEFT HERO PANEL -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_hero_panel"
         android:layout_width="0dp"
@@ -24,7 +24,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/cl_hero_panel_bg"
         android:padding="20dp"
         app:layout_constraintBottom_toTopOf="@id/_background_display_view"
@@ -32,7 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <!-- Branding -->
         <TextView
             android:id="@+id/cl_brand"
             android:layout_width="wrap_content"
@@ -83,7 +82,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cl_hero_subtitle" />
 
-        <!-- Minecraft block artwork -->
         <ImageView
             android:id="@+id/cl_hero_block"
             android:layout_width="150dp"
@@ -108,7 +106,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- RIGHT: TOOLS + COMMUNITY -->
+    <!-- RIGHT TOOL AREA -->
     <ScrollView
         android:id="@+id/cl_tools_scroll"
         android:layout_width="0dp"
@@ -129,7 +127,6 @@
             android:paddingEnd="12dp"
             android:paddingBottom="8dp">
 
-            <!-- Section title -->
             <TextView
                 android:id="@+id/cl_tools_heading"
                 android:layout_width="wrap_content"
@@ -142,7 +139,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Row 1 -->
+            <!-- CUSTOM CONTROLS -->
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/custom_control_button"
                 style="@style/LauncherMenuButton.Universal"
@@ -157,6 +154,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_tools_heading" />
 
+            <!-- INSTALL JAR -->
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/install_jar_button"
                 style="@style/LauncherMenuButton.Universal"
@@ -170,7 +168,7 @@
                 app:layout_constraintStart_toEndOf="@id/custom_control_button"
                 app:layout_constraintTop_toTopOf="@id/custom_control_button" />
 
-            <!-- Row 2 -->
+            <!-- SHARE LOGS -->
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/share_logs_button"
                 style="@style/LauncherMenuButton.Universal"
@@ -185,6 +183,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/custom_control_button" />
 
+            <!-- OPEN DIRECTORY -->
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/open_files_button"
                 style="@style/LauncherMenuButton.Universal"
@@ -198,7 +197,7 @@
                 app:layout_constraintStart_toEndOf="@id/share_logs_button"
                 app:layout_constraintTop_toTopOf="@id/share_logs_button" />
 
-            <!-- Community heading -->
+            <!-- COMMUNITY -->
             <TextView
                 android:id="@+id/cl_community_heading"
                 android:layout_width="wrap_content"
@@ -212,7 +211,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/share_logs_button" />
 
-            <!-- Wiki -->
+            <!-- WIKI -->
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/news_button"
                 style="@style/LauncherMenuButton.Universal"
@@ -227,7 +226,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cl_community_heading" />
 
-            <!-- Divider -->
+            <!-- SOCIAL DIVIDER -->
             <View
                 android:id="@+id/social_divider"
                 android:layout_width="0dp"
@@ -237,7 +236,7 @@
                 app:layout_constraintStart_toEndOf="@id/news_button"
                 app:layout_constraintTop_toTopOf="@id/news_button" />
 
-            <!-- Discord -->
+            <!-- DISCORD -->
             <com.kdt.mcgui.LauncherMenuButton
                 android:id="@+id/discord_button"
                 style="@style/LauncherMenuButton.Universal"
@@ -265,7 +264,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Version selector -->
+    <!-- VERSION SELECTOR -->
     <com.kdt.mcgui.mcVersionSpinner
         android:id="@+id/mc_version_spinner"
         android:layout_width="0dp"
@@ -282,20 +281,20 @@
         app:layout_constraintEnd_toStartOf="@id/edit_profile_button"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Edit profile -->
+    <!-- EDIT PROFILE -->
     <ImageButton
         android:id="@+id/edit_profile_button"
         android:layout_width="42dp"
         android:layout_height="42dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/cl_tool_tile_bg"
-        android:contentDescription="@string/edit_profile"
+        android:contentDescription="Edit profile"
         android:src="@drawable/ic_edit_profile"
         app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
         app:layout_constraintEnd_toStartOf="@id/play_button"
         app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
 
-    <!-- Play -->
+    <!-- PLAY BUTTON -->
     <com.kdt.mcgui.MineButton
         android:id="@+id/play_button"
         android:layout_width="160dp"
@@ -304,7 +303,7 @@
         android:text="@string/main_play"
         android:textAllCaps="true"
         android:textStyle="bold"
-        android:background="@drawable/cl_play_bg"
+        android:background="#8956E8"
         app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
