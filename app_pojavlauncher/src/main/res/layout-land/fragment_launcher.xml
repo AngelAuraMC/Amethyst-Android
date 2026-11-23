@@ -273,6 +273,8 @@
         android:layout_marginBottom="18dp"
         android:background="@drawable/cl_version_field_bg"
         android:drawableEnd="@drawable/spinner_arrow"
+        android:elevation="6dp"
+        android:translationZ="6dp"
         app:drawableEndPadding="@dimen/_1sdp"
         app:drawableEndSize="@dimen/_12sdp"
         app:drawableStartIntegerScaling="true"
@@ -290,6 +292,8 @@
         android:background="@drawable/cl_tool_tile_bg"
         android:contentDescription="Edit profile"
         android:src="@drawable/ic_edit_profile"
+        android:elevation="6dp"
+        android:translationZ="6dp"
         app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
         app:layout_constraintEnd_toStartOf="@id/play_button"
         app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
@@ -304,8 +308,8 @@
         android:textAllCaps="true"
         android:textStyle="bold"
         android:background="#8956E8"
-        android:elevation="4dp"
-        android:translationZ="4dp"
+        android:elevation="6dp"
+        android:translationZ="6dp"
         app:layout_constraintBottom_toBottomOf="@id/mc_version_spinner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/mc_version_spinner" />
