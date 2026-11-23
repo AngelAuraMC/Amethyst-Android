@@ -1,8 +1,5 @@
 package net.kdt.pojavlaunch.fragments;
 
-import static net.kdt.pojavlaunch.Tools.hasNoOnlineProfileDialog;
-import static net.kdt.pojavlaunch.Tools.hasOnlineProfile;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -30,7 +27,7 @@ public class ProfileTypeSelectFragment extends Fragment {
         view.findViewById(R.id.vanilla_profile).setOnClickListener(v -> Tools.swapFragment(requireActivity(), ProfileEditorFragment.class,
                 ProfileEditorFragment.TAG, new Bundle(1)));
 
-        // NOTE: Special care needed! If you wll decide to add these to the back stack, please read
+        // NOTE: Special care needed! If you will decide to add these to the back stack, please read
         // the comment in FabricInstallFragment.onDownloadFinished() and amend the code
         // in FabricInstallFragment.onDownloadFinished() and ModVersionListFragment.onDownloadFinished()
         view.findViewById(R.id.optifine_profile).setOnClickListener(v ->
@@ -52,10 +49,6 @@ public class ProfileTypeSelectFragment extends Fragment {
     }
 
     private void tryInstall(Class<? extends Fragment> fragmentClass, String tag){
-        if(!hasOnlineProfile()){
-            hasNoOnlineProfileDialog(requireActivity());
-        } else {
-            Tools.swapFragment(requireActivity(), fragmentClass, tag, null);
-        }
+        Tools.swapFragment(requireActivity(), fragmentClass, tag, null);
     }
 }
