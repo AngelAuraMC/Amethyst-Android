@@ -42,9 +42,35 @@ jobs:
           mkdir -p out
 
       - name: Build Debug APK
-        run: gradle :app_pojavlauncher:assembleDebug --stacktrace --info
+        run: |
+          set +e
+          gradle :app_pojavlauncher:assembleDebug --stacktrace --info 2>&1 | tee build-error.log
+          GRADLE_EXIT=${PIPESTATUS[0]}
+          echo "GRADLE_EXIT=$GRADLE_EXIT" >> "$GITHUB_ENV"
+
+          echo "## Build failure diagnostics" >> "$GITHUB_STEP_SUMMARY"
+          if [ "$GRADLE_EXIT" -ne 0 ]; then
+            echo "### Relevant error lines" >> "$GITHUB_STEP_SUMMARY"
+            grep -nE 'What went wrong|Execution failed|error:|Caused by:|FAILURE:|failed' build-error.log | tail -n 100 >> "$GITHUB_STEP_SUMMARY" || true
+
+            echo "### Last 80 log lines" >> "$GITHUB_STEP_SUMMARY"
+            tail -n 80 build-error.log >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Build succeeded." >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+          exit "$GRADLE_EXIT"
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: CraftLauncher-build-log
+          path: build-error.log
+          if-no-files-found: warn
 
       - name: Upload Debug APK
+        if: success()
         uses: actions/upload-artifact@v4
         with:
           name: CraftLauncher-debug
