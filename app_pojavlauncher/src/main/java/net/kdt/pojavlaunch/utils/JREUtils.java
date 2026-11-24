@@ -94,6 +94,7 @@ public class JREUtils {
         dlopen(findInLdLibPath("libfreetype.so"));
         dlopen(findInLdLibPath("libfontmanager.so"));
         for(File f : locateLibs(new File(jreHome, Tools.DIRNAME_HOME_JRE))) {
+            if(f.getName().equals("libjvm.so")) continue;
             dlopen(f.getAbsolutePath());
         }
         dlopen(NATIVE_LIB_DIR + "/libopenal.so");
