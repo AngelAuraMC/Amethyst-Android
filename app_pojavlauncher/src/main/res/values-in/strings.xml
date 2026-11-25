@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -52,8 +51,6 @@
     <string name="mcl_setting_title_renderer_subtitle">Pengaturan Khusus untuk Renderer</string>
     <string name="mcl_setting_category_renderer">Renderer</string>
     <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (Mendukung semua versi, Cepat)</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan) - (Mendukung semua versi, Lambat)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (Hanya mendukung 1.17+ , Cepat)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3) - hanya untuk 1.17+</string>
     <string name="mcl_setting_veroption_release">Rilis</string>
     <string name="mcl_setting_veroption_snapshot">Snapshot</string>
@@ -138,6 +135,7 @@
     <string name="dl_library_sha_fail">Library %s rusak dan akan di-unduh ulang</string>
     <string name="dl_library_sha_unknown">Library %s tidak dapat diperiksa, harus dianggap bagus</string>
     <string name="dl_library_sha_pass">Library %s baik-baik saja dan dapat digunakan</string>
+    <string name="mcl_gamepad_SDL">Aktifkan backend pengontrol SDL</string>
     <string name="mcl_disable_gestures">Matikan gestures</string>
     <string name="mcl_disable_gestures_subtitle">Mematikan gestures, seperti tahan lama untuk menghancurkan block, dan pencet untuk menempatkan block.</string>
     <string name="mcl_disable_swap_hand">Nonaktifkan ketuk dua kali untuk bertukar tangan</string>
@@ -391,7 +389,6 @@
     <string name="preference_renderer_mobileglues_settings">Setelan Renderer Untuk MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Ukuran Maksimum Cache GLSL</string>
     <string name="mg_renderer_angle">Gunakan ANGLE sebagai driver</string>
-    <string name="mg_renderer_multidraw">Mode Emulasi Multidraw</string>
     <string name="mg_renderer_title_errorSetting">Error Filtering</string>
     <string name="mg_renderer_title_timerQueryExt">Nonaktifkan Penggunaan GPU di menu F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Memperbaiki crash acak saat F3 dibuka di beberapa perangkat Mali</string>
@@ -403,9 +400,6 @@
     <string name="mg_renderer_summary_gl43exts">Dapat membantu menghindari crash karena mod. Matikan jika tidak diperlukan, karena bisa menyebabkan crash.</string>
     <string name="mg_renderer_title_computeShaderext">Gunakan Ekstensi Compute Shader Eksperimental</string>
     <string name="mg_renderer_summary_computeShaderext">Mungkin membantu mengatasi glitch pada shaderpack. Nonaktifkan jika tidak diperlukan, karena bisa menyebabkan crash.</string>
-    <string name="mg_renderer_title_multidrawCompute">Gunakan Emulasi Multidraw Compute</string>
-    <string name="mg_renderer_summary_multidrawCompute">Menggunakan compute shaders untuk emulasi multidraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Hanya Minecraft Vanilla versi 1.3.1 ke atas yang didukung untuk akun demo</string>
     <string name="demo_unsupported">Profil Demo tidak di dukung</string>
     <string name="change_account">Ganti akun terlebih dahulu untuk menggunakan fitur ini</string>
@@ -423,4 +417,5 @@
     <string name="preference_touchcontroller_vibrate_length_title">Durasi getaran kontrol sentuh</string>
     <string name="preference_touchcontroller_vibrate_length_description">Atur durasi getaran saat menggunakan kontrol sentuh.</string>
     <string name="error_vanilla_json_corrupt">File JSON bawaan tampaknya rusak. Silakan kirim laporan bug di GitHub atau Discord.</string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

@@ -137,4 +137,5 @@
         <b>Açó no és segur. La teva informació personal podria estar en risc si es continua.</b><br/>
         Si encara vols utilitzar aquest servidor, prem \"Desactiva les comprovacions de servidor\" i torna a començar la baixada.<br/>
         Si vols utilitzar la font oficial de baixades, prem \"Canviar al servidor oficial\" i torna a començar la baixada de nou.<br/>]]></string>
+    <!--  Make sure the people turning this on can read English.  -->
 </resources>

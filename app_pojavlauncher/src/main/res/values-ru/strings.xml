@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <!-- App name part -->
-    <string name="app_name">Amethyst</string>
     <!-- Action bar part -->
     <!-- Languages list part -->
     <!-- Login strings -->
@@ -51,11 +50,12 @@
     <string name="mcl_setting_title_renderer_settings">Дополнительные настройки визуализации</string>
     <string name="mcl_setting_title_renderer_subtitle">Особые настройки визуализации</string>
     <string name="mcl_setting_category_renderer">Визуализатор</string>
-    <string name="mcl_setting_renderer_vulkan_zink">Zink (Vulkan; все версии, средний)</string>
-    <string name="mcl_setting_renderer_mobileglues">MobileGlues (OpenGL ES) - (только 1.17+, быстро)</string>
+    <string name="mcl_setting_renderer_gles2_4">Holy GL4ES - (только 1.21.4&lt;, быстро)</string>
+    <string name="mcl_setting_renderer_ng_gl4es">Krypton Wrapper - (все версии, быстро)</string>
+    <string name="mcl_setting_renderer_vulkan_kopper_zink">Kopper Zink (Vulkan) - (все версии, среднее быстродействие)</string>
     <string name="mcl_setting_renderer_ltw">LTW (OpenGL ES 3; 1.17 и выше)</string>
     <string name="mcl_setting_veroption_release">Релизы</string>
-    <string name="mcl_setting_veroption_snapshot">Снапшоты</string>
+    <string name="mcl_setting_veroption_snapshot">Снапшот</string>
     <string name="mcl_setting_veroption_oldalpha">Старые альфа</string>
     <string name="mcl_setting_veroption_oldbeta">Старые бета</string>
     <string name="mcl_version_clone">Копировать</string>
@@ -137,12 +137,16 @@
     <string name="dl_library_sha_fail">Библиотека %s повреждена и будет загружена повторно</string>
     <string name="dl_library_sha_unknown">Библиотеку %s не удалось проверить; допустим, она в порядке</string>
     <string name="dl_library_sha_pass">Библиотека %s проверена и готова к использованию</string>
+    <string name="mcl_gamepad_SDL">Включить SDL бэк-энд для контроллера</string>
+    <string name="mcl_gamepad_SDL_subtitle">Включает SDL бэк-энд. Имеет улучшенную поддержку модов. Использует на GLFW не включено.</string>
     <string name="mcl_disable_gestures">Отключить жесты</string>
     <string name="mcl_disable_gestures_subtitle">Переключение жестов размещения/разрушения блока при касании/удерживании экрана.</string>
     <string name="mcl_disable_swap_hand">Отключить смену руки по двойному касанию</string>
     <string name="mcl_disable_swap_hand_subtitle">Отключает перемещение предмета во вторую руку при двойном касании по нему в панели инструментов.</string>
     <string name="mcl_setting_title_mousespeed">Скорость указателя</string>
     <string name="mcl_setting_subtitle_mousespeed">Изменить скорость указателя виртуальный мыши.</string>
+    <string name="mcl_setting_title_grab_mouse">Использовать виртуальный курсор</string>
+    <string name="mcl_setting_subtitle_grab_mouse">Не дает курсору выйти за пределы игры. Предотвращает нажатие кнопок мыши на сенсорном экране.</string>
     <string name="customctrl_passthru">Пропускать касание в игру</string>
     <string name="customctrl_swipeable">Пролистываемый</string>
     <string name="customctrl_forward_lock">Блокировка движения вперёд</string>
@@ -259,6 +263,7 @@
     <string name="version_select_hint">Выберите версию</string>
     <string name="forge_dl_progress">Загрузка установщика %s</string>
     <string name="forge_dl_searching">Поиск номера версии Forge</string>
+    <string name="neoforge_dl_searching">Поиск NeoForge для номера версии</string>
     <string name="modloader_dl_failed_to_load_list">Не удалось загрузить список версий.</string>
     <string name="forge_dl_no_installer">К сожалению, у этой версии Forge отсутствует поддерживаемый установщик.</string>
     <string name="forge_dl_select_version">Выбор версии Forge</string>
@@ -329,6 +334,7 @@
     <string name="preference_vsync_in_zink_description">Позволяет использовать внутренние системные API для активации вертикальной синхронизации при работе с Zink. Отключите, если игра начнёт вылетать после обновления системы.</string>
     <string name="exception_failed_to_unpack_jre17">Не удалось установить JRE 17</string>
     <string name="newdl_starting">Чтение метаданных игры…</string>
+    <string name="newdl_downloading_jre_runtime">Скачивание Java %s runtime (%.2f/%.2f MB)</string>
     <string name="newdl_downloading_metadata">Загрузка метаданных игры (%s)</string>
     <string name="newdl_downloading_game_files">Загрузка файлов игры… (%d/%d, %.2f МБ/с)</string>
     <string name="newdl_downloading_game_files_size">Загрузка файлов игры… (%.2f/%.2f МБ, %.2f МБ/с)</string>
@@ -388,7 +394,6 @@
     <string name="preference_renderer_mobileglues_settings">Настройки отображения MobileGlues</string>
     <string name="mg_renderer_glsl_cache">Максимальный размер кэша GLSL</string>
     <string name="mg_renderer_angle">Использовать ANGLE в качестве драйвера</string>
-    <string name="mg_renderer_multidraw">Режим эмуляции MultiDraw</string>
     <string name="mg_renderer_title_errorSetting">Ошибка фильтрации</string>
     <string name="mg_renderer_title_timerQueryExt">Отключить использование графического процессора в меню F3</string>
     <string name="mg_renderer_summary_timerQueryExt">Исправляет случайные вылеты когда F3 открыто на некоторых устройствах Mali</string>
@@ -400,9 +405,6 @@
     <string name="mg_renderer_summary_gl43exts">Может помочь при сбоях мода. Отключите, если не требуется, может привести к сбоям.</string>
     <string name="mg_renderer_title_computeShaderext">Извещать экспериментальное расширение вычислительного шейдера</string>
     <string name="mg_renderer_summary_computeShaderext">Может помочь при сбоях набора шейдеров. Отключите, если не требуется, может привести к сбоям.</string>
-    <string name="mg_renderer_title_multidrawCompute">Использовать вычислительную эмуляцию MultiDraw</string>
-    <string name="mg_renderer_summary_multidrawCompute">Использует вычислительные шейдеры для эмуляции MultiDraw</string>
-    <string name="app_short_name">Amethyst</string>
     <string name="demo_versions_supported">Только ванильные версии от 1.3.1 поддерживается для демонстрационных учётных записей</string>
     <string name="demo_unsupported">Демо-профиль не поддерживается</string>
     <string name="change_account">Пожалуйста, измените учётную запись для использования этой функции</string>
@@ -419,4 +421,28 @@
     <string name="preference_force_enable_touchcontroller_description">Принудительно включает интеграцию сенсорного контроллера, даже если файл мода не найден.</string>
     <string name="preference_touchcontroller_vibrate_length_title">Длина вибрации сенсорного контроллера</string>
     <string name="preference_touchcontroller_vibrate_length_description">Установите продолжительность вибрации при использовании сенсорного контроллера.</string>
+    <string name="error_vanilla_json_corrupt">Ванильный json возможно поврежден. Пожалуйста, отправьте сообщение об ошибке на github или discord.</string>
+    <string name="preference_ask_for_microphone_title">Разрешить Микрофон</string>
+    <string name="preference_ask_for_microphone_description">Нажмите, чтобы запросить разрешие для микрофона, нужно для модов как Simple Voice Chat.</string>
+    <string name="mcl_gamepad_forcedSDL">Принудительно запустить обработку SDL</string>
+    <string name="preference_category_SDL_settings">Настройки SDL</string>
+    <string name="oldL4JFound">Вы используете версию Legacy4J без исправлений для Android! Для получения наилучших результатов вам потребуется вручную включить SDL в настройках контроллера!</string>
+    <string name="global_warning">Предупреждение!</string>
+    <string name="controllableFound">Controllable сейчас имеет случайный шанс крашнуть игру на запуске. Либо продолжайте пробовать или используйте другой мод как Controlify.</string>
+    <string name="mg_renderer_title_dsaExt">Включить поддержку экспериментального расширения Direct State Access</string>
+    <string name="mg_renderer_summary_dsaExt">Может помочь с шейдер-паками для Iris, обязателен для AcceleratedRendering</string>
+    <string name="mg_renderer_title_fsr">Апскейлинг AMD FSR 1</string>
+    <string name="autorendererselectfailed">Ошибка выбора визуализатора, возврат к визуализатору HolyGL4ES</string>
+    <string name="sodium_warning_title">Обнаружен Sodium!</string>
+    <string name="sodium_warning_message">Похоже, вы используете Sodium, он не поддерживается и может привести к графическим проблемам или крашам, Пожалуйста удалите его.</string>
+    <string name="delete_sodium">Удалить Sodium и запустить</string>
+    <string name="sodium_override_title">Продолжить все равно</string>
+    <string name="sodium_override_summaryOff">Sodium может создавать визуальные баги и краши. Вы были предупреждены.</string>
+    <string name="sodium_override_summaryOn">Sodium не поддерживается.</string>
+    <!--  Make sure the people turning this on can read English.  -->
+    <string name="not_modpack_file">Не является файлом сборки!</string>
+    <string name="global_not_installed">Не установлено</string>
+    <string name="global_download">Скачать</string>
+    <string name="multirt_no_internet">Ошибка скачивания, проверьте интернет-соединение.</string>
+    <string name="global_installing">Установка…</string>
 </resources>
