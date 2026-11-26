@@ -194,6 +194,7 @@ public class ControlButton extends TextView implements ControlInterface {
         setActivated(isDown);
         for(int keycode : mProperties.keycodes){
             if(keycode >= GLFW_KEY_UNKNOWN){
+                MainActivity.trackChatStateKey(keycode, isDown);
                 sendKeyPress(keycode, EfficientAndroidLWJGLKeycode.getLwjglChar(keycode), CallbackBridge.getCurrentMods(), isDown);
                 CallbackBridge.setModifiers(keycode, isDown);
             }else{
